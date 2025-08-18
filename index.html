@@ -10,46 +10,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* Définition d'une variable CSS pour la taille de police de base */
-        :root {
-            --base-font-size: 16px;
-        }
-
         /* Styles personnalisés pour la borne */
         body {
             font-family: 'Inter', sans-serif;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            font-size: var(--base-font-size);
-            transition: font-size 0.2s ease;
-        }
-
-        /* Mode Contraste Élevé pour l'accessibilité */
-        body.high-contrast {
-            background-color: #000 !important;
-            color: #FFFF00 !important;
-        }
-        body.high-contrast .overlay {
-            background: rgba(0, 0, 0, 0.8) !important;
-        }
-        body.high-contrast .icon-button {
-            background-color: #000 !important;
-            border: 2px solid #FFFF00 !important;
-            color: #FFFF00 !important;
-        }
-        body.high-contrast .icon-button svg {
-            stroke: #FFFF00 !important;
-        }
-        body.high-contrast .high-contrast-button, body.high-contrast #date-time-display {
-            background-color: transparent !important;
-            color: #FFFF00 !important;
-            border-color: #FFFF00 !important;
-        }
-        
-        /* Contraste élevé pour les éléments d'affichage de la date et de l'heure */
-        body.high-contrast #date-display, body.high-contrast #time-display {
-            color: #FFFF00 !important;
+            font-size: 16px;
         }
 
         /* Conteneur pour la vidéo de fond */
@@ -126,7 +93,7 @@
         .top-logos img {
             height: 50px;
         }
-
+        
         /* Augmentation de la taille et de l'espacement de la grille d'icônes */
         .icon-grid {
             display: grid;
@@ -168,6 +135,12 @@
             stroke: white;
             fill: none;
             stroke-width: 2;
+        }
+
+        .icon-button img {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 0.5rem;
         }
         
         /* Styles pour le bouton d'accessibilité et son panneau */
@@ -302,7 +275,7 @@
     </div>
 
     <!-- Page de démarrage -->
-    <main id="start-page" class="overlay fade-in" role="main" aria-labelledby="start-title">
+    <main id="start-page" class="overlay" role="main" aria-labelledby="start-title">
         <!-- Affichage de la date et l'heure -->
         <div id="date-time-display" class="mb-8" role="timer" aria-live="polite">
             <span id="date-display"></span>
@@ -357,64 +330,64 @@
     </main>
 
     <!-- Contenu principal qui sera affiché après la sélection du code postal -->
-    <main id="main-content" class="hidden overlay fade-in" role="main" aria-labelledby="city-title">
+    <main id="main-content" class="hidden overlay" role="main" aria-labelledby="city-title">
         <h1 id="city-title" class="text-4xl md:text-5xl font-bold"></h1>
         <!-- Ajout de "Office de Tourisme" en dessous du titre de la ville -->
         <p id="tourist-office-label" class="text-xl font-semibold mb-8"></p>
         <div class="icon-grid" role="group" aria-label="Options de la borne numérique">
-            <!-- Boutons de la borne -->
-            <a href="#" class="icon-button" data-type="see" role="button" aria-label="À voir, à faire">
+            <!-- Boutons de la borne, avec les liens mis à jour -->
+            <a href="a_voir.html" class="icon-button" role="button" aria-label="À voir, à faire">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
                 <span id="label-see">À voir / À faire</span>
             </a>
-            <a href="#" class="icon-button" data-type="sleep" role="button" aria-label="Où dormir ?">
+            <a href="ou_dormir.html" class="icon-button" role="button" aria-label="Où dormir ?">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
                 <span id="label-sleep">Où dormir ?</span>
             </a>
-            <a href="#" class="icon-button" data-type="eat" role="button" aria-label="Où manger ?">
+            <a href="ou_manger.html" class="icon-button" role="button" aria-label="Où manger ?">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
                 <span id="label-eat">Où manger ?</span>
             </a>
-            <a href="#" class="icon-button" data-type="agenda" role="button" aria-label="Agenda">
+            <a href="agenda.html" class="icon-button" role="button" aria-label="Agenda">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <span id="label-agenda">Agenda</span>
             </a>
-            <a href="#" class="icon-button" data-type="forecast" role="button" aria-label="Météo et marée">
+            <a href="meteo_maree.html" class="icon-button" role="button" aria-label="Météo et marée">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.927A5.002 5.002 0 0012 6c-2.457 0-4.783 1.149-6.322 2.972l-.337.351-1.396.985A1 1 0 003 15z" />
                 </svg>
                 <span id="label-forecast">Météo & marée</span>
             </a>
-            <a href="#" class="icon-button" data-type="map" role="button" aria-label="Carte interactive">
+            <a href="carte_interactive.html" class="icon-button" role="button" aria-label="Carte interactive">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <span id="label-map">Carte interactive</span>
             </a>
-            <a href="#" class="icon-button" data-type="outings" role="button" aria-label="Sorties possibles">
+            <a href="sorties.html" class="icon-button" role="button" aria-label="Sorties possibles">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                 </svg>
                 <span id="label-outings">Sorties possibles</span>
             </a>
-            <a href="#" class="icon-button" data-type="news" role="button" aria-label="Actualités">
+            <a href="actualites.html" class="icon-button" role="button" aria-label="Actualités">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12V9m0 3a2 2 0 100 4 2 2 0 000-4z" />
                 </svg>
                 <span id="label-news">Actualités</span>
             </a>
-            <a href="#" class="icon-button" data-type="transport" role="button" aria-label="Transports">
+            <a href="transports.html" class="icon-button" role="button" aria-label="Transports">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v4m0 0a2 2 0 100-4 2 2 0 000 4zm0-10v4m0 0a2 2 0 100-4 2 2 0 000 4z" />
@@ -422,20 +395,13 @@
                 <span id="label-transport">Transports</span>
             </a>
         </div>
-        <!-- Bouton de retour commun à toutes les pages de ville -->
-        <button id="back-button" class="mt-8 py-2 px-4 rounded-lg bg-gray-500 text-white font-bold hover:bg-gray-600 transition duration-300" role="button" aria-label="Retour à l'écran précédent">
-            Retour
-        </button>
     </main>
-
-    <!-- Script JavaScript pour la logique de l'application -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const startPage = document.getElementById('start-page');
             const mainContent = document.getElementById('main-content');
             const zipCodeSelect = document.getElementById('zip-code-select');
             const enterButton = document.getElementById('enter-button');
-            const backButton = document.getElementById('back-button');
             const cityTitle = document.getElementById('city-title');
             const accessibilityBtn = document.getElementById('accessibility-btn');
             const accessibilityPanel = document.getElementById('accessibility-panel');
@@ -447,7 +413,6 @@
             const timeDisplay = document.getElementById('time-display');
             const touristOfficeLabel = document.getElementById('tourist-office-label');
 
-            // Éléments de texte à traduire. C'est ici que toutes les traductions sont stockées.
             const textElements = {
                 'start-title': {'fr': 'Bienvenue', 'en': 'Welcome', 'es': 'Bienvenido', 'de': 'Willkommen'},
                 'start-subtitle': {'fr': 'Veuillez sélectionner votre code postal pour continuer.', 'en': 'Please select your zip code to continue.', 'es': 'Por favor, seleccione su código postal para continuar.', 'de': 'Bitte wählen Sie Ihre Postleitzahl aus, um fortzufahren.'},
@@ -462,14 +427,12 @@
                 'label-outings': {'fr': 'Sorties possibles', 'en': 'Possible outings', 'es': 'Posibles salidas', 'de': 'Mögliche Ausflüge'},
                 'label-news': {'fr': 'Actualités', 'en': 'News', 'es': 'Noticias', 'de': 'Aktuelles'},
                 'label-transport': {'fr': 'Transports', 'en': 'Transport', 'es': 'Transporte', 'de': 'Transport'},
-                'back-button': {'fr': 'Retour', 'en': 'Back', 'es': 'Volver', 'de': 'Zurück'},
                 'select-option': {'fr': 'Sélectionner un code postal', 'en': 'Select a zip code', 'es': 'Seleccionar un código postal', 'de': 'Wählen Sie eine Postleitzahl'},
                 'label-contrast': {'fr': 'Contraste', 'en': 'Contrast', 'es': 'Contraste', 'de': 'Kontrast'},
                 'label-text-increase': {'fr': 'A+', 'en': 'A+', 'es': 'A+', 'de': 'A-'},
                 'label-text-decrease': {'fr': 'A-', 'en': 'A-', 'es': 'A-', 'de': 'A-'}
             };
             
-            // Mapping des codes postaux aux noms de villes
             const cityNames = {
                 '97410': 'Saint-Pierre',
                 '97427': 'L\'Étang-Salé',
@@ -478,11 +441,9 @@
                 '97480': 'Petite-Île',
             };
 
-            // On déclare une variable pour stocker la langue actuelle
             let currentLang = 'fr';
             let dateTimeInterval;
-
-            // Fonction pour afficher la date et l'heure en fonction de la langue
+            
             function updateDateTime() {
                 const now = new Date();
                 const timeString = now.toLocaleTimeString(currentLang + '-FR', { hour: '2-digit', minute: '2-digit' });
@@ -492,68 +453,52 @@
                 timeDisplay.textContent = timeString;
             }
 
-            // Fonction pour changer la langue et la date
             function setLanguage(lang) {
                 currentLang = lang;
                 document.documentElement.lang = lang;
+
                 document.getElementById('start-title').textContent = textElements['start-title'][lang];
                 document.getElementById('start-subtitle').textContent = textElements['start-subtitle'][lang];
                 document.getElementById('enter-button').textContent = textElements['enter-button'][lang];
-                document.getElementById('back-button').textContent = textElements['back-button'][lang];
                 zipCodeSelect.options[0].textContent = textElements['select-option'][lang];
                 document.getElementById('label-contrast').textContent = textElements['label-contrast'][lang];
                 document.getElementById('label-text-increase').textContent = textElements['label-text-increase'][lang];
                 document.getElementById('label-text-decrease').textContent = textElements['label-text-decrease'][lang];
-                // Mise à jour du texte "Office de Tourisme"
                 touristOfficeLabel.textContent = textElements['tourist-office-label'][lang];
-
-                const buttons = document.querySelectorAll('.icon-button span');
+                
+                const buttons = document.querySelectorAll('#main-content .icon-button span');
                 buttons.forEach(span => {
-                    const id = span.id.replace(/-974\d{2}$/, ''); 
+                    const id = span.id;
                     if (textElements[id]) {
                         span.textContent = textElements[id][lang];
                     }
                 });
 
-                // On efface l'intervalle précédent et on en crée un nouveau pour mettre à jour la date et l'heure
                 clearInterval(dateTimeInterval);
                 updateDateTime();
                 dateTimeInterval = setInterval(updateDateTime, 1000);
             }
 
-            // Gestionnaire d'événements pour les drapeaux
             document.getElementById('lang-fr').addEventListener('click', () => setLanguage('fr'));
             document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
             document.getElementById('lang-es').addEventListener('click', () => setLanguage('es'));
             document.getElementById('lang-de').addEventListener('click', () => setLanguage('de'));
             
-            // Afficher la page d'accueil après la sélection et le clic
             enterButton.addEventListener('click', () => {
                 const selectedCode = zipCodeSelect.value;
                 if (selectedCode) {
-                    // Cacher la page de démarrage
-                    startPage.classList.add('hidden');
-                    // Afficher le conteneur principal
+                    localStorage.setItem('kiosk-zip-code', selectedCode);
                     mainContent.classList.remove('hidden');
-
-                    // Mettre à jour le titre de la ville
+                    startPage.classList.add('hidden');
                     cityTitle.textContent = cityNames[selectedCode] || 'Destination Sud Réunion';
                 }
             });
 
-            // Retourner à la page de démarrage
-            backButton.addEventListener('click', () => {
-                mainContent.classList.add('hidden');
-                startPage.classList.remove('hidden');
-            });
-
-            // Activer le bouton d'entrée lorsque le code postal est sélectionné
             zipCodeSelect.addEventListener('change', () => {
                 enterButton.disabled = !zipCodeSelect.value;
                 enterButton.setAttribute('aria-disabled', enterButton.disabled);
             });
             
-            // Logique du service worker pour le mode hors ligne (PWA)
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', () => {
                     navigator.serviceWorker.register('/sw.js')
@@ -566,56 +511,36 @@
                 });
             }
 
-            // Fonctions d'accessibilité
-            function getRootFontSize() {
-                return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--base-font-size'));
-            }
-
-            function setRootFontSize(size) {
-                document.documentElement.style.setProperty('--base-font-size', `${size}px`);
-                localStorage.setItem('kiosk-font-size', size);
-            }
-
-            // Récupérer les préférences d'accessibilité de localStorage
-            const savedContrast = localStorage.getItem('kiosk-high-contrast') === 'true';
-            const savedFontSize = parseFloat(localStorage.getItem('kiosk-font-size')) || 16;
-            if (savedContrast) {
-                document.body.classList.add('high-contrast');
-            }
-            setRootFontSize(savedFontSize);
-
-            // Gérer le bouton d'accessibilité pour afficher/cacher le panneau
             accessibilityBtn.addEventListener('click', () => {
                 const isHidden = accessibilityPanel.style.display === 'none' || accessibilityPanel.style.display === '';
                 accessibilityPanel.style.display = isHidden ? 'flex' : 'none';
                 accessibilityBtn.setAttribute('aria-expanded', !isHidden);
             });
 
-            // Gérer le bouton de contraste
             highContrastBtn.addEventListener('click', () => {
                 document.body.classList.toggle('high-contrast');
                 const isHighContrast = document.body.classList.contains('high-contrast');
                 localStorage.setItem('kiosk-high-contrast', isHighContrast);
             });
 
-            // Gérer les boutons de taille de texte
             textIncreaseBtn.addEventListener('click', () => {
-                let currentSize = getRootFontSize();
-                currentSize += 2; // Augmenter de 2px
-                if (currentSize <= 24) { // Limite maximale pour éviter les débordements
-                    setRootFontSize(currentSize);
+                let currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                currentSize += 2;
+                if (currentSize <= 24) {
+                    document.body.style.fontSize = `${currentSize}px`;
+                    localStorage.setItem('kiosk-font-size', currentSize);
                 }
             });
 
             textDecreaseBtn.addEventListener('click', () => {
-                let currentSize = getRootFontSize();
-                currentSize -= 2; // Diminuer de 2px
-                if (currentSize >= 12) { // Limite minimale
-                    setRootFontSize(currentSize);
+                let currentSize = parseFloat(getComputedStyle(document.body).fontSize);
+                currentSize -= 2;
+                if (currentSize >= 12) {
+                    document.body.style.fontSize = `${currentSize}px`;
+                    localStorage.setItem('kiosk-font-size', currentSize);
                 }
             });
 
-            // Initialisation de la langue par défaut et de l'affichage de la date
             setLanguage('fr');
         });
     </script>
