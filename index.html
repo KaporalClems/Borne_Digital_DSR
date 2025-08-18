@@ -18,18 +18,28 @@
             overflow: hidden;
         }
 
-        .video-background {
+        /* Conteneur pour la vidéo de fond */
+        .background-video-container {
             position: fixed;
-            right: 0;
-            bottom: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -100;
+            overflow: hidden; /* Cache les débordements de l'iframe */
+        }
+
+        /* Vidéo de fond */
+        #background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
             min-width: 100%;
             min-height: 100%;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            z-index: -100;
-            background-size: cover;
-            filter: brightness(0.7); /* Assombrir la vidéo pour une meilleure lisibilité */
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            filter: brightness(0.7); /* Assombrir l'image pour une meilleure lisibilité */
         }
 
         .overlay {
@@ -47,15 +57,10 @@
             color: white;
             padding: 20px;
         }
-
-        .main-content {
-            width: 90%;
-            max-width: 600px;
-        }
-
+        
         .language-switcher {
             position: absolute;
-            top: 20px;
+            bottom: 20px;
             right: 20px;
             z-index: 100;
         }
@@ -73,6 +78,56 @@
             border-color: white;
         }
 
+        .top-left-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+
+        .top-left-logo img {
+            height: 50px;
+        }
+
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 90%;
+            margin-top: 20px;
+        }
+
+        .icon-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 120px;
+            aspect-ratio: 1 / 1;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 1rem;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .icon-button:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .icon-button svg {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 0.5rem;
+            stroke: white;
+            fill: none;
+            stroke-width: 2;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -81,9 +136,24 @@
         .fade-in {
             animation: fadeIn 1s ease-in;
         }
+
     </style>
 </head>
 <body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+    <!-- Conteneur pour la vidéo de fond gérée par JS -->
+    <div class="background-video-container">
+        <!-- Remplacement de l'iframe par la balise <video> pour la lecture locale -->
+        <video id="background-video" autoplay muted loop playsinline>
+            <source src="Destination Sud Réunion_HD.mp4" type="video/mp4">
+            Votre navigateur ne supporte pas la vidéo en arrière-plan.
+        </video>
+    </div>
+    
+    <!-- Top-left logo -->
+    <div class="top-left-logo">
+        <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion">
+    </div>
+
     <!-- Langues Switcher -->
     <div class="language-switcher flex space-x-4">
         <img id="lang-fr" src="https://flagcdn.com/w40/fr.png" alt="Drapeau Français" data-lang="fr">
@@ -92,15 +162,9 @@
         <img id="lang-de" src="https://flagcdn.com/w40/de.png" alt="Drapeau Allemand" data-lang="de">
     </div>
 
-    <!-- Vidéo en arrière-plan -->
-    <video autoplay muted loop playsinline class="video-background">
-        <source src="05 ST PIERRE BY NIGHT DSR WEB HD.mp4" type="video/mp4">
-        Votre navigateur ne prend pas en charge la balise vidéo.
-    </video>
-
+    <!-- Page de démarrage -->
     <div id="start-page" class="overlay fade-in">
-        <div class="main-content flex flex-col items-center p-8 rounded-lg shadow-xl bg-gray-800 bg-opacity-70">
-            <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion" class="h-24 md:h-32 mb-8">
+        <div class="flex flex-col items-center p-8 rounded-lg shadow-xl bg-gray-800 bg-opacity-70 max-w-xl w-full">
             <h1 id="start-title" class="text-3xl md:text-5xl font-bold mb-4">Bienvenue</h1>
             <p id="start-subtitle" class="text-lg md:text-xl mb-8">Veuillez sélectionner votre code postal pour continuer.</p>
             
@@ -110,7 +174,7 @@
                     <option value="" disabled selected>Sélectionner un code postal</option>
                     <option value="97410">Saint-Pierre (97410)</option>
                     <option value="97427">L'Étang-Salé (97427)</option>
-                    <option "97436">Saint-Leu (97436)</option>
+                    <option value="97436">Saint-Leu (97436)</option>
                     <option value="97480">Saint-Joseph (97480)</option>
                     <option value="97413">Cilaos (97413)</option>
                     <option value="97416">Entre-Deux (97416)</option>
@@ -139,45 +203,117 @@
             </div>
 
             <!-- Bouton pour accéder à la page d'accueil -->
-            <button id="enter-button" disabled class="mt-6 w-full py-3 px-6 rounded-lg bg-blue-500 text-white font-bold text-lg hover:bg-blue-600 transition duration-300 transform hover:scale-105 disabled:bg-gray-500 disabled:cursor-not-allowed">
+            <button id="enter-button" disabled class="mt-6 w-full py-3 px-6 rounded-lg bg-emerald-500 text-white font-bold text-lg hover:bg-emerald-600 transition duration-300 transform hover:scale-105 disabled:bg-gray-500 disabled:cursor-not-allowed">
                 Entrer
             </button>
         </div>
     </div>
 
-    <div id="home-page" class="hidden overlay fade-in">
-        <div class="main-content flex flex-col items-center p-8 rounded-lg shadow-xl bg-gray-800 bg-opacity-70">
-            <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion" class="h-24 md:h-32 mb-8">
-            <h1 id="greeting-title" class="text-3xl md:text-5xl font-bold mb-4"></h1>
-            <p id="welcome-message" class="text-lg md:text-xl mb-8">Vous avez sélectionné le code postal : <span id="selected-zip-code" class="font-bold"></span></p>
-            <p id="home-subtitle" class="text-center">Cette page peut être personnalisée avec le contenu de la borne (informations touristiques, services, etc.).</p>
-            <button id="back-button" class="mt-8 py-2 px-4 rounded-lg bg-gray-500 text-white font-bold hover:bg-gray-600 transition duration-300">
-                Retour
-            </button>
+    <!-- Contenu principal qui sera affiché après la sélection du code postal -->
+    <div id="main-content" class="hidden overlay fade-in">
+        <h1 id="city-title" class="text-4xl md:text-5xl font-bold mb-8"></h1>
+        <div class="icon-grid">
+            <!-- Boutons de la borne -->
+            <a href="#" class="icon-button" data-type="see">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                </svg>
+                <span id="label-see">À voir / À faire</span>
+            </a>
+            <a href="#" class="icon-button" data-type="sleep">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+                <span id="label-sleep">Où dormir ?</span>
+            </a>
+            <a href="#" class="icon-button" data-type="eat">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                <span id="label-eat">Où manger ?</span>
+            </a>
+            <a href="#" class="icon-button" data-type="agenda">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span id="label-agenda">Agenda</span>
+            </a>
+            <a href="#" class="icon-button" data-type="forecast">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.927A5.002 5.002 0 0012 6c-2.457 0-4.783 1.149-6.322 2.972l-.337.351-1.396.985A1 1 0 003 15z" />
+                </svg>
+                <span id="label-forecast">Météo & marée</span>
+            </a>
+            <a href="#" class="icon-button" data-type="map">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                <span id="label-map">Carte interactive</span>
+            </a>
+            <a href="#" class="icon-button" data-type="outings">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                </svg>
+                <span id="label-outings">Sorties possibles</span>
+            </a>
+            <a href="#" class="icon-button" data-type="news">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12V9m0 3a2 2 0 100 4 2 2 0 000-4z" />
+                </svg>
+                <span id="label-news">Actualités</span>
+            </a>
+            <a href="#" class="icon-button" data-type="transport">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v4m0 0a2 2 0 100-4 2 2 0 000 4zm0-10v4m0 0a2 2 0 100-4 2 2 0 000 4z" />
+                </svg>
+                <span id="label-transport">Transports</span>
+            </a>
         </div>
+        <!-- Bouton de retour commun à toutes les pages de ville -->
+        <button id="back-button" class="mt-8 py-2 px-4 rounded-lg bg-gray-500 text-white font-bold hover:bg-gray-600 transition duration-300">
+            Retour
+        </button>
     </div>
 
     <!-- Script JavaScript pour la logique de l'application -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const startPage = document.getElementById('start-page');
-            const homePage = document.getElementById('home-page');
+            const mainContent = document.getElementById('main-content');
             const zipCodeSelect = document.getElementById('zip-code-select');
             const enterButton = document.getElementById('enter-button');
             const backButton = document.getElementById('back-button');
-            const selectedZipCodeSpan = document.getElementById('selected-zip-code');
-            const greetingTitle = document.getElementById('greeting-title');
+            const cityTitle = document.getElementById('city-title');
 
             // Éléments de texte à traduire
             const textElements = {
                 'start-title': {'fr': 'Bienvenue', 'en': 'Welcome', 'es': 'Bienvenido', 'de': 'Willkommen'},
                 'start-subtitle': {'fr': 'Veuillez sélectionner votre code postal pour continuer.', 'en': 'Please select your zip code to continue.', 'es': 'Por favor, seleccione su código postal para continuar.', 'de': 'Bitte wählen Sie Ihre Postleitzahl aus, um fortzufahren.'},
                 'enter-button': {'fr': 'Entrer', 'en': 'Enter', 'es': 'Entrar', 'de': 'Eingeben'},
-                'greeting-title': {'fr': '', 'en': '', 'es': '', 'de': ''},
-                'welcome-message': {'fr': 'Vous avez sélectionné le code postal :', 'en': 'You have selected the zip code:', 'es': 'Ha seleccionado el código postal:', 'de': 'Sie haben die Postleitzahl ausgewählt:'},
-                'home-subtitle': {'fr': 'Cette page peut être personnalisée avec le contenu de la borne (informations touristiques, services, etc.).', 'en': 'This page can be customized with kiosk content (tourist information, services, etc.).', 'es': 'Esta página se puede personalizar con el contenido del quiosco (información turística, servicios, etc.).', 'de': 'Diese Seite kann mit dem Kioskinhalt (touristische Informationen, Dienstleistungen, etc.) angepasst werden.'},
+                'label-see': {'fr': 'À voir / À faire', 'en': 'To see / To do', 'es': 'Para ver / Para hacer', 'de': 'Sehenswert / Aktivitäten'},
+                'label-sleep': {'fr': 'Où dormir ?', 'en': 'Where to sleep?', 'es': '¿Dónde dormir?', 'de': 'Wo übernachten?'},
+                'label-eat': {'fr': 'Où manger ?', 'en': 'Where to eat?', 'es': '¿Dónde comer?', 'de': 'Wo essen?'},
+                'label-agenda': {'fr': 'Agenda', 'en': 'Agenda', 'es': 'Agenda', 'de': 'Agenda'},
+                'label-forecast': {'fr': 'Météo & marée', 'en': 'Weather & tide', 'es': 'Clima y marea', 'de': 'Wetter & Gezeiten'},
+                'label-map': {'fr': 'Carte interactive', 'en': 'Interactive map', 'es': 'Mapa interactivo', 'de': 'Interaktive Karte'},
+                'label-outings': {'fr': 'Sorties possibles', 'en': 'Possible outings', 'es': 'Posibles salidas', 'de': 'Mögliche Ausflüge'},
+                'label-news': {'fr': 'Actualités', 'en': 'News', 'es': 'Noticias', 'de': 'Aktuelles'},
+                'label-transport': {'fr': 'Transports', 'en': 'Transport', 'es': 'Transporte', 'de': 'Transport'},
                 'back-button': {'fr': 'Retour', 'en': 'Back', 'es': 'Volver', 'de': 'Zurück'},
                 'select-option': {'fr': 'Sélectionner un code postal', 'en': 'Select a zip code', 'es': 'Seleccionar un código postal', 'de': 'Wählen Sie eine Postleitzahl'}
+            };
+            
+            // Mapping des codes postaux aux noms de villes
+            const cityNames = {
+                '97410': 'Saint-Pierre',
+                '97427': 'L\'Étang-Salé',
+                '97442': 'Saint-Louis',
+                '97425': 'Les Avirons',
+                '97480': 'Petite-Île',
             };
 
             // Fonction pour changer la langue
@@ -186,13 +322,16 @@
                 document.getElementById('start-title').textContent = textElements['start-title'][lang];
                 document.getElementById('start-subtitle').textContent = textElements['start-subtitle'][lang];
                 document.getElementById('enter-button').textContent = textElements['enter-button'][lang];
-                document.getElementById('welcome-message').textContent = textElements['welcome-message'][lang] + ' ';
-                document.getElementById('home-subtitle').textContent = textElements['home-subtitle'][lang];
                 document.getElementById('back-button').textContent = textElements['back-button'][lang];
                 zipCodeSelect.options[0].textContent = textElements['select-option'][lang];
 
-                // Mettre à jour le titre de la page d'accueil avec le message de salutation
-                greetingTitle.textContent = getGreeting(lang);
+                const buttons = document.querySelectorAll('.icon-button span');
+                buttons.forEach(span => {
+                    const id = span.id.replace(/-974\d{2}$/, ''); 
+                    if (textElements[id]) {
+                        span.textContent = textElements[id][lang];
+                    }
+                });
             }
 
             // Gestionnaire d'événements pour les drapeaux
@@ -200,43 +339,24 @@
             document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
             document.getElementById('lang-es').addEventListener('click', () => setLanguage('es'));
             document.getElementById('lang-de').addEventListener('click', () => setLanguage('de'));
-
-            // Fonction pour obtenir le message de salutation en fonction de l'heure et de la langue
-            function getGreeting(lang) {
-                const hour = new Date().getHours();
-                if (lang === 'fr') {
-                    if (hour < 12) { return "Bonjour !"; }
-                    else if (hour < 18) { return "Bon après-midi !"; }
-                    else { return "Bonsoir !"; }
-                } else if (lang === 'en') {
-                    if (hour < 12) { return "Good morning!"; }
-                    else if (hour < 18) { return "Good afternoon!"; }
-                    else { return "Good evening!"; }
-                } else if (lang === 'es') {
-                    if (hour < 12) { return "¡Buenos días!"; }
-                    else if (hour < 18) { return "¡Buenas tardes!"; }
-                    else { return "¡Buenas noches!"; }
-                } else if (lang === 'de') {
-                    if (hour < 12) { return "Guten Morgen!"; }
-                    else if (hour < 18) { return "Guten Tag!"; }
-                    else { return "Guten Abend!"; }
-                }
-            }
-
+            
             // Afficher la page d'accueil après la sélection et le clic
             enterButton.addEventListener('click', () => {
                 const selectedCode = zipCodeSelect.value;
                 if (selectedCode) {
-                    selectedZipCodeSpan.textContent = selectedCode;
-                    greetingTitle.textContent = getGreeting(document.documentElement.lang);
+                    // Cacher la page de démarrage
                     startPage.classList.add('hidden');
-                    homePage.classList.remove('hidden');
+                    // Afficher le conteneur principal
+                    mainContent.classList.remove('hidden');
+
+                    // Mettre à jour le titre de la ville
+                    cityTitle.textContent = cityNames[selectedCode] || 'Destination Sud Réunion';
                 }
             });
 
             // Retourner à la page de démarrage
             backButton.addEventListener('click', () => {
-                homePage.classList.add('hidden');
+                mainContent.classList.add('hidden');
                 startPage.classList.remove('hidden');
             });
 
