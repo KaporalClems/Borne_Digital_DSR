@@ -241,19 +241,9 @@
         }
 
         /* --- Styles de la modale --- */
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: transparent;
-            font-family: 'Inter', sans-serif;
-            color: #fff;
-            flex-direction: column;
+        body.modal-open {
             overflow: hidden;
         }
-
         .modal-overlay {
             display: none;
             position: fixed;
@@ -271,12 +261,10 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
         }
-
         .modal-overlay.active {
             display: flex;
             opacity: 1;
         }
-
         .modal-content {
             background-color: #1a1a1a;
             margin: auto;
@@ -291,11 +279,9 @@
             transition: transform 0.3s ease-in-out;
             box-sizing: border-box;
         }
-
         .modal-overlay.active .modal-content {
             transform: translateY(0);
         }
-
         .modal-content::before {
             content: '';
             position: absolute;
@@ -309,7 +295,6 @@
             z-index: -1;
             filter: blur(5px);
         }
-
         #modal-body-content {
             flex-grow: 1;
             width: 100%;
@@ -319,34 +304,104 @@
             overflow: hidden;
             padding: 0;
         }
-
         #modal-body-content iframe {
             width: 100%;
             height: 100%;
             border: none;
             display: block;
             background-color: transparent;
-            min-height: 400px; 
+            min-height: 400px;
+        }
+        /* Style pour le sélecteur de localisation */
+        .localisation-container {
+            width: 100%;
+            padding: 24px;
+            text-align: center;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #d1d5db;
+        }
+        .form-select, .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #e5e7eb;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        .form-select:focus, .form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .form-select option {
+            background-color: #1f2937;
+            color: #e5e7eb;
+        }
+        .form-input {
+            cursor: text;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #1d4ed8;
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: background-color 0.2s;
+            cursor: pointer;
+            border: none;
+            margin-top: 16px;
+        }
+        .btn:hover {
+            background-color: #1e40af;
+        }
+        .result-box {
+            margin-top: 16px;
+            padding: 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #a5f3fc;
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        body.modal-open {
-            overflow: hidden;
+        /* Style pour la boîte de message personnalisée */
+        #custom-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ef4444;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 10000;
+            font-weight: 600;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
-
-        /* ===== Responsive Styles (Modale spécifique) ===== */
-        @media (max-width: 767px) {
-            .modal-content { width: 95%; max-height: 95vh; border-radius: 0.8rem; }
-            .modal-content::before { border-radius: 1rem; }
-        }
-
-        @media (min-width: 768px) and (max-width: 1023px) {
-            .modal-content { max-width: 800px; max-height: 90vh; border-radius: 1rem; }
-            .modal-content::before { border-radius: 1.2rem; }
-        }
-
-        @media (min-width: 1024px) {
-            .modal-content { max-width: 900px; max-height: 90vh; border-radius: 1rem; }
-            .modal-content::before { border-radius: 1.2rem; }
+        #custom-alert.active {
+            display: block;
+            opacity: 1;
         }
     </style>
 </head>
@@ -400,10 +455,36 @@
     <div id="myModal" class="modal-overlay">
         <div class="modal-content">
             <div id="modal-body-content">
-                <!-- Dropdown list and login form will be inserted here -->
+                <!-- Localisation form will be injected here by JS -->
+                <div id="localisation-form-container" class="localisation-container">
+                    <h1 class="text-3xl font-bold text-center mb-6 text-white text-shadow-lg">Localisation</h1>
+
+                    <div class="mb-4">
+                        <label for="countrySelect" class="form-label">Sélectionnez le pays :</label>
+                        <select id="countrySelect" class="form-select">
+                            <option value="">Choisissez un pays...</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="citySelect" class="form-label">Sélectionnez la ville :</label>
+                        <select id="citySelect" class="form-select" disabled>
+                            <option value="">Choisissez une ville...</option>
+                        </select>
+                    </div>
+
+                    <div id="postalCodeResult" class="result-box">
+                        Code Postal: <span id="postalCodeValue"></span>
+                    </div>
+
+                    <button id="validateButton" class="btn">Valider</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Custom Alert Message Box -->
+    <div id="custom-alert"></div>
 
     <script>
         // ===============================
@@ -430,6 +511,32 @@
             { lang: 'ar', text: 'اسحب لأعلى للفتح' },
             { lang: 'ru', text: 'Проведите вверх, чтобы открыть' }
         ];
+        
+        // Données pour la liste déroulante
+        const locations = {
+            "France": {
+                "Paris": "75000",
+                "Marseille": "13000",
+                "Lyon": "69000",
+                "Réunion": "97400",
+                "Saint-Denis": "97400",
+                "Saint-Gilles": "97434",
+                "Sainte-Marie": "97438",
+                "Saint-Leu": "97436",
+                "Saint-Paul": "97460",
+                "Saint-Pierre": "97410"
+            },
+            "United States": {
+                "New York": "10001",
+                "Los Angeles": "90001",
+                "Chicago": "60601"
+            },
+            "Canada": {
+                "Toronto": "M5V 2T6",
+                "Vancouver": "V6B 1A1",
+                "Montreal": "H2Y 1C6"
+            }
+        };
 
         // ===============================
         // Variables globales
@@ -453,7 +560,14 @@
             modalContent: document.querySelector('.modal-content'),
             modalBodyContent: document.getElementById('modal-body-content'),
             videoBackground: document.getElementById('video-background'),
-            lockButton: document.getElementById('lock-button')
+            lockButton: document.getElementById('lock-button'),
+            // Nouveaux éléments pour le sélecteur
+            countrySelect: document.getElementById('countrySelect'),
+            citySelect: document.getElementById('citySelect'),
+            postalCodeResult: document.getElementById('postalCodeResult'),
+            postalCodeValue: document.getElementById('postalCodeValue'),
+            validateButton: document.getElementById('validateButton'),
+            customAlert: document.getElementById('custom-alert')
         };
 
         // ===============================
@@ -575,6 +689,19 @@
         // ===============================
         // Gestion de l'état (Verrouillé / Déverrouillé / Modale)
         // ===============================
+        function openModal() {
+            if (elements.myModal.classList.contains('active')) return;
+            elements.myModal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
+
+        function closeModal() {
+            if (elements.myModal.classList.contains('active')) {
+                elements.myModal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+        }
+
         function unlockScreen() {
             if (elements.myModal.classList.contains('active')) return;
 
@@ -583,16 +710,12 @@
             setTimeout(() => {
                 clearIntervals();
                 elements.lockScreenContainer.classList.add('hidden');
-                openModal('Code%20Postal/code.html');
+                openModal();
             }, 500);
         }
 
         function lockScreen() {
-            if (elements.myModal.classList.contains('active')) {
-                elements.myModal.classList.remove('active');
-                elements.modalBodyContent.innerHTML = '';
-                document.body.classList.remove('modal-open');
-            }
+            closeModal();
             
             if (elements.unlockedContent.classList.contains('active')) {
                 elements.unlockedContent.classList.remove('active');
@@ -602,41 +725,80 @@
             startLockScreenAnimations();
         }
 
-        function openModal(url) {
-            if (elements.myModal.classList.contains('active')) return;
+        // ===============================
+        // Logique du sélecteur de localisation
+        // ===============================
 
-            elements.modalBodyContent.innerHTML = `<iframe id="modalIframe" src="${url}" title="Application Content" frameborder="0"></iframe>`;
-            const iframe = document.getElementById('modalIframe');
-
-            iframe.addEventListener('load', () => {
-                // Communication avec l'iframe
-            });
-
-            elements.myModal.classList.add('active');
-            document.body.classList.add('modal-open');
+        // Affiche une boîte de message personnalisée
+        function showCustomAlert(message) {
+            elements.customAlert.textContent = message;
+            elements.customAlert.classList.add('active');
+            setTimeout(() => {
+                elements.customAlert.classList.remove('active');
+            }, 3000);
         }
 
-        function closeModal() {
-            lockScreen();
+        // Fonction pour remplir la liste déroulante des pays
+        function populateCountries() {
+            for (const country in locations) {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                elements.countrySelect.appendChild(option);
+            }
         }
 
-        // ===============================
-        // Écoute des messages de l'iframe
-        // ===============================
-        window.addEventListener('message', (event) => {
-            if (event.data === 'closeModal') {
-                closeModal();
-            } else if (event.data?.type === 'preferencesValidated') {
-                console.log("Préférences reçues, redirection vers l'accueil:", event.data);
-                // Redirige vers la nouvelle page au lieu de simplement fermer.
-                window.location.href = 'ecran_accueil.html';
-            } else if (event.data?.type === 'setIframeHeight') {
-                const iframe = document.getElementById('modalIframe');
-                if (iframe) {
-                    iframe.style.height = `${event.data.height}px`;
-                    elements.modalContent.style.height = 'auto';
-                    elements.modalContent.style.minHeight = `${event.data.height}px`;
+        // Fonction pour remplir la liste déroulante des villes en fonction du pays
+        function populateCities(selectedCountry) {
+            elements.citySelect.innerHTML = '<option value="">Choisissez une ville...</option>';
+            elements.citySelect.disabled = true;
+            elements.postalCodeResult.style.display = 'none';
+
+            if (selectedCountry && locations[selectedCountry]) {
+                const cities = locations[selectedCountry];
+                for (const city in cities) {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    elements.citySelect.appendChild(option);
                 }
+                elements.citySelect.disabled = false;
+            }
+        }
+
+        // Événement : changement de pays
+        elements.countrySelect.addEventListener('change', (e) => {
+            const selectedCountry = e.target.value;
+            populateCities(selectedCountry);
+        });
+
+        // Événement : changement de ville
+        elements.citySelect.addEventListener('change', (e) => {
+            const selectedCity = e.target.value;
+            const selectedCountry = elements.countrySelect.value;
+            if (selectedCity && selectedCountry) {
+                const postalCode = locations[selectedCountry][selectedCity];
+                elements.postalCodeValue.textContent = postalCode;
+                elements.postalCodeResult.style.display = 'block';
+            } else {
+                elements.postalCodeResult.style.display = 'none';
+            }
+        });
+
+        // Événement : clic sur le bouton Valider
+        elements.validateButton.addEventListener('click', () => {
+            const selectedCountry = elements.countrySelect.value;
+            const selectedCity = elements.citySelect.value;
+            const postalCode = elements.postalCodeValue.textContent;
+
+            if (selectedCountry && selectedCity && postalCode) {
+                // Actions de redirection une fois la sélection validée
+                console.log(`Sélection validée: ${selectedCity}, ${selectedCountry}, Code Postal: ${postalCode}`);
+                closeModal();
+                // Redirige vers la nouvelle page d'accueil
+                window.location.href = 'ecran_accueil.html';
+            } else {
+                showCustomAlert("Veuillez sélectionner un pays et une ville.");
             }
         });
 
@@ -688,7 +850,11 @@
         // ===============================
         // Initialisation
         // ===============================
-        document.addEventListener('DOMContentLoaded', startLockScreenAnimations);
+        document.addEventListener('DOMContentLoaded', () => {
+            startLockScreenAnimations();
+            // Remplir la liste déroulante des pays au démarrage
+            populateCountries();
+        });
     </script>
 </body>
 </html>
