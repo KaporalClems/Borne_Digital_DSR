@@ -52,7 +52,27 @@
             width: 90%;
             max-width: 600px;
         }
+
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
         
+        .language-switcher img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .language-switcher img:hover {
+            border-color: white;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -64,6 +84,12 @@
     </style>
 </head>
 <body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+    <!-- Langues Switcher -->
+    <div class="language-switcher flex space-x-4">
+        <img id="lang-fr" src="https://flagcdn.com/w40/fr.png" alt="Drapeau Français" data-lang="fr">
+        <img id="lang-en" src="https://flagcdn.com/w40/gb.png" alt="Drapeau Anglais" data-lang="en">
+    </div>
+
     <!-- Vidéo en arrière-plan -->
     <video autoplay muted loop playsinline class="video-background">
         <source src="05 ST PIERRE BY NIGHT DSR WEB HD.mp4" type="video/mp4">
@@ -73,8 +99,8 @@
     <div id="start-page" class="overlay fade-in">
         <div class="main-content flex flex-col items-center p-8 rounded-lg shadow-xl bg-gray-800 bg-opacity-70">
             <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion" class="h-24 md:h-32 mb-8">
-            <h1 class="text-3xl md:text-5xl font-bold mb-4">Bienvenue</h1>
-            <p class="text-lg md:text-xl mb-8">Veuillez sélectionner votre code postal pour continuer.</p>
+            <h1 id="start-title" class="text-3xl md:text-5xl font-bold mb-4">Bienvenue</h1>
+            <p id="start-subtitle" class="text-lg md:text-xl mb-8">Veuillez sélectionner votre code postal pour continuer.</p>
             
             <!-- Liste déroulante des codes postaux -->
             <div class="w-full">
@@ -122,7 +148,7 @@
             <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion" class="h-24 md:h-32 mb-8">
             <h1 id="greeting-title" class="text-3xl md:text-5xl font-bold mb-4"></h1>
             <p id="welcome-message" class="text-lg md:text-xl mb-8">Vous avez sélectionné le code postal : <span id="selected-zip-code" class="font-bold"></span></p>
-            <p class="text-center">Cette page peut être personnalisée avec le contenu de la borne (informations touristiques, services, etc.).</p>
+            <p id="home-subtitle" class="text-center">Cette page peut être personnalisée avec le contenu de la borne (informations touristiques, services, etc.).</p>
             <button id="back-button" class="mt-8 py-2 px-4 rounded-lg bg-gray-500 text-white font-bold hover:bg-gray-600 transition duration-300">
                 Retour
             </button>
@@ -140,15 +166,48 @@
             const selectedZipCodeSpan = document.getElementById('selected-zip-code');
             const greetingTitle = document.getElementById('greeting-title');
 
-            // Fonction pour obtenir le message de salutation en fonction de l'heure
-            function getGreeting() {
+            // Éléments de texte à traduire
+            const textElements = {
+                'start-title': {'fr': 'Bienvenue', 'en': 'Welcome'},
+                'start-subtitle': {'fr': 'Veuillez sélectionner votre code postal pour continuer.', 'en': 'Please select your zip code to continue.'},
+                'enter-button': {'fr': 'Entrer', 'en': 'Enter'},
+                'greeting-title': {'fr': '', 'en': ''}, // C'est dynamique, donc on ne le stocke pas ici
+                'welcome-message': {'fr': 'Vous avez sélectionné le code postal :', 'en': 'You have selected the zip code:'},
+                'home-subtitle': {'fr': 'Cette page peut être personnalisée avec le contenu de la borne (informations touristiques, services, etc.).', 'en': 'This page can be customized with kiosk content (tourist information, services, etc.).'},
+                'back-button': {'fr': 'Retour', 'en': 'Back'},
+                'select-option': {'fr': 'Sélectionner un code postal', 'en': 'Select a zip code'}
+            };
+
+            // Fonction pour changer la langue
+            function setLanguage(lang) {
+                document.documentElement.lang = lang;
+                document.getElementById('start-title').textContent = textElements['start-title'][lang];
+                document.getElementById('start-subtitle').textContent = textElements['start-subtitle'][lang];
+                document.getElementById('enter-button').textContent = textElements['enter-button'][lang];
+                document.getElementById('welcome-message').textContent = textElements['welcome-message'][lang] + ' ';
+                document.getElementById('home-subtitle').textContent = textElements['home-subtitle'][lang];
+                document.getElementById('back-button').textContent = textElements['back-button'][lang];
+                zipCodeSelect.options[0].textContent = textElements['select-option'][lang];
+
+                // Mettre à jour le titre de la page d'accueil avec le message de salutation
+                greetingTitle.textContent = getGreeting(lang);
+            }
+
+            // Gestionnaire d'événements pour les drapeaux
+            document.getElementById('lang-fr').addEventListener('click', () => setLanguage('fr'));
+            document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+
+            // Fonction pour obtenir le message de salutation en fonction de l'heure et de la langue
+            function getGreeting(lang) {
                 const hour = new Date().getHours();
-                if (hour < 12) {
-                    return "Bonjour !";
-                } else if (hour < 18) {
-                    return "Bon après-midi !";
-                } else {
-                    return "Bonsoir !";
+                if (lang === 'fr') {
+                    if (hour < 12) { return "Bonjour !"; }
+                    else if (hour < 18) { return "Bon après-midi !"; }
+                    else { return "Bonsoir !"; }
+                } else if (lang === 'en') {
+                    if (hour < 12) { return "Good morning!"; }
+                    else if (hour < 18) { return "Good afternoon!"; }
+                    else { return "Good evening!"; }
                 }
             }
 
@@ -157,7 +216,7 @@
                 const selectedCode = zipCodeSelect.value;
                 if (selectedCode) {
                     selectedZipCodeSpan.textContent = selectedCode;
-                    greetingTitle.textContent = getGreeting();
+                    greetingTitle.textContent = getGreeting(document.documentElement.lang);
                     startPage.classList.add('hidden');
                     homePage.classList.remove('hidden');
                 }
