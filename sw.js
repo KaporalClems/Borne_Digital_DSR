@@ -9,7 +9,9 @@ const urlsToCache = [
     'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap',
     'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap',
     'https://flagcdn.com/w40/fr.png',
-    'https://flagcdn.com/w40/gb.png'
+    'https://flagcdn.com/w40/gb.png',
+    'https://flagcdn.com/w40/es.png',
+    'https://flagcdn.com/w40/de.png'
 ];
 
 self.addEventListener('install', (event) => {
