@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borne Numérique Destination Sud Réunion</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Styles personnalisés pour la borne */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            background-size: cover;
+            filter: brightness(0.7); /* Assombrir la vidéo pour une meilleure lisibilité */
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .main-content {
+            width: 90%;
+            max-width: 600px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+    <!-- Vidéo en arrière-plan -->
+    <video autoplay muted loop playsinline class="video-background">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-drones-view-of-waves-and-shore-1463-large.mp4" type="video/mp4">
+        Votre navigateur ne prend pas en charge la balise vidéo.
+    </video>
+
+    <div id="start-page" class="overlay fade-in">
+        <div class="main-content flex flex-col items-center p-8 rounded-lg shadow-xl bg-gray-800 bg-opacity-70">
+            <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion" class="h-24 md:h-32 mb-8">
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">Bienvenue</h1>
+            <p class="text-lg md:text-xl mb-8">Veuillez sélectionner votre code postal pour continuer.</p>
+            
+            <!-- Liste déroulante des codes postaux -->
+            <div class="w-full">
+                <select id="zip-code-select" class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+                    <option value="" disabled selected>Sélectionner un code postal</option>
+                    <option value="97410">Saint-Pierre (97410)</option>
+                    <option value="97427">L'Étang-Salé (97427)</option>
+                    <option "97436">Saint-Leu (97436)</option>
+                    <option value="97480">Saint-Joseph (97480)</option>
+                    <option value="97413">Cilaos (97413)</option>
+                    <option value="97416">Entre-Deux (97416)</option>
+                    <option value="97421">La Rivière Saint-Louis (97421)</option>
+                    <option value="97424">Piton Saint-Leu (97424)</option>
+                    <option value="97425">Les Avirons (97425)</option>
+                    <option value="97426">Les Trois-Bassins (97426)</option>
+                    <option value="97434">Saint-Gilles les Bains (97434)</option>
+                    <option value="97441">Saint-Paul (97441)</option>
+                    <option value="97442">Saint-Louis (97442)</option>
+                    <option value="97443">Le Tampon (97443)</option>
+                    <option value="97445">Saint-Gilles les Hauts (97445)</option>
+                    <option value="97446">Saint-André (97446)</option>
+                    <option value="97447">Saint-Benoît (97447)</option>
+                    <option value="97450">Saint-Louis (97450)</option>
+                    <option value="97460">Saint-Paul (97460)</option>
+                    <option value="97470">Saint-Gilles les Bains (97470)</option>
+                    <option value="97480">Saint-Joseph (97480)</option>
+                    <option value="97490">Sainte-Clotilde (97490)</option>
+                    <option value="97491">Sainte-Marie (97491)</option>
+                    <option value="97492">Saint-Denis (97492)</option>
+                    <option value="97493">Le Port (97493)</option>
+                    <option value="97494">Saint-Paul (97494)</option>
+                    <option value="97495">Sainte-Suzanne (97495)</option>
+                </select>
+            </div>
+
+            <!-- Bouton pour accéder à la page d'accueil -->
+            <button id="enter-button" disabled class="mt-6 w-full py-3 px-6 rounded-lg bg-blue-500 text-white font-bold text-lg hover:bg-blue-600 transition duration-300 transform hover:scale-105 disabled:bg-gray-500 disabled:cursor-not-allowed">
+                Entrer
+            </button>
+        </div>
+    </div>
+
+    <div id="home-page" class="hidden overlay fade-in">
+        <div class="main-content flex flex-col items-center p-8 rounded-lg shadow-xl bg-gray-800 bg-opacity-70">
+            <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion" class="h-24 md:h-32 mb-8">
+            <h1 id="greeting-title" class="text-3xl md:text-5xl font-bold mb-4"></h1>
+            <p id="welcome-message" class="text-lg md:text-xl mb-8">Vous avez sélectionné le code postal : <span id="selected-zip-code" class="font-bold"></span></p>
+            <p class="text-center">Cette page peut être personnalisée avec le contenu de la borne (informations touristiques, services, etc.).</p>
+            <button id="back-button" class="mt-8 py-2 px-4 rounded-lg bg-gray-500 text-white font-bold hover:bg-gray-600 transition duration-300">
+                Retour
+            </button>
+        </div>
+    </div>
+
+    <!-- Script JavaScript pour la logique de l'application -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const startPage = document.getElementById('start-page');
+            const homePage = document.getElementById('home-page');
+            const zipCodeSelect = document.getElementById('zip-code-select');
+            const enterButton = document.getElementById('enter-button');
+            const backButton = document.getElementById('back-button');
+            const selectedZipCodeSpan = document.getElementById('selected-zip-code');
+            const greetingTitle = document.getElementById('greeting-title');
+
+            // Fonction pour obtenir le message de salutation en fonction de l'heure
+            function getGreeting() {
+                const hour = new Date().getHours();
+                if (hour < 12) {
+                    return "Bonjour !";
+                } else if (hour < 18) {
+                    return "Bon après-midi !";
+                } else {
+                    return "Bonsoir !";
+                }
+            }
+
+            // Afficher la page d'accueil après la sélection et le clic
+            enterButton.addEventListener('click', () => {
+                const selectedCode = zipCodeSelect.value;
+                if (selectedCode) {
+                    selectedZipCodeSpan.textContent = selectedCode;
+                    greetingTitle.textContent = getGreeting();
+                    startPage.classList.add('hidden');
+                    homePage.classList.remove('hidden');
+                }
+            });
+
+            // Retourner à la page de démarrage
+            backButton.addEventListener('click', () => {
+                homePage.classList.add('hidden');
+                startPage.classList.remove('hidden');
+            });
+
+            // Activer le bouton d'entrée lorsque le code postal est sélectionné
+            zipCodeSelect.addEventListener('change', () => {
+                enterButton.disabled = !zipCodeSelect.value;
+            });
+            
+            // Logique du service worker pour le mode hors ligne (PWA)
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js')
+                        .then(registration => {
+                            console.log('Service Worker enregistré avec succès:', registration);
+                        })
+                        .catch(err => {
+                            console.log('Échec de l\'enregistrement du Service Worker:', err);
+                        });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
