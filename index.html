@@ -88,6 +88,8 @@
     <div class="language-switcher flex space-x-4">
         <img id="lang-fr" src="https://flagcdn.com/w40/fr.png" alt="Drapeau Français" data-lang="fr">
         <img id="lang-en" src="https://flagcdn.com/w40/gb.png" alt="Drapeau Anglais" data-lang="en">
+        <img id="lang-es" src="https://flagcdn.com/w40/es.png" alt="Drapeau Espagnol" data-lang="es">
+        <img id="lang-de" src="https://flagcdn.com/w40/de.png" alt="Drapeau Allemand" data-lang="de">
     </div>
 
     <!-- Vidéo en arrière-plan -->
@@ -168,14 +170,14 @@
 
             // Éléments de texte à traduire
             const textElements = {
-                'start-title': {'fr': 'Bienvenue', 'en': 'Welcome'},
-                'start-subtitle': {'fr': 'Veuillez sélectionner votre code postal pour continuer.', 'en': 'Please select your zip code to continue.'},
-                'enter-button': {'fr': 'Entrer', 'en': 'Enter'},
-                'greeting-title': {'fr': '', 'en': ''}, // C'est dynamique, donc on ne le stocke pas ici
-                'welcome-message': {'fr': 'Vous avez sélectionné le code postal :', 'en': 'You have selected the zip code:'},
-                'home-subtitle': {'fr': 'Cette page peut être personnalisée avec le contenu de la borne (informations touristiques, services, etc.).', 'en': 'This page can be customized with kiosk content (tourist information, services, etc.).'},
-                'back-button': {'fr': 'Retour', 'en': 'Back'},
-                'select-option': {'fr': 'Sélectionner un code postal', 'en': 'Select a zip code'}
+                'start-title': {'fr': 'Bienvenue', 'en': 'Welcome', 'es': 'Bienvenido', 'de': 'Willkommen'},
+                'start-subtitle': {'fr': 'Veuillez sélectionner votre code postal pour continuer.', 'en': 'Please select your zip code to continue.', 'es': 'Por favor, seleccione su código postal para continuar.', 'de': 'Bitte wählen Sie Ihre Postleitzahl aus, um fortzufahren.'},
+                'enter-button': {'fr': 'Entrer', 'en': 'Enter', 'es': 'Entrar', 'de': 'Eingeben'},
+                'greeting-title': {'fr': '', 'en': '', 'es': '', 'de': ''},
+                'welcome-message': {'fr': 'Vous avez sélectionné le code postal :', 'en': 'You have selected the zip code:', 'es': 'Ha seleccionado el código postal:', 'de': 'Sie haben die Postleitzahl ausgewählt:'},
+                'home-subtitle': {'fr': 'Cette page peut être personnalisée avec le contenu de la borne (informations touristiques, services, etc.).', 'en': 'This page can be customized with kiosk content (tourist information, services, etc.).', 'es': 'Esta página se puede personalizar con el contenido del quiosco (información turística, servicios, etc.).', 'de': 'Diese Seite kann mit dem Kioskinhalt (touristische Informationen, Dienstleistungen, etc.) angepasst werden.'},
+                'back-button': {'fr': 'Retour', 'en': 'Back', 'es': 'Volver', 'de': 'Zurück'},
+                'select-option': {'fr': 'Sélectionner un code postal', 'en': 'Select a zip code', 'es': 'Seleccionar un código postal', 'de': 'Wählen Sie eine Postleitzahl'}
             };
 
             // Fonction pour changer la langue
@@ -196,6 +198,8 @@
             // Gestionnaire d'événements pour les drapeaux
             document.getElementById('lang-fr').addEventListener('click', () => setLanguage('fr'));
             document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-es').addEventListener('click', () => setLanguage('es'));
+            document.getElementById('lang-de').addEventListener('click', () => setLanguage('de'));
 
             // Fonction pour obtenir le message de salutation en fonction de l'heure et de la langue
             function getGreeting(lang) {
@@ -208,6 +212,14 @@
                     if (hour < 12) { return "Good morning!"; }
                     else if (hour < 18) { return "Good afternoon!"; }
                     else { return "Good evening!"; }
+                } else if (lang === 'es') {
+                    if (hour < 12) { return "¡Buenos días!"; }
+                    else if (hour < 18) { return "¡Buenas tardes!"; }
+                    else { return "¡Buenas noches!"; }
+                } else if (lang === 'de') {
+                    if (hour < 12) { return "Guten Morgen!"; }
+                    else if (hour < 18) { return "Guten Tag!"; }
+                    else { return "Guten Abend!"; }
                 }
             }
 
