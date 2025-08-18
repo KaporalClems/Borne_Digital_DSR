@@ -7,7 +7,9 @@ const urlsToCache = [
     'https://cdn.tailwindcss.com',
     'https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png',
     'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap',
-    'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap'
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap',
+    'https://flagcdn.com/w40/fr.png',
+    'https://flagcdn.com/w40/gb.png'
 ];
 
 self.addEventListener('install', (event) => {
