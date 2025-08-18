@@ -1,548 +1,694 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Borne Numérique Destination Sud Réunion</title>
-    <link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello Screen</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet" />
     <style>
-        /* Styles personnalisés pour la borne */
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            font-size: 16px;
+        /* ===== Base Styles ===== */
+        :root {
+            --primary-font: 'Inter', sans-serif;
+            --secondary-font: 'Pacifico', cursive;
+            --text-color: #fff;
         }
 
-        /* Conteneur pour la vidéo de fond */
-        .background-video-container {
-            position: fixed;
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-color: #fff;
+            }
+        }
+
+        /* ===== Font Styles ===== */
+        .font-apple-hello {
+            font-family: var(--secondary-font);
+            font-weight: 400;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        /* ===== Glassmorphism ===== */
+        .frosted-glass {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* ===== Text Glow ===== */
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
+
+        /* ===== Animation Styles ===== */
+        .animate-letter {
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            display: inline-block;
+            animation: letterDraw 0.8s ease-out forwards;
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        @keyframes letterDraw {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .swipe-up-text-wrapper {
+            font-family: var(--primary-font);
+            font-weight: 400;
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            opacity: 0;
+            color: var(--text-color);
+            white-space: nowrap;
+            display: inline-block;
+            transform: translateY(30px);
+            animation: swipeUpAppear 0.8s ease-out forwards;
+        }
+
+        @keyframes swipeUpAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 0.9;
+                transform: translateY(0);
+            }
+        }
+
+        .home-indicator-base {
+            width: 8rem;
+            height: 0.375rem;
+            background-color: white;
+            border-radius: 9999px;
+            opacity: 0.7;
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        .home-indicator-base:hover {
+            transform: scale(1.1);
+            opacity: 1;
+        }
+
+        .home-indicator-slide-in {
+            animation: slideDownBar 0.8s ease-out forwards;
+        }
+
+        @keyframes slideDownBar {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 0.7;
+                transform: translateY(0);
+            }
+        }
+
+        .wifi-active {
+            animation: wifiPulse 1.5s infinite ease-in-out;
+        }
+
+        @keyframes wifiPulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes timePopIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* ===== Layout Styles ===== */
+        .bg-gradient-apple {
+            background: linear-gradient(135deg, #2ED299 0%, #29A8C7 50%, #4A73E4 100%);
+        }
+
+        #lock-screen-container {
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -100;
-            overflow: hidden;
+            z-index: 10;
         }
 
-        /* Vidéo de fond */
-        #background-video {
+        #lock-screen-container.fade-out {
+            opacity: 0;
+            transform: translateY(-50px);
+            pointer-events: none;
+        }
+
+        #unlocked-content {
+            display: none;
             position: absolute;
-            top: 50%;
-            left: 50%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #34568B 0%, #6B5B95 50%, #88B04B 100%);
+            color: var(--text-color);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--primary-font);
+            font-size: 3rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 0;
+        }
+
+        #unlocked-content.active {
+            opacity: 1;
+            z-index: 20;
+            display: flex;
+        }
+
+        /* ===== Component Styles ===== */
+        .large-time {
+            font-family: var(--primary-font);
+            font-weight: 600;
+            font-size: 5rem;
+            line-height: 1;
+            color: var(--text-color);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            animation: timePopIn 1s ease-out;
+        }
+
+        .current-date {
+            font-family: var(--primary-font);
+            font-weight: 400;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
             min-width: 100%;
             min-height: 100%;
             width: auto;
             height: auto;
-            transform: translate(-50%, -50%);
+            z-index: -100;
+            background-size: cover;
+            overflow: hidden;
+            transform: translate3d(0, 0, 0);
+            will-change: transform;
         }
 
-        .overlay {
-            position: absolute;
-            top: 0;
+        /* ===== Responsive Styles (Écran principal) ===== */
+        @media (max-width: 767px) {
+            .large-time { font-size: 3rem; }
+            .current-date { font-size: 1rem; }
+            .swipe-up-text-wrapper { font-size: 1rem; }
+            #unlocked-content { font-size: 1.5rem; }
+            .home-indicator-base { width: 5rem; }
+        }
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .large-time { font-size: 4rem; }
+            .current-date { font-size: 1.25rem; }
+            .swipe-up-text-wrapper { font-size: 1.1rem; }
+            #unlocked-content { font-size: 2rem; }
+        }
+
+        @media (min-width: 1024px) {
+            .large-time { font-size: 5rem; }
+            .current-date { font-size: 1.5rem; }
+            .swipe-up-text-wrapper { font-size: 1.125rem; }
+            #unlocked-content { font-size: 3rem; }
+        }
+
+        /* --- Styles de la modale --- */
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: transparent;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            display: flex;
-            flex-direction: column;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
             justify-content: center;
             align-items: center;
-            text-align: center;
-            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            margin: auto;
             padding: 20px;
-        }
-
-        .language-switcher {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100;
-        }
-        
-        .language-switcher img {
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            transition: border-color 0.3s ease;
-        }
-
-        .language-switcher img:hover {
-            border-color: white;
-        }
-
-        /* Conteneur pour les deux logos en haut à gauche et à droite */
-        .top-logos {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-        }
-        
-        .top-logos img {
-            height: 50px;
-        }
-        
-        /* Augmentation de la taille et de l'espacement de la grille d'icônes */
-        .icon-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.4), 0 0 50px rgba(255, 0, 255, 0.4);
+            width: clamp(300px, 90vw, 600px);
             max-width: 90%;
-            margin-top: 20px;
-        }
-
-        /* Modification de la taille des boutons pour une taille fixe */
-        .icon-button {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 180px;
-            height: 180px;
-            padding: 1.5rem;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 1rem;
-            color: white;
-            font-weight: bold;
-            text-align: center;
-            transition: transform 0.2s, background-color 0.2s;
+            position: relative;
             overflow: hidden;
-            border: none;
+            transform: translateY(-50px);
+            transition: transform 0.3s ease-in-out;
+            box-sizing: border-box;
         }
 
-        .icon-button:hover {
-            transform: scale(1.05);
-            background-color: rgba(255, 255, 255, 0.3);
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
         }
 
-        /* Augmentation de la taille des icônes SVG */
-        .icon-button svg {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 0.5rem;
-            stroke: white;
-            fill: none;
-            stroke-width: 2;
-        }
-
-        .icon-button img {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Styles pour le bouton d'accessibilité et son panneau */
-        .accessibility-button {
+        .modal-content::before {
+            content: '';
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            z-index: 100;
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 50%;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+            transform-origin: center center;
+            animation: rotate 4s linear infinite;
+            z-index: -1;
+            filter: blur(5px);
+        }
+
+        #modal-body-content {
+            flex-grow: 1;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            overflow: hidden;
+            padding: 0;
         }
 
-        .accessibility-button:hover {
-            background-color: rgba(255, 255, 255, 0.3);
+        #modal-body-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background-color: transparent;
+            min-height: 400px; 
         }
 
-        .accessibility-panel {
-            position: absolute;
-            bottom: 90px;
-            left: 20px;
-            z-index: 100;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 15px;
-            border-radius: 1rem;
-            display: none; /* Caché par défaut */
-            flex-direction: column;
-            gap: 10px;
+        body.modal-open {
+            overflow: hidden;
         }
 
-        .panel-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 10px 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 2px solid white;
-            border-radius: 0.5rem;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
+        /* ===== Responsive Styles (Modale spécifique) ===== */
+        @media (max-width: 767px) {
+            .modal-content { width: 95%; max-height: 95vh; border-radius: 0.8rem; }
+            .modal-content::before { border-radius: 1rem; }
         }
 
-        .panel-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .modal-content { max-width: 800px; max-height: 90vh; border-radius: 1rem; }
+            .modal-content::before { border-radius: 1.2rem; }
         }
 
-        .panel-button.active {
-            background-color: #38a169;
-        }
-        
-        /* Styles pour l'affichage de la date et l'heure */
-        #date-time-display {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            color: white;
-        }
-        
-        #date-display {
-            font-size: 1rem;
-            font-weight: 400; /* Poids de police régulier pour la date */
-            margin-bottom: -0.5rem; /* Ajustement de l'espacement entre la date et l'heure */
-        }
-        
-        #time-display {
-            font-size: 3rem; /* Grande taille pour l'heure */
-            font-weight: 700; /* Poids de police gras pour l'heure */
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .fade-in {
-            animation: fadeIn 1s ease-in;
+        @media (min-width: 1024px) {
+            .modal-content { max-width: 900px; max-height: 90vh; border-radius: 1rem; }
+            .modal-content::before { border-radius: 1.2rem; }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
-    <!-- Conteneur pour la vidéo de fond gérée par JS -->
-    <div class="background-video-container">
-        <video id="background-video" autoplay muted loop playsinline>
-            <source src="Destination Sud Réunion_HD.mp4" type="video/mp4">
-            Votre navigateur ne supporte pas la vidéo en arrière-plan.
-        </video>
-    </div>
-    
-    <!-- Conteneur pour les deux logos -->
-    <div class="top-logos">
-        <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion" class="h-12" role="img" aria-label="Logo Destination Sud Réunion">
-        <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo Sud Réunion Tourisme" class="h-12" role="img" aria-label="Logo Sud Réunion Tourisme">
-    </div>
+<body class="h-screen w-screen relative overflow-hidden text-white font-inter">
 
-    <!-- Langues Switcher -->
-    <div class="language-switcher flex space-x-4">
-        <img id="lang-fr" src="https://flagcdn.com/w40/fr.png" alt="Drapeau Français" data-lang="fr" role="button" aria-label="Changer la langue en français" tabindex="0">
-        <img id="lang-en" src="https://flagcdn.com/w40/gb.png" alt="Drapeau Anglais" data-lang="en" role="button" aria-label="Change language to English" tabindex="0">
-        <img id="lang-es" src="https://flagcdn.com/w40/es.png" alt="Drapeau Espagnol" data-lang="es" role="button" aria-label="Cambiar idioma a español" tabindex="0">
-        <img id="lang-de" src="https://flagcdn.com/w40/de.png" alt="Drapeau Allemand" data-lang="de" role="button" aria-label="Sprache auf Deutsch ändern" tabindex="0">
-    </div>
+    <!-- Video Background -->
+    <video autoplay muted loop id="video-background" class="absolute inset-0 w-full h-full object-cover z-0">
+        <source src="Apps/Photos/Images Vidéos/Destination Sud Réunion_HD.mp4" type="video/mp4" />
+        Votre navigateur ne supporte pas la vidéo.
+    </video>
 
-    <!-- Bouton pour l'accessibilité -->
-    <button id="accessibility-btn" class="accessibility-button" role="button" aria-controls="accessibility-panel" aria-expanded="false" aria-label="Options d'accessibilité">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-accessible-icon"><circle cx="12" cy="12" r="10"/><path d="M9 12a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2h-3l-2-2h-2z"/><path d="M10 8h2l-2 2h-2"/></svg>
-    </button>
-    
-    <!-- Panneau d'accessibilité -->
-    <div id="accessibility-panel" class="accessibility-panel">
-        <button id="high-contrast-btn" class="panel-button" role="button" aria-label="Activer le mode contraste élevé">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-contrast"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20z"/></svg>
-            <span id="label-contrast">Contraste</span>
-        </button>
-        <button id="text-increase-btn" class="panel-button" role="button" aria-label="Augmenter la taille du texte">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-size"><path d="M21 10V6"/><path d="M14 10V6"/><path d="M14 6h7"/><path d="M21 10h-7"/><path d="M20 18H9"/><path d="M10 12v6"/><path d="M18 12v6"/><path d="M17 12H9"/></svg>
-            <span id="label-text-increase">A+</span>
-        </button>
-        <button id="text-decrease-btn" class="panel-button" role="button" aria-label="Diminuer la taille du texte">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-text-size"><path d="M21 10V6"/><path d="M14 10V6"/><path d="M14 6h7"/><path d="M21 10h-7"/><path d="M18 12H9"/></svg>
-            <span id="label-text-decrease">A-</span>
-        </button>
-    </div>
-
-    <!-- Page de démarrage -->
-    <main id="start-page" class="overlay" role="main" aria-labelledby="start-title">
-        <!-- Affichage de la date et l'heure -->
-        <div id="date-time-display" class="mb-8" role="timer" aria-live="polite">
-            <span id="date-display"></span>
-            <span id="time-display"></span>
-        </div>
-        
-        <div class="flex flex-col items-center p-8 rounded-lg shadow-xl bg-gray-800 bg-opacity-70 max-w-xl w-full">
-            <h1 id="start-title" class="text-3xl md:text-5xl font-bold mb-4">Bienvenue</h1>
-            <p id="start-subtitle" class="text-lg md:text-xl mb-8">Veuillez sélectionner votre code postal pour continuer.</p>
-            
-            <!-- Liste déroulante des codes postaux -->
-            <div class="w-full">
-                <label for="zip-code-select" class="sr-only">Sélectionner un code postal</label>
-                <select id="zip-code-select" class="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300" aria-describedby="zip-code-description">
-                    <option value="" disabled selected>Sélectionner un code postal</option>
-                    <option value="97410">Saint-Pierre (97410)</option>
-                    <option value="97427">L'Étang-Salé (97427)</option>
-                    <option value="97436">Saint-Leu (97436)</option>
-                    <option value="97480">Saint-Joseph (97480)</option>
-                    <option value="97413">Cilaos (97413)</option>
-                    <option value="97416">Entre-Deux (97416)</option>
-                    <option value="97421">La Rivière Saint-Louis (97421)</option>
-                    <option value="97424">Piton Saint-Leu (97424)</option>
-                    <option value="97425">Les Avirons (97425)</option>
-                    <option value="97426">Les Trois-Bassins (97426)</option>
-                    <option value="97434">Saint-Gilles les Bains (97434)</option>
-                    <option value="97441">Saint-Paul (97441)</option>
-                    <option value="97442">Saint-Louis (97442)</option>
-                    <option value="97443">Le Tampon (97443)</option>
-                    <option value="97445">Saint-Gilles les Hauts (97445)</option>
-                    <option value="97446">Saint-André (97446)</option>
-                    <option value="97447">Saint-Benoît (97447)</option>
-                    <option value="97450">Saint-Louis (97450)</option>
-                    <option value="97460">Saint-Paul (97460)</option>
-                    <option value="97470">Saint-Gilles les Bains (97470)</option>
-                    <option value="97480">Saint-Joseph (97480)</option>
-                    <option value="97490">Sainte-Clotilde (97490)</option>
-                    <option value="97491">Sainte-Marie (97491)</option>
-                    <option value="97492">Saint-Denis (97492)</option>
-                    <option value="97493">Le Port (97493)</option>
-                    <option value="97494">Saint-Paul (97494)</option>
-                    <option value="97495">Sainte-Suzanne (97495)</option>
-                </select>
-                <div id="zip-code-description" class="sr-only">Cette liste déroulante permet de sélectionner un code postal.</div>
+    <!-- Lock Screen Container -->
+    <div id="lock-screen-container" class="absolute inset-0 z-10">
+        <!-- Status Bar -->
+        <div class="absolute top-0 right-0 left-0 flex justify-end items-center p-4 text-sm md:text-base z-20">
+            <div class="flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 94.72" fill="currentColor" class="w-5 h-5">
+                    <path d="M61.44 6.72c-15.42 0-30.84 5.86-42.48 17.5-23.36 23.36-23.36 61.32 0 84.68 11.64 11.64 27.06 17.5 42.48 17.5s30.84-5.86 42.48-17.5c23.36-23.36 23.36-61.32 0-84.68C92.28 12.58 76.86 6.72 61.44 0C27.52 0 0 27.52 0 61.44c0 33.92 27.52 61.44 61.44 61.44s61.44-27.52 61.44-61.44C122.88 27.52 95.36 0 61.44 0zM61.44 10.3c28.84 0 52.28 23.44 52.28 52.28s-23.44 52.28-52.28 52.28S9.16 91.24 9.16 61.44 32.6 10.3 61.44 10.3z"/>
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.248 32.248" fill="currentColor" class="w-6 h-6 wifi-icon">
+                    <path d="M26.471,8.083c-0.426-0.219-0.841-0.259-1.291-0.259h-2.12c-0.27-2.302-2.223-4.14-4.577-4.14h-5.632c-2.354,0-4.306,1.838-4.577,4.14h-2.12c-0.45,0-0.865,0.041-1.291,0.259C3.896,8.232,2.02,10.74,2.02,13.78v4.689c0,3.041,1.876,5.549,4.242,5.698c0.426,0.219,0.841,0.259,1.291,0.259h2.12c0.27,2.302,2.223,4.14,4.577,4.14h5.632c2.354,0,4.306-1.838,4.577-4.14h2.12c0.45,0,0.865-0.041,1.291-0.259c2.366-0.149,4.242-2.657,4.242-5.698v-4.689C30.228,10.74,28.352,8.232,26.471,8.083z"/>
+                </svg>
             </div>
-
-            <!-- Bouton pour accéder à la page d'accueil -->
-            <button id="enter-button" disabled class="mt-6 w-full py-3 px-6 rounded-lg bg-emerald-500 text-white font-bold text-lg hover:bg-emerald-600 transition duration-300 transform hover:scale-105 disabled:bg-gray-500 disabled:cursor-not-allowed" role="button" aria-disabled="true">
-                Entrer
-            </button>
         </div>
-    </main>
 
-    <!-- Contenu principal qui sera affiché après la sélection du code postal -->
-    <main id="main-content" class="hidden overlay" role="main" aria-labelledby="city-title">
-        <h1 id="city-title" class="text-4xl md:text-5xl font-bold"></h1>
-        <!-- Ajout de "Office de Tourisme" en dessous du titre de la ville -->
-        <p id="tourist-office-label" class="text-xl font-semibold mb-8"></p>
-        <div class="icon-grid" role="group" aria-label="Options de la borne numérique">
-            <!-- Boutons de la borne, avec les liens mis à jour -->
-            <a href="a_voir.html" class="icon-button" role="button" aria-label="À voir, à faire">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-                <span id="label-see">À voir / À faire</span>
-            </a>
-            <a href="ou_dormir.html" class="icon-button" role="button" aria-label="Où dormir ?">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-                <span id="label-sleep">Où dormir ?</span>
-            </a>
-            <a href="ou_manger.html" class="icon-button" role="button" aria-label="Où manger ?">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                <span id="label-eat">Où manger ?</span>
-            </a>
-            <a href="agenda.html" class="icon-button" role="button" aria-label="Agenda">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <span id="label-agenda">Agenda</span>
-            </a>
-            <a href="meteo_maree.html" class="icon-button" role="button" aria-label="Météo et marée">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.927A5.002 5.002 0 0012 6c-2.457 0-4.783 1.149-6.322 2.972l-.337.351-1.396.985A1 1 0 003 15z" />
-                </svg>
-                <span id="label-forecast">Météo & marée</span>
-            </a>
-            <a href="carte_interactive.html" class="icon-button" role="button" aria-label="Carte interactive">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span id="label-map">Carte interactive</span>
-            </a>
-            <a href="sorties.html" class="icon-button" role="button" aria-label="Sorties possibles">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                </svg>
-                <span id="label-outings">Sorties possibles</span>
-            </a>
-            <a href="actualites.html" class="icon-button" role="button" aria-label="Actualités">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12V9m0 3a2 2 0 100 4 2 2 0 000-4z" />
-                </svg>
-                <span id="label-news">Actualités</span>
-            </a>
-            <a href="transports.html" class="icon-button" role="button" aria-label="Transports">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v4m0 0a2 2 0 100-4 2 2 0 000 4zm0-10v4m0 0a2 2 0 100-4 2 2 0 000 4z" />
-                </svg>
-                <span id="label-transport">Transports</span>
-            </a>
+        <!-- Date and Time -->
+        <div id="date-time-container" class="absolute left-1/2 transform -translate-x-1/2 top-[20%] text-center">
+            <div id="current-date" class="text-lg font-medium"></div>
+            <div id="current-large-time" class="text-6xl md:text-7xl font-bold mt-2"></div>
         </div>
-    </main>
+
+        <!-- Hello Text -->
+        <div id="hello-text-container" class="absolute left-1/2 transform -translate-x-1/2 top-1/2 text-white drop-shadow-lg text-7xl md:text-8xl lg:text-9xl font-[Pacifico]">
+        </div>
+
+        <!-- Swipe Up Indicator -->
+        <div class="absolute bottom-0 w-full flex flex-col items-center p-6 pb-8 space-y-4 z-20">
+            <div id="swipe-up-text-container" class="text-lg md:text-xl text-white opacity-90"></div>
+            <div id="home-indicator-bar" class="w-32 h-1.5 bg-white rounded-full opacity-70"></div>
+        </div>
+    </div>
+
+    <!-- Unlocked Content (hidden) -->
+    <div id="unlocked-content" class="hidden flex-col items-center justify-center min-h-screen z-30 relative">
+        <h2 class="text-4xl font-bold mb-4">Déverrouillé</h2>
+        <p class="text-xl mb-6">Le contenu principal de votre application irait ici.</p>
+        <button id="lock-button" class="px-6 py-3 bg-white text-blue-600 rounded-lg shadow hover:bg-gray-100 transition">Verrouiller l'écran</button>
+    </div>
+
+    <!-- Modal for Login -->
+    <div id="myModal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="modal-body-content">
+                <!-- Dropdown list and login form will be inserted here -->
+            </div>
+        </div>
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const startPage = document.getElementById('start-page');
-            const mainContent = document.getElementById('main-content');
-            const zipCodeSelect = document.getElementById('zip-code-select');
-            const enterButton = document.getElementById('enter-button');
-            const cityTitle = document.getElementById('city-title');
-            const accessibilityBtn = document.getElementById('accessibility-btn');
-            const accessibilityPanel = document.getElementById('accessibility-panel');
-            const highContrastBtn = document.getElementById('high-contrast-btn');
-            const textIncreaseBtn = document.getElementById('text-increase-btn');
-            const textDecreaseBtn = document.getElementById('text-decrease-btn');
-            const htmlElement = document.documentElement;
-            const dateDisplay = document.getElementById('date-display');
-            const timeDisplay = document.getElementById('time-display');
-            const touristOfficeLabel = document.getElementById('tourist-office-label');
+        // ===============================
+        // Configuration
+        // ===============================
+        const helloWords = [
+            { lang: 'en', text: 'hello', locale: 'en-US' },
+            { lang: 'fr', text: 'bonjour', locale: 'fr-FR' },
+            { lang: 'es', text: 'hola', locale: 'es-ES' },
+            { lang: 'de', text: 'hallo', locale: 'de-DE' },
+            { lang: 'ja', text: 'こんにちは', locale: 'ja-JP' },
+            { lang: 'zh', text: '你好', locale: 'zh-CN' },
+            { lang: 'ar', text: 'مرحبا', locale: 'ar-SA' },
+            { lang: 'ru', text: 'привет', locale: 'ru-RU' }
+        ];
 
-            const textElements = {
-                'start-title': {'fr': 'Bienvenue', 'en': 'Welcome', 'es': 'Bienvenido', 'de': 'Willkommen'},
-                'start-subtitle': {'fr': 'Veuillez sélectionner votre code postal pour continuer.', 'en': 'Please select your zip code to continue.', 'es': 'Por favor, seleccione su código postal para continuar.', 'de': 'Bitte wählen Sie Ihre Postleitzahl aus, um fortzufahren.'},
-                'enter-button': {'fr': 'Entrer', 'en': 'Enter', 'es': 'Entrar', 'de': 'Eingeben'},
-                'tourist-office-label': {'fr': 'Office de Tourisme', 'en': 'Tourist Office', 'es': 'Oficina de Turismo', 'de': 'Touristenbüro'},
-                'label-see': {'fr': 'À voir / À faire', 'en': 'To see / To do', 'es': 'Para ver / Para hacer', 'de': 'Sehenswert / Aktivitäten'},
-                'label-sleep': {'fr': 'Où dormir ?', 'en': 'Where to sleep?', 'es': '¿Dónde dormir?', 'de': 'Wo übernachten?'},
-                'label-eat': {'fr': 'Où manger ?', 'en': 'Where to eat?', 'es': '¿Dónde comer?', 'de': 'Wo essen?'},
-                'label-agenda': {'fr': 'Agenda', 'en': 'Agenda', 'es': 'Agenda', 'de': 'Agenda'},
-                'label-forecast': {'fr': 'Météo & marée', 'en': 'Weather & tide', 'es': 'Clima y marea', 'de': 'Wetter & Gezeiten'},
-                'label-map': {'fr': 'Carte interactive', 'en': 'Interactive map', 'es': 'Mapa interactivo', 'de': 'Interaktive Karte'},
-                'label-outings': {'fr': 'Sorties possibles', 'en': 'Possible outings', 'es': 'Posibles salidas', 'de': 'Mögliche Ausflüge'},
-                'label-news': {'fr': 'Actualités', 'en': 'News', 'es': 'Noticias', 'de': 'Aktuelles'},
-                'label-transport': {'fr': 'Transports', 'en': 'Transport', 'es': 'Transporte', 'de': 'Transport'},
-                'select-option': {'fr': 'Sélectionner un code postal', 'en': 'Select a zip code', 'es': 'Seleccionar un código postal', 'de': 'Wählen Sie eine Postleitzahl'},
-                'label-contrast': {'fr': 'Contraste', 'en': 'Contrast', 'es': 'Contraste', 'de': 'Kontrast'},
-                'label-text-increase': {'fr': 'A+', 'en': 'A+', 'es': 'A+', 'de': 'A-'},
-                'label-text-decrease': {'fr': 'A-', 'en': 'A-', 'es': 'A-', 'de': 'A-'}
-            };
-            
-            const cityNames = {
-                '97410': 'Saint-Pierre',
-                '97427': 'L\'Étang-Salé',
-                '97442': 'Saint-Louis',
-                '97425': 'Les Avirons',
-                '97480': 'Petite-Île',
-            };
+        const swipeUpWords = [
+            { lang: 'en', text: 'Swipe up to open' },
+            { lang: 'fr', text: 'Faites glisser vers le haut pour ouvrir' },
+            { lang: 'es', text: 'Desliza hacia arriba para abrir' },
+            { lang: 'de', text: 'Zum Öffnen nach oben wischen' },
+            { lang: 'ja', text: '上にスワイプして開く' },
+            { lang: 'zh', text: '向上滑动以打开' },
+            { lang: 'ar', text: 'اسحب لأعلى للفتح' },
+            { lang: 'ru', text: 'Проведите вверх, чтобы открыть' }
+        ];
 
-            let currentLang = 'fr';
-            let dateTimeInterval;
-            
-            function updateDateTime() {
-                const now = new Date();
-                const timeString = now.toLocaleTimeString(currentLang + '-FR', { hour: '2-digit', minute: '2-digit' });
-                const dateString = now.toLocaleDateString(currentLang + '-' + (currentLang === 'de' ? 'DE' : (currentLang === 'es' ? 'ES' : (currentLang === 'en' ? 'GB' : 'FR'))), { weekday: 'long', day: '2-digit', month: 'long' });
-                
-                dateDisplay.textContent = dateString;
-                timeDisplay.textContent = timeString;
+        // ===============================
+        // Variables globales
+        // ===============================
+        let currentIndex = 0;
+        let currentDisplayLocale = helloWords[currentIndex].locale;
+        let animationInterval, dateTimeInterval, wifiCheckInterval;
+        let startY = 0, endY = 0;
+        const swipeThreshold = 80;
+
+        const elements = {
+            lockScreenContainer: document.getElementById('lock-screen-container'),
+            unlockedContent: document.getElementById('unlocked-content'),
+            helloContainer: document.getElementById('hello-text-container'),
+            swipeUpContainer: document.getElementById('swipe-up-text-container'),
+            homeIndicatorBar: document.getElementById('home-indicator-bar'),
+            currentDateDiv: document.getElementById('current-date'),
+            currentLargeTimeDiv: document.getElementById('current-large-time'),
+            wifiIconSvg: document.querySelector('.wifi-icon'),
+            myModal: document.getElementById('myModal'),
+            modalContent: document.querySelector('.modal-content'),
+            modalBodyContent: document.getElementById('modal-body-content'),
+            videoBackground: document.getElementById('video-background'),
+            lockButton: document.getElementById('lock-button')
+        };
+
+        // ===============================
+        // Fonctions de l'écran de verrouillage
+        // ===============================
+        function updateDateTime() {
+            const now = new Date();
+            const timeFormatter = new Intl.DateTimeFormat(currentDisplayLocale, { hour: 'numeric', minute: '2-digit', hour12: false });
+            const dateFormatter = new Intl.DateTimeFormat(currentDisplayLocale, { weekday: 'long', month: 'long', day: 'numeric' });
+            elements.currentLargeTimeDiv.textContent = timeFormatter.format(now);
+            elements.currentDateDiv.textContent = dateFormatter.format(now);
+        }
+
+        async function checkWifiConnectivity() {
+            if (!navigator.onLine) {
+                elements.wifiIconSvg.classList.remove('wifi-active');
+                return;
             }
-
-            function setLanguage(lang) {
-                currentLang = lang;
-                document.documentElement.lang = lang;
-
-                document.getElementById('start-title').textContent = textElements['start-title'][lang];
-                document.getElementById('start-subtitle').textContent = textElements['start-subtitle'][lang];
-                document.getElementById('enter-button').textContent = textElements['enter-button'][lang];
-                zipCodeSelect.options[0].textContent = textElements['select-option'][lang];
-                document.getElementById('label-contrast').textContent = textElements['label-contrast'][lang];
-                document.getElementById('label-text-increase').textContent = textElements['label-text-increase'][lang];
-                document.getElementById('label-text-decrease').textContent = textElements['label-text-decrease'][lang];
-                touristOfficeLabel.textContent = textElements['tourist-office-label'][lang];
-                
-                const buttons = document.querySelectorAll('#main-content .icon-button span');
-                buttons.forEach(span => {
-                    const id = span.id;
-                    if (textElements[id]) {
-                        span.textContent = textElements[id][lang];
-                    }
-                });
-
-                clearInterval(dateTimeInterval);
-                updateDateTime();
-                dateTimeInterval = setInterval(updateDateTime, 1000);
+            try {
+                await fetch(`https://www.google.com/favicon.ico?t=${new Date().getTime()}`, { mode: 'no-cors', cache: 'no-store' });
+                elements.wifiIconSvg.classList.add('wifi-active');
+            } catch (error) {
+                elements.wifiIconSvg.classList.remove('wifi-active');
             }
+        }
+        
+        function clearIntervals() {
+            clearInterval(animationInterval);
+            clearInterval(dateTimeInterval);
+            clearInterval(wifiCheckInterval);
+        }
 
-            document.getElementById('lang-fr').addEventListener('click', () => setLanguage('fr'));
-            document.getElementById('lang-en').addEventListener('click', () => setLanguage('en'));
-            document.getElementById('lang-es').addEventListener('click', () => setLanguage('es'));
-            document.getElementById('lang-de').addEventListener('click', () => setLanguage('de'));
-            
-            enterButton.addEventListener('click', () => {
-                const selectedCode = zipCodeSelect.value;
-                if (selectedCode) {
-                    localStorage.setItem('kiosk-zip-code', selectedCode);
-                    mainContent.classList.remove('hidden');
-                    startPage.classList.add('hidden');
-                    cityTitle.textContent = cityNames[selectedCode] || 'Destination Sud Réunion';
-                }
-            });
+        function startLockScreenAnimations() {
+            clearIntervals();
+            updateTexts();
+            animationInterval = setInterval(updateTexts, 4000);
+            updateDateTime();
+            dateTimeInterval = setInterval(updateDateTime, 1000);
+            checkWifiConnectivity();
+            wifiCheckInterval = setInterval(checkWifiConnectivity, 10000);
+        }
 
-            zipCodeSelect.addEventListener('change', () => {
-                enterButton.disabled = !zipCodeSelect.value;
-                enterButton.setAttribute('aria-disabled', enterButton.disabled);
-            });
-            
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/sw.js')
-                        .then(registration => {
-                            console.log('Service Worker enregistré avec succès:', registration);
-                        })
-                        .catch(err => {
-                            console.log('Échec de l\'enregistrement du Service Worker:', err);
-                        });
+        // ===============================
+        // Animation du texte
+        // ===============================
+        function fadeOutElements(oldHelloWrapper, oldSwipeUpWrapper) {
+            if (oldHelloWrapper) {
+                oldHelloWrapper.querySelectorAll('.animate-letter').forEach(letter => {
+                    letter.style.opacity = '0';
+                    letter.style.transform = 'translateY(-20px) scale(0.8)';
                 });
             }
+            if (oldSwipeUpWrapper) {
+                oldSwipeUpWrapper.style.opacity = '0';
+                oldSwipeUpWrapper.style.transform = 'translateY(-20px)';
+            }
+            if (elements.homeIndicatorBar) {
+                elements.homeIndicatorBar.style.opacity = '0';
+                elements.homeIndicatorBar.style.transform = 'translateY(-10px)';
+            }
+        }
 
-            accessibilityBtn.addEventListener('click', () => {
-                const isHidden = accessibilityPanel.style.display === 'none' || accessibilityPanel.style.display === '';
-                accessibilityPanel.style.display = isHidden ? 'flex' : 'none';
-                accessibilityBtn.setAttribute('aria-expanded', !isHidden);
+        function removeOldElements(oldHelloWrapper, oldSwipeUpWrapper) {
+            if (oldHelloWrapper?.parentNode) oldHelloWrapper.parentNode.removeChild(oldHelloWrapper);
+            if (oldSwipeUpWrapper?.parentNode) oldSwipeUpWrapper.parentNode.removeChild(oldSwipeUpWrapper);
+        }
+
+        function drawNewHelloWord(text) {
+            const wordWrapper = document.createElement('div');
+            wordWrapper.className = 'font-apple-hello';
+            Array.from(text).forEach((char, index) => {
+                const letterSpan = document.createElement('span');
+                letterSpan.textContent = char;
+                letterSpan.className = 'animate-letter';
+                letterSpan.style.animationDelay = `${index * 0.1}s`;
+                wordWrapper.appendChild(letterSpan);
+            });
+            elements.helloContainer.appendChild(wordWrapper);
+        }
+
+        function drawNewSwipeUpText(text) {
+            const textWrapper = document.createElement('div');
+            textWrapper.className = 'swipe-up-text-wrapper';
+            textWrapper.textContent = text;
+            elements.swipeUpContainer.appendChild(textWrapper);
+        }
+
+        function animateHomeIndicator() {
+            if (elements.homeIndicatorBar) {
+                elements.homeIndicatorBar.classList.remove('home-indicator-slide-in');
+                void elements.homeIndicatorBar.offsetWidth;
+                elements.homeIndicatorBar.classList.add('home-indicator-slide-in');
+            }
+        }
+
+        async function updateTexts() {
+            const { text: helloText, locale } = helloWords[currentIndex];
+            const { text: swipeUpText } = swipeUpWords[currentIndex];
+            currentDisplayLocale = locale;
+            updateDateTime();
+
+            const oldHelloWrapper = elements.helloContainer.querySelector('.font-apple-hello');
+            const oldSwipeUpWrapper = elements.swipeUpContainer.querySelector('.swipe-up-text-wrapper');
+            
+            fadeOutElements(oldHelloWrapper, oldSwipeUpWrapper);
+            await new Promise(resolve => setTimeout(resolve, 600));
+            
+            removeOldElements(oldHelloWrapper, oldSwipeUpWrapper);
+            
+            drawNewHelloWord(helloText);
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            drawNewSwipeUpText(swipeUpText);
+            animateHomeIndicator();
+            
+            currentIndex = (currentIndex + 1) % helloWords.length;
+        }
+
+        // ===============================
+        // Gestion de l'état (Verrouillé / Déverrouillé / Modale)
+        // ===============================
+        function unlockScreen() {
+            if (elements.myModal.classList.contains('active')) return;
+
+            elements.lockScreenContainer.classList.add('fade-out');
+
+            setTimeout(() => {
+                clearIntervals();
+                elements.lockScreenContainer.classList.add('hidden');
+                openModal('Code%20Postal/code.html');
+            }, 500);
+        }
+
+        function lockScreen() {
+            if (elements.myModal.classList.contains('active')) {
+                elements.myModal.classList.remove('active');
+                elements.modalBodyContent.innerHTML = '';
+                document.body.classList.remove('modal-open');
+            }
+            
+            if (elements.unlockedContent.classList.contains('active')) {
+                elements.unlockedContent.classList.remove('active');
+            }
+
+            elements.lockScreenContainer.classList.remove('hidden', 'fade-out');
+            startLockScreenAnimations();
+        }
+
+        function openModal(url) {
+            if (elements.myModal.classList.contains('active')) return;
+
+            elements.modalBodyContent.innerHTML = `<iframe id="modalIframe" src="${url}" title="Application Content" frameborder="0"></iframe>`;
+            const iframe = document.getElementById('modalIframe');
+
+            iframe.addEventListener('load', () => {
+                // Communication avec l'iframe
             });
 
-            highContrastBtn.addEventListener('click', () => {
-                document.body.classList.toggle('high-contrast');
-                const isHighContrast = document.body.classList.contains('high-contrast');
-                localStorage.setItem('kiosk-high-contrast', isHighContrast);
-            });
+            elements.myModal.classList.add('active');
+            document.body.classList.add('modal-open');
+        }
 
-            textIncreaseBtn.addEventListener('click', () => {
-                let currentSize = parseFloat(getComputedStyle(document.body).fontSize);
-                currentSize += 2;
-                if (currentSize <= 24) {
-                    document.body.style.fontSize = `${currentSize}px`;
-                    localStorage.setItem('kiosk-font-size', currentSize);
+        function closeModal() {
+            lockScreen();
+        }
+
+        // ===============================
+        // Écoute des messages de l'iframe
+        // ===============================
+        window.addEventListener('message', (event) => {
+            if (event.data === 'closeModal') {
+                closeModal();
+            } else if (event.data?.type === 'preferencesValidated') {
+                console.log("Préférences reçues, redirection vers l'accueil:", event.data);
+                // Redirige vers la nouvelle page au lieu de simplement fermer.
+                window.location.href = 'ecran_accueil.html';
+            } else if (event.data?.type === 'setIframeHeight') {
+                const iframe = document.getElementById('modalIframe');
+                if (iframe) {
+                    iframe.style.height = `${event.data.height}px`;
+                    elements.modalContent.style.height = 'auto';
+                    elements.modalContent.style.minHeight = `${event.data.height}px`;
                 }
-            });
-
-            textDecreaseBtn.addEventListener('click', () => {
-                let currentSize = parseFloat(getComputedStyle(document.body).fontSize);
-                currentSize -= 2;
-                if (currentSize >= 12) {
-                    document.body.style.fontSize = `${currentSize}px`;
-                    localStorage.setItem('kiosk-font-size', currentSize);
-                }
-            });
-
-            setLanguage('fr');
+            }
         });
+
+        // ===============================
+        // Événements Utilisateur
+        // ===============================
+        function handleTouchStart(e) { startY = e.touches[0].clientY; }
+        function handleTouchMove(e) { endY = e.touches[0].clientY; }
+        function handleTouchEnd() {
+            if (startY && startY - endY > swipeThreshold) {
+                unlockScreen();
+            }
+            startY = 0; endY = 0;
+        }
+
+        function handleWheel(e) {
+            if (elements.myModal.classList.contains('active')) {
+                e.preventDefault();
+                return;
+            }
+            if (e.deltaY > swipeThreshold) {
+                unlockScreen();
+            }
+        }
+
+        document.body.addEventListener('touchstart', handleTouchStart);
+        document.body.addEventListener('touchmove', handleTouchMove);
+        document.body.addEventListener('touchend', handleTouchEnd);
+        document.body.addEventListener('wheel', handleWheel);
+        
+        if (elements.lockButton) {
+            elements.lockButton.addEventListener('click', lockScreen);
+        }
+
+        window.addEventListener('click', (event) => {
+            if (event.target === elements.myModal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 10;
+            const y = (e.clientY / window.innerHeight - 0.5) * 10;
+            if (elements.videoBackground) {
+                elements.videoBackground.style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+            }
+        });
+
+        // ===============================
+        // Initialisation
+        // ===============================
+        document.addEventListener('DOMContentLoaded', startLockScreenAnimations);
     </script>
 </body>
 </html>
