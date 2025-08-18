@@ -1,0 +1,35 @@
+const CACHE_NAME = 'kiosk-cache-v1';
+const urlsToCache = [
+    '/',
+    '/index.html',
+    '/manifest.json',
+    'https://cdn.tailwindcss.com',
+    'https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png',
+    'https://assets.mixkit.co/videos/preview/mixkit-drones-view-of-waves-and-shore-1463-large.mp4',
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap',
+    'https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap'
+];
+
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+        .then((cache) => {
+            console.log('Ouverture du cache et mise en cache des URLs');
+            return cache.addAll(urlsToCache);
+        })
+    );
+});
+
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request)
+        .then((response) => {
+            // Le cache a une réponse
+            if (response) {
+                return response;
+            }
+            // Aucune réponse dans le cache, faire la requête réseau
+            return fetch(event.request);
+        })
+    );
+});
