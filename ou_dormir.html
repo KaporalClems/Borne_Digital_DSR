@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Où dormir ?</title>
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-size: 16px;
+        }
+
+        .background-video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -100;
+            overflow: hidden;
+        }
+
+        #background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+        }
+
+        .content-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .content-page h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .content-page p {
+            max-width: 800px;
+            font-size: 1.125rem;
+            line-height: 1.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .content-logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            margin-top: auto;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background-color: rgba(107, 114, 128, 1);
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: rgba(75, 85, 99, 1);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+    <div class="background-video-container">
+        <video id="background-video" autoplay muted loop playsinline>
+            <source src="Destination Sud Réunion_HD.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <main id="page-sleep" class="content-page" role="main" aria-labelledby="title-sleep">
+        <h1 id="title-sleep">Où dormir ?</h1>
+        <p id="content-sleep">
+            Trouvez l'hébergement idéal pour votre séjour. Que vous cherchiez un hôtel de luxe en bord de mer, un gîte de charme dans les hauts, une chambre d'hôtes pour une immersion authentique, ou une location de vacances pour plus de liberté, notre région offre un large éventail d'options pour tous les goûts et tous les budgets.
+        </p>
+        <a href="index.html" class="back-button" role="button" aria-label="Retour à la page d'accueil">
+            Retour
+        </a>
+    </main>
+</body>
+</html>
