@@ -1,16 +1,21 @@
 {
-    "name": "Borne Numérique",
-    "short_name": "Borne",
-    "description": "Borne d'information numérique interactive pour la Réunion.",
-    "start_url": "index.html",
-    "display": "standalone",
-    "background_color": "#111827",
-    "theme_color": "#2563EB",
-    "icons": [
-        {
-            "src": "https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ]
+  "name": "DSR Borne Interactive",
+  "short_name": "DSR Kiosk",
+  "description": "Une application interactive pour la borne DSR.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
