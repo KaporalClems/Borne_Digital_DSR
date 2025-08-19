@@ -147,6 +147,52 @@
             transform: translateY(-50px);
             pointer-events: none;
         }
+        
+        /* Styles pour la fenêtre modale */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            color: black;
+            text-align: center;
+        }
+
+        .modal-content select, .modal-content button {
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .modal-content select {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
 
         /* ===== Component Styles ===== */
         .large-time {
@@ -238,6 +284,30 @@
             <div id="home-indicator-bar" class="w-32 h-1.5 bg-white rounded-full opacity-70"></div>
         </div>
     </div>
+
+    <!-- Fenêtre modale pour le code postal -->
+    <div id="postal-code-modal" class="modal">
+        <div class="modal-content frosted-glass">
+            <h2 class="text-2xl font-bold mb-4 text-white">Sélectionnez votre code postal</h2>
+            <select id="postal-code-select" class="p-2 border rounded text-black">
+                <option value="97410">97410 - Saint-Pierre</option>
+                <option value="97421">97421 - La Rivière Saint-Louis</option>
+                <option value="97424">97424 - Piton Saint-Leu</option>
+                <option value="97425">97425 - Les Avirons</option>
+                <option value="97427">97427 - L'Étang-Salé</option>
+                <option value="97429">97429 - Petite-Île</option>
+                <option value="97430">97430 - Le Tampon</option>
+                <option value="97432">97432 - Le Guillaume</option>
+                <option value="97433">97433 - Salazie</option>
+                <option value="97436">97436 - Saint-Leu</option>
+                <option value="97439">97439 - Sainte-Rose</option>
+                <option value="97440">97440 - Saint-André</option>
+            </select>
+            <button id="confirm-button" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                Confirmer
+            </button>
+        </div>
+    </div>
     
     <script>
         // ===============================
@@ -282,7 +352,10 @@
             currentDateDiv: document.getElementById('current-date'),
             currentLargeTimeDiv: document.getElementById('current-large-time'),
             wifiIconSvg: document.querySelector('.wifi-icon'),
-            videoBackground: document.getElementById('video-background')
+            videoBackground: document.getElementById('video-background'),
+            postalCodeModal: document.getElementById('postal-code-modal'),
+            confirmButton: document.getElementById('confirm-button'),
+            postalCodeSelect: document.getElementById('postal-code-select')
         };
 
         // ===============================
@@ -404,7 +477,21 @@
         // ===============================
         // Gestion de l'état (Verrouillé / Déverrouillé)
         // ===============================
-        function unlockScreen() {
+        function showModal() {
+            // Empêche la redirection et affiche la modale
+            elements.postalCodeModal.classList.add('active');
+        }
+
+        function closeModal() {
+            // Masque la modale
+            elements.postalCodeModal.classList.remove('active');
+        }
+        
+        function handleSelection() {
+            const selectedPostalCode = elements.postalCodeSelect.value;
+            // Vous pouvez utiliser le code postal sélectionné ici pour des actions futures
+            console.log("Code postal sélectionné : " + selectedPostalCode);
+            // Redirection après la sélection
             elements.lockScreenContainer.classList.add('fade-out');
             setTimeout(() => {
                 window.location.href = 'accueil.html'; // Redirection vers la page d'accueil
@@ -418,21 +505,34 @@
         function handleTouchMove(e) { endY = e.touches[0].clientY; }
         function handleTouchEnd() {
             if (startY && startY - endY > swipeThreshold) {
-                unlockScreen();
+                showModal();
             }
             startY = 0; endY = 0;
         }
 
         function handleWheel(e) {
-            if (e.deltaY > swipeThreshold) {
-                unlockScreen();
+            if (e.deltaY < 0 && elements.postalCodeModal.classList.contains('active')) {
+                // Ignore le défilement si la modale est active et que c'est un défilement vers le haut
+                return;
+            }
+            if (e.deltaY > 0) { // Défilement vers le bas
+                showModal();
             }
         }
-
+        
+        // Cacher l'écran de verrouillage et afficher la modale
         document.body.addEventListener('touchstart', handleTouchStart);
         document.body.addEventListener('touchmove', handleTouchMove);
         document.body.addEventListener('touchend', handleTouchEnd);
         document.body.addEventListener('wheel', handleWheel);
+        
+        // Gérer les événements de la modale
+        elements.confirmButton.addEventListener('click', handleSelection);
+        elements.postalCodeModal.addEventListener('click', (event) => {
+            if (event.target === elements.postalCodeModal) {
+                closeModal();
+            }
+        });
 
         document.addEventListener("mousemove", (e) => {
             const x = (e.clientX / window.innerWidth - 0.5) * 10;
