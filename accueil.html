@@ -194,6 +194,36 @@
                 transform: translateX(-5px);
             }
         }
+        /* Styles pour le logo de l'office de tourisme */
+        .tourisme-logo {
+            width: 200px; /* Ajustez la taille selon vos besoins */
+            height: auto;
+        }
+        
+        /* Conteneur flexible pour le titre et le logo */
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap; /* Permet au contenu de s'adapter sur les petits écrans */
+        }
+
+        .logo-and-text {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .office-text {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1.125rem;
+            line-height: 1.25;
+            text-transform: uppercase;
+            max-width: 200px;
+        }
+
     </style>
 </head>
 <body>
@@ -215,6 +245,13 @@
                     <a href="#" class="flag-button" onclick="changeLanguage('de')" style="background-image: url('https://flagcdn.com/w320/de.png');"></a>
                 </div>
                 <div class="left-panel-content">
+                    <!-- Section mise à jour avec le logo et le texte de l'office de tourisme -->
+                    <div class="logo-and-text">
+                        <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de la Réunion" class="tourisme-logo">
+                        <div class="office-text">
+                            OFFICES DE TOURISME DU SUD DE LA RÉUNION
+                        </div>
+                    </div>
                     <h1 id="title-main" class="font-[Pacifico] text-6xl md:text-8xl lg:text-9xl mb-4 drop-shadow-lg">
                         Destination Sud Réunion
                     </h1>
@@ -318,7 +355,9 @@
     <!-- Barre de pied de page -->
     <div class="footer-bar">
         <div class="flex items-center gap-2">
-            <span>© 2024 DSR</span>
+            <!-- Mise à jour pour afficher l'année en cours automatiquement -->
+            <span id="current-year"></span>
+            <span> DSR</span>
         </div>
         <a href="index.html" class="flex items-center gap-2">
             Retour à l'écran de verrouillage
@@ -546,6 +585,12 @@
             slider.addEventListener('mouseup', handleMouseUp);
             slider.addEventListener('mouseleave', handleMouseUp); // Arrête le glissement si la souris quitte
             document.addEventListener('wheel', handleWheel);
+
+            // Met à jour l'année automatiquement
+            const currentYearElement = document.getElementById('current-year');
+            if (currentYearElement) {
+                currentYearElement.textContent = `© ${new Date().getFullYear()}`;
+            }
 
             // Initialise le slider au chargement
             updateSlider();
