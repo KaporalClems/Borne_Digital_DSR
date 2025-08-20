@@ -338,6 +338,40 @@
         .access-option-button.active {
             background-color: #3b82f6;
         }
+
+        /* Styles pour le modal de mentions légales */
+        .legal-modal-content {
+            max-height: 80vh;
+            overflow-y: auto; /* Permet le défilement si le contenu est trop grand */
+        }
+
+        .legal-modal-content h2,
+        .legal-modal-content h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-modal-content p {
+            margin-bottom: 1rem;
+        }
+
+        .legal-modal-content strong {
+            color: #fff;
+        }
+
+        .editor-logo {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .partners-logo {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -481,6 +515,7 @@
             <!-- Mise à jour pour afficher l'année en cours automatiquement -->
             <span id="current-year"></span>
             <span> DSR</span>
+            <a href="#" id="legal-link" class="text-sm">Mentions légales</a>
         </div>
         <a href="index.html" class="flex items-center gap-2">
             Retour à l'écran de verrouillage
@@ -510,6 +545,25 @@
             </button>
         </div>
     </div>
+
+    <!-- Modal Mentions Légales -->
+    <div id="legal-modal" class="modal">
+        <div class="modal-content legal-modal-content">
+            <span class="close-button" id="close-legal-modal-btn">&times;</span>
+            <h2 class="text-3xl font-bold mb-6">Mentions Légales</h2>
+            <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion" class="editor-logo">
+            <p><strong>Éditeur du site :</strong> Destination Sud Réunion</p>
+            <p><strong>Adresse :</strong> Capitainerie du Port de Plaisance Lislet Geoffroy - place Napoléon Hoareau, 97410 Saint-Pierre</p>
+            <p><strong>Contact :</strong><br>Téléphone : 0262353433<br>Email : saintpierre.tourisme@gmail.com</p>
+            <p><strong>Hébergement :</strong><br>Google Cloud Platform</p>
+            <p><strong>Propriété intellectuelle :</strong><br>Le contenu de ce site (textes, images, etc.) est la propriété exclusive de Déstination Sud Réunion, sauf mention contraire. Toute reproduction ou utilisation, même partielle, est interdite sans autorisation préalable.</p>
+            <p><strong>Protection des données personnelles :</strong><br>Ce site ne collecte aucune donnée personnelle. Le jeu est conçu pour être anonyme et ne stocke aucune information sur les joueurs.</p>
+            <h3>Partenaires</h3>
+            <!-- URL de l'image des partenaires mise à jour pour un dépôt GitHub -->
+            <img src="https://raw.githubusercontent.com/KaporalClems/borne-vital-sport/refs/heads/main/logo_partenaires-removebg-preview.png" alt="Logos partenaires" class="partners-logo">
+            <p><strong>Crédits photos :</strong><br>Les images utilisées par Destination Sud Réunion.</p>
+        </div>
+    </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -535,6 +589,11 @@
             const animationsBtn = document.getElementById('animations-btn');
             const screenReaderBtn = document.getElementById('screen-reader-btn');
             const voiceCommandBtn = document.getElementById('voice-command-btn');
+
+            // Références aux éléments de mentions légales
+            const legalLink = document.getElementById('legal-link');
+            const legalModal = document.getElementById('legal-modal');
+            const closeLegalModalBtn = document.getElementById('close-legal-modal-btn');
 
             // Fonction pour réinitialiser le minuteur d'inactivité
             function resetInactivityTimer() {
@@ -754,7 +813,7 @@
             }
 
             // =======================================================
-            // FONCTIONNALITÉS D'ACCESSIBILITÉ
+            // FONCTIONNALITÉS D'ACCESSIBILITÉ ET MENTIONS LÉGALES
             // =======================================================
 
             // Affiche le modal d'accessibilité
@@ -764,13 +823,13 @@
                 document.body.style.overflow = 'hidden'; // Empêche le défilement en arrière-plan
             });
             
-            // Ferme le modal
+            // Ferme le modal d'accessibilité
             closeModalBtn.addEventListener('click', () => {
                 accessibilityModal.classList.remove('active');
                 document.body.style.overflow = ''; // Réactive le défilement
             });
 
-            // Ferme le modal si on clique en dehors
+            // Ferme le modal d'accessibilité si on clique en dehors
             window.addEventListener('click', (event) => {
                 if (event.target === accessibilityModal) {
                     accessibilityModal.classList.remove('active');
@@ -815,6 +874,27 @@
             voiceCommandBtn.addEventListener('click', () => {
                 console.log("Commandes vocales activées ! (Fonctionnalité factice)");
                 voiceCommandBtn.classList.toggle('active');
+            });
+
+            // Affiche le modal de mentions légales
+            legalLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                legalModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Ferme le modal de mentions légales
+            closeLegalModalBtn.addEventListener('click', () => {
+                legalModal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+
+            // Ferme le modal si on clique en dehors
+            window.addEventListener('click', (event) => {
+                if (event.target === legalModal) {
+                    legalModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
             });
 
             // Initialise le slider au chargement
