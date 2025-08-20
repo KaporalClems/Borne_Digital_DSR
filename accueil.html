@@ -14,6 +14,22 @@
             overflow: hidden; /* Empêche le défilement du corps de la page */
         }
 
+        /* Styles pour le mode contraste élevé */
+        body.high-contrast {
+            filter: invert(1) hue-rotate(180deg);
+            background-color: #fff; /* S'assure que le fond est blanc */
+        }
+        
+        body.high-contrast #video-background {
+             filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* Styles pour la taille de police augmentée */
+        body.larger-text h1 { font-size: 8rem; }
+        body.larger-text h2 { font-size: 5rem; }
+        body.larger-text .text-2xl { font-size: 2rem; }
+        body.larger-text .text-lg { font-size: 1.5rem; }
+
         /* Style pour l'arrière-plan vidéo plein écran */
         #video-background {
             position: fixed;
@@ -24,7 +40,7 @@
             object-fit: cover;
             z-index: -10;
         }
-
+        
         /* Conteneur principal qui gère le glissement */
         #slider-container {
             display: flex;
@@ -32,7 +48,7 @@
             height: 100vh;
             transition: transform 0.5s ease-in-out;
         }
-
+        
         /* Styles pour chaque écran */
         .screen {
             width: 100vw;
@@ -45,7 +61,7 @@
             color: white;
             box-sizing: border-box;
         }
-
+        
         /* Panneau principal (écran 1) */
         .left-panel {
             background: rgba(0, 0, 0, 0.2);
@@ -84,7 +100,7 @@
             border: 2px solid white;
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
-
+        
         .flag-button:hover {
             transform: scale(1.1);
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
@@ -99,6 +115,32 @@
         
         .logo-button:hover {
             transform: scale(1.1);
+        }
+
+        /* Style pour le bouton d'accessibilité */
+        .accessibility-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #3b82f6; /* Couleur de fond pour l'accessibilité */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            border: 2px solid #3b82f6;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        .accessibility-button:hover {
+            transform: scale(1.1);
+            background-color: #1d4ed8;
+            box-shadow: 0 0 15px rgba(29, 78, 216, 0.8);
+        }
+
+        .accessibility-icon {
+            font-size: 3rem;
+            color: white;
         }
 
         /* Panneau de grille (écrans 2 et 3) */
@@ -137,12 +179,12 @@
             transform: scale(1.03);
             background-color: rgba(255, 255, 255, 0.1);
         }
-
+        
         .grid-icon {
             font-size: 5rem; 
             margin-bottom: 0.5rem;
         }
-
+        
         .text-2xl {
             font-size: 1.5rem;
         }
@@ -182,7 +224,7 @@
         .dot.active {
             background-color: white;
         }
-
+        
         /* Animation pour inviter à glisser */
         #swipe-prompt {
             position: fixed;
@@ -206,6 +248,7 @@
                 transform: translateX(-5px);
             }
         }
+        
         /* Styles pour le logo de l'office de tourisme */
         .tourisme-logo {
             width: 200px; /* Ajustez la taille selon vos besoins */
@@ -219,14 +262,14 @@
             gap: 1rem;
             flex-wrap: wrap; /* Permet au contenu de s'adapter sur les petits écrans */
         }
-
+        
         .logo-and-text {
             display: flex;
             align-items: center;
             gap: 1.5rem;
             flex-wrap: wrap;
         }
-
+        
         .office-text {
             font-family: 'Inter', sans-serif;
             font-weight: 600;
@@ -235,7 +278,66 @@
             text-transform: uppercase;
             max-width: 200px;
         }
+        
+        /* Styles pour le modal d'accessibilité */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+        }
 
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 500px;
+            color: white;
+            position: relative;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #9ca3af;
+        }
+
+        .access-option-button {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            text-align: left;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .access-option-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .access-option-button.active {
+            background-color: #3b82f6;
+        }
     </style>
 </head>
 <body>
@@ -256,6 +358,10 @@
                     <a href="#" class="flag-button" onclick="changeLanguage('en')" style="background-image: url('https://flagcdn.com/w320/gb.png');"></a>
                     <a href="#" class="flag-button" onclick="changeLanguage('es')" style="background-image: url('https://flagcdn.com/w320/es.png');"></a>
                     <a href="#" class="flag-button" onclick="changeLanguage('de')" style="background-image: url('https://flagcdn.com/w320/de.png');"></a>
+                    <!-- Nouveau bouton d'accessibilité -->
+                    <a href="#" class="accessibility-button" id="accessibility-btn">
+                        <span class="accessibility-icon">♿</span>
+                    </a>
                 </div>
                 <div class="left-panel-content">
                     <!-- Section mise à jour avec le logo et le texte de l'office de tourisme -->
@@ -381,6 +487,30 @@
         </a>
     </div>
 
+    <!-- Modal d'Accessibilité -->
+    <div id="accessibility-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-modal-btn">&times;</span>
+            <h3 class="text-3xl font-bold mb-6">Options d'Accessibilité</h3>
+            
+            <button id="contrast-btn" class="access-option-button">
+                <span class="text-2xl">🎨</span> Mode Contraste Élevé
+            </button>
+            <button id="text-size-btn" class="access-option-button">
+                <span class="text-2xl">🔍</span> Taille de Police Augmentée
+            </button>
+            <button id="animations-btn" class="access-option-button">
+                <span class="text-2xl">🚫</span> Désactiver les Animations
+            </button>
+            <button id="screen-reader-btn" class="access-option-button">
+                <span class="text-2xl">🗣️</span> Activer le Lecteur d'Écran
+            </button>
+            <button id="voice-command-btn" class="access-option-button">
+                <span class="text-2xl">🎤</span> Activer les Commandes Vocales
+            </button>
+        </div>
+    </div>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const slider = document.getElementById('slider-container');
@@ -395,6 +525,16 @@
 
             // Durée d'inactivité en millisecondes avant la redirection (ici 60 secondes)
             const inactivityDuration = 60000;
+
+            // Références aux éléments d'accessibilité
+            const accessibilityBtn = document.getElementById('accessibility-btn');
+            const accessibilityModal = document.getElementById('accessibility-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const contrastBtn = document.getElementById('contrast-btn');
+            const textSizeBtn = document.getElementById('text-size-btn');
+            const animationsBtn = document.getElementById('animations-btn');
+            const screenReaderBtn = document.getElementById('screen-reader-btn');
+            const voiceCommandBtn = document.getElementById('voice-command-btn');
 
             // Fonction pour réinitialiser le minuteur d'inactivité
             function resetInactivityTimer() {
@@ -494,7 +634,7 @@
                     'nav-info-2': 'Praktische Informationen'
                 }
             };
-
+            
             // Fonction pour changer la langue
             window.changeLanguage = function(lang) {
                 const currentLangTranslations = translations[lang];
@@ -521,7 +661,7 @@
                     swipePrompt.style.display = 'block';
                 }
             }
-
+            
             // Gère les événements tactiles
             function handleTouchStart(e) {
                 startX = e.touches[0].clientX;
@@ -539,7 +679,7 @@
                 slider.style.transition = 'none';
                 slider.style.transform = newPos;
             }
-
+            
             function handleTouchEnd(e) {
                 const endX = e.changedTouches[0].clientX;
                 const diffX = endX - startX;
@@ -560,7 +700,7 @@
                 startX = e.clientX;
                 slider.style.cursor = 'grabbing';
             }
-
+            
             function handleMouseMove(e) {
                 if (!isDragging) return;
                 const moveX = e.clientX;
@@ -569,7 +709,7 @@
                 slider.style.transition = 'none';
                 slider.style.transform = newPos;
             }
-
+            
             function handleMouseUp(e) {
                 if (!isDragging) return;
                 isDragging = false;
@@ -586,7 +726,7 @@
                 startX = 0;
                 slider.style.cursor = 'grab';
             }
-
+            
             // Gère le défilement de la molette pour les ordinateurs de bureau
             function handleWheel(e) {
                 if (e.deltaY > 0 && currentScreenIndex < numScreens - 1) {
@@ -596,7 +736,7 @@
                 }
                 updateSlider();
             }
-
+            
             // Ajoute les écouteurs d'événements
             slider.addEventListener('touchstart', handleTouchStart);
             slider.addEventListener('touchmove', handleTouchMove);
@@ -606,12 +746,76 @@
             slider.addEventListener('mouseup', handleMouseUp);
             slider.addEventListener('mouseleave', handleMouseUp); // Arrête le glissement si la souris quitte
             document.addEventListener('wheel', handleWheel);
-
+            
             // Met à jour l'année automatiquement
             const currentYearElement = document.getElementById('current-year');
             if (currentYearElement) {
                 currentYearElement.textContent = `© ${new Date().getFullYear()}`;
             }
+
+            // =======================================================
+            // FONCTIONNALITÉS D'ACCESSIBILITÉ
+            // =======================================================
+
+            // Affiche le modal d'accessibilité
+            accessibilityBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                accessibilityModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Empêche le défilement en arrière-plan
+            });
+            
+            // Ferme le modal
+            closeModalBtn.addEventListener('click', () => {
+                accessibilityModal.classList.remove('active');
+                document.body.style.overflow = ''; // Réactive le défilement
+            });
+
+            // Ferme le modal si on clique en dehors
+            window.addEventListener('click', (event) => {
+                if (event.target === accessibilityModal) {
+                    accessibilityModal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            // Gère le mode contraste élevé
+            contrastBtn.addEventListener('click', () => {
+                document.body.classList.toggle('high-contrast');
+                contrastBtn.classList.toggle('active');
+            });
+            
+            // Gère l'augmentation de la taille de la police
+            textSizeBtn.addEventListener('click', () => {
+                document.body.classList.toggle('larger-text');
+                textSizeBtn.classList.toggle('active');
+            });
+
+            // Gère la désactivation des animations
+            animationsBtn.addEventListener('click', () => {
+                const body = document.body;
+                body.classList.toggle('no-animations');
+                animationsBtn.classList.toggle('active');
+                
+                // Si les animations sont désactivées, supprime la classe d'animation
+                if (body.classList.contains('no-animations')) {
+                    swipePrompt.style.animation = 'none';
+                    slider.style.transition = 'none';
+                } else {
+                    swipePrompt.style.animation = 'bounce-right 2s infinite';
+                    slider.style.transition = 'transform 0.5s ease-in-out';
+                }
+            });
+
+            // Fonctionnalités factices
+            screenReaderBtn.addEventListener('click', () => {
+                console.log("Lecteur d'écran activé ! (Fonctionnalité factice)");
+                screenReaderBtn.classList.toggle('active');
+            });
+
+            voiceCommandBtn.addEventListener('click', () => {
+                console.log("Commandes vocales activées ! (Fonctionnalité factice)");
+                voiceCommandBtn.classList.toggle('active');
+            });
 
             // Initialise le slider au chargement
             updateSlider();
