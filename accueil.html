@@ -335,7 +335,25 @@
             let currentScreenIndex = 0;
             let startX = 0;
             let isDragging = false;
+            let inactivityTimeout; // Déclarez la variable pour le minuteur
 
+            // Durée d'inactivité en millisecondes avant la redirection (ici 60 secondes)
+            const inactivityDuration = 60000;
+
+            // Fonction pour réinitialiser le minuteur d'inactivité
+            function resetInactivityTimer() {
+                clearTimeout(inactivityTimeout);
+                inactivityTimeout = setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, inactivityDuration);
+            }
+
+            // Écoutez les événements qui indiquent une activité de l'utilisateur
+            document.addEventListener('mousemove', resetInactivityTimer);
+            document.addEventListener('mousedown', resetInactivityTimer);
+            document.addEventListener('keypress', resetInactivityTimer);
+            document.addEventListener('touchmove', resetInactivityTimer);
+            
             // Dictionnaire des traductions
             const translations = {
                 'fr': {
@@ -531,6 +549,7 @@
 
             // Initialise le slider au chargement
             updateSlider();
+            resetInactivityTimer(); // Démarre le minuteur au chargement de la page
         });
     </script>
 </body>
