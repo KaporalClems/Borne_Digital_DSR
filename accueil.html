@@ -92,15 +92,10 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
 
-        .grid-item-small {
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
+        /* Style pour les icônes agrandies */
         .grid-icon {
-            font-size: 3rem; /* Utilisation de caractères Unicode ou d'icônes */
+            font-size: 5rem; 
+            margin-bottom: 0.5rem;
         }
         
         /* Styles pour les sections météo et autres */
@@ -149,6 +144,10 @@
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
             }
+
+            .grid-icon {
+                font-size: 3rem; /* Ajustement pour les petits écrans */
+            }
         }
     </style>
 </head>
@@ -175,28 +174,28 @@
         <!-- Panneau de droite - Grille de navigation -->
         <div class="right-panel">
             <a href="#" class="grid-item">
-                <span class="text-4xl mb-2">🗺️</span>
-                <span class="text-xl font-semibold">Découvrir</span>
+                <span class="grid-icon">🗺️</span>
+                <span class="text-2xl font-semibold">Découvrir</span>
             </a>
             <a href="#" class="grid-item">
-                <span class="text-4xl mb-2">🎈</span>
-                <span class="text-xl font-semibold">Activités &amp; sensations</span>
+                <span class="grid-icon">🎈</span>
+                <span class="text-2xl font-semibold">Activités &amp; sensations</span>
             </a>
             <a href="#" class="grid-item">
-                <span class="text-4xl mb-2">📅</span>
-                <span class="text-xl font-semibold">Agenda</span>
+                <span class="grid-icon">📅</span>
+                <span class="text-2xl font-semibold">Agenda</span>
             </a>
             <a href="#" class="grid-item">
-                <span class="text-4xl mb-2">🍽️</span>
-                <span class="text-xl font-semibold">Où manger ?</span>
+                <span class="grid-icon">🍽️</span>
+                <span class="text-2xl font-semibold">Où manger ?</span>
             </a>
             <a href="#" class="grid-item">
-                <span class="text-4xl mb-2">🛏️</span>
-                <span class="text-xl font-semibold">Où dormir ?</span>
+                <span class="grid-icon">🛏️</span>
+                <span class="text-2xl font-semibold">Où dormir ?</span>
             </a>
             <a href="#" class="grid-item">
-                <span class="text-4xl mb-2">ℹ️</span>
-                <span class="text-xl font-semibold">Infos pratiques</span>
+                <span class="grid-icon">ℹ️</span>
+                <span class="text-2xl font-semibold">Infos pratiques</span>
             </a>
         </div>
     </div>
