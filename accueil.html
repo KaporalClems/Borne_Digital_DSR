@@ -13,19 +13,9 @@
             background-color: #000;
         }
 
-        /* Conteneur principal qui maintiendra le ratio 16:9 */
-        .aspect-ratio-16-9-container {
-            width: 100%;
-            max-width: 1280px; /* Limite la largeur pour les grands écrans */
-            margin: 0 auto; /* Centre le conteneur */
-            aspect-ratio: 16 / 9;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Style pour la vidéo en arrière-plan */
+        /* La vidéo couvre désormais l'intégralité de l'écran (viewport) */
         #video-background {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -34,9 +24,9 @@
             z-index: -10;
         }
 
-        /* Style pour le contenu placé au-dessus de la vidéo */
+        /* Le conteneur du contenu est également en plein écran, fixé au-dessus de la vidéo */
         .content-overlay {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -49,6 +39,7 @@
             padding: 2rem;
             text-align: center;
             background-color: rgba(0, 0, 0, 0.4); /* Overlay pour améliorer la lisibilité */
+            z-index: 10;
         }
 
         /* Media queries pour une meilleure adaptabilité */
@@ -59,26 +50,23 @@
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="flex items-center justify-center min-h-screen">
 
-    <!-- Conteneur pour l'affichage en 16:9 -->
-    <div class="aspect-ratio-16-9-container rounded-xl shadow-2xl">
-        <video autoplay muted loop id="video-background">
-            <source src="Destination Sud Réunion_HD.mp4" type="video/mp4" />
-            Votre navigateur ne supporte pas la vidéo.
-        </video>
+    <video autoplay muted loop id="video-background">
+        <source src="Destination Sud Réunion_HD.mp4" type="video/mp4" />
+        Votre navigateur ne supporte pas la vidéo.
+    </video>
 
-        <!-- Contenu de la page d'accueil -->
-        <div class="content-overlay">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">Bienvenue sur la Borne Interactive</h1>
-            <p class="text-lg md:text-xl max-w-2xl">
-                Explorez les richesses et les activités de la Destination Sud Réunion.
-                Cette page est votre point de départ pour une expérience immersive.
-            </p>
-            <a href="index.html" class="mt-8 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-colors shadow-lg">
-                Retour à l'écran de verrouillage
-            </a>
-        </div>
+    <!-- Contenu de la page d'accueil -->
+    <div class="content-overlay">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">Bienvenue sur la Borne Interactive</h1>
+        <p class="text-lg md:text-xl max-w-2xl">
+            Explorez les richesses et les activités de la Destination Sud Réunion.
+            Cette page est votre point de départ pour une expérience immersive.
+        </p>
+        <a href="index.html" class="mt-8 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-colors shadow-lg">
+            Retour à l'écran de verrouillage
+        </a>
     </div>
 
 </body>
