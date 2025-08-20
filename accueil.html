@@ -342,23 +342,24 @@
         /* Styles pour le modal de mentions légales */
         .legal-modal-content {
             max-height: 80vh;
-            overflow-y: auto; /* Permet le défilement si le contenu est trop grand */
+            /* Retire le overflow-y pour éviter la barre de défilement */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
         .legal-modal-content h2,
         .legal-modal-content h3 {
             font-family: 'Inter', sans-serif;
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.25rem; /* Taille de police légèrement réduite */
             margin-bottom: 0.5rem;
         }
 
         .legal-modal-content p {
-            margin-bottom: 1rem;
-        }
-
-        .legal-modal-content strong {
-            color: #fff;
+            margin-bottom: 0.75rem; /* Marge réduite */
+            font-size: 0.9rem; /* Taille de police légèrement réduite */
         }
 
         .editor-logo {
@@ -511,10 +512,12 @@
     
     <!-- Barre de pied de page -->
     <div class="footer-bar">
+        <!-- Conteneur pour le copyright et les mentions légales -->
         <div class="flex items-center gap-2">
             <!-- Mise à jour pour afficher l'année en cours automatiquement -->
             <span id="current-year"></span>
             <span> DSR</span>
+            <span class="px-2 text-gray-400">|</span>
             <a href="#" id="legal-link" class="text-sm">Mentions légales</a>
         </div>
         <a href="index.html" class="flex items-center gap-2">
