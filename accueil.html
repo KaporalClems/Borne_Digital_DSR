@@ -62,14 +62,15 @@
             margin-right: 1.5rem;
         }
         
-        /* Styles pour les boutons de langue */
-        .language-buttons {
+        /* Styles pour les boutons de langue et le nouveau logo */
+        .top-left-buttons {
             position: absolute;
             top: 2rem;
             left: 2rem;
             z-index: 10;
             display: flex;
             gap: 1rem;
+            align-items: center;
         }
 
         .flag-button {
@@ -87,6 +88,17 @@
         .flag-button:hover {
             transform: scale(1.1);
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+        
+        .logo-button {
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .logo-button:hover {
+            transform: scale(1.1);
         }
 
         /* Panneau de grille (écrans 2 et 3) */
@@ -237,8 +249,9 @@
         <!-- Écran 1 -->
         <div id="screen-1" class="screen">
             <div class="left-panel">
-                <!-- Boutons de langue -->
-                <div class="language-buttons">
+                <!-- Conteneur pour le logo et les boutons de langue -->
+                <div class="top-left-buttons">
+                    <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo DSR" class="logo-button">
                     <a href="#" class="flag-button" onclick="changeLanguage('fr')" style="background-image: url('https://flagcdn.com/w320/fr.png');"></a>
                     <a href="#" class="flag-button" onclick="changeLanguage('en')" style="background-image: url('https://flagcdn.com/w320/gb.png');"></a>
                     <a href="#" class="flag-button" onclick="changeLanguage('es')" style="background-image: url('https://flagcdn.com/w320/es.png');"></a>
