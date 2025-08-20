@@ -1,72 +1,85 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DSR Borne Interactive - Accueil</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page d'Accueil</title>
+    <!-- Inclut Tailwind CSS pour un style rapide -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
+            background-color: #000;
         }
-        .bg-image {
-            background: url('https://placehold.co/600x1200/5a91cf/ffffff?text=Image+de+fond') no-repeat center center / cover;
+
+        /* Conteneur principal qui maintiendra le ratio 16:9 */
+        .aspect-ratio-16-9-container {
+            width: 100%;
+            max-width: 1280px; /* Limite la largeur pour les grands écrans */
+            margin: 0 auto; /* Centre le conteneur */
+            aspect-ratio: 16 / 9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Style pour la vidéo en arrière-plan */
+        #video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -10;
+        }
+
+        /* Style pour le contenu placé au-dessus de la vidéo */
+        .content-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.4); /* Overlay pour améliorer la lisibilité */
+        }
+
+        /* Media queries pour une meilleure adaptabilité */
+        @media (max-width: 768px) {
+            .content-overlay h1 {
+                font-size: 2rem;
+            }
         }
     </style>
-    <link rel="manifest" href="manifest.json">
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div id="home-page" class="bg-white rounded-2xl shadow-lg w-full max-w-md p-4 min-h-screen relative overflow-hidden bg-image">
-        <!-- En-tête -->
-        <div class="text-center text-white pt-8 pb-4">
-            <h1 class="text-4xl font-extrabold tracking-tight">LA TESTE</h1>
-            <h2 class="text-4xl font-extrabold tracking-tight mt-1">DE BUCH</h2>
-            <p class="mt-2 text-xl font-medium opacity-80">BASSIN D'ARCACHON</p>
-        </div>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-        <!-- Grille d'icônes -->
-        <div class="grid grid-cols-2 gap-4 p-4 mt-8">
-            <a href="manger.html" class="p-4 bg-white/30 backdrop-blur-sm rounded-2xl text-white text-center flex flex-col items-center justify-center space-y-2 hover:bg-white/50 transition duration-300">
-                <!-- Utilisez un SVG ou une icône de Font Awesome pour un meilleur style -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2z"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14c-1.657 0-3-.895-3-2s1.343-2 3-2 3 .895 3 2-1.343 2-3 2z"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21c-1.657 0-3-.895-3-2s1.343-2 3-2 3 .895 3 2-1.343 2-3 2z"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2z"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.485 5.515c.97.97 1.515 2.253 1.515 3.485s-.545 2.515-1.515 3.485"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.515 5.515c-.97.97-1.515 2.253-1.515 3.485s.545 2.515 1.515 3.485"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.485 18.485c.97-.97 1.515-2.253 1.515-3.485s-.545-2.515-1.515-3.485"/>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.515 18.485c-.97-.97-1.515-2.253-1.515-3.485s.545-2.515 1.515-3.485"/>
-                </svg>
-                <span class="font-bold text-lg">MANGER</span>
-            </a>
-            <a href="dormir.html" class="p-4 bg-white/30 backdrop-blur-sm rounded-2xl text-white text-center flex flex-col items-center justify-center space-y-2 hover:bg-white/50 transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m0 0l-7 7-7-7m12-2V10a1 1 0 01-1 1h-3"/>
-                </svg>
-                <span class="font-bold text-lg">DORMIR</span>
-            </a>
-            <a href="decouvrir.html" class="p-4 bg-white/30 backdrop-blur-sm rounded-2xl text-white text-center flex flex-col items-center justify-center space-y-2 hover:bg-white/50 transition duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.808-1.212A2 2 0 0110.153 4h3.694a2 2 0 011.664.89l.808 1.212A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span class="font-bold text-lg">DÉCOUVRIR</span>
-            </a>
-            <!-- Répétez pour les autres icônes -->
-        </div>
+    <!-- Conteneur pour l'affichage en 16:9 -->
+    <div class="aspect-ratio-16-9-container rounded-xl shadow-2xl">
+        <video autoplay muted loop id="video-background">
+            <source src="Destination Sud Réunion_HD.mp4" type="video/mp4" />
+            Votre navigateur ne supporte pas la vidéo.
+        </video>
 
-        <!-- Pied de page -->
-        <div class="absolute bottom-0 w-full text-center pb-4 text-white opacity-90 text-sm">
-            <p>www.tourisme-latestedebuch.fr</p>
+        <!-- Contenu de la page d'accueil -->
+        <div class="content-overlay">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">Bienvenue sur la Borne Interactive</h1>
+            <p class="text-lg md:text-xl max-w-2xl">
+                Explorez les richesses et les activités de la Destination Sud Réunion.
+                Cette page est votre point de départ pour une expérience immersive.
+            </p>
+            <a href="index.html" class="mt-8 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full transition-colors shadow-lg">
+                Retour à l'écran de verrouillage
+            </a>
         </div>
     </div>
+
 </body>
 </html>
-
-
-
-
-
