@@ -30,6 +30,71 @@
         body.larger-text .text-2xl { font-size: 2rem; }
         body.larger-text .text-lg { font-size: 1.5rem; }
 
+        /* Styles pour le modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 800px;
+            color: white;
+            position: relative;
+            max-height: 90vh; /* Limite la hauteur du contenu du modal */
+            overflow-y: auto; /* Ajoute un défilement si le contenu est trop grand */
+        }
+        
+        .modal-content.policy-modal {
+            max-height: 90vh;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #9ca3af;
+        }
+
+        .modal-content h2, .modal-content h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-content h2 {
+            font-size: 2rem;
+        }
+        
+        .modal-content h3 {
+            font-size: 1.5rem;
+        }
+        
+        .modal-content p, .modal-content ul, .modal-content li {
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
         /* Style pour l'arrière-plan vidéo plein écran */
         #video-background {
             position: fixed;
@@ -302,44 +367,6 @@
         }
         
         /* Styles pour le modal d'accessibilité */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 50;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 2rem;
-            border-radius: 1rem;
-            width: 90%;
-            max-width: 500px;
-            color: white;
-            position: relative;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #9ca3af;
-        }
-
         .access-option-button {
             width: 100%;
             padding: 1rem;
@@ -364,7 +391,6 @@
         /* Styles pour le modal de mentions légales */
         .legal-modal-content {
             max-height: 80vh;
-            /* Retire le overflow-y pour éviter la barre de défilement */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -445,19 +471,41 @@
             background-color: #16a34a;
         }
         
-        /* Styles pour le reCAPTCHA factice */
-        .recaptcha-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 1rem;
+        /* Styles pour la nouvelle fenêtre de statut (succès/erreur) */
+        .status-modal-content .status-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
         }
-        .recaptcha-checkbox {
-            width: 24px;
-            height: 24px;
-            border: 2px solid #ccc;
-            background-color: white;
+        
+        .status-modal-content .success-icon {
+            color: #22c55e;
+        }
+        
+        .status-modal-content .error-icon {
+            color: #ef4444;
+        }
+
+        /* Style pour la case à cocher RGPD */
+        .privacy-consent {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            color: #d1d5db;
+        }
+        
+        .privacy-consent input[type="checkbox"] {
+            margin-top: 0.2rem;
+            flex-shrink: 0;
+            width: 1rem;
+            height: 1rem;
             cursor: pointer;
+        }
+
+        .privacy-consent a {
+            color: #3b82f6;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -678,6 +726,13 @@
                     <label for="newsletter-lastname" class="form-label">Nom</label>
                     <input type="text" id="newsletter-lastname" name="lastname" class="form-input">
                 </div>
+                <!-- Nouvelle section pour le consentement RGPD -->
+                <div class="privacy-consent">
+                    <input type="checkbox" id="newsletter-rgpd" name="rgpd" required>
+                    <label for="newsletter-rgpd">
+                        J'ai lu et j'accepte les conditions de traitement de mes données personnelles conformément à la <a href="#" id="privacy-policy-link">politique de confidentialité</a>.
+                    </label>
+                </div>
                 <button type="submit" class="form-button mt-4">S'abonner</button>
             </form>
         </div>
@@ -722,6 +777,93 @@
             </form>
         </div>
     </div>
+    
+    <!-- Nouveau modal pour les messages de statut (succès/erreur) -->
+    <div id="status-modal" class="modal">
+        <div class="modal-content status-modal-content text-center">
+            <span class="close-button" id="close-status-modal-btn">&times;</span>
+            <div id="status-icon" class="status-icon"></div>
+            <h2 id="status-title" class="text-3xl font-bold mb-2"></h2>
+            <p id="status-message" class="text-lg"></p>
+        </div>
+    </div>
+    
+    <!-- Nouveau modal pour la politique de confidentialité -->
+    <div id="privacy-policy-modal" class="modal">
+        <div class="modal-content policy-modal">
+            <span class="close-button" id="close-privacy-policy-modal-btn">&times;</span>
+            <h2 class="text-3xl font-bold">Politique de confidentialité</h2>
+            <p>Lorsque vous utilisez notre site internet et les services associés, nous collectons et traitons certaines données. La présente politique de confidentialité vous expose quelles sont les informations recueillies par Destination Sud Réunion sur vous, comment nous les collectons, dans quel but et les droits que vous avez concernant vos données personnelles.</p>
+            <p><strong>Destination Sud Réunion</strong> est l’entité responsable du traitement de vos données personnelles. La liste de ces données personnelles et les raisons pour lesquelles nous collectons ces informations sont expliquées ci-après :</p>
+
+            <h3>1. Services tiers</h3>
+            <p>Pour faciliter l’utilisation de notre site et le rendre plus agréable, nous collectons certaines informations. Le site sudreuniontourisme.fr utilise des services fournis par des sites tiers tels que :</p>
+            <ul>
+                <li>L'outil <strong>Google Analytics</strong> est utilisé à des fins statistiques et nous fournit des informations essentielles permettant d’améliorer l’expérience utilisateur et de proposer le contenu utile à nos visiteurs.</li>
+                <li>Le site et services en ligne proposés, peuvent utiliser des <strong>cookies</strong> et d’autres technologies telles que des « pixel tags ».</li>
+                <li>Des boutons de partage (Google+, Facebook, Twitter).</li>
+                <li>Des vidéos diffusées sur le site (Youtube).</li>
+            </ul>
+            <p>Ces fonctionnalités s’appuient sur des cookies tiers déposés par ces services. Pour plus d’informations sur la politique de confidentialité et l’utilisation des cookies appliquée par ces services, merci de vous référer à leur site internet. <br>Twitter <br>Politique de confidentialité de Google+ et YouTube<br>Politique de confidentialité de Facebook <br>Bitly.com <br>addthis</p>
+
+            <h3>2. Collecte de l’information</h3>
+            <p>Nous recueillons des informations lorsque :</p>
+            <ul>
+                <li>Vous vous inscrivez sur notre site via le bouton contactez-nous. Les informations recueillies incluent votre nom*, votre adresse e-mail*, le lieu* qui vous intéresse, l'objet* du message, le message*. Les champs avec un astérisque (*) sont obligatoires.</li>
+                <li>Vous vous inscrivez à notre newsletter. Les informations recueillies incluent votre adresse e-mail, votre prénom, votre nom. Durée de conservation : Destination Sud Réunion conserve les données tant que la personne concernée ne se désinscrit pas via le lien de désinscription intégré aux newsletters. Se désabonner : Nous utilisons l’adresse e-mail que vous fournissez pour vous envoyer, via nos newsletters, des informations touristiques et culturelles régulières, des informations précises sur nos produits ou les évènementiels en cours ou à venir. Si, à n’importe quel moment, vous souhaitez vous désinscrire et ne plus recevoir d’e-mails, des instructions de désabonnement détaillées sont incluses en bas de chaque newsletter.</li>
+                <li>Vous vous inscrivez à notre espace pro. Les informations recueillies incluent votre adresse e-mail, votre prénom, votre nom, le nom de votre entreprise, votre numéro de téléphone.</li>
+            </ul>
+
+            <h3>3. Utilisation des informations</h3>
+            <p>Toutes les informations que nous recueillons auprès de vous peuvent être utilisées pour :</p>
+            <ul>
+                <li>Personnaliser votre expérience et répondre à vos besoins individuels ;</li>
+                <li>Améliorer notre site Web ;</li>
+                <li>Améliorer le service client et vos besoins d'informations et de conseils touristiques ;</li>
+                <li>Vous contacter par e-mail ;</li>
+            </ul>
+
+            <h3>4. Confidentialité</h3>
+            <p>Nous sommes les seuls propriétaires des informations recueillies sur ce site. Vos informations personnelles ne seront pas vendues, échangées, transférées, ou données à une autre société pour n’importe quel raison, sans votre consentement, en dehors de ce qui est nécessaire pour répondre à une demande et / ou une transaction.</p>
+
+            <h3>5. Divulgation à des tiers</h3>
+            <p>Destination Sud Réunion n’a pas pour vocation de tirer un profit financier des données collectées. L'accès à vos données personnelles est strictement limité aux usages prévus et préposés de Destination Sud Réunion. Cependant, les données collectées pourront éventuellement être communiquées à des sous-traitants chargés contractuellement de l'exécution des tâches nécessaires au bon fonctionnement du site et de ses services ainsi qu’à la bonne gestion de la relation avec vous. Il est précisé que, dans le cadre de l’exécution de leurs prestations, les sous-traitants n’ont qu’un accès limité à vos données et ont une obligation contractuelle de les utiliser en conformité avec les dispositions de la législation applicable en matière de protection des données personnelles.</p>
+            <p>Vos informations peuvent être consultées, si nécessaire, pour nous conformer à nos obligations légales ; par exemple, pour répondre à une décision de justice ou autre acte de procédure prise par les autorités compétentes.</p>
+            <p>Conformément aux dispositions légales et réglementaires, vous disposez de droits d’accès, d’opposition, de rectification, de limitation et de suppression des données vous concernant. Toute demande liée à l’exercice de vos droits doit se faire en nous contactant via le formulaire contact.</p>
+            <p>Pour vous informer sur vos droits rendez vous sur le site de la CNIL.</p>
+
+            <h3>6. Protection des informations</h3>
+            <p>Seuls les employés qui ont besoin d’effectuer un travail spécifique (par exemple, la facturation ou le service à la clientèle) ont accès aux informations personnelles identifiables.</p>
+
+            <h3>7. Est-ce que nous utilisons des cookies ?</h3>
+            <p>Oui. Nos cookies améliorent l’accès à notre site et identifient les visiteurs réguliers. En outre, nos cookies améliorent l’expérience d’utilisateur grâce au suivi et au ciblage de ses intérêts. Cependant, cette utilisation des cookies n’est en aucune façon liée à des informations personnelles identifiables sur notre site.</p>
+            <h4>Qu'est-ce qu'un témoin de connexion (cookie) ?</h4>
+            <p>Un cookie est un fichier texte stocké sur votre ordinateur quand vous visitez notre site. Ils permettent d'identifier votre ordinateur lors de votre prochaine visite.</p>
+            <h4>Quelle utilisation faisons-nous des cookies ?</h4>
+            <p>Lorsque vous visitez notre site nous pouvons, selon vos choix exprimés par le paramétrage de votre navigateur, installer divers cookies sur le disque dur de votre ordinateur. Nous pouvons lire les cookies que nous avons installés pendant la durée de validité de chaque cookie ou jusqu'à ce que vous supprimiez ledit cookie.</p>
+            <p>Nous utilisons les cookies pour les finalités suivantes sur notre site:</p>
+            <ul>
+                <li>Analyse de la performance de notre site à partir d'informations anonymes sur votre navigation (par exemple: pages vues, nombre de visites….). Nous utilisons pour ce faire l'outil d'analyse «Google Analytics».</li>
+                <li>Partage de votre géopositionnement afin d'affiner les itinéraires cartographiques que nous vous proposons.</li>
+            </ul>
+            <p>Les cookies que nous utilisons ne nous permettent pas de vous identifier personnellement. Les données recueillies sont conservées pour une durée limitée et ne sont pas cédées à des tiers ni utilisées à d'autres fins.</p>
+            <h4>Puis-je m'opposer à l'enregistrement des cookies ?</h4>
+            <p>Vous pouvez vous opposer à l'enregistrement de ces "cookies" de façon globale ou au cas par cas en ajustant les paramètres de votre navigateur. Nous vous invitons à vous reporter à la procédure figurant dans les règles d'utilisation de votre navigateur.</p>
+            <p>Nous vous informons néanmoins que si vous choisissez de refuser tout type de cookies, certaines fonctionnalités du site pourraient ne pas être accessibles. Vous pouvez également désactiver les cookies placés dans le cadre de l'utilisation de Google Analytics en installant le module complémentaire fourni par Google à l'adresse suivante : <a href="https://tools.google.com/dlpage/gaoptout?hl=fr" target="_blank">https://tools.google.com/dlpage/gaoptout?hl=fr</a></p>
+
+            <h3>8. Consentement</h3>
+            <p>En utilisant notre site, vous consentez à notre politique de confidentialité.</p>
+
+            <h3>9. Nous contacter</h3>
+            <p>Pour obtenir des informations sur le traitement des données personnelles ou exercer vos droits sur les données vous concernant, contactez Destination Sud Réunion :</p>
+            <ul>
+                <li>Par voie électronique : le formulaire contact</li>
+                <li>Par courrier postal : Destination Sud Réunion - 29, route de L'Entre Deux - Pierrefonds - 97410 Saint-Pierre</li>
+            </ul>
+            <p>Toute demande doit comporter le maximum d’informations afin qu’elle puisse être traitée dans les meilleurs délais.</p>
+        </div>
+    </div>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -761,6 +903,18 @@
             const contactLink = document.getElementById('contact-link');
             const contactModal = document.getElementById('contact-modal');
             const closeContactModalBtn = document.getElementById('close-contact-modal-btn');
+            
+            // Références pour le nouveau modal de statut
+            const statusModal = document.getElementById('status-modal');
+            const closeStatusModalBtn = document.getElementById('close-status-modal-btn');
+            const statusTitle = document.getElementById('status-title');
+            const statusMessage = document.getElementById('status-message');
+            const statusIcon = document.getElementById('status-icon');
+            
+            // Nouveaux éléments de la politique de confidentialité
+            const privacyPolicyLink = document.getElementById('privacy-policy-link');
+            const privacyPolicyModal = document.getElementById('privacy-policy-modal');
+            const closePrivacyPolicyModalBtn = document.getElementById('close-privacy-policy-modal-btn');
 
             // Fonction pour réinitialiser le minuteur d'inactivité
             function resetInactivityTimer() {
@@ -995,6 +1149,23 @@
                 document.body.style.overflow = '';
             }
 
+            // Fonction pour afficher le modal de statut
+            function showStatusModal(title, message, isSuccess) {
+                statusTitle.textContent = title;
+                statusMessage.textContent = message;
+                // Met à jour l'icône et la couleur en fonction du succès ou de l'échec
+                if (isSuccess) {
+                    statusIcon.innerHTML = '✅';
+                    statusIcon.classList.remove('error-icon');
+                    statusIcon.classList.add('success-icon');
+                } else {
+                    statusIcon.innerHTML = '❌';
+                    statusIcon.classList.remove('success-icon');
+                    statusIcon.classList.add('error-icon');
+                }
+                openModal(statusModal);
+            }
+
             // Affiche le modal d'accessibilité
             accessibilityBtn.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1020,7 +1191,19 @@
                 if (event.target === contactModal) {
                     closeModal(contactModal);
                 }
+                if (event.target === statusModal) {
+                    closeModal(statusModal);
+                }
+                if (event.target === privacyPolicyModal) {
+                    closeModal(privacyPolicyModal);
+                }
             });
+            
+            // Ferme le modal de statut
+            closeStatusModalBtn.addEventListener('click', () => {
+                closeModal(statusModal);
+            });
+
 
             // Gère le mode contraste élevé
             contrastBtn.addEventListener('click', () => {
@@ -1094,12 +1277,37 @@
                 closeModal(contactModal);
             });
 
+            // Affiche le modal de la politique de confidentialité
+            privacyPolicyLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                closeModal(newsletterModal); // Ferme d'abord le modal de la newsletter
+                openModal(privacyPolicyModal);
+            });
+
+            // Ferme le modal de la politique de confidentialité
+            closePrivacyPolicyModalBtn.addEventListener('click', () => {
+                closeModal(privacyPolicyModal);
+            });
+            
             // Gère la soumission des formulaires (factice)
             const newsletterForm = document.getElementById('newsletter-form');
+            const newsletterRGPDCheckbox = document.getElementById('newsletter-rgpd');
+
             if (newsletterForm) {
                 newsletterForm.addEventListener('submit', (e) => {
                     // Empêche la soumission par défaut pour que Formspree puisse la gérer
                     e.preventDefault();
+
+                    // Vérifie si la case RGPD est cochée
+                    if (!newsletterRGPDCheckbox.checked) {
+                        showStatusModal(
+                            "Erreur d'inscription",
+                            "Veuillez accepter les conditions de traitement des données pour vous inscrire.",
+                            false
+                        );
+                        return; // Empêche le reste du code de s'exécuter
+                    }
+
                     // Envoyer le formulaire à Formspree
                     fetch(e.target.action, {
                         method: newsletterForm.method,
@@ -1110,18 +1318,18 @@
                     }).then(response => {
                         if (response.ok) {
                             closeModal(newsletterModal);
-                            alert("Merci pour votre inscription à la newsletter !");
+                            showStatusModal("Inscription réussie !", "Merci de vous être abonné à notre newsletter.", true);
                         } else {
                             response.json().then(data => {
                                 if (Object.hasOwn(data, 'errors')) {
-                                    alert(data["errors"].map(error => error["message"]).join(", "));
+                                    showStatusModal("Erreur", data["errors"].map(error => error["message"]).join(", "), false);
                                 } else {
-                                    alert("Oops! Une erreur s'est produite lors de la soumission du formulaire.");
+                                    showStatusModal("Erreur", "Oops! Une erreur s'est produite lors de la soumission du formulaire.", false);
                                 }
                             });
                         }
                     }).catch(error => {
-                        alert("Oops! Une erreur s'est produite lors de la soumission du formulaire.");
+                        showStatusModal("Erreur", "Oops! Une erreur s'est produite lors de la soumission du formulaire. Veuillez réessayer plus tard.", false);
                     });
                 });
             }
@@ -1141,18 +1349,18 @@
                     }).then(response => {
                         if (response.ok) {
                             closeModal(contactModal);
-                            alert("Merci ! Votre message a été envoyé.");
+                            showStatusModal("Message envoyé !", "Merci de nous avoir contacté. Nous vous répondrons dans les plus brefs délais.", true);
                         } else {
                             response.json().then(data => {
                                 if (Object.hasOwn(data, 'errors')) {
-                                    alert(data["errors"].map(error => error["message"]).join(", "));
+                                    showStatusModal("Erreur", data["errors"].map(error => error["message"]).join(", "), false);
                                 } else {
-                                    alert("Oops! Une erreur s'est produite lors de la soumission du formulaire.");
+                                    showStatusModal("Erreur", "Oops! Une erreur s'est produite lors de la soumission du formulaire.", false);
                                 }
                             });
                         }
                     }).catch(error => {
-                        alert("Oops! Une erreur s'est produite lors de la soumission du formulaire.");
+                        showStatusModal("Erreur", "Oops! Une erreur s'est produite lors de la soumission du formulaire. Veuillez réessayer plus tard.", false);
                     });
                 });
             }
