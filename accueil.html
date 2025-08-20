@@ -23,7 +23,6 @@
             height: 100%;
             object-fit: cover;
             z-index: -10;
-            /* Retire le filtre pour afficher les couleurs originales */
         }
 
         /* Conteneur principal qui gère le glissement */
@@ -61,6 +60,26 @@
             width: 50%;
             height: 100%;
             margin-right: 1.5rem;
+        }
+        
+        /* Styles pour les boutons de langue */
+        .language-buttons {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            z-index: 10;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .language-button {
+            font-size: 2.5rem; /* Taille de l'icône de drapeau */
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .language-button:hover {
+            transform: scale(1.1);
         }
 
         /* Panneau de grille (écrans 2 et 3) */
@@ -181,11 +200,18 @@
         <!-- Écran 1 -->
         <div id="screen-1" class="screen">
             <div class="left-panel">
+                <!-- Boutons de langue -->
+                <div class="language-buttons">
+                    <span class="language-button" onclick="changeLanguage('fr')">🇫🇷</span>
+                    <span class="language-button" onclick="changeLanguage('en')">🇬🇧</span>
+                    <span class="language-button" onclick="changeLanguage('es')">🇪🇸</span>
+                    <span class="language-button" onclick="changeLanguage('de')">🇩🇪</span>
+                </div>
                 <div class="left-panel-content">
-                    <h1 class="font-[Pacifico] text-6xl md:text-8xl lg:text-9xl mb-4 drop-shadow-lg">
+                    <h1 id="title-main" class="font-[Pacifico] text-6xl md:text-8xl lg:text-9xl mb-4 drop-shadow-lg">
                         Destination Sud Réunion
                     </h1>
-                    <h2 class="font-bold text-4xl md:text-5xl lg:text-6xl text-white drop-shadow-lg">
+                    <h2 id="title-welcome" class="font-bold text-4xl md:text-5xl lg:text-6xl text-white drop-shadow-lg">
                         Bienvenue
                     </h2>
                 </div>
@@ -193,27 +219,27 @@
             <div class="right-panel">
                 <a href="#" class="grid-item">
                     <span class="grid-icon">🗺️</span>
-                    <span class="text-2xl font-semibold">Découvrir</span>
+                    <span id="nav-discover" class="text-2xl font-semibold">Découvrir</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">🎈</span>
-                    <span class="text-2xl font-semibold">Activités &amp; sensations</span>
+                    <span id="nav-activities" class="text-2xl font-semibold">Activités &amp; sensations</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">📅</span>
-                    <span class="text-2xl font-semibold">Agenda</span>
+                    <span id="nav-agenda" class="text-2xl font-semibold">Agenda</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">🍽️</span>
-                    <span class="text-2xl font-semibold">Où manger ?</span>
+                    <span id="nav-eat" class="text-2xl font-semibold">Où manger ?</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">🛏️</span>
-                    <span class="text-2xl font-semibold">Où dormir ?</span>
+                    <span id="nav-sleep" class="text-2xl font-semibold">Où dormir ?</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">ℹ️</span>
-                    <span class="text-2xl font-semibold">Infos pratiques</span>
+                    <span id="nav-info" class="text-2xl font-semibold">Infos pratiques</span>
                 </a>
             </div>
         </div>
@@ -224,23 +250,23 @@
                 <!-- Boutons de différentes tailles -->
                 <a href="#" class="grid-item grid-item-col-2">
                     <span class="grid-icon">☀️</span>
-                    <span class="text-2xl font-semibold">La Météo</span>
+                    <span id="nav-weather" class="text-2xl font-semibold">La Météo</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">⛰️</span>
-                    <span class="text-2xl font-semibold">Randonnées</span>
+                    <span id="nav-hikes" class="text-2xl font-semibold">Randonnées</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">🌊</span>
-                    <span class="text-2xl font-semibold">Activités Nautiques</span>
+                    <span id="nav-water" class="text-2xl font-semibold">Activités Nautiques</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">🗺️</span>
-                    <span class="text-2xl font-semibold">Découvrir</span>
+                    <span id="nav-discover-2" class="text-2xl font-semibold">Découvrir</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">🎈</span>
-                    <span class="text-2xl font-semibold">Activités &amp; sensations</span>
+                    <span id="nav-activities-2" class="text-2xl font-semibold">Activités &amp; sensations</span>
                 </a>
             </div>
         </div>
@@ -250,19 +276,19 @@
             <div class="right-panel">
                 <a href="#" class="grid-item grid-item-row-2">
                     <span class="grid-icon">🎥</span>
-                    <span class="text-2xl font-semibold">Vidéos et reportages</span>
+                    <span id="nav-videos" class="text-2xl font-semibold">Vidéos et reportages</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">📚</span>
-                    <span class="text-2xl font-semibold">Brochures</span>
+                    <span id="nav-brochures" class="text-2xl font-semibold">Brochures</span>
                 </a>
                 <a href="#" class="grid-item">
                     <span class="grid-icon">🎧</span>
-                    <span class="text-2xl font-semibold">Guides audio</span>
+                    <span id="nav-audio" class="text-2xl font-semibold">Guides audio</span>
                 </a>
                  <a href="#" class="grid-item grid-item-col-2">
                     <span class="grid-icon">ℹ️</span>
-                    <span class="text-2xl font-semibold">Infos pratiques</span>
+                    <span id="nav-info-2" class="text-2xl font-semibold">Infos pratiques</span>
                 </a>
             </div>
         </div>
@@ -302,6 +328,100 @@
             let currentScreenIndex = 0;
             let startX = 0;
             let isDragging = false;
+
+            // Dictionnaire des traductions
+            const translations = {
+                'fr': {
+                    'title-main': 'Destination Sud Réunion',
+                    'title-welcome': 'Bienvenue',
+                    'nav-discover': 'Découvrir',
+                    'nav-activities': 'Activités & sensations',
+                    'nav-agenda': 'Agenda',
+                    'nav-eat': 'Où manger ?',
+                    'nav-sleep': 'Où dormir ?',
+                    'nav-info': 'Infos pratiques',
+                    'nav-weather': 'La Météo',
+                    'nav-hikes': 'Randonnées',
+                    'nav-water': 'Activités Nautiques',
+                    'nav-videos': 'Vidéos et reportages',
+                    'nav-brochures': 'Brochures',
+                    'nav-audio': 'Guides audio',
+                    // Pour les boutons en double sur d'autres écrans
+                    'nav-discover-2': 'Découvrir',
+                    'nav-activities-2': 'Activités & sensations',
+                    'nav-info-2': 'Infos pratiques'
+                },
+                'en': {
+                    'title-main': 'South Reunion Island Destination',
+                    'title-welcome': 'Welcome',
+                    'nav-discover': 'Discover',
+                    'nav-activities': 'Activities & thrills',
+                    'nav-agenda': 'Events',
+                    'nav-eat': 'Where to eat?',
+                    'nav-sleep': 'Where to sleep?',
+                    'nav-info': 'Practical info',
+                    'nav-weather': 'The Weather',
+                    'nav-hikes': 'Hikes',
+                    'nav-water': 'Water Activities',
+                    'nav-videos': 'Videos and reports',
+                    'nav-brochures': 'Brochures',
+                    'nav-audio': 'Audio guides',
+                    'nav-discover-2': 'Discover',
+                    'nav-activities-2': 'Activities & thrills',
+                    'nav-info-2': 'Practical info'
+                },
+                'es': {
+                    'title-main': 'Destino Sur Reunión',
+                    'title-welcome': 'Bienvenido',
+                    'nav-discover': 'Descubrir',
+                    'nav-activities': 'Actividades y sensaciones',
+                    'nav-agenda': 'Agenda',
+                    'nav-eat': '¿Dónde comer?',
+                    'nav-sleep': '¿Dónde dormir?',
+                    'nav-info': 'Información práctica',
+                    'nav-weather': 'El tiempo',
+                    'nav-hikes': 'Senderismo',
+                    'nav-water': 'Actividades acuáticas',
+                    'nav-videos': 'Vídeos y reportajes',
+                    'nav-brochures': 'Folletos',
+                    'nav-audio': 'Guías de audio',
+                    'nav-discover-2': 'Descubrir',
+                    'nav-activities-2': 'Actividades y sensaciones',
+                    'nav-info-2': 'Información práctica'
+                },
+                'de': {
+                    'title-main': 'Reiseziel Süd-Réunion',
+                    'title-welcome': 'Willkommen',
+                    'nav-discover': 'Entdecken',
+                    'nav-activities': 'Aktivitäten & Nervenkitzel',
+                    'nav-agenda': 'Veranstaltungskalender',
+                    'nav-eat': 'Wo essen?',
+                    'nav-sleep': 'Wo schlafen?',
+                    'nav-info': 'Praktische Informationen',
+                    'nav-weather': 'Das Wetter',
+                    'nav-hikes': 'Wanderungen',
+                    'nav-water': 'Wasseraktivitäten',
+                    'nav-videos': 'Videos und Berichte',
+                    'nav-brochures': 'Broschüren',
+                    'nav-audio': 'Audioführer',
+                    'nav-discover-2': 'Entdecken',
+                    'nav-activities-2': 'Aktivitäten & Nervenkitzel',
+                    'nav-info-2': 'Praktische Informationen'
+                }
+            };
+
+            // Fonction pour changer la langue
+            window.changeLanguage = function(lang) {
+                const currentLangTranslations = translations[lang];
+                if (currentLangTranslations) {
+                    for (const key in currentLangTranslations) {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            element.textContent = currentLangTranslations[key];
+                        }
+                    }
+                }
+            };
             
             // Met à jour la position du carrousel et les points de navigation
             function updateSlider() {
