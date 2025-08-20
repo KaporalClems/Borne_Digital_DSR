@@ -209,6 +209,21 @@
             align-items: center;
             color: #9ca3af;
             font-size: 0.875rem;
+            flex-wrap: wrap; /* Permet un retour à la ligne sur les petits écrans */
+        }
+        
+        /* Conteneur pour les liens du footer */
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        /* Styles pour la barre de séparation */
+        .footer-divider {
+            padding: 0 0.5rem;
+            color: #4b5563;
         }
 
         /* Points de navigation pour les écrans */
@@ -380,6 +395,70 @@
             height: auto;
             margin-bottom: 1rem;
         }
+        
+        /* Styles pour les formulaires modaux */
+        .form-modal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #4b5563;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        
+        .form-label {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: #d1d5db;
+        }
+        
+        .form-button {
+            background-color: #22c55e;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: none;
+        }
+        
+        .form-button:hover {
+            background-color: #16a34a;
+        }
+        
+        /* Styles pour le reCAPTCHA factice */
+        .recaptcha-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .recaptcha-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -519,13 +598,17 @@
     
     <!-- Barre de pied de page -->
     <div class="footer-bar">
-        <!-- Conteneur pour le copyright et les mentions légales -->
-        <div class="flex items-center gap-2">
+        <!-- Conteneur pour les liens du footer -->
+        <div class="footer-links">
             <!-- Mise à jour pour afficher l'année en cours automatiquement -->
             <span id="current-year"></span>
-            <span> DSR</span>
-            <span class="px-2 text-gray-400">|</span>
+            <span>DSR</span>
+            <span class="footer-divider">|</span>
             <a href="#" id="legal-link" class="text-sm">Mentions légales</a>
+            <span class="footer-divider">|</span>
+            <a href="#" id="newsletter-link" class="text-sm">Newsletter</a>
+            <span class="footer-divider">|</span>
+            <a href="#" id="contact-link" class="text-sm">Nous contacter</a>
         </div>
         <a href="index.html" class="flex items-center gap-2">
             Retour à l'écran de verrouillage
@@ -575,6 +658,71 @@
         </div>
     </div>
     
+    <!-- Modal Newsletter -->
+    <div id="newsletter-modal" class="modal">
+        <div class="modal-content form-modal-content">
+            <span class="close-button" id="close-newsletter-modal-btn">&times;</span>
+            <h2 class="text-3xl font-bold mb-6">Newsletter</h2>
+            <!-- L'attribut action pointe vers votre URL Formspree. REMPLACÉ PAR LE NOUVEAU LIEN -->
+            <form id="newsletter-form" action="https://formspree.io/f/xovlokvl" method="POST">
+                <div class="form-group">
+                    <label for="newsletter-email" class="form-label">Email*</label>
+                    <!-- L'attribut 'name' est important pour que Formspree reconnaisse le champ -->
+                    <input type="email" id="newsletter-email" name="email" required class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="newsletter-firstname" class="form-label">Prénom</label>
+                    <input type="text" id="newsletter-firstname" name="firstname" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="newsletter-lastname" class="form-label">Nom</label>
+                    <input type="text" id="newsletter-lastname" name="lastname" class="form-input">
+                </div>
+                <button type="submit" class="form-button mt-4">S'abonner</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Nous Contacter -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content form-modal-content">
+            <span class="close-button" id="close-contact-modal-btn">&times;</span>
+            <h2 class="text-3xl font-bold mb-6">Contactez-nous</h2>
+            <!-- L'attribut action pointe vers votre URL Formspree. REMPLACÉ PAR LE NOUVEAU LIEN -->
+            <form id="contact-form" action="https://formspree.io/f/mgvzjnvl" method="POST">
+                <!-- Champ caché pour l'objet de l'email, géré par Formspree -->
+                <input type="hidden" name="_subject" value="Nouveau message de contact depuis le site DSR">
+
+                <div class="form-group">
+                    <label for="contact-name" class="form-label">Nom*</label>
+                    <input type="text" id="contact-name" name="name" required class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="contact-email" class="form-label">Email*</label>
+                    <input type="email" id="contact-email" name="email" required class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="contact-subject" class="form-label">Objet*</label>
+                    <select id="contact-subject" name="subject" required class="form-select">
+                        <option value="">- Veuillez sélectionner -</option>
+                        <option value="Demande d'informations">Demande d'informations</option>
+                        <option value="Partenariat">Partenariat</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contact-message" class="form-label">Message*</label>
+                    <textarea id="contact-message" name="message" rows="4" required class="form-textarea"></textarea>
+                </div>
+                <div class="recaptcha-container">
+                    <div class="recaptcha-checkbox"></div>
+                    <span>Je ne suis pas un robot</span>
+                </div>
+                <button type="submit" class="form-button mt-4">Envoyer</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const slider = document.getElementById('slider-container');
@@ -604,6 +752,15 @@
             const legalLink = document.getElementById('legal-link');
             const legalModal = document.getElementById('legal-modal');
             const closeLegalModalBtn = document.getElementById('close-legal-modal-btn');
+            
+            // Références aux nouveaux éléments de pied de page
+            const newsletterLink = document.getElementById('newsletter-link');
+            const newsletterModal = document.getElementById('newsletter-modal');
+            const closeNewsletterModalBtn = document.getElementById('close-newsletter-modal-btn');
+            
+            const contactLink = document.getElementById('contact-link');
+            const contactModal = document.getElementById('contact-modal');
+            const closeContactModalBtn = document.getElementById('close-contact-modal-btn');
 
             // Fonction pour réinitialiser le minuteur d'inactivité
             function resetInactivityTimer() {
@@ -823,27 +980,45 @@
             }
 
             // =======================================================
-            // FONCTIONNALITÉS D'ACCESSIBILITÉ ET MENTIONS LÉGALES
+            // FONCTIONNALITÉS D'ACCESSIBILITÉ, MENTIONS LÉGALES ET FORMULAIRES
             // =======================================================
+            
+            // Fonction générique pour ouvrir un modal
+            function openModal(modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            // Fonction générique pour fermer un modal
+            function closeModal(modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
 
             // Affiche le modal d'accessibilité
             accessibilityBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                accessibilityModal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Empêche le défilement en arrière-plan
+                openModal(accessibilityModal);
             });
             
             // Ferme le modal d'accessibilité
             closeModalBtn.addEventListener('click', () => {
-                accessibilityModal.classList.remove('active');
-                document.body.style.overflow = ''; // Réactive le défilement
+                closeModal(accessibilityModal);
             });
 
-            // Ferme le modal d'accessibilité si on clique en dehors
+            // Ferme les modaux si on clique en dehors
             window.addEventListener('click', (event) => {
                 if (event.target === accessibilityModal) {
-                    accessibilityModal.classList.remove('active');
-                    document.body.style.overflow = '';
+                    closeModal(accessibilityModal);
+                }
+                if (event.target === legalModal) {
+                    closeModal(legalModal);
+                }
+                if (event.target === newsletterModal) {
+                    closeModal(newsletterModal);
+                }
+                if (event.target === contactModal) {
+                    closeModal(contactModal);
                 }
             });
 
@@ -889,23 +1064,98 @@
             // Affiche le modal de mentions légales
             legalLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                legalModal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                openModal(legalModal);
             });
             
             // Ferme le modal de mentions légales
             closeLegalModalBtn.addEventListener('click', () => {
-                legalModal.classList.remove('active');
-                document.body.style.overflow = '';
+                closeModal(legalModal);
+            });
+            
+            // Affiche le modal de la newsletter
+            newsletterLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal(newsletterModal);
+            });
+            
+            // Ferme le modal de la newsletter
+            closeNewsletterModalBtn.addEventListener('click', () => {
+                closeModal(newsletterModal);
             });
 
-            // Ferme le modal si on clique en dehors
-            window.addEventListener('click', (event) => {
-                if (event.target === legalModal) {
-                    legalModal.classList.remove('active');
-                    document.body.style.overflow = '';
-                }
+            // Affiche le modal de contact
+            contactLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal(contactModal);
             });
+            
+            // Ferme le modal de contact
+            closeContactModalBtn.addEventListener('click', () => {
+                closeModal(contactModal);
+            });
+
+            // Gère la soumission des formulaires (factice)
+            const newsletterForm = document.getElementById('newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', (e) => {
+                    // Empêche la soumission par défaut pour que Formspree puisse la gérer
+                    e.preventDefault();
+                    // Envoyer le formulaire à Formspree
+                    fetch(e.target.action, {
+                        method: newsletterForm.method,
+                        body: new FormData(newsletterForm),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            closeModal(newsletterModal);
+                            alert("Merci pour votre inscription à la newsletter !");
+                        } else {
+                            response.json().then(data => {
+                                if (Object.hasOwn(data, 'errors')) {
+                                    alert(data["errors"].map(error => error["message"]).join(", "));
+                                } else {
+                                    alert("Oops! Une erreur s'est produite lors de la soumission du formulaire.");
+                                }
+                            });
+                        }
+                    }).catch(error => {
+                        alert("Oops! Une erreur s'est produite lors de la soumission du formulaire.");
+                    });
+                });
+            }
+
+            const contactForm = document.getElementById('contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    // Empêche la soumission par défaut
+                    e.preventDefault();
+                    // Envoyer le formulaire à Formspree
+                    fetch(e.target.action, {
+                        method: contactForm.method,
+                        body: new FormData(contactForm),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            closeModal(contactModal);
+                            alert("Merci ! Votre message a été envoyé.");
+                        } else {
+                            response.json().then(data => {
+                                if (Object.hasOwn(data, 'errors')) {
+                                    alert(data["errors"].map(error => error["message"]).join(", "));
+                                } else {
+                                    alert("Oops! Une erreur s'est produite lors de la soumission du formulaire.");
+                                }
+                            });
+                        }
+                    }).catch(error => {
+                        alert("Oops! Une erreur s'est produite lors de la soumission du formulaire.");
+                    });
+                });
+            }
 
             // Initialise le slider au chargement
             updateSlider();
