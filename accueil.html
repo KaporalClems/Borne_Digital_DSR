@@ -72,14 +72,21 @@
             gap: 1rem;
         }
 
-        .language-button {
-            font-size: 3rem; /* Taille de l'icône de drapeau */
+        .flag-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        .language-button:hover {
+        .flag-button:hover {
             transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
         }
 
         /* Panneau de grille (écrans 2 et 3) */
@@ -200,12 +207,12 @@
         <!-- Écran 1 -->
         <div id="screen-1" class="screen">
             <div class="left-panel">
-                <!-- Boutons de langue avec emojis -->
+                <!-- Boutons de langue -->
                 <div class="language-buttons">
-                    <span class="language-button" onclick="changeLanguage('fr')">🇫🇷</span>
-                    <span class="language-button" onclick="changeLanguage('en')">🇬🇧</span>
-                    <span class="language-button" onclick="changeLanguage('es')">🇪🇸</span>
-                    <span class="language-button" onclick="changeLanguage('de')">🇩🇪</span>
+                    <a href="#" class="flag-button" onclick="changeLanguage('fr')" style="background-image: url('https://flagcdn.com/w320/fr.png');"></a>
+                    <a href="#" class="flag-button" onclick="changeLanguage('en')" style="background-image: url('https://flagcdn.com/w320/gb.png');"></a>
+                    <a href="#" class="flag-button" onclick="changeLanguage('es')" style="background-image: url('https://flagcdn.com/w320/es.png');"></a>
+                    <a href="#" class="flag-button" onclick="changeLanguage('de')" style="background-image: url('https://flagcdn.com/w320/de.png');"></a>
                 </div>
                 <div class="left-panel-content">
                     <h1 id="title-main" class="font-[Pacifico] text-6xl md:text-8xl lg:text-9xl mb-4 drop-shadow-lg">
