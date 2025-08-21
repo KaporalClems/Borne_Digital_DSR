@@ -12,6 +12,7 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f0f4f8;
+            padding-top: 68px; /* Ajoute un padding pour que le contenu ne soit pas caché par le header fixe */
         }
         :root {
             --onf-green-dark: #00552e;
@@ -68,7 +69,7 @@
         }
 
         #map {
-            height: 500px; /* Hauteur ajustée pour la nouvelle disposition */
+            height: 500px;
             border-radius: 0.5rem;
         }
         .theme-icon {
@@ -120,6 +121,18 @@
             width: 1rem;
             height: 1rem;
         }
+
+        /* Animation du bouton de retour */
+        @keyframes vibrate {
+            0% { transform: translateX(0) scale(1); }
+            25% { transform: translateX(-1px) scale(1.01); }
+            50% { transform: translateX(1px) scale(1); }
+            75% { transform: translateX(-1px) scale(1.01); }
+            100% { transform: translateX(0) scale(1); }
+        }
+        .animate-vibrate {
+            animation: vibrate 0.5s infinite linear;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -133,9 +146,19 @@
 
     <!-- Contenu de la page -->
     <div class="relative z-10">
-        <header class="bg-onf-green-dark/70 backdrop-blur-sm shadow-md sticky top-0">
+        <!-- Header fixé en haut de la page -->
+        <header class="bg-onf-green-dark/70 backdrop-blur-sm shadow-md fixed top-0 left-0 right-0 z-50">
             <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="text-2xl font-bold text-white">Destination <span class="text-onf-green-light">Randos</span></div>
+                <div class="flex items-center space-x-4">
+                    <!-- Bouton de retour avec lien et animation de vibration -->
+                    <a href="accueil.html" class="flex items-center text-gray-200 hover:text-white px-3 py-2 rounded-md transition-colors border-2 border-onf-green-light animate-vibrate">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        </svg>
+                        Retour
+                    </a>
+                    <div class="text-2xl font-bold text-white">Destination <span class="text-onf-green-light">Randos</span></div>
+                </div>
                 <div>
                     <a href="#" class="text-gray-200 hover:text-white px-3 py-2">Accueil</a>
                     <a href="#" class="text-gray-200 hover:text-white px-3 py-2">Randonnées</a>
@@ -196,88 +219,24 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const themeIcons = { 'Montagne': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 15.75l-1.42-1.42a2.25 2.25 0 010-3.18l8.48-8.48a2.25 2.25 0 013.18 0l8.48 8.48a2.25 2.25 0 010 3.18l-1.42 1.42m-10.5-3.53v-2.25a2.25 2.25 0 00-2.25-2.25H4.5m1.5 6.75v2.25a2.25 2.25 0 002.25 2.25h1.5m-6.75-4.5v4.5a2.25 2.25 0 002.25 2.25h1.5m10.5-11.25l-3.75 3.75" /></svg>`, 'Volcan': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.362-3.797z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" /></svg>`, 'Point de vue': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639l4.368-7.022a1.012 1.012 0 011.628 0l4.368 7.022a1.012 1.012 0 010 .639l-4.368 7.022a1.012 1.012 0 01-1.628 0l-4.368-7.022z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`, 'Forêt': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1M14.25 3l-3.75 1.364M10.5 15l-1.5-1.5" /></svg>`, 'Cascade': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.375v12.75m-3.375-3.375L12 20.25l3.375-4.25M12 6.375L9.375 9.75m2.625-3.375L14.625 9.75" /></svg>`, 'Patrimoine culturel': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>`, 'Géologie': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 3.75a9 9 0 010 16.5" /></svg>`, 'Flore': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 12.75l-1.5 1.5M12 15.75l-1.5-1.5m1.5-1.5l1.5 1.5m-1.5-1.5l1.5-1.5M3 12a9 9 0 1118 0 9 9 0 01-18 0z" /></svg>`, 'Faune': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.75a9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" /></svg>`, 'Défaut': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L24 5.25l-.813 2.846a4.5 4.5 0 00-3.09 3.09L18.25 12z" /></svg>` };
+            // Icones pour les thèmes
+            const themeIcons = { 'Montagne': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 15.75l-1.42-1.42a2.25 2.25 0 010-3.18l8.48-8.48a2.25 2.25 0 013.18 0l8.48 8.48a2.25 2.25 0 010 3.18l-1.42 1.42m-10.5-3.53v-2.25a2.25 2.25 0 00-2.25-2.25H4.5m1.5 6.75v2.25a2.25 2.25 0 002.25 2.25h1.5m-6.75-4.5v4.5a2.25 2.25 0 002.25 2.25h1.5m10.5-11.25l-3.75 3.75" /></svg>`, 'Volcan': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.362-3.797z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" /></svg>`, 'Point de vue': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639l4.368-7.022a1.012 1.012 0 011.628 0l4.368 7.022a1.012 1.012 0 010 .639l-4.368 7.022a1.012 1.012 0 01-1.628 0l-4.368-7.022z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`, 'Forêt': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1M14.25 3l-3.75 1.364M10.5 15l-1.5-1.5" /></svg>`, 'Cascade': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.375v12.75m-3.375-3.375L12 20.25l3.375-4.25M12 6.375L9.375 9.75m2.625-3.375L14.625 9.75" /></svg>`, 'Patrimoine culturel': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" /></svg>`, 'Géologie': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 3.75a9 9 0 010 16.5" /></svg>`, 'Flore': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 12.75l-1.5 1.5M12 15.75l-1.5-1.5m1.5-1.5l1.5 1.5m-1.5-1.5l1.5-1.5M3 12a9 9 0 1118 0 9 9 0 01-18 0z" /></svg>`, 'Faune': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.75a9 9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M12 15.75a3.75 3.75 0 100-7.5 3.75 3.75 0 000 7.5z" /></svg>`, 'Défaut': `<svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L24 5.25l-.813 2.846a4.5 4.5 0 00-3.09 3.09L18.25 12z" /></svg>` };
+            
+            // Les randonnées qui sont dans le sud de La Réunion
             const hikes = [
                 { name: "Sommet du Piton des Neiges", difficulty: "Difficile", image: "https://www.sudreuniontourisme.fr/fileadmin/_processed_/3/0/csm_sommet-piton-des-neiges_958ee59099.jpg", lat: -21.099, lng: 55.4805, duration: "10 h", duration_hours: 10, distance: "15 km", elevation: "1743 m", commune: "Cilaos", themes: ["Montagne", "Volcan", "Point de vue"], alt_min: 1330, alt_max: 3073, description: "L'ascension du plus haut sommet de l'île de La Réunion est un incontournable pour les randonneurs aguerris. Le panorama à 360° au lever du soleil est une récompense inoubliable." },
                 { name: "Ascension du cratère Dolomieu", difficulty: "Assez difficile", image: "https://upload.wikimedia.org/wikipedia/commons/9/96/R%C3%A9union_Fournaise_Dolomieu2009.JPG", lat: -21.24, lng: 55.71, duration: "6 h", duration_hours: 6, distance: "13 km", elevation: "596 m", commune: "Sainte-Rose", themes: ["Volcan", "Point de vue", "Géologie"], alt_min: 2250, alt_max: 2632, description: "Atteignez le sommet du Piton de la Fournaise et contemplez l'immensité de son cratère principal, le Dolomieu. Une expérience volcanique inoubliable." },
-                { name: "Boucle de Marla, Trois Roches et Plaine aux Sables", difficulty: "Difficile", image: "https://upload.wikimedia.org/wikipedia/commons/1/10/Mafate_Marla_from_Taibit_dsc00570.jpg", lat: -21.14, lng: 55.43, duration: "6 h", duration_hours: 6, distance: "12 km", elevation: "899 m", commune: "La Possession", themes: ["Montagne", "Point de vue", "Cascade"], alt_min: 1500, alt_max: 2399, description: "Une boucle exigeante au cœur de Mafate, offrant des paysages spectaculaires, des ilets traditionnels et la fameuse cascade de Trois Roches." },
-                { name: "Grand Bénare depuis le gîte des Tamarins", difficulty: "Difficile", image: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Ile_de_la_R%C3%A9union_-_cirque_de_Mafate_depuis_le_Grand_B%C3%A9nare.jpg", lat: -21.1, lng: 55.35, duration: "7 h", duration_hours: 7, distance: "15 km", elevation: "1105 m", commune: "Les Trois-Bassins", themes: ["Montagne", "Point de vue", "Faune"], alt_min: 1800, alt_max: 2898, description: "Atteignez le troisième plus haut sommet de l'île pour une vue imprenable sur les cirques de Mafate et Cilaos." },
-                { name: "Le sommet de la Roche Ecrite depuis Mamode Camp", difficulty: "Difficile", image: "https://placehold.co/600x400/2d3748/ffffff?text=Roche+Ecrite", lat: -20.98, lng: 55.44, duration: "8 h 30", duration_hours: 8.5, distance: "19 km", elevation: "1090 m", commune: "Saint-Denis", themes: ["Montagne", "Forêt", "Point de vue", "Faune"], alt_min: 1200, alt_max: 2276, description: "Une longue et belle randonnée vers un des plus beaux belvédères de l'île, avec des chances d'apercevoir le Tuit-tuit." },
-                { name: "Boucle Fenêtre des Makes", difficulty: "Assez difficile", image: "https://placehold.co/600x400/4a5568/FFF?text=Fenêtre+des+Makes", lat: -21.218, lng: 55.428, duration: "5 h", duration_hours: 5, distance: "12 km", elevation: "889 m", commune: "Saint-Louis", themes: ["Forêt", "Point de vue"], alt_min: 1500, alt_max: 2389, description: "Offrant l'un des plus beaux panoramas sur le Cirque de Cilaos, cette randonnée est un classique pour les amateurs de vues imprenables." },
-                { name: "Le sentier de Takamaka", difficulty: "Assez difficile", image: "https://placehold.co/600x400/3182ce/ffffff?text=Takamaka", lat: -21.11, lng: 55.63, duration: "5 h", duration_hours: 5, distance: "9 km", elevation: "281 m", commune: "Saint-Benoît", themes: ["Forêt", "Cascade", "Point de vue"], alt_min: 700, alt_max: 981, description: "Plongez au cœur de la vallée de Takamaka, connue pour ses nombreuses cascades et sa végétation luxuriante." },
-                { name: 'Sentier de la Chapelle', difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/b794f4/ffffff?text=La+Chapelle', lat: -21.135, lng: 55.45, duration: '6 h', duration_hours: 6, distance: '7 km', elevation: '674 m', commune: 'Cilaos', themes: ['Cascade', 'Géologie', 'Montagne'], alt_min: 1200, alt_max: 1874, description: "Une randonnée aquatique et minérale qui mène à un site géologique exceptionnel, une immense grotte au fond d'un canyon." },
-                { name: 'Piton Mont Vert', difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/38a169/FFF?text=Piton+Mont+Vert', lat: -21.34, lng: 55.45, duration: '1 h 30', duration_hours: 1.5, distance: '2 km', elevation: '118 m', commune: 'Saint-Pierre', themes: ['Volcan', 'Point de vue', 'Flore'], alt_min: 500, alt_max: 618, description: "Une courte ascension pour un panorama à 360° sur la côte sud de l'île. Idéal pour une sortie en famille et pour découvrir un ancien cône volcanique." },
-                { name: 'Découverte de la forêt de Bon Accueil', difficulty: 'Facile', image: 'https://placehold.co/600x400/9ae6b4/2d3748?text=Bon+Accueil', lat: -21.26, lng: 55.43, duration: '3 h 30', duration_hours: 3.5, distance: '4 km', elevation: '322 m', commune: 'Saint-Louis', themes: ['Forêt', 'Flore'], alt_min: 900, alt_max: 1222, description: "Une immersion paisible dans une forêt des hauts, parfaite pour une balade familiale et la découverte de la flore locale." },
-                { name: 'Boucle de l\'Anse des Cascades', difficulty: 'Facile', image: 'https://placehold.co/600x400/4299e1/ffffff?text=Anse+des+Cascades', lat: -21.23, lng: 55.82, duration: '2 h', duration_hours: 2, distance: '4 km', elevation: '91 m', commune: 'Sainte-Rose', themes: ['Cascade', 'Forêt', 'Patrimoine culturel'], alt_min: 0, alt_max: 91, description: "Une balade facile entre l'océan et de multiples petites cascades, dans une cocoteraie aménagée." },
-                { name: 'Forêt de Mare Longue', difficulty: 'Facile', image: 'https://placehold.co/600x400/48bb78/ffffff?text=Mare+Longue', lat: -21.35, lng: 55.7, duration: '3 h 30', duration_hours: 3.5, distance: '7 km', elevation: '290 m', commune: 'Saint-Philippe', themes: ['Forêt', 'Flore', 'Faune'], alt_min: 300, alt_max: 590, description: "Découvrez l'une des dernières forêts primaires de basse altitude de l'île, un trésor de biodiversité." },
-                { name: "Boucle de l'Argamasse", difficulty: 'Facile', image: 'https://placehold.co/600x400/ed8936/ffffff?text=Argamasse', lat: -21.22, lng: 55.57, duration: '3 h', duration_hours: 3, distance: '7 km', elevation: '172 m', commune: 'Le Tampon', themes: ['Forêt', 'Flore'], alt_min: 1500, alt_max: 1672, description: "Une promenade agréable sur les hauteurs du Tampon, traversant des paysages variés." },
-                { name: "Boucle de Pic Adam", difficulty: 'Facile', image: 'https://placehold.co/600x400/d53f8c/ffffff?text=Pic+Adam', lat: -20.91, lng: 55.48, duration: '3 h', duration_hours: 3, distance: '7 km', elevation: '555 m', commune: 'Saint-Denis', themes: ['Forêt', 'Point de vue'], alt_min: 400, alt_max: 955, description: "Un classique pour les Dionysiens, offrant une vue panoramique sur le chef-lieu et le littoral nord." },
-                { name: "Boucle des Margosiers", difficulty: 'Difficile', image: 'https://placehold.co/600x400/805ad5/ffffff?text=Margosiers', lat: -21.35, lng: 55.62, duration: '4 h 30', duration_hours: 4.5, distance: '11 km', elevation: '864 m', commune: 'Saint-Joseph', themes: ['Forêt', 'Point de vue', 'Cascade'], alt_min: 300, alt_max: 1164, description: "Une boucle sportive dans les hauts de Saint-Joseph, avec des passages en forêt et des vues sur la Rivière des Remparts." },
-                { name: "Boucle des îlets du Bas Mafate", difficulty: 'Difficile', image: 'https://placehold.co/600x400/38b2ac/ffffff?text=Bas+Mafate', lat: -21.05, lng: 55.35, duration: '2 jours', duration_hours: 48, distance: '15 km', elevation: '1236 m', commune: 'La Possession', themes: ['Montagne', 'Patrimoine culturel'], alt_min: 300, alt_max: 1536, description: "Une immersion de deux jours dans la partie la plus sauvage et la moins fréquentée de Mafate." },
-                { name: "Boucle du Bélier", difficulty: 'Difficile', image: 'https://placehold.co/600x400/dd6b20/ffffff?text=Bélier', lat: -21.07, lng: 55.54, duration: '6 h', duration_hours: 6, distance: '13 km', elevation: '926 m', commune: 'Salazie', themes: ['Forêt', 'Point de vue', 'Faune'], alt_min: 1000, alt_max: 1926, description: "Une randonnée exigeante offrant des vues spectaculaires sur le cirque de Salazie et le Piton des Neiges." },
-                { name: "Bras Sec - Ilet à Cordes", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/f6e05e/2d3748?text=Bras+Sec', lat: -21.18, lng: 55.47, duration: '4 h', duration_hours: 4, distance: '10 km', elevation: '560 m', commune: 'Cilaos', themes: ['Montagne', 'Patrimoine culturel'], alt_min: 800, alt_max: 1360, description: "Reliez deux ilets du cirque de Cilaos par un sentier historique offrant de belles vues sur le cirque." },
-                { name: "Cap Blanc", difficulty: 'Facile', image: 'https://placehold.co/600x400/a0aec0/2d3748?text=Cap+Blanc', lat: -21.38, lng: 55.64, duration: '4 h', duration_hours: 4, distance: '7 km', elevation: '359 m', commune: 'Saint-Joseph', themes: ['Point de vue', 'Forêt'], alt_min: 400, alt_max: 759, description: "Une randonnée sur les falaises du Sud Sauvage, avec des vues imprenables sur l'océan." },
-                { name: "Cap Noir, chemin entre deux mondes", difficulty: 'Facile', image: 'https://placehold.co/600x400/2d3748/ffffff?text=Cap+Noir', lat: -21.06, lng: 55.40, duration: '3 h', duration_hours: 3, distance: '3 km', elevation: '251 m', commune: 'La Possession', themes: ['Point de vue', 'Montagne'], alt_min: 1000, alt_max: 1251, description: "Un sentier spectaculaire et un peu aérien, offrant une vue plongeante sur le cirque de Mafate." },
-                { name: "Cascade du Bras Rouge", difficulty: 'Facile', image: 'https://placehold.co/600x400/e53e3e/ffffff?text=Bras+Rouge', lat: -21.15, lng: 55.46, duration: '3 h', duration_hours: 3, distance: '6 km', elevation: '399 m', commune: 'Cilaos', themes: ['Cascade', 'Forêt'], alt_min: 1100, alt_max: 1499, description: "Une belle balade familiale vers une cascade et des bassins où la baignade est possible." },
-                { name: "Cascade Maniquet par le sentier de Prévallée", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/63b3ed/ffffff?text=Maniquet', lat: -20.92, lng: 55.50, duration: '2 h 30', duration_hours: 2.5, distance: '5 km', elevation: '283 m', commune: 'Saint-Denis', themes: ['Cascade', 'Forêt'], alt_min: 500, alt_max: 783, description: "Une courte randonnée menant à une jolie cascade dans les hauts de Saint-Denis." },
-                { name: "Cassé de la Rivière de l'Est depuis le Volcan", difficulty: 'Assez difficile', image: 'https://placehold.co/600x400/c53030/ffffff?text=Cassé', lat: -21.20, lng: 55.70, duration: '6 h', duration_hours: 6, distance: '16 km', elevation: '547 m', commune: 'Sainte-Rose', themes: ['Volcan', 'Point de vue'], alt_min: 2000, alt_max: 2547, description: "Une longue marche sur les flancs du volcan offrant une vue imprenable sur le grand cassé de la Rivière de l'Est." },
-                { name: "Chemin des pitons", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/f6ad55/2d3748?text=Chemin+Pitons', lat: -21.25, lng: 55.58, duration: '5 h', duration_hours: 5, distance: '12 km', elevation: '576 m', commune: 'Le Tampon', themes: ['Forêt', 'Point de vue'], alt_min: 1600, alt_max: 2176, description: "Une randonnée agréable sur la Plaine des Cafres, reliant plusieurs petits pitons." },
-                { name: "Chemin historique des Anglais", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/4a5568/ffffff?text=Chemin+Anglais', lat: -20.95, lng: 55.30, duration: '5 h 30', duration_hours: 5.5, distance: '6 km', elevation: '304 m', commune: 'La Possession', themes: ['Patrimoine culturel', 'Forêt'], alt_min: 100, alt_max: 404, description: "Marchez sur les pavés d'un sentier historique qui reliait autrefois Saint-Denis à La Possession." },
-                { name: "Cilaos - D'ilet en ilet.", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/9f7aea/ffffff?text=Ilet+en+Ilet', lat: -21.13, lng: 55.47, duration: '3 jours', duration_hours: 72, distance: '30 km', elevation: '2093 m', commune: 'Cilaos', themes: ['Montagne', 'Patrimoine culturel'], alt_min: 800, alt_max: 2893, description: "Une itinérance de plusieurs jours pour découvrir la vie authentique des ilets du cirque de Cilaos." },
-                { name: "De Cap Noir au gîte de la Roche Ecrite", difficulty: 'Assez difficile', image: 'https://placehold.co/600x400/2c5282/ffffff?text=Roche+Ecrite', lat: -21.00, lng: 55.43, duration: '4 h 30', duration_hours: 4.5, distance: '8 km', elevation: '857 m', commune: 'La Possession', themes: ['Montagne', 'Point de vue'], alt_min: 1200, alt_max: 2057, description: "Une montée exigeante vers le gîte de la Roche Ecrite, point de départ pour l'ascension finale." },
-                { name: "De Hell-Bourg à Bélouve", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/fbd38d/2d3748?text=Hell-Bourg', lat: -21.06, lng: 55.52, duration: '3 h', duration_hours: 3, distance: '6 km', elevation: '559 m', commune: 'Salazie', themes: ['Forêt', 'Point de vue'], alt_min: 900, alt_max: 1459, description: "Montez depuis le magnifique village de Hell-Bourg jusqu'à la forêt de Bélouve et son gîte." },
-                { name: "Deux Bras à Cayenne par les passerelles", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/6b46c1/ffffff?text=Cayenne', lat: -21.08, lng: 55.36, duration: '4 h 45', duration_hours: 4.75, distance: '12 km', elevation: '535 m', commune: 'La Possession', themes: ['Montagne', 'Patrimoine culturel', 'Cascade'], alt_min: 250, alt_max: 785, description: "Une randonnée dans le bas de Mafate, traversant plusieurs rivières sur des passerelles impressionnantes." },
-                { name: "Du Col des Bœufs au Col de Fourche", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/f56565/ffffff?text=Col+des+Boeufs', lat: -21.08, lng: 55.47, duration: '2 h 30', duration_hours: 2.5, distance: '5 km', elevation: '326 m', commune: 'Salazie', themes: ['Montagne', 'Point de vue'], alt_min: 1900, alt_max: 2226, description: "Une randonnée sur les crêtes entre les cirques de Salazie et Mafate, offrant des vues à couper le souffle." },
-                { name: "Du Colorado à la Fenêtre d'Îlet à Guillaume", difficulty: 'Facile', image: 'https://placehold.co/600x400/4fd1c5/2d3748?text=Colorado', lat: -20.92, lng: 55.44, duration: '3 h', duration_hours: 3, distance: '5 km', elevation: '278 m', commune: 'Saint-Denis', themes: ['Forêt', 'Point de vue'], alt_min: 600, alt_max: 878, description: "Une balade facile sur les hauteurs de Saint-Denis, menant à un beau point de vue sur la Rivière Saint-Denis." },
-                { name: "Du Maïdo à la Glacière par Grand Bord", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/319795/ffffff?text=Maido', lat: -21.06, lng: 55.38, duration: '4 h 30', duration_hours: 4.5, distance: '12 km', elevation: '534 m', commune: 'Saint-Paul', themes: ['Montagne', 'Point de vue', 'Patrimoine culturel'], alt_min: 1800, alt_max: 2334, description: "Descendez depuis le Maïdo en longeant le rempart de Mafate jusqu'à l'historique Glacière." },
-                { name: "Foc-Foc et les Puys Ramond", difficulty: 'Facile', image: 'https://placehold.co/600x400/f6e05e/2d3748?text=Foc-Foc', lat: -21.27, lng: 55.65, duration: '5 h 30', duration_hours: 5.5, distance: '20 km', elevation: '437 m', commune: 'Sainte-Rose', themes: ['Volcan', 'Flore'], alt_min: 2000, alt_max: 2437, description: "Une longue mais facile randonnée sur le plateau Foc-Foc, connu pour sa flore unique et ses paysages volcaniques." },
-                { name: "Forêt de Dioré", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/00b5d8/ffffff?text=Dioré', lat: -20.98, lng: 55.55, duration: '2 h 30', duration_hours: 2.5, distance: '5 km', elevation: '275 m', commune: 'Saint-André', themes: ['Forêt', 'Flore'], alt_min: 800, alt_max: 1075, description: "Explorez cette belle forêt des hauts de l'Est, riche en espèces endémiques." },
-                { name: "Forêt de la Petite Plaine", difficulty: 'Facile', image: 'https://placehold.co/600x400/90cdf4/2d3748?text=Petite+Plaine', lat: -21.18, lng: 55.62, duration: '1 h 30', duration_hours: 1.5, distance: '1 km', elevation: '87 m', commune: 'La Plaine-des-Palmistes', themes: ['Forêt', 'Flore'], alt_min: 1200, alt_max: 1287, description: "Une très courte balade d'interprétation, idéale pour les familles et la découverte de la nature." },
-                { name: "Forêt de la Plaine des Fougères", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/81e6d9/2d3748?text=Fougères', lat: -20.93, lng: 55.55, duration: '3 h', duration_hours: 3, distance: '6 km', elevation: '279 m', commune: 'Sainte-Marie', themes: ['Forêt', 'Flore'], alt_min: 1000, alt_max: 1279, description: "Une randonnée dans une magnifique forêt de cryptomerias et de fougères arborescentes." },
-                { name: "Forêt luxuriante et Col de Bébour", difficulty: 'Difficile', image: 'https://placehold.co/600x400/36a2eb/ffffff?text=Bébour', lat: -21.12, lng: 55.57, duration: '7 h', duration_hours: 7, distance: '17 km', elevation: '717 m', commune: 'Saint-Benoît', themes: ['Forêt', 'Flore', 'Faune'], alt_min: 1300, alt_max: 2017, description: "Traversez la forêt de Bébour-Bélouve, l'une des plus belles et des mieux préservées de l'île." },
-                { name: "Grand Coude - Grand Galet", difficulty: 'Facile', image: 'https://placehold.co/600x400/ffce56/2d3748?text=Grand+Coude', lat: -21.32, lng: 55.63, duration: '3 h', duration_hours: 3, distance: '6 km', elevation: '38 m', commune: 'Saint-Joseph', themes: ['Forêt', 'Patrimoine culturel'], alt_min: 600, alt_max: 638, description: "Une randonnée facile qui relie le village de Grand Coude à la rivière Langevin et ses bassins." },
-                { name: "Gîte du Volcan - Grand Galet", difficulty: 'Assez difficile', image: 'https://placehold.co/600x400/ff6384/ffffff?text=Gite+Volcan', lat: -21.28, lng: 55.65, duration: '6 h', duration_hours: 6, distance: '16 km', elevation: '170 m', commune: 'Sainte-Rose', themes: ['Volcan', 'Forêt'], alt_min: 700, alt_max: 2250, description: "Une longue descente depuis les flancs du Volcan jusqu'à la vallée de Grand Galet." },
-                { name: "Ilet à Cordes - Le Pavillon", difficulty: 'Facile', image: 'https://placehold.co/600x400/4bc0c0/ffffff?text=Ilet+a+Cordes', lat: -21.17, lng: 55.46, duration: '3 h', duration_hours: 3, distance: '8 km', elevation: '160 m', commune: 'Cilaos', themes: ['Montagne', 'Patrimoine culturel'], alt_min: 900, alt_max: 1060, description: "Une randonnée sur un sentier en balcon, offrant de belles vues sur le cirque de Cilaos." },
-                { name: "La canalisation des Orangers de Sans Souci à l'Îlet des Orangers", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/9966ff/ffffff?text=Orangers', lat: -21.03, lng: 55.33, duration: '8 h', duration_hours: 8, distance: '27 km', elevation: '1209 m', commune: 'Saint-Paul', themes: ['Montagne', 'Patrimoine culturel', 'Point de vue'], alt_min: 400, alt_max: 1609, description: "Suivez une canalisation historique qui vous mènera au cœur de Mafate, à l'ilet des Orangers." },
-                { name: "La face cachée de La Plaine d’Affouches", difficulty: 'Assez difficile', image: 'https://placehold.co/600x400/ff9f40/ffffff?text=Affouches', lat: -20.96, lng: 55.42, duration: '5 h', duration_hours: 5, distance: '14 km', elevation: '816 m', commune: 'Saint-Denis', themes: ['Forêt', 'Point de vue', 'Faune'], alt_min: 1000, alt_max: 1816, description: "Explorez une zone méconnue des hauts de Saint-Denis, avec des vues imprenables et une nature préservée." },
-                { name: "La forêt de Grand Coude (1 800 m)", difficulty: 'Difficile', image: 'https://placehold.co/600x400/c9cbcf/2d3748?text=Foret+Grand+Coude', lat: -21.3, lng: 55.63, duration: '5 h', duration_hours: 5, distance: '4 km', elevation: '700 m', commune: 'Saint-Joseph', themes: ['Forêt', 'Flore', 'Faune'], alt_min: 1100, alt_max: 1800, description: "Une montée difficile à travers une forêt humide, récompensée par une ambiance unique." },
-                { name: "La Nouvelle par le Chemin Charrette", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/e4e6ef/2d3748?text=La+Nouvelle', lat: -21.1, lng: 55.44, duration: '5 h', duration_hours: 5, distance: '13 km', elevation: '612 m', commune: 'La Possession', themes: ['Montagne', 'Patrimoine culturel'], alt_min: 1200, alt_max: 1812, description: "Un des accès classiques pour rejoindre le plus grand ilet de Mafate, La Nouvelle." },
-                { name: "Le belvédère de la Rivière des Marsouins", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/4bc0c0/ffffff?text=Marsouins', lat: -21.15, lng: 55.62, duration: '3 h', duration_hours: 3, distance: '7 km', elevation: '201 m', commune: 'Saint-Benoît', themes: ['Forêt', 'Point de vue'], alt_min: 500, alt_max: 701, description: "Une randonnée agréable menant à un point de vue sur la vallée de la Rivière des Marsouins." },
-                { name: "Le Grand Bénare par le Grand Bord et La Glacière", difficulty: 'Assez difficile', image: 'https://placehold.co/600x400/ffcd56/2d3748?text=Grand+Benare', lat: -21.08, lng: 55.37, duration: '7 h', duration_hours: 7, distance: '17 km', elevation: '795 m', commune: 'Saint-Paul', themes: ['Montagne', 'Point de vue', 'Patrimoine culturel'], alt_min: 2100, alt_max: 2895, description: "Une autre approche du Grand Bénare, passant par le site historique de la Glacière." },
-                { name: "Le Pavillon - Bras Sec", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/36a2eb/ffffff?text=Le+Pavillon', lat: -21.19, lng: 55.48, duration: '4 h', duration_hours: 4, distance: '12 km', elevation: '1358 m', commune: 'Cilaos', themes: ['Montagne', 'Patrimoine culturel'], alt_min: 800, alt_max: 2158, description: "Une longue descente (ou montée) entre deux ilets de Cilaos." },
-                { name: "Le sentier de la Cascade Biberon", difficulty: 'Facile', image: 'https://placehold.co/600x400/ff6384/ffffff?text=Cascade+Biberon', lat: -21.16, lng: 55.64, duration: '1 h', duration_hours: 1, distance: '2 km', elevation: '41 m', commune: 'La Plaine-des-Palmistes', themes: ['Cascade', 'Forêt'], alt_min: 1000, alt_max: 1041, description: "Une très courte et facile balade pour admirer la jolie Cascade Biberon." },
-                { name: "Le sentier du Piton Kapor", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/ff9f40/ffffff?text=Piton+Kapor', lat: -21.28, lng: 55.75, duration: '2 h 30', duration_hours: 2.5, distance: '8 km', elevation: '284 m', commune: 'Sainte-Rose', themes: ['Forêt', 'Point de vue'], alt_min: 100, alt_max: 384, description: "Une randonnée dans le Grand Brûlé, sur les coulées de lave refroidies." },
-                { name: "Le sentier littoral autour de Piton Sainte-Rose", difficulty: 'Facile', image: 'https://placehold.co/600x400/ffcd56/2d3748?text=Littoral+Ste-Rose', lat: -21.13, lng: 55.8, duration: '2 h', duration_hours: 2, distance: '6 km', elevation: '92 m', commune: 'Sainte-Rose', themes: ['Volcan', 'Géologie'], alt_min: 0, alt_max: 92, description: "Marchez le long de la côte sur les coulées de lave de 1977 qui ont miraculeusement épargné l'église." },
-                { name: "Le sentier littoral de Saint-Philippe, de la Marine au Puits Arabe", difficulty: 'Facile', image: 'https://placehold.co/600x400/4bc0c0/ffffff?text=Littoral+St-Philippe', lat: -21.36, lng: 55.75, duration: '3 h', duration_hours: 3, distance: '6 km', elevation: '70 m', commune: 'Saint-Philippe', themes: ['Forêt', 'Géologie'], alt_min: 0, alt_max: 70, description: "Découvrez le littoral sauvage du sud, ses falaises de lave et sa végétation luxuriante." },
-                { name: "Le sentier littoral de Saint-Philippe, du Tremblet à la Pointe de la Table", difficulty: 'Facile', image: 'https://placehold.co/600x400/9966ff/ffffff?text=Pointe+de+la+Table', lat: -21.3, lng: 55.79, duration: '3 h', duration_hours: 3, distance: '9 km', elevation: '115 m', commune: 'Saint-Philippe', themes: ['Volcan', 'Géologie'], alt_min: 0, alt_max: 115, description: "Marchez sur la coulée de lave de 1986 qui a agrandi l'île de plusieurs hectares." },
-                { name: "Le sommet de la Roche Ecrite par mares et cavernes", difficulty: 'Assez difficile', image: 'https://placehold.co/600x400/c9cbcf/2d3748?text=Roche+Ecrite+2', lat: -20.99, lng: 55.45, duration: '4 h', duration_hours: 4, distance: '9 km', elevation: '441 m', commune: 'Saint-Denis', themes: ['Montagne', 'Forêt', 'Point de vue'], alt_min: 1800, alt_max: 2241, description: "Une alternative pour monter à la Roche Ecrite, passant par des paysages plus secrets." },
-                { name: "Le tour des Trous Blancs", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/e4e6ef/2d3748?text=Trous+Blancs', lat: -21.24, lng: 55.59, duration: '2 h 30', duration_hours: 2.5, distance: '2 km', elevation: '124 m', commune: 'Le Tampon', themes: ['Forêt', 'Géologie'], alt_min: 1700, alt_max: 1824, description: "Une courte balade pour découvrir de curieuses formations géologiques sur la Plaine des Cafres." },
-                { name: "Le Trou de Fer depuis le gîte de Bélouve", difficulty: 'Facile', image: 'https://placehold.co/600x400/ff6384/ffffff?text=Trou+de+Fer', lat: -21.05, lng: 55.55, duration: '3 h 30', duration_hours: 3.5, distance: '9 km', elevation: '276 m', commune: 'Salazie', themes: ['Forêt', 'Point de vue', 'Cascade'], alt_min: 1300, alt_max: 1576, description: "Une randonnée incontournable vers un point de vue époustouflant sur la plus grande cascade de France." },
-                { name: "L’îlet à Bananes depuis le belvédère de Takamaka", difficulty: 'Assez difficile', image: 'https://placehold.co/600x400/ff9f40/ffffff?text=Ilet+a+Bananes', lat: -21.12, lng: 55.62, duration: '4 h 30', duration_hours: 4.5, distance: '8 km', elevation: '587 m', commune: 'Saint-Benoît', themes: ['Forêt', 'Cascade', 'Patrimoine culturel'], alt_min: 200, alt_max: 787, description: "Descendez dans la vallée de Takamaka pour découvrir un ilet isolé et de magnifiques cascades." },
-                { name: "MARONAZ - Tour du Piton d'Anchain", difficulty: 'Assez difficile', image: 'https://placehold.co/600x400/ffcd56/2d3748?text=Piton+dAnchain', lat: -21.05, lng: 55.53, duration: '5 h', duration_hours: 5, distance: '8 km', elevation: '795 m', commune: 'Salazie', themes: ['Montagne', 'Point de vue', 'Patrimoine culturel'], alt_min: 500, alt_max: 1295, description: "Faites le tour et l'ascension de ce piton emblématique au milieu du cirque de Salazie." },
-                { name: "Morne Saint-François", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/4bc0c0/ffffff?text=Morne+St-Francois', lat: -20.9, lng: 55.42, duration: '1 h', duration_hours: 1, distance: '2 km', elevation: '148 m', commune: 'Saint-Denis', themes: ['Forêt', 'Point de vue'], alt_min: 200, alt_max: 348, description: "Une très courte montée pour une vue sur Saint-Denis et le littoral." },
-                { name: "Piton de la Croix et Chemin Canal", difficulty: 'Facile', image: 'https://placehold.co/600x400/9966ff/ffffff?text=Piton+de+la+Croix', lat: -21.27, lng: 55.35, duration: '1 h 30', duration_hours: 1.5, distance: '3 km', elevation: '232 m', commune: "L'Étang-Salé", themes: ['Forêt', 'Point de vue'], alt_min: 100, alt_max: 332, description: "Une balade familiale dans la forêt de l'Etang-Salé." },
-                { name: "Piton des Songes", difficulty: 'Facile', image: 'https://placehold.co/600x400/c9cbcf/2d3748?text=Piton+des+Songes', lat: -21.16, lng: 55.61, duration: '2 h', duration_hours: 2, distance: '3 km', elevation: '205 m', commune: 'La Plaine-des-Palmistes', themes: ['Forêt', 'Point de vue'], alt_min: 1100, alt_max: 1305, description: "Une courte ascension vers un petit piton offrant une vue sur la Plaine des Palmistes." },
-                { name: "Plaine des Sables par l'Oratoire Sainte-Thérèse", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/e4e6ef/2d3748?text=Plaine+des+Sables', lat: -21.25, lng: 55.63, duration: '3 h 30', duration_hours: 3.5, distance: '7 km', elevation: '222 m', commune: 'Saint-Joseph', themes: ['Volcan', 'Géologie'], alt_min: 2200, alt_max: 2422, description: "Traversez le paysage lunaire de la Plaine des Sables en direction du volcan." },
-                { name: "Randonnée nocturne au belvédère de l’Eden", difficulty: 'Facile', image: 'https://placehold.co/600x400/ff6384/ffffff?text=Eden+Nocturne', lat: -21.05, lng: 55.6, duration: '1 h 30', duration_hours: 1.5, distance: '2 km', elevation: '83 m', commune: 'Bras-Panon', themes: ['Point de vue'], alt_min: 200, alt_max: 283, description: "Une expérience originale pour découvrir la côte Est de nuit." },
-                { name: "Randonnée nocturne au Camp Mussard", difficulty: 'Facile', image: 'https://placehold.co/600x400/ff9f40/ffffff?text=Camp+Mussard', lat: -21.2, lng: 55.58, duration: '2 h', duration_hours: 2, distance: '6 km', elevation: '229 m', commune: 'Le Tampon', themes: ['Forêt'], alt_min: 1500, alt_max: 1729, description: "Une balade nocturne sur la Plaine des Cafres." },
-                { name: "Randonnée nocturne du Piton Textor vers l’Argamasse", difficulty: 'Facile', image: 'https://placehold.co/600x400/ffcd56/2d3748?text=Piton+Textor', lat: -21.23, lng: 55.6, duration: '1 h 30', duration_hours: 1.5, distance: '7 km', elevation: '167 m', commune: 'Le Tampon', themes: ['Volcan'], alt_min: 2000, alt_max: 2167, description: "Une randonnée facile de nuit sur les hautes plaines du volcan." },
-                { name: "Sentier botanique de Bras Cabot", difficulty: 'Facile', image: 'https://placehold.co/600x400/4bc0c0/ffffff?text=Bras+Cabot', lat: -21.1, lng: 55.6, duration: '1 h', duration_hours: 1, distance: '1 km', elevation: '19 m', commune: 'Saint-Benoît', themes: ['Forêt', 'Flore'], alt_min: 900, alt_max: 919, description: "Un sentier d'interprétation pour découvrir la richesse de la flore des forêts humides." },
-                { name: "Sentier botanique Notre-Dame de la Paix", difficulty: 'Facile', image: 'https://placehold.co/600x400/9966ff/ffffff?text=Notre-Dame+Paix', lat: -21.2, lng: 55.55, duration: '2 h', duration_hours: 2, distance: '2 km', elevation: '61 m', commune: 'Le Tampon', themes: ['Forêt', 'Flore', 'Point de vue'], alt_min: 1600, alt_max: 1661, description: "Un sentier aménagé offrant de belles vues sur la Rivière des Remparts." },
-                { name: "Sentier Canal l’usine", difficulty: 'Facile', image: 'https://placehold.co/600x400/c9cbcf/2d3748?text=Canal+Usine', lat: -21.03, lng: 55.62, duration: '3 h', duration_hours: 3, distance: '6 km', elevation: '188 m', commune: 'Bras-Panon', themes: ['Patrimoine culturel', 'Forêt'], alt_min: 100, alt_max: 288, description: "Longez un ancien canal d'irrigation à travers les champs de canne." },
-                { name: "Sentier de Bras Pauline par l'Éden", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/e4e6ef/2d3748?text=Bras+Pauline', lat: -21.04, lng: 55.61, duration: '3 h', duration_hours: 3, distance: '7 km', elevation: '276 m', commune: 'Bras-Panon', themes: ['Forêt', 'Cascade'], alt_min: 150, alt_max: 426, description: "Une belle boucle dans les hauts de l'Est, le long de la rivière." },
-                { name: "Sentier de Cascade Blanche", difficulty: 'Facile', image: 'https://placehold.co/600x400/ff6384/ffffff?text=Cascade+Blanche', lat: -21.04, lng: 55.53, duration: '1 h 30', duration_hours: 1.5, distance: '3 km', elevation: '146 m', commune: 'Salazie', themes: ['Cascade', 'Point de vue'], alt_min: 800, alt_max: 946, description: "Une courte marche vers un point de vue sur l'une des plus hautes cascades de l'île." },
-                { name: "Sentier de l'Îlet Alcide", difficulty: 'Facile', image: 'https://placehold.co/600x400/ff9f40/ffffff?text=Ilet+Alcide', lat: -21.08, lng: 55.35, duration: '3 h 30', duration_hours: 3.5, distance: '7 km', elevation: '366 m', commune: 'Saint-Paul', themes: ['Forêt', 'Faune', 'Point de vue'], alt_min: 1500, alt_max: 1866, description: "Une randonnée dans la forêt des hauts de l'ouest, à la recherche du Tuit-Tuit." },
-                { name: "Sentier des Ouvriers", difficulty: 'Facile', image: 'https://placehold.co/600x400/ffcd56/2d3748?text=Sentier+Ouvriers', lat: -21.25, lng: 55.38, duration: '1 h 30', duration_hours: 1.5, distance: '2 km', elevation: '103 m', commune: 'Les Avirons', themes: ['Forêt', 'Patrimoine culturel'], alt_min: 300, alt_max: 403, description: "Un sentier historique utilisé par les ouvriers forestiers." },
-                { name: "Sentier des Sources", difficulty: 'Facile', image: 'https://placehold.co/600x400/4bc0c0/ffffff?text=Sentier+Sources', lat: -21.14, lng: 55.48, duration: '1 h 30', duration_hours: 1.5, distance: '2 km', elevation: '117 m', commune: 'Cilaos', themes: ['Forêt', 'Cascade'], alt_min: 1200, alt_max: 1317, description: "Une balade facile à la découverte des sources thermales qui ont fait la renommée de Cilaos." },
-                { name: "Sentier Mère Canal", difficulty: 'Facile', image: 'https://placehold.co/600x400/9966ff/ffffff?text=Mère+Canal', lat: -20.92, lng: 55.53, duration: '3 h', duration_hours: 3, distance: '5 km', elevation: '222 m', commune: 'Sainte-Marie', themes: ['Forêt', 'Patrimoine culturel'], alt_min: 400, alt_max: 622, description: "Longez un canal historique à flanc de rempart." },
-                { name: "Tour du Bonnet de Prêtre", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/c9cbcf/2d3748?text=Bonnet+de+Pretre', lat: -21.12, lng: 55.48, duration: '4 h', duration_hours: 4, distance: '4 km', elevation: '367 m', commune: 'Cilaos', themes: ['Montagne', 'Point de vue'], alt_min: 1300, alt_max: 1667, description: "Faites le tour de ce piton caractéristique du cirque de Cilaos." },
-                { name: "Tour du Grand Étang", difficulty: 'Facile', image: 'https://placehold.co/600x400/e4e6ef/2d3748?text=Grand+Etang', lat: -21.1, lng: 55.65, duration: '2 h', duration_hours: 2, distance: '7 km', elevation: '175 m', commune: 'Saint-Benoît', themes: ['Forêt', 'Cascade', 'Faune'], alt_min: 500, alt_max: 675, description: "Le tour du plus grand lac de l'île, avec ses cascades et son ambiance paisible." },
-                { name: "Trou de Fer par le Sentier de l'École Normale", difficulty: 'Facile', image: 'https://placehold.co/600x400/ff6384/ffffff?text=Trou+de+Fer+2', lat: -21.06, lng: 55.56, duration: '5 h', duration_hours: 5, distance: '12 km', elevation: '334 m', commune: 'Saint-Benoît', themes: ['Forêt', 'Point de vue', 'Cascade'], alt_min: 1200, alt_max: 1534, description: "Une autre approche pour atteindre le point de vue du Trou de Fer, par un sentier moins fréquenté." },
-                { name: "Une itinérance vers le Piton de l'Eau", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/ff9f40/ffffff?text=Piton+de+lEau', lat: -21.21, lng: 55.62, duration: '6 h', duration_hours: 6, distance: '17 km', elevation: '436 m', commune: 'Le Tampon', themes: ['Volcan', 'Forêt', 'Flore'], alt_min: 1800, alt_max: 2236, description: "Randonnez vers le seul lac de cratère de l'île, entouré d'arums." },
-                { name: "Vallée fossile de Bras Patates", difficulty: 'Facile', image: 'https://placehold.co/600x400/ffcd56/2d3748?text=Bras+Patates', lat: -21.25, lng: 55.41, duration: '3 h', duration_hours: 3, distance: '6 km', elevation: '361 m', commune: 'Saint-Louis', themes: ['Géologie', 'Forêt'], alt_min: 800, alt_max: 1161, description: "Une randonnée au cœur de l'histoire géologique de l'île, dans une ancienne vallée creusée par les rivières et le temps." },
-                { name: "À la rencontre du Tuit-Tuit", difficulty: 'Peu difficile', image: 'https://placehold.co/600x400/4bc0c0/ffffff?text=Tuit-Tuit', lat: -20.97, lng: 55.4, duration: '4 h 30', duration_hours: 4.5, distance: '10 km', elevation: '636 m', commune: 'Saint-Denis', themes: ['Forêt', 'Faune', 'Point de vue'], alt_min: 1000, alt_max: 1636, description: "Partez à la recherche d'un des oiseaux les plus rares du monde dans la forêt de la Roche Ecrite." },
+                { name: "Grand Bénare depuis le gîte des Tamarins", difficulty: "Difficile", image: "https://upload.wikimedia.org/wikipedia/commons/6/6b/Ile_de_la_R%C3%A9union_-_cirque_de_Cilaos_-_panoramique.jpg", lat: -21.11, lng: 55.42, duration: "6 h", duration_hours: 6, distance: "14 km", elevation: "956 m", commune: "Cilaos", themes: ["Montagne", "Point de vue"], alt_min: 1620, alt_max: 2898, description: "Un sentier de crête offrant un panorama imprenable sur les cirques de Mafate, Cilaos et Salazie. Idéal pour les randonneurs expérimentés." },
+                { name: "Sentier du Piton de la Fournaise", difficulty: "Peu difficile", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Piton_de_la_Fournaise_2017.jpg/1280px-Piton_de_la_Fournaise_2017.jpg", lat: -21.22, lng: 55.70, duration: "5 h", duration_hours: 5, distance: "10 km", elevation: "400 m", commune: "Sainte-Rose", themes: ["Volcan", "Géologie"], alt_min: 2200, alt_max: 2600, description: "Explorez les paysages lunaires et les formations rocheuses uniques du Piton de la Fournaise, le volcan actif de l'île. Une randonnée accessible pour découvrir la puissance de la nature." },
+                { name: "Cap Jaune depuis la marine de Vincendo", difficulty: "Facile", image: "https://www.ouest-lareunion.com/sites/default/files/styles/fiche_detail/public/2023-01/IMG_0126.jpg", lat: -21.37, lng: 55.67, duration: "1.5 h", duration_hours: 1.5, distance: "2 km", elevation: "50 m", commune: "Saint-Joseph", themes: ["Point de vue", "Géologie"], alt_min: 10, alt_max: 60, description: "Une courte balade sur le littoral du Sud Sauvage pour admirer les falaises impressionnantes de Cap Jaune et l'océan Indien." },
+                { name: "Sentier de la Cascade de Grand Galet", difficulty: "Facile", image: "https://photos.google.com/share/AF1QipN2mO4C_lP8lKxW_yEa5Qz_o1_G-3Y7Lz-F8z-uK/photo/AF1QipN2mO4C_lP8lKxW_yEa5Qz_o1_G-3Y7Lz-F8z-uK?key=R1JwaF92eF9kZGp1eF9iWXl5Yl9zR2d5Wl9zU2d5&authuser=0", lat: -21.36, lng: 55.59, duration: "1.5 h", duration_hours: 1.5, distance: "2 km", elevation: "100 m", commune: "Saint-Joseph", themes: ["Cascade", "Forêt"], alt_min: 400, alt_max: 500, description: "Une promenade familiale qui mène à une magnifique cascade dans un cadre de forêt tropicale luxuriante." },
+                { name: "La Fenêtre des Makes", difficulty: "Facile", image: "https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/fenetremakes/fenetremakesreunion.jpg", lat: -21.13, lng: 55.36, duration: "2 h", duration_hours: 2, distance: "3 km", elevation: "150 m", commune: "Les Makes", themes: ["Point de vue"], alt_min: 1300, alt_max: 1450, description: "Un point de vue exceptionnel sur le cirque de Cilaos. Une randonnée facile et rapide, idéale pour toute la famille." },
+                { name: "Forêt des Makes, Bassin Sassa", difficulty: "Moyen", image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Bassin_Sassa.JPG/1280px-Bassin_Sassa.JPG", lat: -21.14, lng: 55.37, duration: "3 h", duration_hours: 3, distance: "6 km", elevation: "250 m", commune: "Les Makes", themes: ["Forêt", "Cascade"], alt_min: 1350, alt_max: 1600, description: "Une immersion dans la forêt de cryptomerias, avec une belle cascade et une vue sur le cirque de Cilaos." },
+                { name: "Randonnée des trois Salazes", difficulty: "Difficile", image: "https://media.geolcdn.com/t/2048/auto/ext.jpg?maxdim=0&url=https%3A%2F%2Fservices.sitytrail.com%2FGeolivesWS%2FDownloadMedia.ashx%3FTrailID%3D452671%26Media%3Dfix__20150701112858.jpg", lat: -21.14, lng: 55.45, duration: "7 h", duration_hours: 7, distance: "13 km", elevation: "800 m", commune: "Cilaos", themes: ["Montagne", "Point de vue"], alt_min: 1600, alt_max: 2400, description: "Une randonnée de haute montagne qui offre des vues à couper le souffle sur les cirques de Mafate et Cilaos." },
+                { name: "Sentier des Pêcheurs (Bassin Pirogue)", difficulty: "Facile", image: "https://www.sudreuniontourisme.fr/fileadmin/user_upload/Photos/Lieux/Bassin_Pirogue/bassins-pirogues.jpg", lat: -21.32, lng: 55.49, duration: "1.5 h", duration_hours: 1.5, distance: "2.5 km", elevation: "10 m", commune: "Saint-Louis", themes: ["Point de vue", "Forêt"], alt_min: 0, alt_max: 10, description: "Une agréable balade le long d'une rivière, à l'ombre des arbres, menant à un bassin naturel parfait pour la baignade." },
+                { name: "Sentier du Gouffre (L'Étang-Salé)", difficulty: "Facile", image: "https://www.sudreuniontourisme.fr/fileadmin/_processed_/0/9/gouffre-etang-sale-reunion_991807491d.jpg", lat: -21.28, lng: 55.33, duration: "1 h", duration_hours: 1, distance: "1 km", elevation: "50 m", commune: "L'Étang-Salé", themes: ["Point de vue", "Géologie"], alt_min: 0, alt_max: 50, description: "Une courte marche le long de la côte volcanique pour découvrir un phénomène géologique impressionnant : un gouffre où l'océan s'engouffre avec fracas." }
             ];
+
             const hikesList = document.getElementById('hikes-list');
             const searchInput = document.getElementById('searchInput');
             const difficultyFilter = document.getElementById('difficultyFilter');
@@ -287,159 +246,112 @@
             const modal = document.getElementById('details-modal');
             const modalBody = document.getElementById('modal-body');
 
-            const difficultyColors = {
-                'Facile': 'bg-green-500',
-                'Peu difficile': 'bg-lime-600',
-                'Moyen': 'bg-yellow-500',
-                'Assez difficile': 'bg-orange-500',
-                'Difficile': 'bg-red-600'
-            };
-
-            function populateFilters() {
-                const allCommunes = new Set();
-                const allThemes = new Set();
-                hikes.forEach(hike => { allCommunes.add(hike.commune); hike.themes.forEach(theme => allThemes.add(theme)); });
-                [...allCommunes].sort().forEach(commune => communeFilter.appendChild(new Option(commune, commune)));
-                [...allThemes].sort().forEach(theme => themeFilter.appendChild(new Option(theme, theme)));
-            }
-
-            const reunionBounds = L.latLngBounds(L.latLng(-21.5, 55.1), L.latLng(-20.8, 56.0));
-            const map = L.map('map', {
-                center: [-21.15, 55.5],
-                zoom: 9,
-                maxBounds: reunionBounds,
-                minZoom: 9
-            });
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
-                attribution: 'Leaflet | &copy; OpenStreetMap contributors',
-                maxZoom: 18,
+            // Initialisation de la carte
+            const map = L.map('map').setView([-21.2, 55.5], 10);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
             }).addTo(map);
-            
-            const hikeMarkers = {};
 
-            function createHikeCard(hike) {
-                const hikeCard = document.createElement('div');
-                hikeCard.className = `card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col`;
-                const themesHtml = hike.themes.map(theme => `<div title="${theme}" class="transform hover:scale-125 transition-transform">${themeIcons[theme] || themeIcons['Défaut']}</div>`).join('');
-                hikeCard.innerHTML = `
-                    <img src="${hike.image}" alt="Image de ${hike.name}" class="w-full h-32 object-cover cursor-pointer">
-                    <div class="p-3 flex flex-col flex-grow">
-                        <h3 class="text-base font-bold mb-1 text-onf-green-dark cursor-pointer">${hike.name}</h3>
-                        <div class="flex flex-wrap justify-between items-center text-xs text-gray-600">
-                            <span><strong class="font-semibold">Durée:</strong> ${hike.duration}</span>
-                            <span><strong class="font-semibold">Dist:</strong> ${hike.distance}</span>
-                            <span><strong class="font-semibold">D+:</strong> ${hike.elevation}</span>
-                        </div>
-                        <hr class="my-2 border-gray-200">
-                        <div class="flex items-center gap-2 text-gray-500">${themesHtml}</div>
-                        <div class="mt-auto pt-3 flex justify-between items-center">
-                            <span class="inline-block ${difficultyColors[hike.difficulty]} text-white text-xs font-semibold px-2 py-1 rounded-full">${hike.difficulty}</span>
-                            <button class="info-btn text-xs bg-gray-600 text-white font-semibold px-3 py-1 rounded-full hover:bg-onf-green-dark transition-colors">+ d'infos</button>
-                        </div>
-                    </div>`;
-                
-                hikeCard.querySelector('img').addEventListener('click', () => {
-                    map.setView([hike.lat, hike.lng], 13);
-                    if (hikeMarkers[hike.name]) {
-                        hikeMarkers[hike.name].openPopup();
-                    }
-                });
-                 hikeCard.querySelector('h3').addEventListener('click', () => {
-                    map.setView([hike.lat, hike.lng], 13);
-                    if (hikeMarkers[hike.name]) {
-                        hikeMarkers[hike.name].openPopup();
-                    }
-                });
-                hikeCard.querySelector('.info-btn').addEventListener('click', () => showDetailsModal(hike));
-                return hikeCard;
-            }
+            let markers = [];
 
-            function displayHikes(filteredHikes) {
+            function displayHikes(hikesToDisplay) {
                 hikesList.innerHTML = '';
-                Object.values(hikeMarkers).forEach(marker => map.removeLayer(marker));
-                
-                if (filteredHikes.length === 0) {
-                    hikesList.innerHTML = `<p class="text-gray-500 text-center col-span-full">Aucune randonnée ne correspond à votre recherche.</p>`;
-                    return;
+                markers.forEach(marker => map.removeLayer(marker));
+                markers = [];
+
+                if (hikesToDisplay.length === 0) {
+                    hikesList.innerHTML = '<p class="col-span-full text-center text-gray-500">Aucune randonnée trouvée correspondant à vos critères.</p>';
                 }
 
-                filteredHikes.forEach(hike => {
-                    hikesList.appendChild(createHikeCard(hike));
-                    
-                    const difficultyColor = difficultyColors[hike.difficulty] || 'bg-gray-500';
-                    const themesHtmlPopup = hike.themes.map(theme => `<div class="inline-block" title="${theme}">${themeIcons[theme] || themeIcons['Défaut']}</div>`.replace('theme-icon', 'popup-theme-icon')).join('');
+                hikesToDisplay.forEach(hike => {
+                    const themesHtml = hike.themes.map(theme => `
+                        <div class="flex items-center space-x-1 text-xs text-gray-600">
+                            ${themeIcons[theme] || themeIcons['Défaut']}
+                            <span>${theme}</span>
+                        </div>
+                    `).join('');
 
-                    const popupContent = `
-                        <div style="width: 220px; font-family: Inter, sans-serif; color: #333;">
-                            <h3 style="font-weight: 700; font-size: 1rem; margin-bottom: 8px;">${hike.name}</h3>
-                            <p style="margin-bottom: 8px;">
-                                <span class="${difficultyColor}" style="color: white; font-size: 0.7rem; font-weight: 600; padding: 3px 8px; border-radius: 9999px;">${hike.difficulty}</span>
-                            </p>
-                            <div style="font-size: 0.8rem; margin-bottom: 8px; line-height: 1.4;">
-                                <div><strong>Durée:</strong> ${hike.duration}</div>
-                                <div><strong>Distance:</strong> ${hike.distance}</div>
-                                <div><strong>D+:</strong> ${hike.elevation}</div>
+                    const card = document.createElement('div');
+                    card.classList.add('card', 'bg-white', 'rounded-lg', 'shadow-md', 'overflow-hidden', 'cursor-pointer');
+                    card.innerHTML = `
+                        <img src="${hike.image}" alt="Paysage de la randonnée ${hike.name}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold text-onf-green-dark">${hike.name}</h3>
+                            <p class="text-gray-600 mt-1">${hike.commune}</p>
+                            <div class="flex flex-wrap items-center mt-3 text-sm text-gray-700 space-x-4">
+                                <div class="flex items-center space-x-1">
+                                    <svg class="w-4 h-4 text-onf-green-light" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                                    <span>${hike.duration}</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <svg class="w-4 h-4 text-onf-green-light" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 0h10.5m-10.5 0c0-2.25-1.5-4.134-3.5-4.5m14.5 4.5c0-2.25-1.5-4.134-3.5-4.5M12 6.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" /></svg>
+                                    <span>${hike.distance}</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <svg class="w-4 h-4 text-onf-green-light" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21.75a9.75 9.75 0 007.5-3.582l1.696-2.673a1.5 1.5 0 00-2.298-2.338L16.5 13.5m-1.259-2.528l4.47-2.61a1.5 1.5 0 00-.329-2.656l-3.954-1.147L12 3.75z" /></svg>
+                                    <span>${hike.elevation}</span>
+                                </div>
                             </div>
-                            <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
-                                ${themesHtmlPopup}
+                            <div class="mt-3 flex flex-wrap gap-2 text-sm">
+                                ${themesHtml}
+                            </div>
+                            <div class="mt-4">
+                                <span class="inline-block rounded-full px-3 py-1 text-sm font-semibold text-white ${getDifficultyColor(hike.difficulty)}">
+                                    ${hike.difficulty}
+                                </span>
                             </div>
                         </div>
                     `;
+                    card.addEventListener('click', () => openModal(hike));
+                    hikesList.appendChild(card);
 
-                    const marker = L.marker([hike.lat, hike.lng]).addTo(map).bindPopup(popupContent);
-                    hikeMarkers[hike.name] = marker;
+                    // Ajout du marqueur sur la carte
+                    const marker = L.marker([hike.lat, hike.lng]).addTo(map)
+                        .bindPopup(`
+                            <div class="font-bold text-onf-green-dark">${hike.name}</div>
+                            <div class="text-sm text-gray-600">${hike.commune}</div>
+                            <div class="text-xs text-gray-500">${hike.difficulty}</div>
+                        `);
+                    markers.push(marker);
                 });
             }
 
-            function showDetailsModal(hike) {
-                const themesHtml = hike.themes.map(theme => `<div class="flex items-center gap-2" title="${theme}">${themeIcons[theme] || themeIcons['Défaut']}<span>${theme}</span></div>`).join('');
-                const profileChartHtml = `<svg viewBox="0 0 300 100" preserveAspectRatio="none" width="100%" height="100" class="bg-gray-50 rounded-md">
-                    <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:rgba(106, 154, 42, 0.5)" /><stop offset="100%" style="stop-color:rgba(106, 154, 42, 0)" /></linearGradient></defs>
-                    <polyline fill="url(#grad1)" stroke="#6a9a2a" stroke-width="2" points="0,${100 - (hike.alt_min - hike.alt_min)*100/(hike.alt_max - hike.alt_min + 1)} 150,${100 - (hike.alt_max - hike.alt_min)*100/(hike.alt_max - hike.alt_min + 1)} 300,${100 - (hike.alt_min - hike.alt_min)*100/(hike.alt_max - hike.alt_min + 1)} 300,100 0,100" />
-                </svg>`;
-                
-                modalBody.innerHTML = `
-                    <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center z-20">
-                        <h2 class="text-2xl font-bold text-onf-green-dark">${hike.name}</h2>
-                        <button id="close-modal" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
-                    </div>
-                    <div class="p-6">
-                        <img src="${hike.image}" alt="Image de ${hike.name}" class="w-full h-64 object-cover rounded-lg mb-4">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-4">
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Durée</div><div>${hike.duration}</div></div>
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Distance</div><div>${hike.distance}</div></div>
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Dénivelé</div><div>${hike.elevation}</div></div>
-                        </div>
-                        <p class="text-gray-700 mb-4">${hike.description}</p>
-                        <h3 class="font-bold text-onf-green-dark mb-2">Thèmes</h3>
-                        <div class="flex flex-wrap gap-4 mb-4 text-gray-600">${themesHtml}</div>
-                        <h3 class="font-bold text-onf-green-dark mb-2">Profil altimétrique</h3>
-                        <div class="bg-gray-100 p-4 rounded-lg">
-                            ${profileChartHtml}
-                            <div class="flex justify-between text-sm mt-1">
-                                <span>Min: ${hike.alt_min} m</span>
-                                <span>Max: ${hike.alt_max} m</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                modal.classList.remove('modal-hidden');
-                document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('modal-hidden'));
+            function getDifficultyColor(difficulty) {
+                switch(difficulty) {
+                    case 'Facile': return 'bg-green-500';
+                    case 'Peu difficile': return 'bg-lime-500';
+                    case 'Moyen': return 'bg-yellow-500';
+                    case 'Assez difficile': return 'bg-orange-500';
+                    case 'Difficile': return 'bg-red-500';
+                    default: return 'bg-gray-500';
+                }
             }
 
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.add('modal-hidden');
-                }
-            });
+            function populateFilters() {
+                const communes = [...new Set(hikes.map(h => h.commune))];
+                communes.sort().forEach(commune => {
+                    const option = document.createElement('option');
+                    option.value = commune;
+                    option.textContent = commune;
+                    communeFilter.appendChild(option);
+                });
+
+                const themes = [...new Set(hikes.flatMap(h => h.themes))];
+                themes.sort().forEach(theme => {
+                    const option = document.createElement('option');
+                    option.value = theme;
+                    option.textContent = theme;
+                    themeFilter.appendChild(option);
+                });
+            }
 
             function filterHikes() {
                 const searchTerm = searchInput.value.toLowerCase();
                 const difficulty = difficultyFilter.value;
-                const duration = durationFilter.value;
                 const commune = communeFilter.value;
                 const theme = themeFilter.value;
+                const duration = durationFilter.value;
+
                 const filtered = hikes.filter(hike => {
                     const nameMatch = hike.name.toLowerCase().includes(searchTerm);
                     const difficultyMatch = (difficulty === 'all') || (hike.difficulty === difficulty);
@@ -453,6 +365,50 @@
             
             [searchInput, difficultyFilter, durationFilter, communeFilter, themeFilter].forEach(el => el.addEventListener('change', filterHikes));
             searchInput.addEventListener('input', filterHikes);
+
+            function openModal(hike) {
+                const themesHtml = hike.themes.map(theme => `
+                    <div class="flex items-center space-x-1 text-sm text-gray-600 font-medium">
+                        ${themeIcons[theme] || themeIcons['Défaut']}
+                        <span>${theme}</span>
+                    </div>
+                `).join('');
+
+                modalBody.innerHTML = `
+                    <div class="relative">
+                        <img src="${hike.image}" alt="Paysage de la randonnée ${hike.name}" class="w-full h-64 object-cover rounded-t-lg">
+                        <button onclick="closeModal()" class="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/75 p-2 rounded-full transition-all">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h2 class="text-3xl font-bold text-onf-green-dark">${hike.name}</h2>
+                        <p class="text-gray-600 mt-2">${hike.commune}</p>
+                        <div class="mt-4 flex flex-wrap items-center space-x-4">
+                            <span class="inline-block rounded-full px-4 py-1 text-sm font-semibold text-white ${getDifficultyColor(hike.difficulty)}">
+                                ${hike.difficulty}
+                            </span>
+                        </div>
+                        <p class="text-gray-800 mt-4">${hike.description}</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6 text-gray-700">
+                            <div><span class="font-semibold">Durée :</span> ${hike.duration}</div>
+                            <div><span class="font-semibold">Distance :</span> ${hike.distance}</div>
+                            <div><span class="font-semibold">Dénivelé :</span> ${hike.elevation}</div>
+                            <div><span class="font-semibold">Altitude min :</span> ${hike.alt_min} m</div>
+                            <div><span class="font-semibold">Altitude max :</span> ${hike.alt_max} m</div>
+                            <div class="col-span-2 sm:col-span-1"><span class="font-semibold">Thèmes :</span></div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-2">
+                            ${themesHtml}
+                        </div>
+                    </div>
+                `;
+                modal.classList.remove('modal-hidden');
+            }
+
+            window.closeModal = function() {
+                modal.classList.add('modal-hidden');
+            };
 
             const carouselItems = document.querySelectorAll('.carousel-item');
             let currentItem = 0;
