@@ -1,98 +1,127 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Restaurants</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        h1 {
-            text-align: center;
-        }
-        .swiper {
-            width: 100%;
-            height: 300px;
-            margin: 20px auto;
-        }
-        .swiper-slide {
-            text-align: center;
-            background: #fff;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .swiper-slide img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Restaurants</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; }
+    .slider-container {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+    /* ✅ C'est la ligne importante pour votre widget */
+    .widget-restos-wrapper {
+        overflow-y: hidden;
+    }
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .slide {
+      flex: 0 0 100%; /* par défaut : 1 slide = 100% largeur */
+      box-sizing: border-box;
+      text-align: center;
+      cursor: pointer;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin: 5px;
+    }
+    .slide img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+    .controls button {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    h3 { margin: 10px 0 5px; color:#8c2d04; font-size: 1rem; }
+    p, small { margin: 0; color:#555; font-size: 0.9rem; }
+
+    /* ✅ Responsive */
+    @media (min-width: 600px) {
+      .slide { flex: 0 0 50%; } /* tablette : 2 par ligne */
+    }
+    @media (min-width: 900px) {
+      .slide { flex: 0 0 33.33%; } /* desktop : 3 par ligne */
+    }
+    @media (min-width: 1200px) {
+      .slide { flex: 0 0 25%; } /* grand écran : 4 par ligne */
+    }
+  </style>
 </head>
 <body>
-    <h1>Liste des Restaurants</h1>
-    <div class="swiper">
-        <div class="swiper-wrapper" id="resto-container"></div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+
+  <h2 style="text-align:center; color:#8c2d04;">🍽️ Les restaurants locaux</h2>
+    <div class="widget-restos-wrapper">
+        <h3 style="margin-left:20px; color:#8c2d04;">Nos Restaurants</h3>
+        <div class="slider-container">
+            <div class="slider" id="slider"></div>
+            <div class="controls">
+                <button onclick="prevSlide()">‹</button>
+                <button onclick="nextSlide()">›</button>
+            </div>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        fetch("restaurants.json")
-            .then(r => r.json())
-            .then(restos => {
-                const container = document.getElementById('resto-container');
-                restos.forEach(resto => {
-                    const slide = document.createElement('div');
-                    slide.className = 'swiper-slide';
-                    slide.innerHTML = `
-                        <h3>${resto.name}</h3>
-                        <p>${resto.commune}</p>
-                        <p>Note : ${resto.rating}/5</p>
-                        <img src="${resto.image}" alt="${resto.name}">
-                    `;
-                    container.appendChild(slide);
-                });
-                const swiper = new Swiper('.swiper', {
-                    loop: true,
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                    breakpoints: {
-                        600: {
-                            slidesPerView: 2,
-                            spaceBetween: 20,
-                        },
-                        900: {
-                            slidesPerView: 3,
-                            spaceBetween: 30,
-                        },
-                        1200: {
-                            slidesPerView: 4,
-                            spaceBetween: 40,
-                        },
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true,
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                });
-            })
-            .catch(error => {
-                console.error("Erreur lors du chargement des restaurants :", error);
-            });
-    </script>
+  <script>
+    let currentIndex = 0;
+    const slider = document.getElementById("slider");
+
+    // Charger les restos depuis restaurants.json
+    fetch("restaurants.json")
+      .then(r => r.json())
+      .then(restos => {
+        restos.forEach(resto => {
+          const slide = document.createElement("div");
+          slide.className = "slide";
+          slide.innerHTML = `
+            <img src="${resto.image}" alt="${resto.name}">
+            <h3>${resto.name}</h3>
+            <p>${resto.price} • ★ ${resto.rating}</p>
+            <small>${resto.commune}</small>
+          `;
+          slide.onclick = () => window.top.location.href = "DestinationRestos.html#" + encodeURIComponent(resto.name);
+          slider.appendChild(slide);
+        });
+      });
+
+    function showSlide(index) {
+      const slideWidth = document.querySelector(".slide")?.offsetWidth || 0;
+      const visibleCount = Math.round(slider.offsetWidth / slideWidth);
+      const totalSlides = document.querySelectorAll(".slide").length;
+      const maxIndex = totalSlides - visibleCount;
+
+      if (index > maxIndex) currentIndex = 0;
+      else if (index < 0) currentIndex = maxIndex;
+      else currentIndex = index;
+
+      slider.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+    }
+    function nextSlide() { showSlide(currentIndex + 1); }
+    function prevSlide() { showSlide(currentIndex - 1); }
+
+    setInterval(nextSlide, 5000);
+  </script>
+
 </body>
 </html>
