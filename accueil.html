@@ -49,11 +49,11 @@
             position: relative;
         }
 
-        /* Utilise flex-col par défaut et devient flex-row sur les écrans larges */
+        /* Disposition en colonne par défaut, en ligne sur les grands écrans */
         .main-content {
             flex: 1;
             display: flex;
-            flex-direction: column; /* Disposition par défaut en colonne */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
@@ -62,9 +62,9 @@
             width: 100%;
         }
 
-        @media (min-width: 1024px) { /* Applique ces styles sur les écrans larges (lg) */
+        @media (min-width: 1024px) {
             .main-content {
-                flex-direction: row; /* Disposition en ligne sur les grands écrans */
+                flex-direction: row;
             }
         }
         
@@ -75,21 +75,24 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 4rem;
+            padding: 2rem; /* Réduit le padding pour plus d'espace */
+            max-width: 100%; /* S'assure que le panneau gauche est flexible */
         }
 
         .right-panel {
             flex: 1;
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 colonnes par défaut sur mobile/tablette */
+            grid-template-columns: repeat(2, 1fr); /* 2 colonnes par défaut pour les petits écrans */
             grid-gap: 1.5rem;
             max-width: 900px;
             width: 100%;
+            margin-top: 2rem; /* Ajoute de l'espace entre les panneaux en mode colonne */
         }
 
         @media (min-width: 1024px) {
             .right-panel {
                 grid-template-columns: repeat(3, 1fr); /* 3 colonnes sur les grands écrans */
+                margin-top: 0; /* Supprime la marge en mode ligne */
             }
         }
 
@@ -98,7 +101,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 1.5rem;
+            padding: 1rem; /* Padding plus petit pour s'adapter */
             background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 1rem;
@@ -133,9 +136,10 @@
         }
         
         .grid-icon {
-            font-size: 3rem;
+            font-size: 2.5rem; /* Taille réduite pour plus de flexibilité */
             margin-bottom: 0.5rem;
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -226,7 +230,7 @@
 </head>
 <body>
     <video autoplay muted loop id="video-background">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-sunrise-over-the-mountains-9584-large.mp4" type="video/mp4">
+        <source src="https://placeholdervideo.com/Destination-Sud-Reunion_HD.mp4" type="video/mp4">
     </video>
 
     <div class="slider-container">
@@ -234,30 +238,30 @@
         <div id="screen-1" class="screen">
             <div class="main-content lg:flex-row flex-col">
                 <div class="left-panel">
-                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de La Réunion" class="h-auto max-h-24 mb-4 object-contain">
-                    <h1 class="text-white text-5xl md:text-6xl font-bold">Destination Sud Réunion</h1>
-                    <h2 class="text-white text-xl md:text-3xl mt-4">Office de Tourisme du Sud de La Réunion</h2>
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de La Réunion" class="h-auto w-48 mb-4 object-contain">
+                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">Destination Sud Réunion</h1>
+                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">Office de Tourisme du Sud de La Réunion</h2>
                     <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                        <button id="open-button-1" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
-                        <button id="next-screen-1" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Découvrir les activités</button>
+                        <button id="open-button-1" class="px-4 py-3 sm:px-6 sm:py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                        <button id="next-screen-1" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Découvrir les activités</button>
                     </div>
                 </div>
                 <div class="right-panel">
                     <a href="Destinationplage.html" class="grid-item">
                         <span class="grid-icon">🏖️</span>
-                        <span class="text-lg md:text-2xl font-semibold">Les Plages</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Plages</span>
                     </a>
                     <a href="Destinationvolcan.html" class="grid-item">
                         <span class="grid-icon">🌋</span>
-                        <span class="text-lg md:text-2xl font-semibold">Le Volcan</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Le Volcan</span>
                     </a>
                     <a href="Destinationforet.html" class="grid-item">
                         <span class="grid-icon">🌲</span>
-                        <span class="text-lg md:text-2xl font-semibold">Les Forêts</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Forêts</span>
                     </a>
                     <a href="Destinationvillages.html" class="grid-item">
                         <span class="grid-icon">🏡</span>
-                        <span class="text-lg md:text-2xl font-semibold">Les Villages</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Villages</span>
                     </a>
                 </div>
             </div>
@@ -267,33 +271,33 @@
         <div id="screen-2" class="screen">
             <div class="main-content lg:flex-row flex-col">
                 <div class="left-panel">
-                    <h1 class="text-white text-5xl md:text-6xl font-bold">L'île authentique</h1>
-                    <h2 class="text-white text-xl md:text-3xl mt-4">La Réunion</h2>
+                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">L'île authentique</h1>
+                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">La Réunion</h2>
                     <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                        <button id="open-button-2" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
-                        <button id="prev-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
-                        <button id="next-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Activités ludiques</button>
+                        <button id="open-button-2" class="px-4 py-3 sm:px-6 sm:py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                        <button id="prev-screen-2" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                        <button id="next-screen-2" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Activités ludiques</button>
                     </div>
                 </div>
                 <div class="right-panel">
                     <a href="DestinationRandos.html" class="grid-item">
                         <span class="grid-icon">🥾</span>
-                        <span class="text-lg md:text-2xl font-semibold">Les Randonnées</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Randonnées</span>
                     </a>
                     <a href="Destinationactivitesnautiques.html" class="grid-item">
                         <span class="grid-icon">🌊</span>
-                        <span class="text-lg md:text-2xl font-semibold">Activités Nautiques</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Activités Nautiques</span>
                     </a>
 
                     <!-- Widget Météo -->
                     <div class="grid-item col-span-2 bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-xl">
                         <div class="flex flex-col items-center justify-center h-full">
-                            <span class="text-4xl md:text-6xl mb-2">☀️</span>
+                            <span class="text-4xl md:text-5xl lg:text-6xl mb-2">☀️</span>
                             <div class="flex items-end justify-center">
                                 <span class="text-5xl md:text-6xl font-extrabold">+27</span>
                                 <span class="text-xl md:text-2xl font-bold">°C</span>
                             </div>
-                            <span class="text-sm md:text-lg font-medium mt-1">Paris</span>
+                            <span class="text-xs md:text-sm lg:text-lg font-medium mt-1">Paris</span>
                             <span class="text-xs md:text-sm">Ensoleillé avec quelques nuages</span>
                         </div>
                     </div>
@@ -301,7 +305,7 @@
                     <!-- Widget Restaurants -->
                     <div class="grid-item col-span-2 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl">
                         <div class="flex flex-col items-center justify-center h-full w-full">
-                            <h3 class="text-xl md:text-2xl font-semibold mb-2">Les restaurants locaux</h3>
+                            <h3 class="text-lg md:text-xl font-semibold mb-2">Les restaurants locaux</h3>
                             <iframe src="widget-restos.html"
                                 style="border:none; width:100%; max-width:600px; height:350px; border-radius:10px;"
                                 loading="lazy">
@@ -311,11 +315,11 @@
 
                     <a href="Destinationculture.html" class="grid-item">
                         <span class="grid-icon">🎭</span>
-                        <span class="text-lg md:text-2xl font-semibold">Culture & Traditions</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Culture & Traditions</span>
                     </a>
                     <a href="Destinationproduits.html" class="grid-item">
                         <span class="grid-icon">🍍</span>
-                        <span class="text-lg md:text-2xl font-semibold">Produits du Terroir</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Produits du Terroir</span>
                     </a>
                 </div>
             </div>
@@ -325,36 +329,36 @@
         <div id="screen-3" class="screen">
             <div class="main-content lg:flex-row flex-col">
                 <div class="left-panel">
-                    <h1 class="text-white text-5xl md:text-6xl font-bold">L'île aventure</h1>
-                    <h2 class="text-white text-xl md:text-3xl mt-4">La Réunion</h2>
+                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">L'île aventure</h1>
+                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">La Réunion</h2>
                     <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                        <button id="open-button-3" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
-                        <button id="prev-screen-3" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                        <button id="open-button-3" class="px-4 py-3 sm:px-6 sm:py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                        <button id="prev-screen-3" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
                     </div>
                 </div>
                 <div class="right-panel">
                     <a href="DestinationActivitesaeriennes.html" class="grid-item col-span-2">
                         <span class="grid-icon">🚁</span>
-                        <span class="text-lg md:text-2xl font-semibold">Activités Aériennes</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Activités Aériennes</span>
                     </a>
                     <!-- Widget Heure/Date -->
                     <div class="grid-item bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-xl">
                         <div class="flex flex-col items-center justify-center h-full">
-                            <span class="text-sm md:text-lg font-medium" id="date-widget"></span>
-                            <span class="text-3xl md:text-5xl font-extrabold mt-1" id="time-widget"></span>
+                            <span class="text-xs md:text-sm lg:text-lg font-medium" id="date-widget"></span>
+                            <span class="text-3xl md:text-4xl lg:text-5xl font-extrabold mt-1" id="time-widget"></span>
                         </div>
                     </div>
                     <a href="Destinationparcs.html" class="grid-item">
                         <span class="grid-icon">🎢</span>
-                        <span class="text-lg md:text-2xl font-semibold">Parcs & Aventures</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Parcs & Aventures</span>
                     </a>
                     <a href="Destinationbienetre.html" class="grid-item">
                         <span class="grid-icon">🧘‍♀️</span>
-                        <span class="text-lg md:text-2xl font-semibold">Bien-être & Spa</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Bien-être & Spa</span>
                     </a>
                     <a href="Destinationgolf.html" class="grid-item">
                         <span class="grid-icon">⛳</span>
-                        <span class="text-lg md:text-2xl font-semibold">Golf</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Golf</span>
                     </a>
                 </div>
             </div>
@@ -643,3 +647,4 @@
     </script>
 </body>
 </html>
+
