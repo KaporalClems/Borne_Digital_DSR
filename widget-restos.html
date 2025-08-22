@@ -196,6 +196,18 @@
 
     setInterval(nextSlide, 5000);
   </script>
+  <script>
+  // Envoie la hauteur du widget au parent pour auto-ajustement de l'iframe
+  function sendHeight() {
+    const height = document.body.scrollHeight;
+    window.parent.postMessage({ widgetHeight: height }, "*");
+  }
+
+  // Envoi initial + à chaque resize
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+</script>
+
 
 </body>
 </html>
