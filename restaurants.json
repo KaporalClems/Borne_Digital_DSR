@@ -14,5 +14,13 @@
     "rating": 4.5,
     "commune": "Cilaos",
     "description": "Le rendez-vous incontournable pour goûter au fameux carri feu de bois."
+  },
+  {
+    "name": "Le Lagon Bleu",
+    "price": "€€",
+    "image": "https://images.unsplash.com/photo-1606811445326-b7b1e4a2a2a0?q=80&w=1974&auto=format&fit=crop",
+    "rating": 4.6,
+    "commune": "Saint-Pierre",
+    "description": "Poissons frais et fruits de mer directement du port."
   }
 ]
