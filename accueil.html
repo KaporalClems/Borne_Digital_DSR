@@ -12,6 +12,9 @@
             font-family: 'Inter', sans-serif;
             background-color: #0d121c;
             overflow: hidden; /* Empêche le défilement du corps de la page */
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none; /* Empêche le pinch-to-zoom */
         }
 
         /* Styles pour le mode contraste élevé */
@@ -30,945 +33,663 @@
         body.larger-text .text-2xl { font-size: 2rem; }
         body.larger-text .text-lg { font-size: 1.5rem; }
 
-        /* Styles pour le modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 50;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 2rem;
-            border-radius: 1rem;
-            width: 90%;
-            max-width: 800px;
-            color: white;
-            position: relative;
-            max-height: 90vh; /* Limite la hauteur du contenu du modal */
-            overflow-y: auto; /* Ajoute un défilement si le contenu est trop grand */
-        }
-        
-        .modal-content.policy-modal {
-            max-height: 90vh;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1.5rem;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #9ca3af;
-        }
-
-        .modal-content h2, .modal-content h3 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-        
-        .modal-content h2 {
-            font-size: 2rem;
-        }
-        
-        .modal-content h3 {
-            font-size: 1.5rem;
-        }
-        
-        .modal-content p, .modal-content ul, .modal-content li {
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        /* Style pour l'arrière-plan vidéo plein écran */
-        #video-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -10;
-        }
-        
-        /* Conteneur principal qui gère le glissement */
-        #slider-container {
-            display: flex;
-            width: 300%; /* Trois écrans côte à côte */
-            height: 100vh;
-            transition: transform 0.5s ease-in-out;
-        }
-        
-        /* Styles pour chaque écran */
-        .screen {
+        .slider-container {
             width: 100vw;
             height: 100vh;
-            flex-shrink: 0;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .screen {
+            min-width: 100vw;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 1.5rem;
-            color: white;
-            box-sizing: border-box;
-        }
-        
-        /* Panneau principal (écran 1) */
-        .left-panel {
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            border-radius: 1rem;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
             position: relative;
-            overflow: hidden;
-            width: 50%;
-            height: 100%;
-            margin-right: 1.5rem;
-        }
-        
-        /* Styles pour les boutons de langue et le nouveau logo */
-        .top-left-buttons {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            z-index: 10;
-            display: flex;
-            gap: 1rem;
-            align-items: center;
         }
 
-        .flag-button {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 2px solid white;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-        
-        .flag-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-        }
-        
-        .logo-button {
-            width: 80px;
-            height: 80px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        
-        .logo-button:hover {
-            transform: scale(1.1);
-        }
-
-        /* Style pour le bouton d'accessibilité */
-        .accessibility-button {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #3b82f6; /* Couleur de fond pour l'accessibilité */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
-            border: 2px solid #3b82f6;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-        }
-
-        .accessibility-button:hover {
-            transform: scale(1.1);
-            background-color: #1d4ed8;
-            box-shadow: 0 0 15px rgba(29, 78, 216, 0.8);
-        }
-
-        .accessibility-icon {
-            font-size: 3rem;
-            color: white;
-        }
-
-        /* Panneau de grille (écrans 2 et 3) */
-        .right-panel {
-            display: grid;
-            gap: 1.5rem;
-            width: 100%;
-            height: 100%;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-        }
-
-        .grid-item {
-            background-color: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            border-radius: 1rem;
+        .left-panel, .right-panel {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 1rem;
-            cursor: pointer;
-            /* Mise à jour de la transition pour inclure l'ombre */
-            transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
+            padding: 4rem;
+        }
+
+        .right-panel {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 1.5rem;
+            max-width: 900px;
+        }
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            cursor: pointer; /* Indique que l'élément est interactif */
+            will-change: transform, box-shadow;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styles pour le glisser-déposer */
+        .grid-item.dragging {
+            position: fixed;
+            z-index: 999;
+            cursor: grabbing;
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5), 0 10px 10px rgba(0, 0, 0, 0.2);
+            transform: scale(1.1);
+            transition: none; /* Désactive la transition pour un mouvement fluide */
+        }
+
+        /* Animation de vibration pour le clic prolongé */
+        @keyframes vibrate-animation {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .grid-item.vibrating {
+            animation: vibrate-animation 0.2s infinite;
         }
         
-        /* Boutons de différentes tailles */
+        /* Classes pour le redimensionnement */
         .grid-item-col-2 {
             grid-column: span 2;
         }
         .grid-item-row-2 {
             grid-row: span 2;
         }
-
-        .grid-item:hover {
-            transform: scale(1.03);
-            background-color: rgba(255, 255, 255, 0.1);
+        .grid-item-large-square {
+            grid-column: span 2;
+            grid-row: span 2;
         }
-
-        /* NOUVEAU: Effet de pression au clic */
-        .grid-item:active {
-            transform: scale(0.97);
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        .grid-item-large-rectangle {
+            grid-column: span 2;
         }
-        
         .grid-icon {
-            font-size: 5rem; 
+            font-size: 3rem;
             margin-bottom: 0.5rem;
         }
-        
-        .text-2xl {
-            font-size: 1.5rem;
-        }
-        
-        /* Styles de la barre inférieure */
-        .footer-bar {
+        .modal {
+            display: none;
             position: fixed;
-            bottom: 0;
+            z-index: 1000;
             left: 0;
+            top: 0;
             width: 100%;
-            background-color: #090c12;
-            padding: 0.5rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
             align-items: center;
-            color: #9ca3af;
-            font-size: 0.875rem;
-            flex-wrap: wrap; /* Permet un retour à la ligne sur les petits écrans */
         }
-        
-        /* Conteneur pour les liens du footer */
-        .footer-links {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+        .modal-content {
+            background-color: #1e293b;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
         }
-
-        /* Styles pour la barre de séparation */
-        .footer-divider {
-            padding: 0 0.5rem;
-            color: #4b5563;
-        }
-
-        /* Points de navigation pour les écrans */
-        #screen-dots {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.75rem;
-            z-index: 20;
-        }
-        .dot {
-            width: 0.75rem;
-            height: 0.75rem;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.5);
-            transition: background-color 0.3s;
-        }
-        .dot.active {
-            background-color: white;
-        }
-        
-        /* Animation pour inviter à glisser */
-        #swipe-prompt {
-            position: fixed;
-            right: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
             color: white;
-            font-size: 3rem;
-            animation: bounce-right 2s infinite;
-            z-index: 20;
+            cursor: pointer;
         }
-        
-        @keyframes bounce-right {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateX(0);
-            }
-            40% {
-                transform: translateX(-10px);
-            }
-            60% {
-                transform: translateX(-5px);
-            }
-        }
-        
-        /* Styles pour le logo de l'office de tourisme */
-        .tourisme-logo {
-            width: 200px; /* Ajustez la taille selon vos besoins */
-            height: auto;
-        }
-        
-        /* Conteneur flexible pour le titre et le logo */
-        .header-content {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap; /* Permet au contenu de s'adapter sur les petits écrans */
-        }
-        
-        .logo-and-text {
-            display: flex;
-            align-items: center;
+        .modal-grid-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
-            flex-wrap: wrap;
         }
-        
-        .office-text {
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            font-size: 1.125rem;
-            line-height: 1.25;
-            text-transform: uppercase;
-            max-width: 200px;
-        }
-        
-        /* Styles pour le modal d'accessibilité */
-        .access-option-button {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
+        .modal-grid-item {
             background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 0.5rem;
-            text-align: left;
-            transition: background-color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .access-option-button:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .access-option-button.active {
-            background-color: #3b82f6;
-        }
-
-        /* Styles pour le modal de mentions légales */
-        .legal-modal-content {
-            max-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            color: white;
             text-align: center;
         }
-
-        .legal-modal-content h2,
-        .legal-modal-content h3 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 700;
-            font-size: 1.25rem; /* Taille de police légèrement réduite */
-            margin-bottom: 0.5rem;
-        }
-
-        .legal-modal-content p {
-            margin-bottom: 0.75rem; /* Marge réduite */
-            font-size: 0.9rem; /* Taille de police légèrement réduite */
-        }
-
-        .editor-logo {
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 1rem;
-        }
-        
-        .partners-logo {
+        .modal-grid-item img {
             max-width: 100%;
             height: auto;
-            margin-bottom: 1rem;
+            border-radius: 0.5rem;
         }
-        
-        /* Styles pour les formulaires modaux */
-        .form-modal-content {
+        .modal-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem;
+            color: #d1d5db;
+        }
+        #video-background {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            transform: translateX(-50%) translateY(-50%);
+            background-size: cover;
+        }
+        .fixed-buttons {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .form-input, .form-select, .form-textarea {
-            width: 100%;
+        .icon-button {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 9999px;
             padding: 0.75rem;
-            border-radius: 0.5rem;
-            border: 1px solid #4b5563;
-            background-color: rgba(255, 255, 255, 0.05);
             color: white;
-            font-size: 1rem;
-        }
-        
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
-        }
-        
-        .form-label {
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            color: #d1d5db;
-        }
-        
-        .form-button {
-            background-color: #22c55e;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .icon-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
         }
         
-        .form-button:hover {
-            background-color: #16a34a;
-        }
-        
-        /* Styles pour la nouvelle fenêtre de statut (succès/erreur) */
-        .status-modal-content .status-icon {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .status-modal-content .success-icon {
-            color: #22c55e;
-        }
-        
-        .status-modal-content .error-icon {
-            color: #ef4444;
-        }
-
-        /* Style pour la case à cocher RGPD */
-        .privacy-consent {
+        /* Style pour la poignée de redimensionnement */
+        .resize-handle {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            width: 2rem;
+            height: 2rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
             display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            color: #d1d5db;
+            justify-content: center;
+            align-items: center;
+            cursor: nwse-resize;
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+            pointer-events: none; /* Rendu invisible aux événements de la souris par défaut */
         }
-        
-        .privacy-consent input[type="checkbox"] {
-            margin-top: 0.2rem;
-            flex-shrink: 0;
-            width: 1rem;
-            height: 1rem;
-            cursor: pointer;
-        }
-
-        .privacy-consent a {
-            color: #3b82f6;
-            text-decoration: underline;
+        .show-handle .resize-handle {
+            opacity: 1;
+            pointer-events: auto; /* Rendu interactif lorsque la classe est présente */
         }
     </style>
 </head>
 <body>
     <video autoplay muted loop id="video-background">
-        <source src="Destination Sud Réunion_HD.mp4" type="video/mp4" />
-        Votre navigateur ne supporte pas la vidéo.
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-sunrise-over-the-mountains-9584-large.mp4" type="video/mp4">
     </video>
 
-    <!-- Conteneur principal de glissement -->
-    <div id="slider-container">
+    <div class="slider-container">
         <!-- Écran 1 -->
         <div id="screen-1" class="screen">
             <div class="left-panel">
-                <!-- Conteneur pour le logo et les boutons de langue -->
-                <div class="top-left-buttons">
-                    <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo DSR" class="logo-button">
-                    <a href="#" class="flag-button" onclick="changeLanguage('fr')" style="background-image: url('https://flagcdn.com/w320/fr.png');"></a>
-                    <a href="#" class="flag-button" onclick="changeLanguage('en')" style="background-image: url('https://flagcdn.com/w320/gb.png');"></a>
-                    <a href="#" class="flag-button" onclick="changeLanguage('es')" style="background-image: url('https://flagcdn.com/w320/es.png');"></a>
-                    <a href="#" class="flag-button" onclick="changeLanguage('de')" style="background-image: url('https://flagcdn.com/w320/de.png');"></a>
-                    <!-- Nouveau bouton d'accessibilité -->
-                    <a href="#" class="accessibility-button" id="accessibility-btn">
-                        <span class="accessibility-icon">♿</span>
-                    </a>
-                </div>
-                <div class="left-panel-content">
-                    <!-- Section mise à jour avec le logo et le texte de l'office de tourisme -->
-                    <div class="logo-and-text">
-                        <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de la Réunion" class="tourisme-logo">
-                        <div class="office-text"> OFFICES DE TOURISME DU SUD DE LA RÉUNION </div>
-                    </div>
-                    <h1 id="title-main" class="font-[Pacifico] text-6xl md:text-8xl lg:text-9xl mb-4 drop-shadow-lg"> Destination Sud Réunion </h1>
-                    <h2 id="title-welcome" class="font-bold text-4xl md:text-5xl lg:text-6xl text-white drop-shadow-lg"> Bienvenue </h2>
+                <h1 class="text-white text-6xl font-bold">L'île intense</h1>
+                <h2 class="text-white text-3xl mt-4">La Réunion</h2>
+                <div class="mt-8 flex gap-4">
+                    <button id="open-button-1" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                    <button id="next-screen-1" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Découvrir les activités</button>
                 </div>
             </div>
-            <!-- Écran 1 - Liens mis à jour pour les pages de destination -->
             <div class="right-panel">
-                <a href="Destinationdecouvrir.html" class="grid-item">
-                    <span class="grid-icon">🗺️</span>
-                    <span id="nav-discover" class="text-2xl font-semibold">Découvrir</span>
+                <a href="Destinationplage.html" class="grid-item grid-item-row-2">
+                    <span class="grid-icon">🏖️</span>
+                    <span class="text-2xl font-semibold">Les Plages</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
-                <a href="Destinationactivites.html" class="grid-item">
-                    <span class="grid-icon">🎈</span>
-                    <span id="nav-activities" class="text-2xl font-semibold">Activités & sensations</span>
+                <a href="Destinationvolcan.html" class="grid-item">
+                    <span class="grid-icon">🌋</span>
+                    <span class="text-2xl font-semibold">Le Volcan</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
-                <a href="Destinationagenda.html" class="grid-item">
-                    <span class="grid-icon">📅</span>
-                    <span id="nav-agenda" class="text-2xl font-semibold">Agenda</span>
+                <a href="Destinationforet.html" class="grid-item">
+                    <span class="grid-icon">🌲</span>
+                    <span class="text-2xl font-semibold">Les Forêts</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
-                <a href="DestinationRestos.html" class="grid-item">
-                    <span class="grid-icon">🍽️</span>
-                    <span id="nav-eat" class="text-2xl font-semibold">Où manger ?</span>
-                </a>
-                <a href="Destinationhebergements.html" class="grid-item">
-                    <span class="grid-icon">🛏️</span>
-                    <span id="nav-sleep" class="text-2xl font-semibold">Où dormir ?</span>
-                </a>
-                <a href="Destinationinfospratiques.html" class="grid-item">
-                    <span class="grid-icon">ℹ️</span>
-                    <span id="nav-info" class="text-2xl font-semibold">Infos pratiques</span>
+                <a href="Destinationvillages.html" class="grid-item">
+                    <span class="grid-icon">🏡</span>
+                    <span class="text-2xl font-semibold">Les Villages</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
             </div>
         </div>
-        <!-- Écran 2 - Liens mis à jour pour les pages de destination -->
+
+        <!-- Écran 2 -->
         <div id="screen-2" class="screen">
+            <div class="left-panel">
+                <h1 class="text-white text-6xl font-bold">L'île authentique</h1>
+                <h2 class="text-white text-3xl mt-4">La Réunion</h2>
+                <div class="mt-8 flex gap-4">
+                    <button id="open-button-2" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                    <button id="prev-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                    <button id="next-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Activités ludiques</button>
+                </div>
+            </div>
             <div class="right-panel">
-                <!-- Boutons de différentes tailles -->
-                <a href="Destinationmeteo.html" class="grid-item grid-item-col-2">
-                    <span class="grid-icon">☀️</span>
-                    <span id="nav-weather" class="text-2xl font-semibold">La Météo</span>
-                </a>
                 <a href="DestinationRandos.html" class="grid-item">
-                    <span class="grid-icon">⛰️</span>
-                    <span id="nav-hikes" class="text-2xl font-semibold">Randonnées</span>
+                    <span class="grid-icon">🥾</span>
+                    <span class="text-2xl font-semibold">Les Randonnées</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
                 <a href="Destinationactivitesnautiques.html" class="grid-item">
                     <span class="grid-icon">🌊</span>
-                    <span id="nav-water" class="text-2xl font-semibold">Activités Nautiques</span>
+                    <span class="text-2xl font-semibold">Activités Nautiques</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
-                <a href="Destinationdecouvrir.html" class="grid-item">
-                    <span class="grid-icon">🗺️</span>
-                    <span id="nav-discover-2" class="text-2xl font-semibold">Découvrir</span>
+
+                <!-- Widget Météo -->
+                <div class="grid-item grid-item-col-2 bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-xl">
+                    <div class="flex flex-col items-center justify-center h-full">
+                        <span class="text-6xl mb-2">☀️</span>
+                        <div class="flex items-end justify-center">
+                            <span class="text-6xl font-extrabold">+27</span>
+                            <span class="text-2xl font-bold">°C</span>
+                        </div>
+                        <span class="text-lg font-medium mt-1">Paris</span>
+                        <span class="text-sm">Ensoleillé avec quelques nuages</span>
+                    </div>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+                </div>
+                
+                <!-- Widget Restaurants -->
+                <div class="grid-item grid-item-col-2 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl">
+                    <div class="flex flex-col items-center justify-center h-full w-full">
+                        <h3 class="text-2xl font-semibold mb-2">Les restaurants locaux</h3>
+                        <iframe src="widget-restos.html"
+                            style="border:none; width:100%; max-width:600px; height:350px; border-radius:10px;"
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+                </div>
+
+                <a href="Destinationculture.html" class="grid-item">
+                    <span class="grid-icon">🎭</span>
+                    <span class="text-2xl font-semibold">Culture & Traditions</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
-                <a href="Destinationactivites.html" class="grid-item">
-                    <span class="grid-icon">🎈</span>
-                    <span id="nav-activities-2" class="text-2xl font-semibold">Activités & sensations</span>
+                <a href="Destinationproduits.html" class="grid-item">
+                    <span class="grid-icon">🍍</span>
+                    <span class="text-2xl font-semibold">Produits du Terroir</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
             </div>
         </div>
-        <!-- Écran 3 - Liens mis à jour pour les pages de destination -->
+
+        <!-- Écran 3 -->
         <div id="screen-3" class="screen">
+            <div class="left-panel">
+                <h1 class="text-white text-6xl font-bold">L'île aventure</h1>
+                <h2 class="text-white text-3xl mt-4">La Réunion</h2>
+                <div class="mt-8 flex gap-4">
+                    <button id="open-button-3" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                    <button id="prev-screen-3" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                </div>
+            </div>
             <div class="right-panel">
-                <a href="Destinationjeux.html" class="grid-item">
-                    <span class="grid-icon">🕹️</span>
-                    <span id="nav-games" class="text-2xl font-semibold">Jeux</span>
+                <a href="DestinationActivitesaeriennes.html" class="grid-item grid-item-col-2">
+                    <span class="grid-icon">🚁</span>
+                    <span class="text-2xl font-semibold">Activités Aériennes</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
-                <a href="Destinationmultimedia.html" class="grid-item grid-item-row-2">
-                    <span class="grid-icon">🎥</span>
-                    <span id="nav-multimedia" class="text-2xl font-semibold">Multimédia</span>
+                <!-- Widget Heure/Date -->
+                <div class="grid-item bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-xl">
+                    <div class="flex flex-col items-center justify-center h-full">
+                        <span class="text-lg font-medium" id="date-widget"></span>
+                        <span class="text-5xl font-extrabold mt-1" id="time-widget"></span>
+                    </div>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+                </div>
+                <a href="Destinationparcs.html" class="grid-item">
+                    <span class="grid-icon">🎢</span>
+                    <span class="text-2xl font-semibold">Parcs & Aventures</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
-                <a href="Destinationmeteo.html" class="grid-item">
-                    <span class="grid-icon">☀️</span>
-                    <span id="nav-weather-2" class="text-2xl font-semibold">La Météo</span>
+                <a href="Destinationbienetre.html" class="grid-item">
+                    <span class="grid-icon">🧘‍♀️</span>
+                    <span class="text-2xl font-semibold">Bien-être & Spa</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
-                <a href="Destinationinfospratiques.html" class="grid-item">
-                    <span class="grid-icon">ℹ️</span>
-                    <span id="nav-info-2" class="text-2xl font-semibold">Infos pratiques</span>
+                <a href="Destinationgolf.html" class="grid-item">
+                    <span class="grid-icon">⛳</span>
+                    <span class="text-2xl font-semibold">Golf</span>
+                    <div class="resize-handle">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Points de navigation -->
-    <div id="screen-dots">
-        <span class="dot active" onclick="goToScreen(0)"></span>
-        <span class="dot" onclick="goToScreen(1)"></span>
-        <span class="dot" onclick="goToScreen(2)"></span>
-    </div>
-    
-    <!-- Flèche pour inviter à glisser -->
-    <div id="swipe-prompt" class="hidden sm:block">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-    </div>
-
-    <!-- Barre de pied de page -->
-    <div class="footer-bar">
-        <div class="footer-links">
-            <a href="#" onclick="openModal('accessibilite')">Accessibilité</a>
-            <span class="footer-divider">|</span>
-            <a href="#" onclick="openModal('mentions-legales')">Mentions légales</a>
-            <span class="footer-divider">|</span>
-            <a href="#" onclick="openModal('partenaires')">Partenaires</a>
-            <span class="footer-divider">|</span>
-            <a href="#" onclick="openModal('contact')">Nous contacter</a>
-        </div>
-        <div>
-            © 2024 Destination Sud Réunion
-        </div>
-    </div>
-    
-    <!-- Modal d'accessibilité -->
-    <div id="accessibilite-modal" class="modal">
+    <!-- Modals -->
+    <div id="modal-1" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal('accessibilite')">&times;</span>
-            <h2 class="text-3xl font-bold mb-4">Accessibilité</h2>
-            <p>
-                Cette application est conçue pour être accessible au plus grand nombre.
-                Vous pouvez ajuster les paramètres d'affichage pour une meilleure expérience.
-            </p>
-            <div class="mt-4">
-                <button id="high-contrast-btn" class="access-option-button">
-                    <span class="text-2xl">🌗</span> Mode contraste élevé
-                </button>
-                <button id="larger-text-btn" class="access-option-button">
-                    <span class="text-2xl">🔎</span> Taille de texte augmentée
-                </button>
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title mb-4">L'île intense</h2>
+            <div class="modal-grid-content">
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+1" alt="Description Image 1" />
+                    <p class="mt-2 text-lg">Découvrez des paysages à couper le souffle, entre pics majestueux et plages de rêve.</p>
+                </div>
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+2" alt="Description Image 2" />
+                    <p class="mt-2 text-lg">L'île de La Réunion offre une diversité incroyable pour les voyageurs en quête d'aventure et de détente.</p>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal des mentions légales -->
-    <div id="mentions-legales-modal" class="modal">
-        <div class="modal-content legal-modal-content">
-            <span class="close-button" onclick="closeModal('mentions-legales')">&times;</span>
-            <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de la Réunion" class="editor-logo">
-            <h2 class="text-2xl font-bold mb-2">Mentions Légales</h2>
-            <h3 class="text-xl font-semibold mb-1">Éditeur du site</h3>
-            <p>OFFICES DE TOURISME DU SUD DE LA RÉUNION</p>
-            <h3 class="text-xl font-semibold mb-1">Direction de la publication</h3>
-            <p>[Nom du directeur de la publication]</p>
-            <h3 class="text-xl font-semibold mb-1">Hébergement</h3>
-            <p>Ce site est hébergé par [Nom de l'hébergeur] - [Adresse de l'hébergeur]</p>
-            <h3 class="text-xl font-semibold mb-1">Propriété intellectuelle</h3>
-            <p>
-                L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle.
-                Toute reproduction est strictement interdite sans autorisation préalable.
-            </p>
-            <h3 class="text-xl font-semibold mb-1">Données personnelles</h3>
-            <p>
-                Les informations recueillies font l’objet d’un traitement informatique destiné à [objectif du traitement].
-                Conformément à la loi "Informatique et Libertés" du 6 janvier 1978, vous disposez d'un droit d'accès et de rectification aux données vous concernant.
-            </p>
-        </div>
-    </div>
-
-    <!-- Modal des partenaires -->
-    <div id="partenaires-modal" class="modal">
-        <div class="modal-content legal-modal-content">
-            <span class="close-button" onclick="closeModal('partenaires')">&times;</span>
-            <h2 class="text-2xl font-bold mb-4">Nos partenaires</h2>
-            <p>
-                L'Office de Tourisme du Sud de la Réunion travaille en collaboration avec de nombreux acteurs locaux pour vous offrir la meilleure expérience possible.
-                Nous remercions tous nos partenaires pour leur précieuse contribution.
-            </p>
-            <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de la Réunion" class="partners-logo">
-            <!-- Vous pouvez ajouter plus de logos de partenaires ici -->
-        </div>
-    </div>
-    
-    <!-- Modal de contact -->
-    <div id="contact-modal" class="modal contact-modal">
+    <div id="modal-2" class="modal">
         <div class="modal-content">
-            <span class="close-button" onclick="closeModal('contact')">&times;</span>
-            <h2 class="text-2xl font-bold mb-4">Nous contacter</h2>
-            <form id="contact-form" action="https://formspree.io/f/xbjnqkyw" method="POST">
-                <div class="form-group">
-                    <label for="contact-name" class="form-label">Nom complet</label>
-                    <input type="text" id="contact-name" name="name" class="form-input" placeholder="Votre nom" required>
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title mb-4">L'île authentique</h2>
+            <div class="modal-grid-content">
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+3" alt="Description Image 3" />
+                    <p class="mt-2 text-lg">Plongez au cœur de la culture créole et de ses traditions.</p>
                 </div>
-                <div class="form-group">
-                    <label for="contact-email" class="form-label">Adresse email</label>
-                    <input type="email" id="contact-email" name="_replyto" class="form-input" placeholder="votre@email.com" required>
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+4" alt="Description Image 4" />
+                    <p class="mt-2 text-lg">Goûtez aux saveurs locales et rencontrez les habitants chaleureux.</p>
                 </div>
-                <div class="form-group">
-                    <label for="contact-subject" class="form-label">Objet</label>
-                    <select id="contact-subject" name="subject" class="form-input" required>
-                        <option value="" disabled selected>- Veuillez sélectionner -</option>
-                        <option value="Demande d'information">Demande d'information</option>
-                        <option value="Partenariat">Partenariat</option>
-                        <option value="Autres">Autres</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="contact-message" class="form-label">Votre message</label>
-                    <textarea id="contact-message" name="message" rows="4" class="form-textarea" placeholder="Écrivez votre message ici..." required></textarea>
-                </div>
-                <div class="privacy-consent">
-                    <input type="checkbox" id="privacy-policy" name="privacy-policy" required>
-                    <label for="privacy-policy">
-                        J'ai lu et j'accepte la <a href="#" onclick="openModal('mentions-legales'); event.stopPropagation();">politique de confidentialité</a>
-                    </label>
-                </div>
-                <button type="submit" class="form-button mt-4">Envoyer</button>
-            </form>
+            </div>
         </div>
     </div>
 
-    <!-- Modal de statut de soumission de formulaire -->
-    <div id="status-modal" class="modal status-modal">
-        <div class="modal-content status-modal-content text-center">
-            <span class="close-button" onclick="closeModal('status')">&times;</span>
-            <span id="status-icon" class="status-icon"></span>
-            <h2 id="status-title" class="text-2xl font-bold mb-2"></h2>
-            <p id="status-message" class="text-sm text-gray-300"></p>
-            <button onclick="closeModal('status')" class="form-button mt-4">Fermer</button>
+    <div id="modal-3" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title mb-4">L'île aventure</h2>
+            <div class="modal-grid-content">
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+5" alt="Description Image 5" />
+                    <p class="mt-2 text-lg">Explorez l'île à travers des activités uniques et mémorables.</p>
+                </div>
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+6" alt="Description Image 6" />
+                    <p class="mt-2 text-lg">Que vous soyez fan de sensations fortes ou de relaxation, l'île a tout pour vous plaire.</p>
+                </div>
+            </div>
         </div>
     </div>
-    
+
+    <!-- Boutons de contrôle -->
+    <div class="fixed-buttons">
+        <button id="toggle-contrast" class="icon-button" aria-label="Toggle high contrast">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+        </button>
+        <button id="toggle-text-size" class="icon-button" aria-label="Toggle larger text">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M7 9l4 4 4-4m-4 12v-8" />
+            </svg>
+        </button>
+    </div>
+
     <script>
-        // Variables pour gérer l'état du slider
-        const sliderContainer = document.getElementById('slider-container');
-        const screenDots = document.querySelectorAll('.dot');
-        const totalScreens = 3;
-        let currentScreen = 0;
-        let isMoving = false; // Empêche le glissement pendant l'animation
-        let inactivityTimer; // Minuteur pour le défilement automatique
-
-        // Variables pour gérer le toucher/souris
-        let startX = 0;
-        let startY = 0;
-        let endX = 0;
-        let endY = 0;
-        const swipeThreshold = 50; // Distance de glissement minimale pour changer d'écran
-
-        // Éléments pour l'accessibilité
+        // ===============================
+        // Variables Globales
+        // ===============================
+        const slider = document.querySelector('.slider-container');
+        const screens = document.querySelectorAll('.screen');
+        const nextButtons = document.querySelectorAll('[id^="next-screen-"]');
+        const prevButtons = document.querySelectorAll('[id^="prev-screen-"]');
+        const openButtons = document.querySelectorAll('[id^="open-button-"]');
+        const modals = document.querySelectorAll('.modal');
+        const closeButtons = document.querySelectorAll('.close-button');
+        const toggleContrastButton = document.getElementById('toggle-contrast');
+        const toggleTextSizeButton = document.getElementById('toggle-text-size');
         const body = document.body;
-        const highContrastBtn = document.getElementById('high-contrast-btn');
-        const largerTextBtn = document.getElementById('larger-text-btn');
-        const accessibilityBtn = document.getElementById('accessibility-btn');
 
-        // Références aux modaux
-        const contactModal = document.getElementById('contact-modal');
-        const statusModal = document.getElementById('status-modal');
-        const form = document.getElementById('contact-form');
-        const statusIcon = document.getElementById('status-icon');
-        const statusTitle = document.getElementById('status-title');
-        const statusMessage = document.getElementById('status-message');
+        let currentScreen = 0;
+        let isDragging = false;
+        let startX = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let animationID;
+        let inactivityTimer;
 
-        // Fonction pour mettre à jour la position du slider
+        // Variables pour le glisser-déposer et le redimensionnement
+        const gridItems = document.querySelectorAll('.grid-item');
+        let longPressTimer;
+        let isLongPress = false;
+        let draggedElement = null;
+        let isLinkClickBlocked = false;
+        let isResizing = false;
+        let resizeTarget = null;
+        let initialX = 0;
+        let initialY = 0;
+
+        // ===============================
+        // Gestion du Slider et de la Navigation
+        // ===============================
         function updateSlider() {
-            sliderContainer.style.transform = `translateX(-${currentScreen * 100 / totalScreens}%)`;
-            updateDots();
+            currentTranslate = -currentScreen * window.innerWidth;
+            slider.style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        // Gère le glissement normal d'écran
+        function handleStart(event) {
+            // Empêche le défilement de l'écran si l'utilisateur est en train de glisser un widget
+            if (draggedElement) return;
+
+            isDragging = true;
+            startX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+            prevTranslate = currentTranslate;
+            animationID = requestAnimationFrame(animation);
+            slider.style.transition = 'none';
+        }
+
+        function handleMove(event) {
+            if (!isDragging) return;
+            const currentX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+            const deltaX = currentX - startX;
+            currentTranslate = prevTranslate + deltaX;
+            if (event.type.includes('touch')) {
+                event.preventDefault();
+            }
+        }
+
+        function handleEnd() {
+            cancelAnimationFrame(animationID);
+            isDragging = false;
+            const movedBy = currentTranslate - prevTranslate;
+            if (movedBy < -100 && currentScreen < screens.length - 1) {
+                currentScreen++;
+            } else if (movedBy > 100 && currentScreen > 0) {
+                currentScreen--;
+            }
+            updateSlider();
+            slider.style.transition = 'transform 0.5s ease-in-out';
             resetInactivityTimer();
         }
 
-        // Fonction pour mettre à jour les points de navigation
-        function updateDots() {
-            screenDots.forEach((dot, index) => {
-                if (index === currentScreen) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
+        function animation() {
+            slider.style.transform = `translateX(${currentTranslate}px)`;
+            if (isDragging) {
+                requestAnimationFrame(animation);
+            }
+        }
+
+        function handleWheel(event) {
+            if (event.deltaY > 0 && currentScreen < screens.length - 1) {
+                currentScreen++;
+                updateSlider();
+            } else if (event.deltaY < 0 && currentScreen > 0) {
+                currentScreen--;
+                updateSlider();
+            }
+            event.preventDefault();
+            resetInactivityTimer();
+        }
+
+        // Gestionnaires pour la navigation par boutons
+        nextButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                currentScreen++;
+                updateSlider();
+                resetInactivityTimer();
+            });
+        });
+
+        prevButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                currentScreen--;
+                updateSlider();
+                resetInactivityTimer();
+            });
+        });
+
+        // ===============================
+        // Gestion des Modals
+        // ===============================
+        openButtons.forEach((button, index) => {
+            button.addEventListener('click', (event) => {
+                if (isLinkClickBlocked) {
+                    event.preventDefault();
+                    isLinkClickBlocked = false;
+                    return;
+                }
+                modals[index].style.display = 'flex';
+                resetInactivityTimer();
+            });
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.modal').style.display = 'none';
+                resetInactivityTimer();
+            });
+        });
+
+        window.addEventListener('click', (event) => {
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    resetInactivityTimer();
                 }
             });
-        }
+        });
 
-        // Fonction pour se déplacer vers un écran spécifique
-        function goToScreen(index) {
-            if (isMoving) return;
-            currentScreen = index;
-            updateSlider();
-        }
+        // ===============================
+        // Gestion de l'Accessibilité
+        // ===============================
+        toggleContrastButton.addEventListener('click', () => {
+            body.classList.toggle('high-contrast');
+            resetInactivityTimer();
+        });
 
-        // Fonctions pour gérer les modaux
-        function openModal(modalName) {
-            const modal = document.getElementById(`${modalName}-modal`);
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Empêche le défilement de l'arrière-plan
-            }
-        }
-
-        function closeModal(modalName) {
-            const modal = document.getElementById(`${modalName}-modal`);
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = ''; // Rétablit le défilement de l'arrière-plan
-            }
-        }
+        toggleTextSizeButton.addEventListener('click', () => {
+            body.classList.toggle('larger-text');
+            resetInactivityTimer();
+        });
         
-        // Fonction pour montrer le modal de statut
-        function showStatusModal(title, message, isSuccess) {
-            statusTitle.textContent = title;
-            statusMessage.textContent = message;
-            statusIcon.textContent = isSuccess ? '✅' : '❌';
-            statusIcon.classList.toggle('success-icon', isSuccess);
-            statusIcon.classList.toggle('error-icon', !isSuccess);
-            openModal('status');
-        }
-
-        // Gestion de la soumission du formulaire de contact
-        if (form) {
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
-                const data = new FormData(event.target);
-                const url = event.target.action;
-                const method = event.target.method;
-
-                fetch(url, {
-                    method: method,
-                    body: data,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                }).then(response => {
-                    if (response.ok) {
-                        closeModal('contact');
-                        showStatusModal("Message envoyé !", "Merci de nous avoir contacté. Nous vous répondrons dans les plus brefs délais.", true);
-                    } else {
-                        response.json().then(data => {
-                            if (Object.hasOwn(data, 'errors')) {
-                                showStatusModal("Erreur", data["errors"].map(error => error["message"]).join(", "), false);
-                            } else {
-                                showStatusModal("Erreur", "Oops! Une erreur s'est produite lors de la soumission du formulaire.", false);
-                            }
-                        });
-                    }
-                }).catch(error => {
-                    showStatusModal("Erreur", "Oops! Une erreur s'est produite lors de la soumission du formulaire. Veuillez réessayer plus tard.", false);
-                });
-            });
-        }
-        
-        // Gère les clics sur les boutons d'accessibilité
-        if (highContrastBtn) {
-            highContrastBtn.addEventListener('click', () => {
-                body.classList.toggle('high-contrast');
-                highContrastBtn.classList.toggle('active', body.classList.contains('high-contrast'));
-            });
-        }
-
-        if (largerTextBtn) {
-            largerTextBtn.addEventListener('click', () => {
-                body.classList.toggle('larger-text');
-                largerTextBtn.classList.toggle('active', body.classList.contains('larger-text'));
-            });
-        }
-
-        // Gère les événements tactiles et de souris pour le glissement
-        function handleStart(e) {
-            if (e.touches) {
-                startX = e.touches[0].clientX;
-                startY = e.touches[0].clientY;
-            } else {
-                startX = e.clientX;
-                startY = e.clientY;
-            }
-            isMoving = false;
-        }
-
-        function handleMove(e) {
-            if (!startX) return;
-
-            if (e.touches) {
-                endX = e.touches[0].clientX;
-                endY = e.touches[0].clientY;
-            } else {
-                endX = e.clientX;
-                endY = e.clientY;
-            }
-
-            const deltaX = endX - startX;
-            const deltaY = endY - startY;
-
-            // Détecte un mouvement horizontal significatif pour éviter de déclencher sur un défilement vertical
-            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                isMoving = true;
-                const progress = deltaX / window.innerWidth;
-                const newTransform = `translateX(calc(-${currentScreen * 100}vw + ${progress * 100}px))`;
-                sliderContainer.style.transform = newTransform;
-            }
-        }
-
-        function handleEnd(e) {
-            if (!isMoving) {
-                startX = 0;
-                startY = 0;
-                return;
-            }
-            
-            const deltaX = endX - startX;
-            
-            if (deltaX > swipeThreshold && currentScreen > 0) {
-                currentScreen--;
-            } else if (deltaX < -swipeThreshold && currentScreen < totalScreens - 1) {
-                currentScreen++;
-            }
-
-            updateSlider();
-            
-            startX = 0; endX = 0;
-            isMoving = false;
-        }
-
-        function handleWheel(e) {
-            if (isMoving) return;
-            isMoving = true;
-            if (e.deltaY > 0 && currentScreen < totalScreens - 1) {
-                currentScreen++;
-            } else if (e.deltaY < 0 && currentScreen > 0) {
-                currentScreen--;
-            }
-            updateSlider();
-            // Délai pour empêcher le défilement trop rapide
-            setTimeout(() => {
-                isMoving = false;
-            }, 500);
-        }
-        
-        // Défilement automatique après une période d'inactivité
+        // ===============================
+        // Minuteur d'inactivité pour le défilement automatique
+        // ===============================
         function startAutoScroll() {
             inactivityTimer = setTimeout(() => {
-                if (currentScreen < totalScreens - 1) {
+                if (currentScreen < screens.length - 1) {
                     currentScreen++;
                 } else {
                     currentScreen = 0;
                 }
                 updateSlider();
-                startAutoScroll(); // Relance le minuteur après le défilement
-            }, 60000); // 1 minute (60000 ms)
+                startAutoScroll();
+            }, 60000); // 1 minute
         }
         
         function resetInactivityTimer() {
@@ -976,30 +697,171 @@
             startAutoScroll();
         }
 
-        // Ajout des écouteurs d'événements
-        document.addEventListener('mousedown', handleStart);
-        document.addEventListener('mousemove', handleMove);
-        document.addEventListener('mouseup', handleEnd);
+        // ===============================
+        // Gestion du Widget Date/Heure
+        // ===============================
+        function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            
+            const formattedDate = now.toLocaleDateString('fr-FR', dateOptions);
+            const formattedTime = now.toLocaleTimeString('fr-FR', timeOptions);
 
-        document.addEventListener('touchstart', handleStart);
-        document.addEventListener('touchmove', handleMove);
-        document.addEventListener('touchend', handleEnd);
+            const dateElement = document.getElementById('date-widget');
+            const timeElement = document.getElementById('time-widget');
 
-        document.addEventListener('wheel', handleWheel, { passive: false });
+            if (dateElement && timeElement) {
+                dateElement.textContent = formattedDate;
+                timeElement.textContent = formattedTime;
+            }
+        }
+        
+        // ===============================
+        // Fonctions de glisser-déposer & redimensionnement
+        // ===============================
+        function handleGridStart(event) {
+            const targetElement = event.currentTarget.closest('.grid-item');
+            if (!targetElement) return;
 
-        // Empêche le défilement de l'écran principal lorsque le modal est ouvert
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('wheel', (e) => {
-                e.stopPropagation();
-            });
-        });
+            // Si c'est la poignée de redimensionnement qui est cliquée, on passe en mode redimensionnement
+            if (event.target.closest('.resize-handle')) {
+                isResizing = true;
+                resizeTarget = targetElement;
+                initialX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
+                initialY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
+                return;
+            }
+
+            clearTimeout(longPressTimer);
+            isLongPress = false;
+            isLinkClickBlocked = false;
+            
+            initialX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
+            initialY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
+
+            longPressTimer = setTimeout(() => {
+                isLongPress = true;
+                isLinkClickBlocked = true;
+                draggedElement = targetElement;
+                draggedElement.classList.add('dragging');
+                draggedElement.classList.add('vibrating'); // Ajoute la classe pour l'animation de vibration
+                draggedElement.classList.add('show-handle');
+                
+            }, 400);
+
+            if (event.type.includes('touch')) {
+                event.preventDefault();
+            }
+        }
+
+        function handleGridMove(event) {
+            // Gestion du redimensionnement
+            if (isResizing && resizeTarget) {
+                const currentX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
+                const currentY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
+                const deltaX = currentX - initialX;
+                const deltaY = currentY - initialY;
+                const resizeThreshold = 50;
+
+                // Enlève toutes les classes de redimensionnement
+                resizeTarget.classList.remove('grid-item-col-2', 'grid-item-row-2', 'grid-item-large-square', 'grid-item-large-rectangle');
+                
+                // Si l'utilisateur tire horizontalement ou verticalement au-delà d'un seuil, on change la forme
+                if (Math.abs(deltaX) > resizeThreshold) {
+                    resizeTarget.classList.add('grid-item-large-rectangle');
+                } else if (Math.abs(deltaY) > resizeThreshold) {
+                    resizeTarget.classList.add('grid-item-large-square');
+                }
+                if (event.type.includes('touch')) {
+                    event.preventDefault();
+                }
+                return;
+            }
+
+            // Gestion du glisser-déposer principal
+            if (!isLongPress || !draggedElement) return;
+            
+            // Corrige la position de l'élément en mode glisser-déposer
+            draggedElement.classList.add('dragging');
+            
+            const currentX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
+            const currentY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
+            
+            draggedElement.style.left = `${currentX - draggedElement.offsetWidth / 2}px`;
+            draggedElement.style.top = `${currentY - draggedElement.offsetHeight / 2}px`;
+            
+            const screenWidth = window.innerWidth;
+            const threshold = screenWidth * 0.15;
+            
+            if (currentX > screenWidth - threshold && currentScreen < screens.length - 1) {
+                currentScreen++;
+                updateSlider();
+            } else if (currentX < threshold && currentScreen > 0) {
+                currentScreen--;
+                updateSlider();
+            }
+        }
+
+        function handleGridEnd(event) {
+            clearTimeout(longPressTimer);
+            
+            if (isResizing) {
+                // Fin du redimensionnement
+                isResizing = false;
+                resizeTarget = null;
+                // On cache la poignée
+                const allGridItems = document.querySelectorAll('.grid-item');
+                allGridItems.forEach(item => item.classList.remove('show-handle'));
+            }
+            
+            // Si le glisser-déposer principal était actif
+            if (isLongPress && draggedElement) {
+                const dropTarget = screens[currentScreen].querySelector('.right-panel');
+                if (dropTarget) {
+                    dropTarget.appendChild(draggedElement);
+                }
+                
+                draggedElement.classList.remove('dragging');
+                draggedElement.classList.remove('vibrating'); // Supprime la classe de vibration
+                draggedElement.style.left = '';
+                draggedElement.style.top = '';
+                draggedElement.style.position = '';
+
+                isLongPress = false;
+                draggedElement = null;
+                
+                // On cache la poignée après un drag
+                const allGridItems = document.querySelectorAll('.grid-item');
+                allGridItems.forEach(item => item.classList.remove('show-handle'));
+            } else {
+                isLinkClickBlocked = false;
+            }
+
+            if (event.type.includes('touch')) {
+                event.preventDefault();
+            }
+        }
 
         // ===============================
-        // Initialisation
+        // Écouteurs d'événements et Initialisation
         // ===============================
         document.addEventListener('DOMContentLoaded', () => {
-            updateSlider(); // Initialise le slider au chargement
-            resetInactivityTimer(); // Démarre le minuteur au chargement de la page
+            updateSlider();
+            resetInactivityTimer();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+
+            gridItems.forEach(item => {
+                item.addEventListener('mousedown', handleGridStart);
+                item.addEventListener('touchstart', handleGridStart);
+            });
+            document.addEventListener('mouseup', handleGridEnd);
+            document.addEventListener('touchend', handleGridEnd);
+            document.addEventListener('mousemove', handleGridMove);
+            document.addEventListener('touchmove', handleGridMove);
+
+            document.addEventListener('dragstart', (e) => e.preventDefault());
         });
     </script>
 </body>
