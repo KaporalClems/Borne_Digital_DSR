@@ -9,7 +9,7 @@
     .slider-container {
       position: relative;
       width: 100%;
-      max-width: 600px;
+      max-width: 1000px;
       margin: auto;
       overflow: hidden;
       border-radius: 10px;
@@ -19,7 +19,7 @@
       transition: transform 0.5s ease-in-out;
     }
     .slide {
-      min-width: 100%;
+      flex: 0 0 100%; /* par défaut : 1 slide = 100% largeur */
       box-sizing: border-box;
       text-align: center;
       cursor: pointer;
@@ -27,6 +27,7 @@
       background: white;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin: 5px;
     }
     .slide img {
       width: 100%;
@@ -50,13 +51,24 @@
       cursor: pointer;
       border-radius: 50%;
     }
-    h3 { margin: 10px 0 5px; color:#8c2d04; }
-    p { margin: 0; color:#555; }
+    h3 { margin: 10px 0 5px; color:#8c2d04; font-size: 1rem; }
+    p, small { margin: 0; color:#555; font-size: 0.9rem; }
+
+    /* ✅ Responsive */
+    @media (min-width: 600px) {
+      .slide { flex: 0 0 50%; } /* tablette : 2 par ligne */
+    }
+    @media (min-width: 900px) {
+      .slide { flex: 0 0 33.33%; } /* desktop : 3 par ligne */
+    }
+    @media (min-width: 1200px) {
+      .slide { flex: 0 0 25%; } /* grand écran : 4 par ligne */
+    }
   </style>
 </head>
 <body>
 
-  <h2 style="text-align:center; color:#8c2d04;">Nos Restaurants</h2>
+  <h2 style="text-align:center; color:#8c2d04;">🍽️ Nos Restaurants</h2>
 
   <div class="slider-container">
     <div class="slider" id="slider"></div>
@@ -89,12 +101,16 @@
       });
 
     function showSlide(index) {
-      const slides = document.querySelectorAll(".slide");
-      if (!slides.length) return;
-      if (index >= slides.length) currentIndex = 0;
-      else if (index < 0) currentIndex = slides.length - 1;
+      const slideWidth = document.querySelector(".slide")?.offsetWidth || 0;
+      const visibleCount = Math.round(slider.offsetWidth / slideWidth);
+      const totalSlides = document.querySelectorAll(".slide").length;
+      const maxIndex = totalSlides - visibleCount;
+
+      if (index > maxIndex) currentIndex = 0;
+      else if (index < 0) currentIndex = maxIndex;
       else currentIndex = index;
-      slider.style.transform = `translateX(${-currentIndex * 100}%)`;
+
+      slider.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
     }
     function nextSlide() { showSlide(currentIndex + 1); }
     function prevSlide() { showSlide(currentIndex - 1); }
