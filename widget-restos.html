@@ -1,122 +1,72 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Widget Restaurants</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin:0; }
-    .slider-container {
-      position: relative;
-      width: 100%;
-      max-width: 1000px;
-      margin: auto;
-      overflow: hidden;
-      border-radius: 10px;
-    }
-    .slider {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-    .slide {
-      flex: 0 0 100%; /* par défaut : 1 slide = 100% largeur */
-      box-sizing: border-box;
-      text-align: center;
-      cursor: pointer;
-      padding: 15px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      margin: 5px;
-    }
-    .slide img {
-      width: 100%;
-      max-height: 200px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-    .controls {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-    }
-    .controls button {
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 50%;
-    }
-    h3 { margin: 10px 0 5px; color:#8c2d04; font-size: 1rem; }
-    p, small { margin: 0; color:#555; font-size: 0.9rem; }
-
-    /* ✅ Responsive */
-    @media (min-width: 600px) {
-      .slide { flex: 0 0 50%; } /* tablette : 2 par ligne */
-    }
-    @media (min-width: 900px) {
-      .slide { flex: 0 0 33.33%; } /* desktop : 3 par ligne */
-    }
-    @media (min-width: 1200px) {
-      .slide { flex: 0 0 25%; } /* grand écran : 4 par ligne */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Restaurants Fixe</title>
+    <!-- Utilisation de Tailwind CSS pour un style moderne et responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Styles personnalisés pour la mise en page de la grille */
+        .grid-container {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            /* Hauteur fixe pour le conteneur pour éviter les barres de défilement */
+            height: 450px; /* Ajustez la hauteur si nécessaire pour que tout le contenu rentre */
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-100 font-sans p-6">
 
-  <h2 style="text-align:center; color:#8c2d04;">🍽️ Nos Restaurants</h2>
-
-  <div class="slider-container">
-    <div class="slider" id="slider"></div>
-    <div class="controls">
-      <button onclick="prevSlide()">‹</button>
-      <button onclick="nextSlide()">›</button>
+    <div class="mx-auto max-w-6xl">
+        <h1 class="text-3xl font-bold text-center mb-6 text-gray-800">Liste des Restaurants</h1>
+        
+        <!-- Conteneur principal du widget -->
+        <div id="resto-container" class="grid-container">
+            <!-- Les cartes des restaurants seront insérées ici par JavaScript -->
+        </div>
     </div>
-  </div>
 
-  <script>
-    let currentIndex = 0;
-    const slider = document.getElementById("slider");
-
-    // Charger les restos depuis restaurants.json
-    fetch("restaurants.json")
-      .then(r => r.json())
-      .then(restos => {
-        restos.forEach(resto => {
-          const slide = document.createElement("div");
-          slide.className = "slide";
-          slide.innerHTML = `
-            <img src="${resto.image}" alt="${resto.name}">
-            <h3>${resto.name}</h3>
-            <p>${resto.price} • ★ ${resto.rating}</p>
-            <small>${resto.commune}</small>
-          `;
-          slide.onclick = () => window.top.location.href = "DestinationRestos.html#" + encodeURIComponent(resto.name);
-          slider.appendChild(slide);
-        });
-      });
-
-    function showSlide(index) {
-      const slideWidth = document.querySelector(".slide")?.offsetWidth || 0;
-      const visibleCount = Math.round(slider.offsetWidth / slideWidth);
-      const totalSlides = document.querySelectorAll(".slide").length;
-      const maxIndex = totalSlides - visibleCount;
-
-      if (index > maxIndex) currentIndex = 0;
-      else if (index < 0) currentIndex = maxIndex;
-      else currentIndex = index;
-
-      slider.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
-    }
-    function nextSlide() { showSlide(currentIndex + 1); }
-    function prevSlide() { showSlide(currentIndex - 1); }
-
-    setInterval(nextSlide, 5000);
-  </script>
-
+    <script>
+        // Fonction asynchrone pour récupérer les données et les afficher
+        async function fetchRestaurants() {
+            try {
+                // Récupération des données depuis le fichier JSON
+                const response = await fetch("restaurants.json");
+                const restos = await response.json();
+                
+                const container = document.getElementById('resto-container');
+                
+                // Parcours de la liste des restaurants pour créer et insérer les cartes
+                restos.forEach(resto => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white p-4 rounded-lg shadow-md flex flex-col items-center justify-start";
+                    card.innerHTML = `
+                        <!-- Image du restaurant -->
+                        <img 
+                            src="${resto.image}" 
+                            alt="${resto.name}" 
+                            class="w-full h-32 object-cover rounded-lg mb-4"
+                            onerror="this.onerror=null;this.src='https://placehold.co/400x300/FCA311/000000?text=Image+Non+Trouvée';"
+                        >
+                        <!-- Nom du restaurant -->
+                        <h3 class="text-xl font-semibold text-center mt-auto">${resto.name}</h3>
+                        <!-- Note et ville -->
+                        <p class="text-gray-600 text-sm mt-1">⭐️ ${resto.rating}/5 • ${resto.commune}</p>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Erreur lors du chargement des restaurants :", error);
+                const container = document.getElementById('resto-container');
+                container.innerHTML = `<p class="text-center text-red-500">Impossible de charger les restaurants. Veuillez réessayer plus tard.</p>`;
+            }
+        }
+        
+        // Appel de la fonction pour charger les restaurants au chargement de la page
+        fetchRestaurants();
+    </script>
 </body>
 </html>
