@@ -72,13 +72,14 @@
     const slider = document.getElementById("slider");
 
     // Charger la page principale pour récupérer les restos
-    fetch("destination Restos.htm")
+    fetch("DestinationRestos.html") // ✅ nom corrigé
       .then(r => r.text())
       .then(html => {
         const doc = new DOMParser().parseFromString(html, "text/html");
-        // On récupère la variable restaurants depuis le <script>
         const scriptContent = doc.querySelector("script").textContent;
-        const match = scriptContent.match(/const restaurants = (\\[.*?\\]);/s);
+
+        // ✅ Regex corrigée
+        const match = scriptContent.match(/const restaurants = (\[.*?\]);/s);
         if (match) {
           const restos = JSON.parse(match[1]);
           restos.forEach(resto => {
