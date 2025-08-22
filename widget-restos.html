@@ -9,19 +9,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       margin: 0;
       background: transparent; /* ✅ pas de fond */
-    }
-
-    /* Bandeau titre */
-    .widget-header {
       text-align: center;
-      font-size: 1.2rem;
-      font-weight: 600;
-      padding: 10px;
-      color: #fff;
-      background: linear-gradient(90deg, #8c2d04, #e85c0d);
-      border-radius: 10px;
-      max-width: 250px;
-      margin: 0 auto 12px;
     }
 
     .slider-container {
@@ -53,9 +41,10 @@
       height: 220px;
       object-fit: cover;
       display: block;
+      border-radius: 12px;
     }
 
-    /* Overlay sombre en bas pour lisibilité */
+    /* Overlay sombre pour lisibilité */
     .slide-info {
       position: absolute;
       bottom: 0;
@@ -64,6 +53,8 @@
       padding: 10px;
       background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
       color: #fff;
+      text-align: left;
+      border-radius: 0 0 12px 12px;
     }
 
     .slide-info h3 {
@@ -115,6 +106,14 @@
       background-color: #8c2d04;
     }
 
+    /* ✅ Titre dessous le slider */
+    .widget-title {
+      margin-top: 10px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+    }
+
     /* Responsive */
     @media (min-width: 600px) {
       .slide { flex: 0 0 50%; }
@@ -129,9 +128,6 @@
 </head>
 <body>
 
-  <!-- Bandeau titre -->
-  <div class="widget-header">🍴 Où manger ?</div>
-
   <!-- Slider -->
   <div class="slider-container">
     <div class="slider" id="slider"></div>
@@ -141,15 +137,17 @@
     </div>
   </div>
 
-  <!-- Pagination (points) -->
+  <!-- Pagination -->
   <div class="pagination" id="pagination"></div>
+
+  <!-- ✅ Titre centré en dessous -->
+  <div class="widget-title">🍴 Où manger ?</div>
 
   <script>
     let currentIndex = 0;
     const slider = document.getElementById("slider");
     const pagination = document.getElementById("pagination");
 
-    // Charger les restos depuis restaurants.json
     fetch("restaurants.json")
       .then(r => r.json())
       .then(restos => {
@@ -196,7 +194,6 @@
     function nextSlide() { showSlide(currentIndex + 1); }
     function prevSlide() { showSlide(currentIndex - 1); }
 
-    // Auto défilement
     setInterval(nextSlide, 5000);
   </script>
 
