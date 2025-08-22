@@ -114,6 +114,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
             cursor: pointer;
             will-change: transform, box-shadow;
+            text-align: center; /* Centrer le texte */
         }
 
         .grid-item:hover {
@@ -375,12 +376,14 @@
                     </div>
                     
                     <!-- Widget Restaurants -->
+                    <!-- MODIFICATION : Ajout de `flex flex-col` pour centrer le contenu verticalement et permettre au titre et à l'iframe d'être fluides. -->
                     <div class="grid-item col-span-2 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl">
                         <div class="flex flex-col items-center justify-center h-full w-full">
                             <h3 class="text-lg md:text-xl font-semibold mb-2">Les restaurants locaux</h3>
+                            <!-- MODIFICATION : Suppression de `max-width` pour une adaptation complète à la largeur du parent. La hauteur est gérée par le script JS. -->
                             <iframe src="widget-restos.html"
                                 onload="resizeIframe(this)"
-                                style="border:none; width:100%; max-width:600px; height:350px; border-radius:10px;"
+                                style="border:none; width:100%; height:350px; border-radius:10px;"
                                 loading="lazy">
                             </iframe>
                         </div>
