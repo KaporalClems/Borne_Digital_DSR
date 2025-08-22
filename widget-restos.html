@@ -6,7 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Widget Restaurants</title>
   <style>
-    body { font-family: Arial, sans-serif; margin:0; background: transparent; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: transparent; /* ✅ pas de fond global */
+    }
+
     .widget-header {
       text-align: center;
       font-size: 1.3rem;
@@ -14,37 +19,44 @@
       padding: 12px;
       background: linear-gradient(90deg, #8c2d04, #e85c0d);
       color: white;
-      border-radius: 8px 8px 0 0;
+      border-radius: 8px;
       margin-bottom: 10px;
+      display: inline-block;
     }
+
     .slider-container {
       position: relative;
       width: 100%;
       max-width: 1000px;
       margin: auto;
       overflow: hidden;
-      border-radius: 10px;
+      border-radius: 12px;
+      background: transparent; /* ✅ transparent */
     }
+
     .slider {
       display: flex;
       transition: transform 0.5s ease-in-out;
     }
+
     .slide {
       flex: 0 0 100%;
       box-sizing: border-box;
-      text-align: center;
       cursor: pointer;
-      border-radius: 10px;
+      border-radius: 12px;
       margin: 5px;
       position: relative;
       overflow: hidden;
     }
+
     .slide img {
       width: 100%;
       height: 220px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 12px;
+      display: block;
     }
+
     .slide-info {
       position: absolute;
       bottom: 0;
@@ -53,17 +65,19 @@
       padding: 10px;
       background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
       color: white;
-      border-radius: 0 0 10px 10px;
-      text-align: left;
+      border-radius: 0 0 12px 12px;
     }
+
     .slide-info h3 {
       margin: 0;
       font-size: 1rem;
     }
+
     .slide-info small {
       font-size: 0.85rem;
       opacity: 0.9;
     }
+
     .controls {
       position: absolute;
       top: 50%;
@@ -73,6 +87,7 @@
       transform: translateY(-50%);
       pointer-events: none;
     }
+
     .controls button {
       pointer-events: all;
       background: rgba(0,0,0,0.4);
@@ -81,6 +96,24 @@
       padding: 8px;
       cursor: pointer;
       border-radius: 50%;
+    }
+
+    /* ✅ Pagination (petits points) */
+    .pagination {
+      text-align: center;
+      margin-top: 8px;
+    }
+    .dot {
+      height: 10px;
+      width: 10px;
+      margin: 0 4px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.3s;
+    }
+    .dot.active {
+      background-color: #8c2d04;
     }
 
     /* Responsive */
@@ -97,7 +130,9 @@
 </head>
 <body>
 
-  <div class="widget-header">🍴 Où manger ?</div>
+  <div style="text-align:center;">
+    <div class="widget-header">🍴 Où manger ?</div>
+  </div>
 
   <div class="slider-container">
     <div class="slider" id="slider"></div>
@@ -107,15 +142,19 @@
     </div>
   </div>
 
+  <!-- ✅ Pagination (points) -->
+  <div class="pagination" id="pagination"></div>
+
   <script>
     let currentIndex = 0;
     const slider = document.getElementById("slider");
+    const pagination = document.getElementById("pagination");
 
-    // Charger les restos depuis restaurants.json
     fetch("restaurants.json")
       .then(r => r.json())
       .then(restos => {
-        restos.forEach(resto => {
+        restos.forEach((resto, index) => {
+          // slide
           const slide = document.createElement("div");
           slide.className = "slide";
           slide.innerHTML = `
@@ -127,6 +166,12 @@
           `;
           slide.onclick = () => window.top.location.href = "DestinationRestos.html#" + encodeURIComponent(resto.name);
           slider.appendChild(slide);
+
+          // dot
+          const dot = document.createElement("span");
+          dot.className = "dot" + (index === 0 ? " active" : "");
+          dot.addEventListener("click", () => showSlide(index));
+          pagination.appendChild(dot);
         });
       });
 
@@ -141,7 +186,13 @@
       else currentIndex = index;
 
       slider.style.transform = `translateX(${-currentIndex * slideWidth}px)`;
+
+      // update dots
+      document.querySelectorAll(".dot").forEach((d,i)=>{
+        d.classList.toggle("active", i === currentIndex);
+      });
     }
+
     function nextSlide() { showSlide(currentIndex + 1); }
     function prevSlide() { showSlide(currentIndex - 1); }
 
