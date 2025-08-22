@@ -226,13 +226,72 @@
             background-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
         }
+        
+        /* Styles pour les flèches de navigation */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 9999px;
+            padding: 1rem;
+            color: white;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: opacity 0.3s, transform 0.3s;
+            will-change: transform;
+            opacity: 1; /* Par défaut, la flèche est visible */
+        }
+        .nav-arrow.left {
+            left: 2rem;
+        }
+        .nav-arrow.right {
+            right: 2rem;
+        }
+        .nav-arrow.hidden {
+            opacity: 0;
+            pointer-events: none; /* Empêche les clics lorsque la flèche est invisible */
+        }
+        .nav-arrow svg {
+            width: 2rem;
+            height: 2rem;
+        }
+        .nav-arrow:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Animation de pulsation pour attirer le regard */
+        @keyframes pulse-arrow {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.05); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+        .nav-arrow.animate-pulse {
+            animation: pulse-arrow 1.5s infinite;
+        }
+
     </style>
 </head>
 <body>
     <video autoplay muted loop id="video-background">
-        <!-- L'URL de la vidéo a été mise à jour vers le lien "raw" de GitHub. -->
         <source src="https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/4b24136854869ddd073bf02729c517f463686795/Destination%20Sud%20R%C3%A9union_HD.mp4" type="video/mp4">
     </video>
+
+    <!-- Flèches de navigation animées -->
+    <button id="prev-arrow" class="nav-arrow left hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+    <button id="next-arrow" class="nav-arrow right">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
+
 
     <div class="slider-container">
         <!-- Écran 1 -->
@@ -264,6 +323,18 @@
                         <span class="grid-icon">🏡</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Villages</span>
                     </a>
+                    <!-- NOUVEAU WIDGET : Pour ajouter un nouveau widget/bouton, copiez l'une des structures ci-dessus. -->
+                    <!-- Vous pouvez utiliser `div`, `button`, ou `a` et lui donner la classe `grid-item` -->
+                    <div id="new-custom-widget" class="grid-item bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-xl">
+                        <span class="grid-icon">✨</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Widget Personnalisé</span>
+                        <p class="text-xs mt-2 text-center text-gray-200">Cliquez pour un effet !</p>
+                    </div>
+                    <!-- NOUVEAU BOUTON : Un autre exemple de bouton -->
+                    <button id="new-button-example" class="grid-item">
+                        <span class="grid-icon">💡</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Nouveau Bouton</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -441,7 +512,7 @@
 
     <script>
         // ===============================
-        // Variables Globales
+        // VARIABLES GLOBALES
         // ===============================
         const slider = document.querySelector('.slider-container');
         const screens = document.querySelectorAll('.screen');
@@ -454,6 +525,12 @@
         const toggleTextSizeButton = document.getElementById('toggle-text-size');
         const body = document.body;
         const dots = document.querySelectorAll('.dot');
+        const newCustomWidget = document.getElementById('new-custom-widget');
+        const newButtonExample = document.getElementById('new-button-example');
+
+        // NOUVEAU: Références aux flèches de navigation
+        const prevArrow = document.getElementById('prev-arrow');
+        const nextArrow = document.getElementById('next-arrow');
 
         let currentScreen = 0;
         let isDragging = false;
@@ -464,7 +541,7 @@
         let inactivityTimer;
 
         // ===============================
-        // Gestion du Slider et de la Navigation
+        // GESTION DU SLIDER ET DE LA NAVIGATION
         // ===============================
         function updateSlider() {
             currentTranslate = -currentScreen * window.innerWidth;
@@ -478,6 +555,24 @@
                     dot.classList.remove('active');
                 }
             });
+
+            // Met à jour la visibilité des flèches
+            // Flèche gauche
+            if (currentScreen === 0) {
+                prevArrow.classList.add('hidden');
+                prevArrow.classList.remove('animate-pulse');
+            } else {
+                prevArrow.classList.remove('hidden');
+                prevArrow.classList.add('animate-pulse');
+            }
+            // Flèche droite
+            if (currentScreen === screens.length - 1) {
+                nextArrow.classList.add('hidden');
+                nextArrow.classList.remove('animate-pulse');
+            } else {
+                nextArrow.classList.remove('hidden');
+                nextArrow.classList.add('animate-pulse');
+            }
         }
 
         function handleStart(event) {
@@ -548,8 +643,26 @@
             });
         });
 
+        // NOUVEAU : Gestionnaires pour les flèches de navigation
+        nextArrow.addEventListener('click', () => {
+            if (currentScreen < screens.length - 1) {
+                currentScreen++;
+                updateSlider();
+                resetInactivityTimer();
+            }
+        });
+
+        prevArrow.addEventListener('click', () => {
+            if (currentScreen > 0) {
+                currentScreen--;
+                updateSlider();
+                resetInactivityTimer();
+            }
+        });
+
+
         // ===============================
-        // Gestion des Modals
+        // GESTION DES MODALS
         // ===============================
         openButtons.forEach((button, index) => {
             button.addEventListener('click', (event) => {
@@ -575,7 +688,27 @@
         });
 
         // ===============================
-        // Gestion de l'Accessibilité
+        // GESTION DES FONCTIONNALITÉS SUPPLÉMENTAIRES
+        // (Ajoutez vos nouveaux écouteurs d'événements ici !)
+        // ===============================
+        
+        // Exemple de widget personnalisé : un simple clic qui change un texte
+        newCustomWidget.addEventListener('click', () => {
+            const newText = "Super !";
+            const currentText = newCustomWidget.querySelector('p');
+            currentText.textContent = newText;
+            currentText.style.color = '#c7f407'; // Un petit effet visuel !
+            resetInactivityTimer();
+        });
+
+        // Exemple de nouveau bouton : vous pouvez ajouter n'importe quelle action ici
+        newButtonExample.addEventListener('click', () => {
+            alert("Ce bouton peut déclencher une nouvelle action !");
+            resetInactivityTimer();
+        });
+
+        // ===============================
+        // GESTION DE L'ACCESSIBILITÉ
         // ===============================
         toggleContrastButton.addEventListener('click', () => {
             body.classList.toggle('high-contrast');
@@ -588,7 +721,7 @@
         });
         
         // ===============================
-        // Minuteur d'inactivité pour le défilement automatique
+        // MINUTEUR D'INACTIVITÉ
         // ===============================
         function startAutoScroll() {
             inactivityTimer = setTimeout(() => {
@@ -608,7 +741,7 @@
         }
 
         // ===============================
-        // Gestion du Widget Date/Heure
+        // GESTION DU WIDGET DATE/HEURE
         // ===============================
         function updateDateTime() {
             const now = new Date();
@@ -628,7 +761,7 @@
         }
         
         // ===============================
-        // Écouteurs d'événements et Initialisation
+        // ÉCOUTEURS D'ÉVÉNEMENTS ET INITIALISATION
         // ===============================
         document.addEventListener('DOMContentLoaded', () => {
             updateSlider();
