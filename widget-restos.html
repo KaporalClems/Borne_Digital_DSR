@@ -1,0 +1,114 @@
+<!-- widget-restos.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Restaurants</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; }
+    .slider-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+    .slider {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      text-align: center;
+      cursor: pointer;
+      padding: 15px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .slide img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+    .controls button {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    h3 { margin: 10px 0 5px; color:#8c2d04; }
+    p { margin: 0; color:#555; }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center; color:#8c2d04;">Nos Restaurants</h2>
+
+  <div class="slider-container">
+    <div class="slider" id="slider"></div>
+    <div class="controls">
+      <button onclick="prevSlide()">‹</button>
+      <button onclick="nextSlide()">›</button>
+    </div>
+  </div>
+
+  <script>
+    let currentIndex = 0;
+    const slider = document.getElementById("slider");
+
+    // Charger la page principale pour récupérer les restos
+    fetch("destination Restos.htm")
+      .then(r => r.text())
+      .then(html => {
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        // On récupère la variable restaurants depuis le <script>
+        const scriptContent = doc.querySelector("script").textContent;
+        const match = scriptContent.match(/const restaurants = (\\[.*?\\]);/s);
+        if (match) {
+          const restos = JSON.parse(match[1]);
+          restos.forEach(resto => {
+            const slide = document.createElement("div");
+            slide.className = "slide";
+            slide.innerHTML = `
+              <img src="${resto.image}" alt="${resto.name}">
+              <h3>${resto.name}</h3>
+              <p>${resto.price} • ★ ${resto.rating}</p>
+              <small>${resto.commune}</small>
+            `;
+            slide.onclick = () => window.top.location.href = "destination Restos.htm#"+encodeURIComponent(resto.name);
+            slider.appendChild(slide);
+          });
+        }
+      });
+
+    function showSlide(index) {
+      const slides = document.querySelectorAll(".slide");
+      if (!slides.length) return;
+      if (index >= slides.length) currentIndex = 0;
+      else if (index < 0) currentIndex = slides.length - 1;
+      else currentIndex = index;
+      slider.style.transform = `translateX(${-currentIndex * 100}%)`;
+    }
+    function nextSlide() { showSlide(currentIndex + 1); }
+    function prevSlide() { showSlide(currentIndex - 1); }
+
+    setInterval(nextSlide, 5000);
+  </script>
+
+</body>
+</html>
