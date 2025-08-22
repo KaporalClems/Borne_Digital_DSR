@@ -1,4 +1,3 @@
-<!-- widget-restos.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,21 +6,22 @@
   <title>Widget Restaurants</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       margin: 0;
-      background: transparent; /* ✅ pas de fond global */
+      background: transparent; /* ✅ pas de fond */
     }
 
+    /* Bandeau titre */
     .widget-header {
       text-align: center;
-      font-size: 1.3rem;
-      font-weight: bold;
-      padding: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 10px;
+      color: #fff;
       background: linear-gradient(90deg, #8c2d04, #e85c0d);
-      color: white;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      display: inline-block;
+      border-radius: 10px;
+      max-width: 250px;
+      margin: 0 auto 12px;
     }
 
     .slider-container {
@@ -41,22 +41,21 @@
 
     .slide {
       flex: 0 0 100%;
-      box-sizing: border-box;
-      cursor: pointer;
-      border-radius: 12px;
       margin: 5px;
-      position: relative;
+      border-radius: 12px;
       overflow: hidden;
+      position: relative;
+      cursor: pointer;
     }
 
     .slide img {
       width: 100%;
       height: 220px;
       object-fit: cover;
-      border-radius: 12px;
       display: block;
     }
 
+    /* Overlay sombre en bas pour lisibilité */
     .slide-info {
       position: absolute;
       bottom: 0;
@@ -64,13 +63,13 @@
       right: 0;
       padding: 10px;
       background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-      color: white;
-      border-radius: 0 0 12px 12px;
+      color: #fff;
     }
 
     .slide-info h3 {
       margin: 0;
       font-size: 1rem;
+      font-weight: 600;
     }
 
     .slide-info small {
@@ -78,6 +77,7 @@
       opacity: 0.9;
     }
 
+    /* Flèches navigation */
     .controls {
       position: absolute;
       top: 50%;
@@ -87,7 +87,6 @@
       transform: translateY(-50%);
       pointer-events: none;
     }
-
     .controls button {
       pointer-events: all;
       background: rgba(0,0,0,0.4);
@@ -98,15 +97,15 @@
       border-radius: 50%;
     }
 
-    /* ✅ Pagination (petits points) */
+    /* Points pagination */
     .pagination {
       text-align: center;
-      margin-top: 8px;
+      margin-top: 6px;
     }
     .dot {
-      height: 10px;
-      width: 10px;
-      margin: 0 4px;
+      height: 8px;
+      width: 8px;
+      margin: 0 3px;
       background-color: #bbb;
       border-radius: 50%;
       display: inline-block;
@@ -130,10 +129,10 @@
 </head>
 <body>
 
-  <div style="text-align:center;">
-    <div class="widget-header">🍴 Où manger ?</div>
-  </div>
+  <!-- Bandeau titre -->
+  <div class="widget-header">🍴 Où manger ?</div>
 
+  <!-- Slider -->
   <div class="slider-container">
     <div class="slider" id="slider"></div>
     <div class="controls">
@@ -142,7 +141,7 @@
     </div>
   </div>
 
-  <!-- ✅ Pagination (points) -->
+  <!-- Pagination (points) -->
   <div class="pagination" id="pagination"></div>
 
   <script>
@@ -150,6 +149,7 @@
     const slider = document.getElementById("slider");
     const pagination = document.getElementById("pagination");
 
+    // Charger les restos depuis restaurants.json
     fetch("restaurants.json")
       .then(r => r.json())
       .then(restos => {
@@ -167,7 +167,7 @@
           slide.onclick = () => window.top.location.href = "DestinationRestos.html#" + encodeURIComponent(resto.name);
           slider.appendChild(slide);
 
-          // dot
+          // dot pagination
           const dot = document.createElement("span");
           dot.className = "dot" + (index === 0 ? " active" : "");
           dot.addEventListener("click", () => showSlide(index));
@@ -196,6 +196,7 @@
     function nextSlide() { showSlide(currentIndex + 1); }
     function prevSlide() { showSlide(currentIndex - 1); }
 
+    // Auto défilement
     setInterval(nextSlide, 5000);
   </script>
 
