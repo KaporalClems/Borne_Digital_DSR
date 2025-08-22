@@ -49,7 +49,26 @@
             position: relative;
         }
 
-        .left-panel, .right-panel {
+        /* Utilise flex-col par défaut et devient flex-row sur les écrans larges */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column; /* Disposition par défaut en colonne */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            max-width: 1280px;
+            width: 100%;
+        }
+
+        @media (min-width: 1024px) { /* Applique ces styles sur les écrans larges (lg) */
+            .main-content {
+                flex-direction: row; /* Disposition en ligne sur les grands écrans */
+            }
+        }
+        
+        .left-panel {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -60,10 +79,18 @@
         }
 
         .right-panel {
+            flex: 1;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr); /* 2 colonnes par défaut sur mobile/tablette */
             grid-gap: 1.5rem;
             max-width: 900px;
+            width: 100%;
+        }
+
+        @media (min-width: 1024px) {
+            .right-panel {
+                grid-template-columns: repeat(3, 1fr); /* 3 colonnes sur les grands écrans */
+            }
         }
 
         .grid-item {
@@ -82,7 +109,7 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-            cursor: pointer; /* Indique que l'élément est interactif */
+            cursor: pointer;
             will-change: transform, box-shadow;
         }
 
@@ -90,50 +117,21 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
-        /* Styles pour le glisser-déposer */
-        .grid-item.dragging {
-            position: fixed;
-            z-index: 999;
-            cursor: grabbing;
-            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5), 0 10px 10px rgba(0, 0, 0, 0.2);
-            transform: scale(1.1);
-            transition: none; /* Désactive la transition pour un mouvement fluide */
+        
+        /* Styles pour le widget de pagination */
+        .dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 9999px;
+            transition: all 0.3s ease-in-out;
         }
 
-        /* Animation de vibration pour le clic prolongé */
-        @keyframes vibrate-animation {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-
-        .grid-item.vibrating {
-            animation: vibrate-animation 0.2s infinite;
+        .dot.active {
+            background-color: white;
+            transform: scale(1.2);
         }
         
-        /* Classes pour le redimensionnement */
-        .grid-item-col-2 {
-            grid-column: span 2;
-        }
-        .grid-item-row-2 {
-            grid-row: span 2;
-        }
-        .grid-item-large-square {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-        .grid-item-large-rectangle {
-            grid-column: span 2;
-        }
         .grid-icon {
             font-size: 3rem;
             margin-bottom: 0.5rem;
@@ -224,28 +222,6 @@
             background-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
         }
-        
-        /* Style pour la poignée de redimensionnement */
-        .resize-handle {
-            position: absolute;
-            bottom: 0.5rem;
-            right: 0.5rem;
-            width: 2rem;
-            height: 2rem;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 0.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: nwse-resize;
-            opacity: 0;
-            transition: opacity 0.2s ease-in-out;
-            pointer-events: none; /* Rendu invisible aux événements de la souris par défaut */
-        }
-        .show-handle .resize-handle {
-            opacity: 1;
-            pointer-events: auto; /* Rendu interactif lorsque la classe est présente */
-        }
     </style>
 </head>
 <body>
@@ -256,201 +232,140 @@
     <div class="slider-container">
         <!-- Écran 1 -->
         <div id="screen-1" class="screen">
-            <div class="left-panel">
-                <h1 class="text-white text-6xl font-bold">L'île intense</h1>
-                <h2 class="text-white text-3xl mt-4">La Réunion</h2>
-                <div class="mt-8 flex gap-4">
-                    <button id="open-button-1" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
-                    <button id="next-screen-1" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Découvrir les activités</button>
+            <div class="main-content lg:flex-row flex-col">
+                <div class="left-panel">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de La Réunion" class="h-auto max-h-24 mb-4 object-contain">
+                    <h1 class="text-white text-5xl md:text-6xl font-bold">Destination Sud Réunion</h1>
+                    <h2 class="text-white text-xl md:text-3xl mt-4">Office de Tourisme du Sud de La Réunion</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button id="open-button-1" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                        <button id="next-screen-1" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Découvrir les activités</button>
+                    </div>
                 </div>
-            </div>
-            <div class="right-panel">
-                <a href="Destinationplage.html" class="grid-item grid-item-row-2">
-                    <span class="grid-icon">🏖️</span>
-                    <span class="text-2xl font-semibold">Les Plages</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationvolcan.html" class="grid-item">
-                    <span class="grid-icon">🌋</span>
-                    <span class="text-2xl font-semibold">Le Volcan</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationforet.html" class="grid-item">
-                    <span class="grid-icon">🌲</span>
-                    <span class="text-2xl font-semibold">Les Forêts</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationvillages.html" class="grid-item">
-                    <span class="grid-icon">🏡</span>
-                    <span class="text-2xl font-semibold">Les Villages</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
+                <div class="right-panel">
+                    <a href="Destinationplage.html" class="grid-item">
+                        <span class="grid-icon">🏖️</span>
+                        <span class="text-lg md:text-2xl font-semibold">Les Plages</span>
+                    </a>
+                    <a href="Destinationvolcan.html" class="grid-item">
+                        <span class="grid-icon">🌋</span>
+                        <span class="text-lg md:text-2xl font-semibold">Le Volcan</span>
+                    </a>
+                    <a href="Destinationforet.html" class="grid-item">
+                        <span class="grid-icon">🌲</span>
+                        <span class="text-lg md:text-2xl font-semibold">Les Forêts</span>
+                    </a>
+                    <a href="Destinationvillages.html" class="grid-item">
+                        <span class="grid-icon">🏡</span>
+                        <span class="text-lg md:text-2xl font-semibold">Les Villages</span>
+                    </a>
+                </div>
             </div>
         </div>
 
         <!-- Écran 2 -->
         <div id="screen-2" class="screen">
-            <div class="left-panel">
-                <h1 class="text-white text-6xl font-bold">L'île authentique</h1>
-                <h2 class="text-white text-3xl mt-4">La Réunion</h2>
-                <div class="mt-8 flex gap-4">
-                    <button id="open-button-2" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
-                    <button id="prev-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
-                    <button id="next-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Activités ludiques</button>
+            <div class="main-content lg:flex-row flex-col">
+                <div class="left-panel">
+                    <h1 class="text-white text-5xl md:text-6xl font-bold">L'île authentique</h1>
+                    <h2 class="text-white text-xl md:text-3xl mt-4">La Réunion</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button id="open-button-2" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                        <button id="prev-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                        <button id="next-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Activités ludiques</button>
+                    </div>
                 </div>
-            </div>
-            <div class="right-panel">
-                <a href="DestinationRandos.html" class="grid-item">
-                    <span class="grid-icon">🥾</span>
-                    <span class="text-2xl font-semibold">Les Randonnées</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationactivitesnautiques.html" class="grid-item">
-                    <span class="grid-icon">🌊</span>
-                    <span class="text-2xl font-semibold">Activités Nautiques</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
+                <div class="right-panel">
+                    <a href="DestinationRandos.html" class="grid-item">
+                        <span class="grid-icon">🥾</span>
+                        <span class="text-lg md:text-2xl font-semibold">Les Randonnées</span>
+                    </a>
+                    <a href="Destinationactivitesnautiques.html" class="grid-item">
+                        <span class="grid-icon">🌊</span>
+                        <span class="text-lg md:text-2xl font-semibold">Activités Nautiques</span>
+                    </a>
 
-                <!-- Widget Météo -->
-                <div class="grid-item grid-item-col-2 bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-xl">
-                    <div class="flex flex-col items-center justify-center h-full">
-                        <span class="text-6xl mb-2">☀️</span>
-                        <div class="flex items-end justify-center">
-                            <span class="text-6xl font-extrabold">+27</span>
-                            <span class="text-2xl font-bold">°C</span>
+                    <!-- Widget Météo -->
+                    <div class="grid-item col-span-2 bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-xl">
+                        <div class="flex flex-col items-center justify-center h-full">
+                            <span class="text-4xl md:text-6xl mb-2">☀️</span>
+                            <div class="flex items-end justify-center">
+                                <span class="text-5xl md:text-6xl font-extrabold">+27</span>
+                                <span class="text-xl md:text-2xl font-bold">°C</span>
+                            </div>
+                            <span class="text-sm md:text-lg font-medium mt-1">Paris</span>
+                            <span class="text-xs md:text-sm">Ensoleillé avec quelques nuages</span>
                         </div>
-                        <span class="text-lg font-medium mt-1">Paris</span>
-                        <span class="text-sm">Ensoleillé avec quelques nuages</span>
                     </div>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
+                    
+                    <!-- Widget Restaurants -->
+                    <div class="grid-item col-span-2 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl">
+                        <div class="flex flex-col items-center justify-center h-full w-full">
+                            <h3 class="text-xl md:text-2xl font-semibold mb-2">Les restaurants locaux</h3>
+                            <iframe src="widget-restos.html"
+                                style="border:none; width:100%; max-width:600px; height:350px; border-radius:10px;"
+                                loading="lazy">
+                            </iframe>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Widget Restaurants -->
-                <div class="grid-item grid-item-col-2 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl">
-                    <div class="flex flex-col items-center justify-center h-full w-full">
-                        <h3 class="text-2xl font-semibold mb-2">Les restaurants locaux</h3>
-                        <iframe src="widget-restos.html"
-                            style="border:none; width:100%; max-width:600px; height:350px; border-radius:10px;"
-                            loading="lazy">
-                        </iframe>
-                    </div>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </div>
 
-                <a href="Destinationculture.html" class="grid-item">
-                    <span class="grid-icon">🎭</span>
-                    <span class="text-2xl font-semibold">Culture & Traditions</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationproduits.html" class="grid-item">
-                    <span class="grid-icon">🍍</span>
-                    <span class="text-2xl font-semibold">Produits du Terroir</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
+                    <a href="Destinationculture.html" class="grid-item">
+                        <span class="grid-icon">🎭</span>
+                        <span class="text-lg md:text-2xl font-semibold">Culture & Traditions</span>
+                    </a>
+                    <a href="Destinationproduits.html" class="grid-item">
+                        <span class="grid-icon">🍍</span>
+                        <span class="text-lg md:text-2xl font-semibold">Produits du Terroir</span>
+                    </a>
+                </div>
             </div>
         </div>
 
         <!-- Écran 3 -->
         <div id="screen-3" class="screen">
-            <div class="left-panel">
-                <h1 class="text-white text-6xl font-bold">L'île aventure</h1>
-                <h2 class="text-white text-3xl mt-4">La Réunion</h2>
-                <div class="mt-8 flex gap-4">
-                    <button id="open-button-3" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
-                    <button id="prev-screen-3" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
-                </div>
-            </div>
-            <div class="right-panel">
-                <a href="DestinationActivitesaeriennes.html" class="grid-item grid-item-col-2">
-                    <span class="grid-icon">🚁</span>
-                    <span class="text-2xl font-semibold">Activités Aériennes</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <!-- Widget Heure/Date -->
-                <div class="grid-item bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-xl">
-                    <div class="flex flex-col items-center justify-center h-full">
-                        <span class="text-lg font-medium" id="date-widget"></span>
-                        <span class="text-5xl font-extrabold mt-1" id="time-widget"></span>
-                    </div>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
+            <div class="main-content lg:flex-row flex-col">
+                <div class="left-panel">
+                    <h1 class="text-white text-5xl md:text-6xl font-bold">L'île aventure</h1>
+                    <h2 class="text-white text-xl md:text-3xl mt-4">La Réunion</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button id="open-button-3" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                        <button id="prev-screen-3" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
                     </div>
                 </div>
-                <a href="Destinationparcs.html" class="grid-item">
-                    <span class="grid-icon">🎢</span>
-                    <span class="text-2xl font-semibold">Parcs & Aventures</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
+                <div class="right-panel">
+                    <a href="DestinationActivitesaeriennes.html" class="grid-item col-span-2">
+                        <span class="grid-icon">🚁</span>
+                        <span class="text-lg md:text-2xl font-semibold">Activités Aériennes</span>
+                    </a>
+                    <!-- Widget Heure/Date -->
+                    <div class="grid-item bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-xl">
+                        <div class="flex flex-col items-center justify-center h-full">
+                            <span class="text-sm md:text-lg font-medium" id="date-widget"></span>
+                            <span class="text-3xl md:text-5xl font-extrabold mt-1" id="time-widget"></span>
+                        </div>
                     </div>
-                </a>
-                <a href="Destinationbienetre.html" class="grid-item">
-                    <span class="grid-icon">🧘‍♀️</span>
-                    <span class="text-2xl font-semibold">Bien-être & Spa</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationgolf.html" class="grid-item">
-                    <span class="grid-icon">⛳</span>
-                    <span class="text-2xl font-semibold">Golf</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
+                    <a href="Destinationparcs.html" class="grid-item">
+                        <span class="grid-icon">🎢</span>
+                        <span class="text-lg md:text-2xl font-semibold">Parcs & Aventures</span>
+                    </a>
+                    <a href="Destinationbienetre.html" class="grid-item">
+                        <span class="grid-icon">🧘‍♀️</span>
+                        <span class="text-lg md:text-2xl font-semibold">Bien-être & Spa</span>
+                    </a>
+                    <a href="Destinationgolf.html" class="grid-item">
+                        <span class="grid-icon">⛳</span>
+                        <span class="text-lg md:text-2xl font-semibold">Golf</span>
+                    </a>
+                </div>
             </div>
         </div>
+    </div>
+    
+    <!-- Widgets de pagination -->
+    <div class="pagination fixed bottom-8 w-full flex justify-center gap-2 z-50">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
     </div>
 
     <!-- Modals -->
@@ -533,6 +448,7 @@
         const toggleContrastButton = document.getElementById('toggle-contrast');
         const toggleTextSizeButton = document.getElementById('toggle-text-size');
         const body = document.body;
+        const dots = document.querySelectorAll('.dot');
 
         let currentScreen = 0;
         let isDragging = false;
@@ -542,30 +458,24 @@
         let animationID;
         let inactivityTimer;
 
-        // Variables pour le glisser-déposer et le redimensionnement
-        const gridItems = document.querySelectorAll('.grid-item');
-        let longPressTimer;
-        let isLongPress = false;
-        let draggedElement = null;
-        let isLinkClickBlocked = false;
-        let isResizing = false;
-        let resizeTarget = null;
-        let initialX = 0;
-        let initialY = 0;
-
         // ===============================
         // Gestion du Slider et de la Navigation
         // ===============================
         function updateSlider() {
             currentTranslate = -currentScreen * window.innerWidth;
             slider.style.transform = `translateX(${currentTranslate}px)`;
+
+            // Met à jour les marqueurs de pagination
+            dots.forEach((dot, index) => {
+                if (index === currentScreen) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
         }
 
-        // Gère le glissement normal d'écran
         function handleStart(event) {
-            // Empêche le défilement de l'écran si l'utilisateur est en train de glisser un widget
-            if (draggedElement) return;
-
             isDragging = true;
             startX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
             prevTranslate = currentTranslate;
@@ -638,11 +548,6 @@
         // ===============================
         openButtons.forEach((button, index) => {
             button.addEventListener('click', (event) => {
-                if (isLinkClickBlocked) {
-                    event.preventDefault();
-                    isLinkClickBlocked = false;
-                    return;
-                }
                 modals[index].style.display = 'flex';
                 resetInactivityTimer();
             });
@@ -718,132 +623,6 @@
         }
         
         // ===============================
-        // Fonctions de glisser-déposer & redimensionnement
-        // ===============================
-        function handleGridStart(event) {
-            const targetElement = event.currentTarget.closest('.grid-item');
-            if (!targetElement) return;
-
-            // Si c'est la poignée de redimensionnement qui est cliquée, on passe en mode redimensionnement
-            if (event.target.closest('.resize-handle')) {
-                isResizing = true;
-                resizeTarget = targetElement;
-                initialX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-                initialY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
-                return;
-            }
-
-            clearTimeout(longPressTimer);
-            isLongPress = false;
-            isLinkClickBlocked = false;
-            
-            initialX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-            initialY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
-
-            longPressTimer = setTimeout(() => {
-                isLongPress = true;
-                isLinkClickBlocked = true;
-                draggedElement = targetElement;
-                draggedElement.classList.add('dragging');
-                draggedElement.classList.add('vibrating'); // Ajoute la classe pour l'animation de vibration
-                draggedElement.classList.add('show-handle');
-                
-            }, 400);
-
-            if (event.type.includes('touch')) {
-                event.preventDefault();
-            }
-        }
-
-        function handleGridMove(event) {
-            // Gestion du redimensionnement
-            if (isResizing && resizeTarget) {
-                const currentX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-                const currentY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
-                const deltaX = currentX - initialX;
-                const deltaY = currentY - initialY;
-                const resizeThreshold = 50;
-
-                // Enlève toutes les classes de redimensionnement
-                resizeTarget.classList.remove('grid-item-col-2', 'grid-item-row-2', 'grid-item-large-square', 'grid-item-large-rectangle');
-                
-                // Si l'utilisateur tire horizontalement ou verticalement au-delà d'un seuil, on change la forme
-                if (Math.abs(deltaX) > resizeThreshold) {
-                    resizeTarget.classList.add('grid-item-large-rectangle');
-                } else if (Math.abs(deltaY) > resizeThreshold) {
-                    resizeTarget.classList.add('grid-item-large-square');
-                }
-                if (event.type.includes('touch')) {
-                    event.preventDefault();
-                }
-                return;
-            }
-
-            // Gestion du glisser-déposer principal
-            if (!isLongPress || !draggedElement) return;
-            
-            // Corrige la position de l'élément en mode glisser-déposer
-            draggedElement.classList.add('dragging');
-            
-            const currentX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-            const currentY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
-            
-            draggedElement.style.left = `${currentX - draggedElement.offsetWidth / 2}px`;
-            draggedElement.style.top = `${currentY - draggedElement.offsetHeight / 2}px`;
-            
-            const screenWidth = window.innerWidth;
-            const threshold = screenWidth * 0.15;
-            
-            if (currentX > screenWidth - threshold && currentScreen < screens.length - 1) {
-                currentScreen++;
-                updateSlider();
-            } else if (currentX < threshold && currentScreen > 0) {
-                currentScreen--;
-                updateSlider();
-            }
-        }
-
-        function handleGridEnd(event) {
-            clearTimeout(longPressTimer);
-            
-            if (isResizing) {
-                // Fin du redimensionnement
-                isResizing = false;
-                resizeTarget = null;
-                // On cache la poignée
-                const allGridItems = document.querySelectorAll('.grid-item');
-                allGridItems.forEach(item => item.classList.remove('show-handle'));
-            }
-            
-            // Si le glisser-déposer principal était actif
-            if (isLongPress && draggedElement) {
-                const dropTarget = screens[currentScreen].querySelector('.right-panel');
-                if (dropTarget) {
-                    dropTarget.appendChild(draggedElement);
-                }
-                
-                draggedElement.classList.remove('dragging');
-                draggedElement.classList.remove('vibrating'); // Supprime la classe de vibration
-                draggedElement.style.left = '';
-                draggedElement.style.top = '';
-                draggedElement.style.position = '';
-
-                isLongPress = false;
-                draggedElement = null;
-                
-                // On cache la poignée après un drag
-                const allGridItems = document.querySelectorAll('.grid-item');
-                allGridItems.forEach(item => item.classList.remove('show-handle'));
-            } else {
-                isLinkClickBlocked = false;
-            }
-
-            if (event.type.includes('touch')) {
-                event.preventDefault();
-            }
-        }
-
-        // ===============================
         // Écouteurs d'événements et Initialisation
         // ===============================
         document.addEventListener('DOMContentLoaded', () => {
@@ -852,16 +631,14 @@
             updateDateTime();
             setInterval(updateDateTime, 1000);
 
-            gridItems.forEach(item => {
-                item.addEventListener('mousedown', handleGridStart);
-                item.addEventListener('touchstart', handleGridStart);
-            });
-            document.addEventListener('mouseup', handleGridEnd);
-            document.addEventListener('touchend', handleGridEnd);
-            document.addEventListener('mousemove', handleGridMove);
-            document.addEventListener('touchmove', handleGridMove);
-
-            document.addEventListener('dragstart', (e) => e.preventDefault());
+            // Écouteurs pour le glissement de l'écran principal
+            document.addEventListener('mousedown', handleStart);
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('mouseup', handleEnd);
+            document.addEventListener('touchstart', handleStart);
+            document.addEventListener('touchmove', handleMove);
+            document.addEventListener('touchend', handleEnd);
+            document.addEventListener('wheel', handleWheel, { passive: false });
         });
     </script>
 </body>
