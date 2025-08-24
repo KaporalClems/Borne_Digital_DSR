@@ -148,52 +148,128 @@
             pointer-events: none;
         }
         
-        /* Styles pour la fenêtre modale */
-        .modal {
+        /* Styles pour la modale */
+        .modal-backdrop {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 100;
+            z-index: 1000;
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease-in-out;
         }
 
-        .modal.active {
+        .modal-backdrop.active {
             opacity: 1;
             pointer-events: auto;
         }
 
+        /* Styles pour la fenêtre modale elle-même, avec des ajustements pour le design */
         .modal-content {
-            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(30px); /* Augmentation du flou */
+            border-radius: 2rem; /* Plus arrondi */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 3rem; /* Plus grand padding */
             width: 90%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            color: black;
+            max-width: 31.25rem;
             text-align: center;
-        }
-
-        .modal-content select, .modal-content button {
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            border: 1px solid rgba(0, 0, 0, 0.2);
-            font-size: 1rem;
-            cursor: pointer;
-            width: 100%;
+            color: #fff;
         }
         
-        .modal-content select {
-            background-color: rgba(255, 255, 255, 0.9);
+        /* Styles pour les éléments de la modale */
+        .modal-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        h1 { color: #fff; font-size: 2.2em; margin-bottom: 0.5em; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
+        p { color: #eee; margin-bottom: 2em; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
+        
+        form#postalCodeForm {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Espace entre les champs de saisie */
         }
 
+        input { 
+            padding: 1.5rem; /* 24px - Plus grand */
+            font-size: 1.2em; /* Plus grande police */
+            width: 100%; 
+            box-sizing: border-box; 
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            border-radius: 1.5rem; /* 24px - Plus arrondi */
+            transition: border-color 0.3s; 
+        }
+        
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7); /* Rendre le placeholder plus visible */
+        }
+        
+        input:focus { outline: none; border-color: #fff; }
+        
+        button { 
+            padding: 1.5rem 2rem; /* 24px 32px - Plus grand */
+            font-size: 1.2em; /* Plus grande police */
+            background: rgba(255, 255, 255, 0.2); /* Blanc translucide */
+            backdrop-filter: blur(10px);
+            color: white; 
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 2.5rem; /* Plus arrondi pour correspondre à l'image */
+            cursor: pointer; 
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; 
+            width: 100%; 
+            font-weight: bold; 
+            margin-top: 1.5rem; /* Plus d'espace */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            /* Pour un bouton vert plus grand : */
+            /* background: linear-gradient(135deg, #7434a9, #593175); */
+        }
+        
+        button:hover { 
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); 
+        }
+        button:active { transform: translateY(0); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); }
+        
+        #message { margin-top: 1.25rem; font-size: 1.1em; font-weight: bold; color: #fff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
+        
+        .language-switcher { 
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+        }
+        
+        .language-switcher img { 
+            width: 2.5rem;
+            height: 2.5rem;
+            margin: 0 0.5rem;
+            cursor: pointer; 
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5); /* Bordure blanche pour les drapeaux */
+            box-shadow: 0 0.125rem 0.3125rem rgba(0,0,0,0.2);
+            transition: transform 0.2s, border-color 0.2s;
+            object-fit: cover;
+        }
+        
+        .language-switcher img:hover { transform: scale(1.1); border-color: #fff; }
+        
+        /* Styles de la page hôte, conservés pour la mise en forme du contenu */
+        body { font-family: 'Inter', Arial, sans-serif; }
+        
         /* ===== Component Styles ===== */
         .large-time {
             font-family: var(--primary-font);
@@ -284,35 +360,176 @@
             <div id="home-indicator-bar" class="w-32 h-1.5 bg-white rounded-full opacity-70"></div>
         </div>
     </div>
+    
+    <div id="postal-code-modal" class="modal-backdrop">
+        <div class="modal-content">
+            <div class="language-switcher">
+                <img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" alt="Français" onclick="setLanguage('fr')">
+                <img src="https://flagicons.lipis.dev/flags/4x3/gb.svg" alt="English" onclick="setLanguage('en')">
+                <img src="https://flagicons.lipis.dev/flags/4x3/de.svg" alt="Deutsch" onclick="setLanguage('de')">
+                <img src="https://flagicons.lipis.dev/flags/4x3/es.svg" alt="Español" onclick="setLanguage('es')">
+            </div>
+            <div class="modal-container">
+                <h1 id="title">Saisie des Codes Postaux</h1>
+                <p id="instruction">Veuillez entrer votre code postal et votre ville.</p>
 
-    <!-- Fenêtre modale pour le code postal -->
-    <div id="postal-code-modal" class="modal">
-        <div class="modal-content frosted-glass">
-            <h2 class="text-2xl font-bold mb-4 text-white">Sélectionnez votre code postal</h2>
-            <select id="postal-code-select" class="p-2 border rounded text-black">
-                <option value="97410">97410 - Saint-Pierre</option>
-                <option value="97421">97421 - La Rivière Saint-Louis</option>
-                <option value="97424">97424 - Piton Saint-Leu</option>
-                <option value="97425">97425 - Les Avirons</option>
-                <option value="97427">97427 - L'Étang-Salé</option>
-                <option value="97429">97429 - Petite-Île</option>
-                <option value="97430">97430 - Le Tampon</option>
-                <option value="97432">97432 - Le Guillaume</option>
-                <option value="97433">97433 - Salazie</option>
-                <option value="97436">97436 - Saint-Leu</option>
-                <option value="97439">97439 - Sainte-Rose</option>
-                <option value="97440">97440 - Saint-André</option>
-            </select>
-            <button id="confirm-button" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors">
-                Confirmer
-            </button>
+                <form id="postalCodeForm">
+                    <input type="text" id="postalCode" placeholder="Code Postal" required>
+                    <input type="text" id="city" placeholder="Ville" required>
+                    <button type="submit" id="submitBtn">Envoyer</button>
+                </form>
+
+                <div id="message"></div>
+            </div>
         </div>
     </div>
     
-    <script>
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+        // Configuration de Firebase (à remplacer par vos propres clés)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy3tI-gl_z0JzA7uH6bQtMc89pfFcgJMs",
+            authDomain: "code-postaux-dsr.firebaseapp.com",
+            projectId: "code-postaux-dsr",
+            storageBucket: "code-postaux-dsr.firebasestorage.app",
+            messagingSenderId: "317015321347",
+            appId: "1:317015321347:web:27a95ea854064b21561736",
+            measurementId: "G-25B25N3GP9"
+        };
+
+        // Initialisation de Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Cette variable identifie la borne de Saint-Pierre
+        const source = 'borne_st_pierre';
+
         // ===============================
-        // Configuration
+        // Configuration de la modale
         // ===============================
+        const form = document.getElementById('postalCodeForm');
+        const messageDiv = document.getElementById('message');
+        const postalCodeInput = document.getElementById('postalCode');
+        const cityInput = document.getElementById('city');
+        const submitBtn = document.getElementById('submitBtn');
+        const title = document.getElementById('title');
+        const instruction = document.getElementById('instruction');
+
+        let currentLanguage = 'fr';
+
+        const translations = {
+            fr: {
+                title: 'Saisie des Codes Postaux',
+                instruction: 'Veuillez entrer votre code postal et votre ville.',
+                postalCodePlaceholder: 'Ex: 97410 ou L24 8RB',
+                cityPlaceholder: 'Ex: Saint-Pierre ou Liverpool',
+                submitBtn: 'Envoyer',
+                successMessage: 'Merci ! Votre code postal a été enregistré avec succès.',
+                errorMessage: 'Une erreur est survenue. Veuillez réessayer.'
+            },
+            en: {
+                title: 'Postal Code Entry',
+                instruction: 'Please enter your postal code and city.',
+                postalCodePlaceholder: 'Ex: 97410 or L24 8RB',
+                cityPlaceholder: 'Ex: Saint-Pierre or Liverpool',
+                submitBtn: 'Submit',
+                successMessage: 'Thank you! Your postal code has been successfully recorded.',
+                errorMessage: 'An error occurred. Please try again.'
+            },
+            de: {
+                title: 'Postleitzahl-Eingabe',
+                instruction: 'Bitte geben Sie Ihre Postleitzahl und Stadt ein.',
+                postalCodePlaceholder: 'Ex: 10115 ou L24 8RB',
+                cityPlaceholder: 'Ex: Berlin',
+                submitBtn: 'Senden',
+                successMessage: 'Vielen Dank! Ihre Postleitzahl wurde erfolgreich gespeichert.',
+                errorMessage: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.'
+            },
+            es: {
+                title: 'Entrada de Código Postal',
+                instruction: 'Por favor, introduzca su código postal et su ciudad.',
+                postalCodePlaceholder: 'Ex: 28001 ou L24 8RB',
+                cityPlaceholder: 'Ex: Madrid',
+                submitBtn: 'Enviar',
+                successMessage: '¡Gracias! Su código postal ha sido registrado con éxito.',
+                errorMessage: 'Ha ocurrido un error. Por favor, inténtelo de nuevo.'
+            }
+        };
+
+        // Fonction pour changer la langue de la page
+        window.setLanguage = function(lang) {
+            currentLanguage = lang;
+            const t = translations[lang];
+            title.textContent = t.title;
+            instruction.textContent = t.instruction;
+            postalCodeInput.placeholder = t.postalCodePlaceholder;
+            cityInput.placeholder = t.cityPlaceholder;
+            submitBtn.textContent = t.submitBtn;
+            messageDiv.textContent = ''; // Clear message on language change
+        };
+
+        // Définit la langue par défaut au chargement
+        document.addEventListener('DOMContentLoaded', () => setLanguage('fr'));
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const postalCode = postalCodeInput.value;
+            const city = cityInput.value;
+            
+            try {
+                // Ajoute un nouveau document à la collection "codesPostaux"
+                await addDoc(collection(db, "codesPostaux"), {
+                    code: postalCode,
+                    ville: city,
+                    date: new Date(),
+                    source: source // Ajoute la source pour le filtrage dans le dashboard
+                });
+                
+                // Affiche un message de succès
+                const successMessage = translations[currentLanguage].successMessage;
+                messageDiv.style.color = '#fff';
+                messageDiv.textContent = successMessage;
+                
+                // Redirige vers la page d'accueil avec le paramètre de langue
+                window.location.href = `https://kaporalclems.github.io/Borne_Digital_DSR/accueil.html?lang=${currentLanguage}`;
+                
+            } catch (e) {
+                console.error("Erreur lors de l'ajout du document : ", e);
+                const errorMessage = translations[currentLanguage].errorMessage;
+                messageDiv.style.color = '#fff';
+                messageDiv.textContent = errorMessage;
+            }
+        });
+
+
+        // ===============================
+        // Variables globales (de la page originale)
+        // ===============================
+        let currentIndex = 0;
+        let currentDisplayLocale = 'fr-FR';
+        let animationInterval, dateTimeInterval, wifiCheckInterval;
+        let startY = 0, endY = 0;
+        const swipeThreshold = 80;
+
+        const elements = {
+            lockScreenContainer: document.getElementById('lock-screen-container'),
+            helloContainer: document.getElementById('hello-text-container'),
+            swipeUpContainer: document.getElementById('swipe-up-text-container'),
+            homeIndicatorBar: document.getElementById('home-indicator-bar'),
+            currentDateDiv: document.getElementById('current-date'),
+            currentLargeTimeDiv: document.getElementById('current-large-time'),
+            wifiIconSvg: document.querySelector('.wifi-icon'),
+            videoBackground: document.getElementById('video-background'),
+            postalCodeModal: document.getElementById('postal-code-modal'),
+            
+            // Les éléments de l'ancienne modale ont été supprimés
+        };
+        
+        // Configuration pour l'animation 'hello'
         const helloWords = [
             { lang: 'en', text: 'hello', locale: 'en-US' },
             { lang: 'fr', text: 'bonjour', locale: 'fr-FR' },
@@ -334,29 +551,6 @@
             { lang: 'ar', text: 'اسحب لأعلى للفتح' },
             { lang: 'ru', text: 'Проведите вверх, чтобы открыть' }
         ];
-
-        // ===============================
-        // Variables globales
-        // ===============================
-        let currentIndex = 0;
-        let currentDisplayLocale = helloWords[currentIndex].locale;
-        let animationInterval, dateTimeInterval, wifiCheckInterval;
-        let startY = 0, endY = 0;
-        const swipeThreshold = 80;
-
-        const elements = {
-            lockScreenContainer: document.getElementById('lock-screen-container'),
-            helloContainer: document.getElementById('hello-text-container'),
-            swipeUpContainer: document.getElementById('swipe-up-text-container'),
-            homeIndicatorBar: document.getElementById('home-indicator-bar'),
-            currentDateDiv: document.getElementById('current-date'),
-            currentLargeTimeDiv: document.getElementById('current-large-time'),
-            wifiIconSvg: document.querySelector('.wifi-icon'),
-            videoBackground: document.getElementById('video-background'),
-            postalCodeModal: document.getElementById('postal-code-modal'),
-            confirmButton: document.getElementById('confirm-button'),
-            postalCodeSelect: document.getElementById('postal-code-select')
-        };
 
         // ===============================
         // Fonctions de l'écran de verrouillage
@@ -478,26 +672,13 @@
         // Gestion de l'état (Verrouillé / Déverrouillé)
         // ===============================
         function showModal() {
-            // Empêche la redirection et affiche la modale
             elements.postalCodeModal.classList.add('active');
         }
 
         function closeModal() {
-            // Masque la modale
             elements.postalCodeModal.classList.remove('active');
         }
         
-        function handleSelection() {
-            const selectedPostalCode = elements.postalCodeSelect.value;
-            // Vous pouvez utiliser le code postal sélectionné ici pour des actions futures
-            console.log("Code postal sélectionné : " + selectedPostalCode);
-            // Redirection après la sélection
-            elements.lockScreenContainer.classList.add('fade-out');
-            setTimeout(() => {
-                window.location.href = 'accueil.html'; // Redirection vers la page d'accueil
-            }, 500);
-        }
-
         // ===============================
         // Événements Utilisateur
         // ===============================
@@ -512,7 +693,6 @@
 
         function handleWheel(e) {
             if (e.deltaY < 0 && elements.postalCodeModal.classList.contains('active')) {
-                // Ignore le défilement si la modale est active et que c'est un défilement vers le haut
                 return;
             }
             if (e.deltaY > 0) { // Défilement vers le bas
@@ -527,7 +707,6 @@
         document.body.addEventListener('wheel', handleWheel);
         
         // Gérer les événements de la modale
-        elements.confirmButton.addEventListener('click', handleSelection);
         elements.postalCodeModal.addEventListener('click', (event) => {
             if (event.target === elements.postalCodeModal) {
                 closeModal();
