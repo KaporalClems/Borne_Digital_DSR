@@ -5,98 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Code Postaux DSR</title>
     <style>
-        body { font-family: 'Inter', Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; background-color: #f4f7f9; color: #333; }
-        .container { background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        body { font-family: 'Inter', Arial, sans-serif; padding: 20px; max-width: 900px; margin: auto; background-color: #f0f2f5; color: #333; }
+        .container { background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
         input, button { padding: 12px; margin: 8px 0; font-size: 16px; width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 8px; }
-        button { background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s ease; }
-        button:hover { background-color: #0056b3; }
+        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        button:hover { background-color: #45a049; transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
         #dashboard { display: none; margin-top: 20px; }
-        h1, h2 { text-align: center; color: #2c3e50; }
+        h1, h2, h3 { text-align: center; color: #2c3e50; }
+        h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+        h2 { font-size: 1.8em; margin-top: 1.5em; margin-bottom: 0.8em; }
         .stats-container { display: flex; justify-content: space-around; flex-wrap: wrap; margin: 20px 0; }
-        .stat-box { flex: 1; min-width: 150px; padding: 15px; border: 1px solid #e0e0e0; margin: 10px; border-radius: 12px; background-color: #fafafa; text-align: center; }
-        .stat-box h3 { margin-top: 0; color: #34495e; }
+        .stat-box { flex: 1; min-width: 150px; padding: 20px; border-radius: 12px; background-color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px; text-align: center; transition: transform 0.3s ease; }
+        .stat-box:hover { transform: translateY(-5px); }
+        .stat-box h3 { margin-top: 0; color: #34495e; font-size: 1.2em; }
+        .stat-box p { font-size: 2em; font-weight: bold; color: #4CAF50; margin: 5px 0 0; }
+        .kpi-container { display: flex; justify-content: space-around; flex-wrap: wrap; margin: 20px 0; }
+        .kpi-box { flex: 1; min-width: 200px; padding: 20px; border-radius: 12px; background-color: #e8f5e9; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 10px; text-align: center; }
+        .kpi-box h4 { margin: 0; color: #2e7d32; font-size: 1.1em; }
+        .kpi-box p { font-size: 1.8em; font-weight: bold; color: #1b5e20; margin: 5px 0 0; }
         #villes-stats { text-align: left; }
         #villes-stats ul { list-style: none; padding: 0; }
-        #villes-stats li { padding: 5px 0; border-bottom: 1px dotted #ccc; }
+        #villes-stats li { padding: 8px 0; border-bottom: 1px dotted #ccc; }
         #villes-stats li:last-child { border-bottom: none; }
-        .form-section { border-top: 2px solid #eee; padding-top: 20px; margin-top: 20px; }
+        .chart-section { display: flex; flex-wrap: wrap; justify-content: space-around; margin-top: 30px; }
+        .chart-box { width: 100%; max-width: 450px; margin: 10px; padding: 20px; background-color: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .chart-canvas-wrapper { height: 400px; position: relative; } /* Nouveau conteneur pour le canvas */
         #listeCodes { list-style: none; padding: 0; }
-        #listeCodes li { padding: 10px; border-bottom: 1px solid #e0e0e0; }
+        #listeCodes li { padding: 12px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; }
         #listeCodes li:last-child { border-bottom: none; }
-        .chart-container { position: relative; height: 400px; margin-top: 20px; }
+        .pagination { display: flex; justify-content: center; align-items: center; margin-top: 20px; }
+        .pagination button { width: auto; margin: 0 5px; background-color: #f0f0f0; color: #333; }
+        .pagination button:hover { background-color: #e0e0e0; }
+        .pagination button.active { background-color: #4CAF50; color: white; }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Dashboard Code Postaux DSR</h1>
+        <h1>Dashboard Codes Postaux</h1>
 
         <!-- Formulaire de connexion -->
         <div id="loginDiv">
             <h2>Connexion</h2>
             <input type="email" id="loginEmail" placeholder="Email">
             <input type="password" id="loginPassword" placeholder="Mot de passe">
-            <button onclick="login()">Se connecter</button>
+            <button onclick="login()"><i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i> Se connecter</button>
         </div>
 
         <!-- Dashboard -->
         <div id="dashboard">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <button onclick="exporterEnPDF()" style="width: 48%;">Exporter en PDF</button>
-                <button onclick="logout()" style="width: 48%;">Se déconnecter</button>
+                <button onclick="exporterEnPDF()" style="width: 48%;"><i class="fas fa-file-pdf" style="margin-right: 8px;"></i> Exporter en PDF</button>
+                <button onclick="logout()" style="width: 48%; background-color: #dc3545;"><i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Se déconnecter</button>
             </div>
             
             <hr>
 
-            <h2>Statistiques</h2>
-            <div class="stats-container">
-                <div class="stat-box">
-                    <h3>Total</h3>
+            <h2>Indicateurs Clés</h2>
+            <div class="kpi-container">
+                <div class="kpi-box">
+                    <h4>Total des Saisies</h4>
                     <p id="totalCount"></p>
                 </div>
-                <div class="stat-box">
-                    <h3>Aujourd'hui</h3>
-                    <p id="todayCount"></p>
+                <div class="kpi-box">
+                    <h4>Villes Uniques</h4>
+                    <p id="uniqueCitiesCount"></p>
                 </div>
-                <div class="stat-box">
-                    <h3>Ce mois-ci</h3>
+                <div class="kpi-box">
+                    <h4>Saisies ce mois-ci</h4>
                     <p id="monthCount"></p>
-                </div>
-                <div class="stat-box">
-                    <h3>Cette année</h3>
-                    <p id="yearCount"></p>
-                </div>
-            </div>
-            
-            <div class="stat-box" id="villes-stats">
-                <h3>Totaux par villes</h3>
-                <ul id="villesListe"></ul>
-            </div>
-            
-            <hr>
-            
-            <h2>Graphique des Saisies</h2>
-            <div>
-                <label for="viewSelector">Afficher par :</label>
-                <select id="viewSelector" onchange="mettreAJourGraphique(this.value)">
-                    <option value="day">Jour</option>
-                    <option value="month">Mois</option>
-                    <option value="year">Année</option>
-                </select>
-                <div class="chart-container">
-                    <canvas id="saisiesChart"></canvas>
                 </div>
             </div>
 
             <hr>
+
+            <div class="chart-section">
+                <div class="chart-box">
+                    <h2>Évolution des Saisies</h2>
+                    <label for="viewSelector">Afficher par :</label>
+                    <select id="viewSelector" onchange="updateChart('saisiesChart', this.value)">
+                        <option value="day">Jour</option>
+                        <option value="month">Mois</option>
+                        <option value="year">Année</option>
+                    </select>
+                    <div class="chart-canvas-wrapper">
+                      <canvas id="saisiesChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-box">
+                    <h2>Répartition par Villes</h2>
+                    <div class="chart-canvas-wrapper">
+                      <canvas id="villesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
             <h2>Derniers codes postaux enregistrés</h2>
             <ul id="listeCodes"></ul>
+            <div class="pagination">
+                <button id="prevPage" onclick="changePage(-1)"><i class="fas fa-chevron-left"></i></button>
+                <span id="pageInfo"></span>
+                <button id="nextPage" onclick="changePage(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
         </div>
     </div>
 
     <script type="module">
         // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
         
         // Import jsPDF pour l'exportation
@@ -104,6 +124,9 @@
         
         // Import Chart.js pour les graphiques
         import 'https://cdn.jsdelivr.net/npm/chart.js';
+        
+        // Import pour les icônes
+        import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js';
 
         // Configuration de Firebase
         const firebaseConfig = {
@@ -122,7 +145,9 @@
         const auth = getAuth(app);
         
         let allCodes = []; 
-        let myChart;
+        let myBarChart, myPieChart;
+        let currentPage = 1;
+        const itemsPerPage = 10;
 
         // --- Fonctions d'authentification ---
         window.login = async function() {
@@ -158,91 +183,100 @@
 
         // --- Mise à jour de l'UI avec les données ---
         function mettreAJourUI() {
-            // Charge les derniers codes postaux
+            // Mise à jour des KPI
+            const now = new Date();
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+            const monthCount = allCodes.filter(c => c.date.toDate() >= startOfMonth).length;
+            const uniqueCitiesCount = new Set(allCodes.map(c => c.ville)).size;
+
+            document.getElementById("totalCount").textContent = allCodes.length;
+            document.getElementById("uniqueCitiesCount").textContent = uniqueCitiesCount;
+            document.getElementById("monthCount").textContent = monthCount;
+
+            // Pagination
+            displayCodes(currentPage);
+
+            // Prépare les données pour les graphiques et les initialise
+            const dataSets = preparerDonneesGraphique();
+            initialiserGraphiques(dataSets);
+        }
+        
+        // Gère la pagination
+        function displayCodes(page) {
             const liste = document.getElementById("listeCodes");
             liste.innerHTML = "";
-            allCodes.slice(0, 20).forEach(data => {
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedItems = allCodes.slice(startIndex, endIndex);
+
+            paginatedItems.forEach(data => {
                 const li = document.createElement("li");
                 li.textContent = `${data.code} - ${data.ville} (${data.date?.toDate().toLocaleString()})`;
                 liste.appendChild(li);
             });
 
-            // Calcule et affiche les statistiques
-            const now = new Date();
-            const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-            const startOfYear = new Date(now.getFullYear(), 0, 1);
-            
-            document.getElementById("totalCount").textContent = allCodes.length;
-            
-            const todayCount = allCodes.filter(c => c.date.toDate() >= startOfDay).length;
-            const monthCount = allCodes.filter(c => c.date.toDate() >= startOfMonth).length;
-            const yearCount = allCodes.filter(c => c.date.toDate() >= startOfYear).length;
-            
-            document.getElementById("todayCount").textContent = todayCount;
-            document.getElementById("monthCount").textContent = monthCount;
-            document.getElementById("yearCount").textContent = yearCount;
-            
-            const villesStats = allCodes.reduce((acc, current) => {
-                const ville = current.ville || "Inconnu";
-                acc[ville] = (acc[ville] || 0) + 1;
-                return acc;
-            }, {});
-            
-            const villesListe = document.getElementById("villesListe");
-            villesListe.innerHTML = "";
-            Object.entries(villesStats).sort(([, a], [, b]) => b - a).forEach(([ville, count]) => {
-                const li = document.createElement("li");
-                li.textContent = `${ville}: ${count}`;
-                villesListe.appendChild(li);
-            });
-
-            // Prépare les données pour le graphique et l'initialise
-            const dataSets = preparerDonneesGraphique();
-            initialiserGraphique(dataSets);
+            const pageInfo = document.getElementById("pageInfo");
+            const totalPages = Math.ceil(allCodes.length / itemsPerPage);
+            pageInfo.textContent = `Page ${page} sur ${totalPages}`;
+            document.getElementById("prevPage").disabled = page === 1;
+            document.getElementById("nextPage").disabled = page === totalPages;
         }
-        
+
+        // Change la page de la pagination
+        window.changePage = function(offset) {
+            const totalPages = Math.ceil(allCodes.length / itemsPerPage);
+            const newPage = currentPage + offset;
+            if (newPage >= 1 && newPage <= totalPages) {
+                currentPage = newPage;
+                displayCodes(currentPage);
+            }
+        }
+
         // Prépare les données pour les graphiques (par jour, mois, année)
         function preparerDonneesGraphique() {
             const dailyData = {};
             const monthlyData = {};
             const yearlyData = {};
+            const villesData = {};
 
             allCodes.forEach(item => {
                 const date = item.date.toDate();
                 const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
                 const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
                 const yearKey = `${date.getFullYear()}`;
+                const ville = item.ville || "Inconnu";
 
                 dailyData[dayKey] = (dailyData[dayKey] || 0) + 1;
                 monthlyData[monthKey] = (monthlyData[monthKey] || 0) + 1;
                 yearlyData[yearKey] = (yearlyData[yearKey] || 0) + 1;
+                villesData[ville] = (villesData[ville] || 0) + 1;
             });
             
             return {
                 day: { labels: Object.keys(dailyData).sort(), data: Object.values(dailyData) },
                 month: { labels: Object.keys(monthlyData).sort(), data: Object.values(monthlyData) },
-                year: { labels: Object.keys(yearlyData).sort(), data: Object.values(yearlyData) }
+                year: { labels: Object.keys(yearlyData).sort(), data: Object.values(yearlyData) },
+                villes: { labels: Object.keys(villesData).sort(), data: Object.values(villesData) }
             };
         }
 
-        // Initialise le graphique
-        function initialiserGraphique(dataSets) {
-            const ctx = document.getElementById('saisiesChart').getContext('2d');
+        // Initialise les deux graphiques
+        function initialiserGraphiques(dataSets) {
+            const barCtx = document.getElementById('saisiesChart').getContext('2d');
+            const pieCtx = document.getElementById('villesChart').getContext('2d');
             
-            if (myChart) {
-                myChart.destroy();
-            }
+            if (myBarChart) myBarChart.destroy();
+            if (myPieChart) myPieChart.destroy();
 
-            myChart = new Chart(ctx, {
-                type: 'bar', // On utilise un graphique en barres
+            myBarChart = new Chart(barCtx, {
+                type: 'bar',
                 data: {
                     labels: dataSets.day.labels,
                     datasets: [{
                         label: 'Saisies par jour',
                         data: dataSets.day.data,
-                        backgroundColor: 'rgba(0, 123, 255, 0.5)',
-                        borderColor: 'rgba(0, 123, 255, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
                         borderWidth: 1
                     }]
                 },
@@ -250,28 +284,70 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        y: {
-                            beginAtZero: true
+                        y: { beginAtZero: true },
+                        x: {
+                            ticks: {
+                                maxRotation: 90,
+                                minRotation: 90
+                            }
+                        }
+                    }
+                }
+            });
+
+            myPieChart = new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: dataSets.villes.labels,
+                    datasets: [{
+                        label: 'Saisies par ville',
+                        data: dataSets.villes.data,
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40',
+                            '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: Math.max(12, 16 - (dataSets.villes.labels.length > 5 ? Math.floor(dataSets.villes.labels.length / 5) * 1.5 : 0))
+                                }
+                            }
                         }
                     }
                 }
             });
         }
         
-        // Met à jour le graphique avec la vue sélectionnée
-        window.mettreAJourGraphique = function(view) {
+        // Met à jour un graphique spécifique
+        window.updateChart = function(chartId, view) {
             const dataSets = preparerDonneesGraphique();
-            const newData = dataSets[view];
-            const labels = {
-                'day': 'Saisies par jour',
-                'month': 'Saisies par mois',
-                'year': 'Saisies par année'
-            };
-
-            myChart.data.labels = newData.labels;
-            myChart.data.datasets[0].data = newData.data;
-            myChart.data.datasets[0].label = labels[view];
-            myChart.update();
+            const chart = chartId === 'saisiesChart' ? myBarChart : myPieChart;
+            
+            if (chartId === 'saisiesChart') {
+                const newData = dataSets[view];
+                const labels = { 'day': 'Saisies par jour', 'month': 'Saisies par mois', 'year': 'Saisies par année' };
+                chart.data.labels = newData.labels;
+                chart.data.datasets[0].data = newData.data;
+                chart.data.datasets[0].label = labels[view];
+                chart.update();
+            } else {
+                const newData = dataSets.villes;
+                chart.data.labels = newData.labels;
+                chart.data.datasets[0].data = newData.data;
+                
+                // Ajustement de la taille de la police de la légende
+                chart.options.plugins.legend.labels.font.size = Math.max(12, 16 - (newData.labels.length > 5 ? Math.floor(newData.labels.length / 5) * 1.5 : 0));
+                
+                chart.update();
+            }
         }
 
         // Exporte les données en PDF
@@ -287,24 +363,20 @@
             
             doc.text(`Total: ${document.getElementById("totalCount").textContent}`, 10, y);
             y += 10;
-            doc.text(`Aujourd'hui: ${document.getElementById("todayCount").textContent}`, 10, y);
+            doc.text(`Villes Uniques: ${document.getElementById("uniqueCitiesCount").textContent}`, 10, y);
             y += 10;
             doc.text(`Ce mois-ci: ${document.getElementById("monthCount").textContent}`, 10, y);
-            y += 10;
-            doc.text(`Cette année: ${document.getElementById("yearCount").textContent}`, 10, y);
             y += 20;
 
-            doc.text("Totaux par villes:", 10, y);
+            doc.text("Derniers codes postaux enregistrés:", 10, y);
             y += 10;
-            const villesListe = document.getElementById("villesListe").children;
-            for (let i = 0; i < villesListe.length; i++) {
-                doc.text(villesListe[i].textContent, 20, y);
+            allCodes.slice(0, 50).forEach(data => { // Limite l'exportation aux 50 derniers pour la lisibilité
+                doc.text(`${data.code} - ${data.ville} (${data.date?.toDate().toLocaleString()})`, 20, y);
                 y += 7;
-            }
+            });
             
             doc.save("statistiques-codes-postaux.pdf");
         }
     </script>
 </body>
 </html>
-
