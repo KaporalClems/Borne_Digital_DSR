@@ -3,7 +3,7 @@
   "results": [
     {
       "type": [
-        "Restauration"
+        "Restaurant"
       ],
       "nom_commercial": "Délices et Douceurs",
       "zone_touristique": "Sud",
@@ -22,9 +22,9 @@
         "lon": 55.335415,
         "lat": -21.272685
       },
-      "photo": "",
-      "prix_fourchette": "Non renseigné",
-      "notation": "Non noté"
+      "photo": "https://rankeat.fr/wp-content/uploads/2025/07/delices-et-douceurs-photo-google-1-1751548870.jpg",
+      "prix_fourchette": "10–20 €",
+      "notation": "4,8"
     },
     {
       "type": [
