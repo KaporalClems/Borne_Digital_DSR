@@ -359,8 +359,6 @@
                 font-size: 1rem;
             }
         }
-
-
     </style>
 </head>
 <body>
@@ -426,11 +424,11 @@
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Widget Personnalisé</span>
                         <p class="text-xs mt-2 text-center text-gray-200">Cliquez pour un effet !</p>
                     </div>
-                    <!-- NOUVEAU BOUTON : Un autre exemple de bouton -->
-                    <button id="new-button-example" class="grid-item">
-                        <span class="grid-icon">💡</span>
-                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Nouveau Bouton</span>
-                    </button>
+                     <!-- AJOUT DU BOUTON HEBERGEMENTS -->
+                    <div class="grid-item" data-modal-target="Destinationhebergements.html" data-modal-title="Hébergements">
+                        <span class="grid-icon">🏨</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Hébergements</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -662,7 +660,6 @@
         const body = document.body;
         const dots = document.querySelectorAll('.dot');
         const newCustomWidget = document.getElementById('new-custom-widget');
-        const newButtonExample = document.getElementById('new-button-example');
         const destinationButtons = document.querySelectorAll('.right-panel .grid-item');
 
         const destinationModal = document.getElementById('destination-modal');
@@ -856,7 +853,6 @@
 
         // ===============================
         // GESTION DES FONCTIONNALITÉS SUPPLÉMENTAIRES
-        // (Ajoutez vos nouveaux écouteurs d'événements ici !)
         // ===============================
         
         // Exemple de widget personnalisé : un simple clic qui change un texte
@@ -868,12 +864,6 @@
             resetInactivityTimer();
         });
 
-        // Exemple de nouveau bouton : vous pouvez ajouter n'importe quelle action ici
-        newButtonExample.addEventListener('click', () => {
-            // Remplacement d'alert() par une modale personnalisée pour une meilleure expérience utilisateur
-            showCustomMessage("Ce bouton peut déclencher une nouvelle action !");
-            resetInactivityTimer();
-        });
 
         // Fonction pour afficher une modale de message personnalisée
         function showCustomMessage(message) {
