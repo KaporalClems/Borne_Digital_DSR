@@ -156,31 +156,27 @@
             overflow: auto;
         }
 
-        /* Styles de la modale pour le mode PAYSAGE (par défaut) */
+        /* NOUVEAU: Styles pour la modale universelle */
         .modal-content {
             background-color: #1e293b;
-            padding: 0;
+            padding: 1.5rem; /* Ajout de padding */
             border-radius: 1rem;
-            width: 95%; /* Augmenté à 95% pour plus de largeur */
-            max-width: 1400px; /* Augmenté la largeur maximale */
-            /* Enlève l'aspect-ratio fixe pour que la modale s'ajuste au contenu */
-            max-height: 90vh; /* Limite la hauteur pour qu'elle ne déborde pas */
+            width: 95%;
+            max-width: 1400px;
+            max-height: 90vh;
             position: relative;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.3s ease-out;
             margin: 20px;
-        }
-
-        /* Nouveaux styles pour le mode PORTRAIT */
-        .modal-content.portrait-mode {
-            max-width: 95%; /* Largeur maximale pour le mode portrait */
-            max-height: 90vh; /* Limite la hauteur */
+            display: flex; /* Utilisation de flexbox */
+            flex-direction: column;
+            overflow: hidden; /* Empêche le défilement à l'intérieur de la modale */
         }
 
         .close-button {
             position: absolute;
-            top: -2.5rem;
-            right: -2.5rem;
+            top: 1rem; /* Mieux positionné */
+            right: 1rem; /* Mieux positionné */
             font-size: 2rem;
             color: white;
             cursor: pointer;
@@ -200,6 +196,7 @@
             height: 100%;
             border: none;
             border-radius: 1rem;
+            flex-grow: 1; /* Permet à l'iframe de prendre tout l'espace restant */
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
@@ -529,8 +526,9 @@
     <!-- MODALE UNIVERSELLE POUR LES DESTINATIONS -->
     <div id="destination-modal" class="modal">
         <div class="modal-content">
+            <!-- Ajout d'un titre pour que l'utilisateur sache où il se trouve -->
+            <h2 id="modal-destination-title" class="modal-title text-2xl font-semibold mb-4 text-white text-center"></h2>
             <span class="close-button">&times;</span>
-            <!-- Nous n'affichons plus le titre à l'intérieur de la modale pour le laisser au sein de la page de destination -->
             <iframe id="modal-destination-iframe" class="modal-iframe" loading="lazy"></iframe>
         </div>
     </div>
@@ -726,6 +724,7 @@
                 const title = button.getAttribute('data-modal-title');
 
                 if (url) {
+                    modalDestinationTitle.textContent = title; // Met à jour le titre
                     modalDestinationIframe.src = url;
                     destinationModal.style.display = 'flex';
                     resetInactivityTimer();
@@ -766,9 +765,38 @@
 
         // Exemple de nouveau bouton : vous pouvez ajouter n'importe quelle action ici
         newButtonExample.addEventListener('click', () => {
-            alert("Ce bouton peut déclencher une nouvelle action !");
+            // Remplacement d'alert() par une modale personnalisée pour une meilleure expérience utilisateur
+            showCustomMessage("Ce bouton peut déclencher une nouvelle action !");
             resetInactivityTimer();
         });
+
+        // Fonction pour afficher une modale de message personnalisée
+        function showCustomMessage(message) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                background: #1e293b; color: white; padding: 2rem; border-radius: 1rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 2000; text-align: center;
+                animation: fadeIn 0.3s ease-out; max-width: 80%;
+            `;
+            modal.innerHTML = `
+                <p class="text-lg mb-4">${message}</p>
+                <button class="px-4 py-2 bg-white text-gray-900 rounded-full font-semibold">Fermer</button>
+            `;
+            document.body.appendChild(modal);
+
+            modal.querySelector('button').addEventListener('click', () => {
+                modal.remove();
+            });
+
+            // Ferme la modale si l'utilisateur clique en dehors
+            document.addEventListener('click', (e) => {
+                if (!modal.contains(e.target) && e.target !== newButtonExample) {
+                    modal.remove();
+                }
+            }, { once: true });
+        }
+
 
         // ===============================
         // GESTION DE L'ACCESSIBILITÉ
