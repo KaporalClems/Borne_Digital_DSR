@@ -324,6 +324,42 @@
             }
         }
 
+        /* NOUVEAU: Styles pour l'affichage de l'heure et de la date */
+        .time-date-widget {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            color: white;
+            text-align: left;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .time-date-widget .time {
+            font-size: 3rem; /* Taille de la police pour l'heure */
+            font-weight: 700;
+        }
+
+        .time-date-widget .date {
+            font-size: 1.5rem; /* Taille de la police pour la date */
+            font-weight: 400;
+            opacity: 0.8;
+            margin-top: -0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .time-date-widget {
+                top: 1rem;
+                left: 1rem;
+            }
+            .time-date-widget .time {
+                font-size: 2rem;
+            }
+            .time-date-widget .date {
+                font-size: 1rem;
+            }
+        }
+
 
     </style>
 </head>
@@ -331,6 +367,13 @@
     <video autoplay muted loop id="video-background">
         <source src="https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/4b24136854869ddd073bf02729c517f463686795/Destination%20Sud%20R%C3%A9union_HD.mp4" type="video/mp4">
     </video>
+
+    <!-- NOUVEAU: Élément pour afficher l'heure et la date en haut à gauche -->
+    <div class="time-date-widget">
+        <div id="time-display" class="time"></div>
+        <div id="date-display" class="date"></div>
+    </div>
+
 
     <!-- Flèches de navigation animées -->
     <button id="prev-arrow" class="nav-arrow left hidden">
@@ -468,13 +511,9 @@
                         <span class="grid-icon">🚁</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Activités Aériennes</span>
                     </div>
-                    <!-- Widget Heure/Date -->
-                    <div class="grid-item bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-xl">
-                        <div class="flex flex-col items-center justify-center h-full">
-                            <span class="text-xs md:text-sm lg:text-lg font-medium" id="date-widget"></span>
-                            <span class="text-3xl md:text-4xl lg:text-5xl font-extrabold mt-1" id="time-widget"></span>
-                        </div>
-                    </div>
+                    
+                    <!-- L'ancien widget date/heure a été supprimé d'ici -->
+                    
                     <div class="grid-item" data-modal-target="Destinationparcs.html" data-modal-title="Parcs & Aventures">
                         <span class="grid-icon">🎢</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Parcs & Aventures</span>
@@ -605,6 +644,10 @@
         // Références aux flèches de navigation
         const prevArrow = document.getElementById('prev-arrow');
         const nextArrow = document.getElementById('next-arrow');
+        
+        // NOUVEAU: Références aux éléments d'affichage de l'heure et de la date
+        const timeDisplay = document.getElementById('time-display');
+        const dateDisplay = document.getElementById('date-display');
 
         let currentScreen = 0;
         let isDragging = false;
@@ -868,18 +911,16 @@
         // ===============================
         function updateDateTime() {
             const now = new Date();
+            const timeOptions = { hour: '2-digit', minute: '2-digit' };
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
             
+            const formattedTime = now.toLocaleTimeString('fr-FR', timeOptions).replace(':', ' : ');
             const formattedDate = now.toLocaleDateString('fr-FR', dateOptions);
-            const formattedTime = now.toLocaleTimeString('fr-FR', timeOptions);
 
-            const dateElement = document.getElementById('date-widget');
-            const timeElement = document.getElementById('time-widget');
-
-            if (dateElement && timeElement) {
-                dateElement.textContent = formattedDate;
-                timeElement.textContent = formattedTime;
+            // Mise à jour des nouveaux éléments d'affichage
+            if (timeDisplay && dateDisplay) {
+                timeDisplay.textContent = formattedTime;
+                dateDisplay.textContent = formattedDate;
             }
         }
         
