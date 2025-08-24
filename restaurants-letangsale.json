@@ -21,7 +21,10 @@
       "coordonnees_geographiques": {
         "lon": 55.335415,
         "lat": -21.272685
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -41,7 +44,10 @@
       "coordonnees_geographiques": {
         "lon": 55.370981,
         "lat": -21.273821
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -62,7 +68,10 @@
       "coordonnees_geographiques": {
         "lon": 55.362238,
         "lat": -21.263441
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -79,7 +88,10 @@
       "coordonnees_geographiques": {
         "lon": 55.357951,
         "lat": -21.27606
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -98,7 +110,10 @@
       "coordonnees_geographiques": {
         "lon": 55.335126,
         "lat": -21.268654
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -118,7 +133,10 @@
       "coordonnees_geographiques": {
         "lon": 55.362592,
         "lat": -21.263091
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -141,7 +159,10 @@
       "coordonnees_geographiques": {
         "lon": 55.33421248,
         "lat": -21.264975
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -161,7 +182,10 @@
       "coordonnees_geographiques": {
         "lon": 55.388439,
         "lat": -21.247265
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -181,7 +205,10 @@
       "coordonnees_geographiques": {
         "lon": 55.333799,
         "lat": -21.265164
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -206,7 +233,10 @@
       "coordonnees_geographiques": {
         "lon": 55.33410769,
         "lat": -21.26572366
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -230,7 +260,10 @@
       "coordonnees_geographiques": {
         "lon": 55.36059969,
         "lat": -21.27596457
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -250,7 +283,10 @@
       "coordonnees_geographiques": {
         "lon": 55.334593,
         "lat": -21.267309
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -269,7 +305,10 @@
       "coordonnees_geographiques": {
         "lon": 55.356165,
         "lat": -21.259979
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -290,7 +329,10 @@
       "coordonnees_geographiques": {
         "lon": 55.38847093,
         "lat": -21.24928897
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -314,7 +356,10 @@
       "coordonnees_geographiques": {
         "lon": 55.334621,
         "lat": -21.266087
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -334,7 +379,10 @@
       "coordonnees_geographiques": {
         "lon": 55.366335,
         "lat": -21.246822
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     },
     {
       "type": [
@@ -353,7 +401,10 @@
       "coordonnees_geographiques": {
         "lon": 55.357715,
         "lat": -21.260194
-      }
+      },
+      "photo": "",
+      "prix_fourchette": "Non renseigné",
+      "notation": "Non noté"
     }
   ]
 }
