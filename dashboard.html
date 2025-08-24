@@ -138,6 +138,13 @@
 
             <hr>
 
+            <div id="villes-stats">
+                <h2>Statistiques par Villes</h2>
+                <ul id="villes-stats-list"></ul>
+            </div>
+
+            <hr>
+
             <h2>Derniers codes postaux enregistrés</h2>
             <ul id="listeCodes"></ul>
             <div class="pagination">
@@ -261,6 +268,9 @@
             document.getElementById("etangSaleCount").textContent = etangSaleCount;
             document.getElementById("tabletteCount").textContent = tabletteCount;
 
+            // Afficher les statistiques par ville
+            afficherStatsVilles();
+
             // Pagination
             displayCodes(currentPage);
 
@@ -268,6 +278,30 @@
             const dataSets = preparerDonneesGraphique(allCodes);
             const sourceData = preparerDonneesSource(allRawCodes);
             initialiserGraphiques(dataSets, sourceData);
+        }
+
+        // Affiche la liste des villes avec leur nombre de saisies
+        function afficherStatsVilles() {
+            const villesList = document.getElementById("villes-stats-list");
+            villesList.innerHTML = "";
+
+            const villesData = {};
+            allCodes.forEach(item => {
+                const ville = item.ville || "Inconnu";
+                villesData[ville] = (villesData[ville] || 0) + 1;
+            });
+
+            // Convertir l'objet en tableau pour le tri
+            const sortedVilles = Object.keys(villesData).map(ville => ({
+                ville: ville,
+                count: villesData[ville]
+            })).sort((a, b) => b.count - a.count);
+
+            sortedVilles.forEach(item => {
+                const li = document.createElement("li");
+                li.textContent = `${item.ville}: ${item.count} saisie(s)`;
+                villesList.appendChild(li);
+            });
         }
         
         // Gère la pagination
@@ -380,6 +414,13 @@
                                 minRotation: 90
                             }
                         }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Évolution des Saisies',
+                            font: { size: 18 }
+                        }
                     }
                 }
             });
@@ -409,6 +450,11 @@
                                     size: Math.max(12, 16 - (dataSets.villes.labels.length > 5 ? Math.floor(dataSets.villes.labels.length / 5) * 1.5 : 0))
                                 }
                             }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Répartition par Villes',
+                            font: { size: 18 }
                         }
                     }
                 }
@@ -433,6 +479,11 @@
                     plugins: {
                         legend: {
                             position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Répartition par Source',
+                            font: { size: 18 }
                         }
                     }
                 }
@@ -492,11 +543,18 @@
                 const scaledWidth = maxWidth;
                 const scaledHeight = imgHeight * scaleFactor;
                 
+                if (yPos + scaledHeight > doc.internal.pageSize.getHeight() - pageMargin) {
+                    doc.addPage();
+                    yPos = pageMargin;
+                }
+                
                 doc.addImage(imgData, 'PNG', pageMargin, yPos, scaledWidth, scaledHeight);
                 return yPos + scaledHeight + 10; // Retourne la nouvelle position y
             };
             
             doc.setFontSize(14);
+            doc.text("Indicateurs Clés", 10, y);
+            y += 8;
             doc.text(`Total des Saisies: ${document.getElementById("totalCount").textContent}`, 10, y);
             y += 8;
             doc.text(`Villes Uniques: ${document.getElementById("uniqueCitiesCount").textContent}`, 10, y);
@@ -527,14 +585,42 @@
             
             y = addScaledImage(barChartCanvas, y);
             
-            // On vérifie s'il reste assez de place sur la page pour le dernier graphique
-            if (y + pieChartCanvas.height * (maxWidth / pieChartCanvas.width) > doc.internal.pageSize.getHeight() - pageMargin) {
+            y = addScaledImage(pieChartCanvas, y);
+            
+            // Partie 4: Ajout du tableau des statistiques par ville
+            const villesData = {};
+            allCodes.forEach(item => {
+                const ville = item.ville || "Inconnu";
+                villesData[ville] = (villesData[ville] || 0) + 1;
+            });
+
+            const sortedVilles = Object.keys(villesData).map(ville => ({
+                ville: ville,
+                count: villesData[ville]
+            })).sort((a, b) => b.count - a.count);
+            
+            const villesTableData = sortedVilles.map(item => [item.ville, item.count]);
+            
+            if (y + 50 > doc.internal.pageSize.getHeight() - pageMargin) {
                 doc.addPage();
                 y = pageMargin;
             }
-            y = addScaledImage(pieChartCanvas, y);
+
+            doc.setFontSize(18);
+            doc.text("Statistiques par Villes", 10, y);
             
-            // Partie 4: Ajout de la liste des codes dans un tableau
+            doc.autoTable({
+                startY: y + 10,
+                head: [['Ville', 'Nombre de Saisies']],
+                body: villesTableData,
+                theme: 'striped',
+                headStyles: { fillColor: [69, 179, 157] },
+                margin: { top: 10, left: 10, right: 10, bottom: 10 },
+            });
+            
+            y = doc.autoTable.previous.finalY + 10;
+
+            // Partie 5: Ajout de la liste des codes dans un tableau
             if (y + 50 > doc.internal.pageSize.getHeight() - pageMargin) {
                 doc.addPage();
                 y = pageMargin;
