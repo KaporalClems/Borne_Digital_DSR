@@ -30,7 +30,7 @@
         #villes-stats li:last-child { border-bottom: none; }
         .chart-section { display: flex; flex-wrap: wrap; justify-content: space-around; margin-top: 30px; }
         .chart-box { width: 100%; max-width: 450px; margin: 10px; padding: 20px; background-color: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .chart-canvas-wrapper { height: 400px; position: relative; } /* Nouveau conteneur pour le canvas */
+        .chart-canvas-wrapper { height: 400px; position: relative; }
         #listeCodes { list-style: none; padding: 0; }
         #listeCodes li { padding: 12px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center; }
         #listeCodes li:last-child { border-bottom: none; }
@@ -56,11 +56,20 @@
         <!-- Dashboard -->
         <div id="dashboard">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <button onclick="exporterEnPDF()" style="width: 48%;"><i class="fas fa-file-pdf" style="margin-right: 8px;"></i> Exporter en PDF</button>
-                <button onclick="logout()" style="width: 48%; background-color: #dc3545;"><i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Se déconnecter</button>
+                <button onclick="exporterEnPDF()" style="width: 32%;"><i class="fas fa-file-pdf" style="margin-right: 8px;"></i> Exporter en PDF</button>
+                <button onclick="exporterEnCSV()" style="width: 32%; background-color: #3498db;"><i class="fas fa-file-csv" style="margin-right: 8px;"></i> Exporter en CSV</button>
+                <button onclick="logout()" style="width: 32%; background-color: #dc3545;"><i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Se déconnecter</button>
             </div>
             
             <hr>
+
+            <h2>Filtre par source</h2>
+            <select id="sourceFilter" onchange="filterBySource(this.value)" style="margin-bottom: 20px;">
+                <option value="all">Toutes les sources</option>
+                <option value="borne_st_pierre">Borne Saint-Pierre</option>
+                <option value="borne_etang_sale">Borne L'Étang-Salé</option>
+                <option value="tablette">Tablette</option>
+            </select>
 
             <h2>Indicateurs Clés</h2>
             <div class="kpi-container">
@@ -121,6 +130,7 @@
         
         // Import jsPDF pour l'exportation
         import 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        import 'https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.25/dist/jspdf.plugin.autotable.min.js';
         
         // Import Chart.js pour les graphiques
         import 'https://cdn.jsdelivr.net/npm/chart.js';
@@ -144,7 +154,8 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
         
-        let allCodes = []; 
+        let allRawCodes = []; // All data from the database
+        let allCodes = [];    // Filtered data for display
         let myBarChart, myPieChart;
         let currentPage = 1;
         const itemsPerPage = 10;
@@ -171,15 +182,39 @@
                 document.getElementById("loginDiv").style.display = "none";
                 document.getElementById("dashboard").style.display = "block";
                 const q = query(collection(db, "codesPostaux"), orderBy("date", "desc"));
+                
+                // Listen to database changes
                 onSnapshot(q, (snapshot) => {
-                    allCodes = snapshot.docs.map(doc => doc.data());
-                    mettreAJourUI();
+                    allRawCodes = snapshot.docs.map(doc => doc.data());
+                    
+                    // Note: You need to add a 'source' field when saving new data.
+                    // For example: await addDoc(collection(db, "codesPostaux"), {
+                    //     code: "97410",
+                    //     ville: "Saint-Pierre",
+                    //     date: new Date(),
+                    //     source: "borne_st_pierre" // Add this field
+                    // });
+                    
+                    // Initially filter to show all data
+                    filterBySource('all');
                 });
             } else {
                 document.getElementById("loginDiv").style.display = "block";
                 document.getElementById("dashboard").style.display = "none";
             }
         });
+
+        // --- Filter function ---
+        window.filterBySource = function(source) {
+            if (source === 'all') {
+                allCodes = [...allRawCodes];
+            } else {
+                allCodes = allRawCodes.filter(c => c.source === source);
+            }
+            // Reset page to 1 on filter change
+            currentPage = 1;
+            mettreAJourUI();
+        }
 
         // --- Mise à jour de l'UI avec les données ---
         function mettreAJourUI() {
@@ -197,7 +232,7 @@
             displayCodes(currentPage);
 
             // Prépare les données pour les graphiques et les initialise
-            const dataSets = preparerDonneesGraphique();
+            const dataSets = preparerDonneesGraphique(allCodes);
             initialiserGraphiques(dataSets);
         }
         
@@ -233,13 +268,13 @@
         }
 
         // Prépare les données pour les graphiques (par jour, mois, année)
-        function preparerDonneesGraphique() {
+        function preparerDonneesGraphique(data) {
             const dailyData = {};
             const monthlyData = {};
             const yearlyData = {};
             const villesData = {};
 
-            allCodes.forEach(item => {
+            data.forEach(item => {
                 const date = item.date.toDate();
                 const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
                 const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
@@ -328,7 +363,7 @@
         
         // Met à jour un graphique spécifique
         window.updateChart = function(chartId, view) {
-            const dataSets = preparerDonneesGraphique();
+            const dataSets = preparerDonneesGraphique(allCodes);
             const chart = chartId === 'saisiesChart' ? myBarChart : myPieChart;
             
             if (chartId === 'saisiesChart') {
@@ -341,7 +376,7 @@
             } else {
                 const newData = dataSets.villes;
                 chart.data.labels = newData.labels;
-                chart.data.datasets[0].data = newData.data;
+                chart.data.datasets[0].data = newData;
                 
                 // Ajustement de la taille de la police de la légende
                 chart.options.plugins.legend.labels.font.size = Math.max(12, 16 - (newData.labels.length > 5 ? Math.floor(newData.labels.length / 5) * 1.5 : 0));
@@ -355,27 +390,84 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
+            // Partie 1: Statistiques et KPI
             doc.setFontSize(22);
             doc.text("Statistiques des Codes Postaux DSR", 10, 20);
             
             doc.setFontSize(16);
             let y = 35;
             
-            doc.text(`Total: ${document.getElementById("totalCount").textContent}`, 10, y);
+            doc.text(`Total des Saisies: ${document.getElementById("totalCount").textContent}`, 10, y);
             y += 10;
             doc.text(`Villes Uniques: ${document.getElementById("uniqueCitiesCount").textContent}`, 10, y);
             y += 10;
-            doc.text(`Ce mois-ci: ${document.getElementById("monthCount").textContent}`, 10, y);
+            doc.text(`Saisies ce mois-ci: ${document.getElementById("monthCount").textContent}`, 10, y);
             y += 20;
 
-            doc.text("Derniers codes postaux enregistrés:", 10, y);
-            y += 10;
-            allCodes.slice(0, 50).forEach(data => { // Limite l'exportation aux 50 derniers pour la lisibilité
-                doc.text(`${data.code} - ${data.ville} (${data.date?.toDate().toLocaleString()})`, 20, y);
-                y += 7;
+            // Partie 2: Ajout des graphiques au PDF avec un meilleur dimensionnement
+            const barChartCanvas = document.getElementById('saisiesChart');
+            const pieChartCanvas = document.getElementById('villesChart');
+
+            const barChartImg = barChartCanvas.toDataURL('image/png');
+            doc.addImage(barChartImg, 'PNG', 15, y, 180, 100);
+            y += 110;
+
+            const pieChartImg = pieChartCanvas.toDataURL('image/png');
+            doc.addImage(pieChartImg, 'PNG', 15, y, 180, 100);
+            y += 110;
+            
+            // Partie 3: Ajout de la liste des codes dans un tableau
+            doc.addPage();
+            doc.setFontSize(18);
+            doc.text("Derniers codes postaux enregistrés", 10, 20);
+            
+            const tableData = allCodes.slice(0, 50).map(item => [
+                item.code,
+                item.ville,
+                item.date?.toDate().toLocaleString(),
+                item.source || 'Inconnu'
+            ]);
+
+            doc.autoTable({
+                startY: 30,
+                head: [['Code Postal', 'Ville', 'Date', 'Source']],
+                body: tableData,
+                theme: 'striped',
+                headStyles: { fillColor: [69, 179, 157] },
+                margin: { top: 10, left: 10, right: 10, bottom: 10 },
             });
             
-            doc.save("statistiques-codes-postaux.pdf");
+            // Ajout de la date dans le nom du fichier
+            const now = new Date();
+            const dateStr = now.getFullYear() + "-" +
+                            String(now.getMonth() + 1).padStart(2, '0') + "-" +
+                            String(now.getDate()).padStart(2, '0') + "-" +
+                            String(now.getHours()).padStart(2, '0') + "-" +
+                            String(now.getMinutes()).padStart(2, '0') + "-" +
+                            String(now.getSeconds()).padStart(2, '0');
+                            
+            doc.save(`statistiques-codes-postaux-${dateStr}.pdf`);
+        }
+
+        // Exporte les données en CSV
+        window.exporterEnCSV = function() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Code Postal,Ville,Date,Source\r\n";
+            
+            allCodes.forEach(item => {
+                const date = item.date?.toDate().toLocaleString() || "Date inconnue";
+                const source = item.source || "Inconnu";
+                const row = `"${item.code}","${item.ville}","${date}","${source}"`;
+                csvContent += row + "\r\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "codes-postaux-data.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 </body>
