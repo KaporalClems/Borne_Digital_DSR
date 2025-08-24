@@ -141,6 +141,7 @@
             margin-bottom: 0.5rem;
         }
 
+        /* Styles des modales mis à jour */
         .modal {
             display: none;
             position: fixed;
@@ -152,6 +153,7 @@
             background-color: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
+            overflow: auto; /* Permet le défilement si le contenu est trop grand */
         }
         .modal-content {
             background-color: #1e293b;
@@ -160,6 +162,9 @@
             max-width: 800px;
             width: 90%;
             position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-out;
+            margin: 20px; /* Ajoute une marge pour les petits écrans */
         }
         .close-button {
             position: absolute;
@@ -168,23 +173,28 @@
             font-size: 2rem;
             color: white;
             cursor: pointer;
+            transition: color 0.2s;
         }
-        .modal-grid-content {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+        .close-button:hover {
+            color: #ccc;
         }
-        .modal-grid-item {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            color: white;
-            text-align: center;
-        }
-        .modal-grid-item img {
-            max-width: 100%;
-            height: auto;
+        .modal-iframe {
+            width: 100%;
+            height: 80vh; /* Hauteur relative pour s'adapter */
+            border: none;
             border-radius: 0.5rem;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Styles pour les iframes et les widgets déjà présents */
+        .widget-iframe {
+            width: 100%;
+            height: 350px;
+            border: none;
+            border-radius: 10px;
         }
         .modal-title {
             font-family: 'Pacifico', cursive;
@@ -308,22 +318,23 @@
                     </div>
                 </div>
                 <div class="right-panel">
-                    <a href="Destinationplage.html" class="grid-item">
+                    <!-- CHANGEMENT : utilisation de div avec un attribut de données pour la modale -->
+                    <div class="grid-item" data-modal-target="Destinationplage.html" data-modal-title="Les Plages">
                         <span class="grid-icon">🏖️</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Plages</span>
-                    </a>
-                    <a href="Destinationvolcan.html" class="grid-item">
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationvolcan.html" data-modal-title="Le Volcan">
                         <span class="grid-icon">🌋</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Le Volcan</span>
-                    </a>
-                    <a href="Destinationforet.html" class="grid-item">
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationforet.html" data-modal-title="Les Forêts">
                         <span class="grid-icon">🌲</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Forêts</span>
-                    </a>
-                    <a href="Destinationvillages.html" class="grid-item">
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationvillages.html" data-modal-title="Les Villages">
                         <span class="grid-icon">🏡</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Villages</span>
-                    </a>
+                    </div>
                     <!-- NOUVEAU WIDGET : Pour ajouter un nouveau widget/bouton, copiez l'une des structures ci-dessus. -->
                     <!-- Vous pouvez utiliser `div`, `button`, ou `a` et lui donner la classe `grid-item` -->
                     <div id="new-custom-widget" class="grid-item bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-xl">
@@ -353,14 +364,15 @@
                     </div>
                 </div>
                 <div class="right-panel">
-                    <a href="DestinationRandos.html" class="grid-item">
+                    <!-- CHANGEMENT : utilisation de div avec un attribut de données pour la modale -->
+                    <div class="grid-item" data-modal-target="DestinationRandos.html" data-modal-title="Les Randonnées">
                         <span class="grid-icon">🥾</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Randonnées</span>
-                    </a>
-                    <a href="Destinationactivitesnautiques.html" class="grid-item">
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationactivitesnautiques.html" data-modal-title="Activités Nautiques">
                         <span class="grid-icon">🌊</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Activités Nautiques</span>
-                    </a>
+                    </div>
 
                     <!-- Widget Météo -->
                     <div class="grid-item col-span-2 bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-xl">
@@ -376,11 +388,9 @@
                     </div>
                     
                     <!-- Widget Restaurants -->
-                    <!-- MODIFICATION : Ajout de `flex flex-col` pour centrer le contenu verticalement et permettre au titre et à l'iframe d'être fluides. -->
                     <div class="grid-item col-span-2 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl">
                         <div class="flex flex-col items-center justify-center h-full w-full">
                             <h3 class="text-lg md:text-xl font-semibold mb-2">
-                            <!-- MODIFICATION : Suppression de `max-width` pour une adaptation complète à la largeur du parent. La hauteur est gérée par le script JS. -->
                             <iframe src="widget-restos.html"
                                 onload="resizeIframe(this)"
                                 style="border:none; width:100%; height:350px; border-radius:10px;"
@@ -389,14 +399,14 @@
                         </div>
                     </div>
 
-                    <a href="Destinationculture.html" class="grid-item">
+                    <div class="grid-item" data-modal-target="Destinationculture.html" data-modal-title="Culture & Traditions">
                         <span class="grid-icon">🎭</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Culture & Traditions</span>
-                    </a>
-                    <a href="Destinationproduits.html" class="grid-item">
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationproduits.html" data-modal-title="Produits du Terroir">
                         <span class="grid-icon">🍍</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Produits du Terroir</span>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -413,10 +423,10 @@
                     </div>
                 </div>
                 <div class="right-panel">
-                    <a href="DestinationActivitesaeriennes.html" class="grid-item col-span-2">
+                    <div class="grid-item col-span-2" data-modal-target="DestinationActivitesaeriennes.html" data-modal-title="Activités Aériennes">
                         <span class="grid-icon">🚁</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Activités Aériennes</span>
-                    </a>
+                    </div>
                     <!-- Widget Heure/Date -->
                     <div class="grid-item bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-xl">
                         <div class="flex flex-col items-center justify-center h-full">
@@ -424,18 +434,18 @@
                             <span class="text-3xl md:text-4xl lg:text-5xl font-extrabold mt-1" id="time-widget"></span>
                         </div>
                     </div>
-                    <a href="Destinationparcs.html" class="grid-item">
+                    <div class="grid-item" data-modal-target="Destinationparcs.html" data-modal-title="Parcs & Aventures">
                         <span class="grid-icon">🎢</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Parcs & Aventures</span>
-                    </a>
-                    <a href="Destinationbienetre.html" class="grid-item">
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationbienetre.html" data-modal-title="Bien-être & Spa">
                         <span class="grid-icon">🧘‍♀️</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Bien-être & Spa</span>
-                    </a>
-                    <a href="Destinationgolf.html" class="grid-item">
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationgolf.html" data-modal-title="Golf">
                         <span class="grid-icon">⛳</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Golf</span>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -448,7 +458,7 @@
         <div class="dot"></div>
     </div>
 
-    <!-- Modals -->
+    <!-- Modals existantes (laissez-les telles quelles) -->
     <div id="modal-1" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -499,6 +509,15 @@
             </div>
         </div>
     </div>
+    
+    <!-- MODALE UNIVERSELLE POUR LES DESTINATIONS -->
+    <div id="destination-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-destination-title" class="modal-title mb-4"></h2>
+            <iframe id="modal-destination-iframe" class="modal-iframe" loading="lazy"></iframe>
+        </div>
+    </div>
 
     <!-- Boutons de contrôle -->
     <div class="fixed-buttons">
@@ -531,8 +550,13 @@
         const dots = document.querySelectorAll('.dot');
         const newCustomWidget = document.getElementById('new-custom-widget');
         const newButtonExample = document.getElementById('new-button-example');
+        const destinationButtons = document.querySelectorAll('.right-panel .grid-item');
 
-        // NOUVEAU: Références aux flèches de navigation
+        const destinationModal = document.getElementById('destination-modal');
+        const modalDestinationIframe = document.getElementById('modal-destination-iframe');
+        const modalDestinationTitle = document.getElementById('modal-destination-title');
+
+        // Références aux flèches de navigation
         const prevArrow = document.getElementById('prev-arrow');
         const nextArrow = document.getElementById('next-arrow');
 
@@ -647,7 +671,7 @@
             });
         });
 
-        // NOUVEAU : Gestionnaires pour les flèches de navigation
+        // Gestionnaires pour les flèches de navigation
         nextArrow.addEventListener('click', () => {
             if (currentScreen < screens.length - 1) {
                 currentScreen++;
@@ -675,6 +699,25 @@
             });
         });
 
+        // Écouteur pour les boutons de destination
+        destinationButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                // Empêche la navigation par défaut si c'est une balise <a>
+                event.preventDefault(); 
+                
+                const url = button.getAttribute('data-modal-target');
+                const title = button.getAttribute('data-modal-title');
+
+                if (url) {
+                    modalDestinationIframe.src = url;
+                    modalDestinationTitle.textContent = title;
+                    destinationModal.style.display = 'flex';
+                    resetInactivityTimer();
+                }
+            });
+        });
+
+        // Fermeture des modales
         closeButtons.forEach(button => {
             button.addEventListener('click', () => {
                 button.closest('.modal').style.display = 'none';
