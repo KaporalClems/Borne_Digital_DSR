@@ -380,9 +380,8 @@
             
             // Fonction pour charger les données depuis le fichier JSON
             function loadData() {
-                // REMPLACEZ CETTE URL AVEC CELLE DE VOTRE FICHIER hebergements.json SUR GITHUB
-                // Exemple : 'https://raw.githubusercontent.com/nom_utilisateur/nom_repo/main/hebergements.json'
-                const jsonUrl = 'https://raw.githubusercontent.com/Google-AI/models/main/gemini/quickstarts/hebergements.json'; 
+                // Utilisation de raw.githubusercontent.com pour un accès direct au fichier brut.
+                const jsonUrl = 'https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/main/hebergements.json'; 
                 fetch(jsonUrl)
                     .then(response => {
                         if (!response.ok) {
@@ -397,7 +396,7 @@
                     })
                     .catch(error => {
                         console.error('Erreur lors du chargement des données:', error);
-                        accommodationsList.innerHTML = `<p class="text-center text-red-500 col-span-full">Impossible de charger les données depuis l'URL. Veuillez vérifier l'URL du fichier JSON.</p>`;
+                        accommodationsList.innerHTML = `<p class="text-center text-red-500 col-span-full">Impossible de charger les données. Veuillez réessayer ou vérifier l'URL du fichier JSON.</p>`;
                     });
             }
 
