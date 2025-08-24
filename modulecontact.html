@@ -224,10 +224,13 @@
             </div>
             <div class="modal-content">
                 <p>Restez informé des dernières actualités, des offres exclusives et des nouveautés.</p>
-                <div class="mt-4">
-                    <input type="email" placeholder="Votre adresse e-mail" class="w-full p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none">
-                    <button class="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg hover:bg-opacity-30 transition-colors">S'abonner</button>
-                </div>
+                <!-- Formulaire de newsletter -->
+                <form id="newsletter-form" class="mt-4">
+                    <input type="email" name="email" placeholder="Votre adresse e-mail" class="w-full p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none" required>
+                    <button type="submit" class="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg hover:bg-opacity-30 transition-colors">S'abonner</button>
+                    <!-- Message de confirmation pour la newsletter -->
+                    <p id="newsletter-status" class="hidden text-center mt-2"></p>
+                </form>
             </div>
         </div>
 
@@ -266,6 +269,7 @@
             const closeButtons = document.querySelectorAll('.modal-close-btn');
             const socialButtons = document.querySelectorAll('.btn-group .btn');
             const messageForm = document.getElementById('message-form');
+            const newsletterForm = document.getElementById('newsletter-form');
 
             let isOpen = false;
             
@@ -398,6 +402,51 @@
                         console.error('Erreur de soumission du formulaire:', error);
                     } finally {
                         formButton.disabled = false; // Réactive le bouton
+                    }
+                });
+            }
+
+            // Gère la soumission du formulaire de newsletter
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const statusElement = document.getElementById('newsletter-status');
+                    const formButton = newsletterForm.querySelector('button[type="submit"]');
+
+                    statusElement.textContent = "Abonnement en cours...";
+                    statusElement.classList.remove('hidden');
+                    formButton.disabled = true;
+
+                    try {
+                        const formData = new FormData(newsletterForm);
+                        const response = await fetch('https://formspree.io/f/xovlokvl', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+
+                        if (response.ok) {
+                            statusElement.textContent = 'Abonnement confirmé !';
+                            newsletterForm.reset();
+                            setTimeout(() => {
+                                statusElement.classList.add('hidden');
+                                closeAllModals();
+                            }, 3000);
+                        } else {
+                            statusElement.textContent = "Une erreur est survenue.";
+                            const data = await response.json();
+                            if (data.errors) {
+                                statusElement.textContent = data.errors.map(error => error.message).join(", ");
+                            }
+                        }
+                    } catch (error) {
+                        statusElement.textContent = 'Erreur: Impossible de se connecter au serveur.';
+                        console.error('Erreur de soumission du formulaire de newsletter:', error);
+                    } finally {
+                        formButton.disabled = false;
                     }
                 });
             }
