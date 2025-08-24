@@ -297,6 +297,34 @@
             animation: pulse-arrow 1.5s infinite;
         }
 
+        /* NOUVEAU: Styles pour optimiser la modale en mode paysage */
+        @media (orientation: landscape) and (min-width: 768px) {
+            .modal-content.landscape-mode {
+                max-width: 90%;
+                max-height: 90vh;
+                width: 90vw;
+                height: 90vh;
+                padding: 2rem;
+            }
+            .modal-iframe.landscape-mode {
+                /* S'assure que l'iframe remplit l'espace vertical */
+                height: calc(100% - 4rem); /* Hauteur moins le padding */
+            }
+        }
+
+        /* NOUVEAU: Styles pour optimiser la modale en mode portrait */
+        @media (orientation: portrait) {
+            .modal-content.portrait-mode {
+                max-width: 95%;
+                max-height: 90vh;
+                padding: 1.5rem;
+            }
+            .modal-iframe.portrait-mode {
+                height: calc(100% - 3rem); /* Hauteur moins le padding */
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -525,11 +553,13 @@
     
     <!-- MODALE UNIVERSELLE POUR LES DESTINATIONS -->
     <div id="destination-modal" class="modal">
-        <div class="modal-content">
+        <!-- Ajout de la classe "landscape-mode" ici pour l'initialisation -->
+        <div class="modal-content landscape-mode"> 
             <!-- Ajout d'un titre pour que l'utilisateur sache où il se trouve -->
             <h2 id="modal-destination-title" class="modal-title text-2xl font-semibold mb-4 text-white text-center"></h2>
             <span class="close-button">&times;</span>
-            <iframe id="modal-destination-iframe" class="modal-iframe" loading="lazy"></iframe>
+            <!-- Ajout de la classe "landscape-mode" ici pour l'initialisation -->
+            <iframe id="modal-destination-iframe" class="modal-iframe landscape-mode" loading="lazy"></iframe>
         </div>
     </div>
 
@@ -569,6 +599,7 @@
         const destinationModal = document.getElementById('destination-modal');
         const modalDestinationIframe = document.getElementById('modal-destination-iframe');
         const modalDestinationTitle = document.getElementById('modal-destination-title');
+        // Mise à jour de la référence pour capturer l'élément modal-content
         const modalContent = document.querySelector('#destination-modal .modal-content');
 
         // Références aux flèches de navigation
@@ -727,6 +758,7 @@
                     modalDestinationTitle.textContent = title; // Met à jour le titre
                     modalDestinationIframe.src = url;
                     destinationModal.style.display = 'flex';
+                    checkOrientation(); // Appel immédiat pour appliquer les styles corrects
                     resetInactivityTimer();
                 }
             });
@@ -862,13 +894,20 @@
         // DÉTECTION DE L'ORIENTATION DE L'ÉCRAN
         // ===============================
         function checkOrientation() {
-            // Vérifie si l'orientation actuelle est en portrait
-            if (window.matchMedia("(orientation: portrait)").matches) {
-                // Si c'est le cas, ajoute une classe pour appliquer les styles portrait
-                modalContent.classList.add('portrait-mode');
-            } else {
-                // Sinon, retire la classe pour revenir aux styles paysage
-                modalContent.classList.remove('portrait-mode');
+            if (modalContent && modalDestinationIframe) {
+                // Vérifie si l'orientation actuelle est en paysage
+                if (window.matchMedia("(orientation: landscape)").matches) {
+                    modalContent.classList.add('landscape-mode');
+                    modalDestinationIframe.classList.add('landscape-mode');
+                    modalContent.classList.remove('portrait-mode');
+                    modalDestinationIframe.classList.remove('portrait-mode');
+                } else {
+                    // Sinon, c'est le mode portrait
+                    modalContent.classList.add('portrait-mode');
+                    modalDestinationIframe.classList.add('portrait-mode');
+                    modalContent.classList.remove('landscape-mode');
+                    modalDestinationIframe.classList.remove('landscape-mode');
+                }
             }
         }
 
@@ -891,10 +930,7 @@
             document.addEventListener('touchend', handleEnd);
             document.addEventListener('wheel', handleWheel, { passive: false });
             
-            // Initialisation de la vérification de l'orientation
-            checkOrientation();
-
-            // Écouteur pour les changements d'orientation
+            // Écouteur pour les changements d'orientation et de redimensionnement de la fenêtre
             window.addEventListener('resize', checkOrientation);
         });
     </script>
