@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Borne Code Postaux DSR</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+    input, button { padding: 10px; font-size: 18px; margin: 10px; }
+    h1 { margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <h1>Borne - Saisie Code Postal</h1>
+
+  <input type="text" id="codePostal" placeholder="Ex: 75001" maxlength="5">
+  <button onclick="validerCode()">Valider</button>
+
+  <p id="message" style="color: green; font-weight: bold;"></p>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+    // ⚠️ Mets ici ta config Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBy3tI-gl_z0JzA7uH6bQtMc89pfFcgJMs",
+      authDomain: "code-postaux-dsr.firebaseapp.com",
+      projectId: "code-postaux-dsr",
+      storageBucket: "code-postaux-dsr.firebasestorage.app",
+      messagingSenderId: "317015321347",
+      appId: "1:317015321347:web:27a95ea854064b21561736",
+      measurementId: "G-25B25N3GP9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function validerCode() {
+      const code = document.getElementById('codePostal').value.trim();
+      const msg = document.getElementById('message');
+
+      if (!/^[0-9]{5}$/.test(code)) {
+        msg.style.color = "red";
+        msg.textContent = "Veuillez entrer un code postal valide (5 chiffres).";
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "codesPostaux"), {
+          code: code,
+          date: serverTimestamp()
+        });
+        msg.style.color = "green";
+        msg.textContent = "Code postal enregistré ✅";
+        document.getElementById('codePostal').value = "";
+      } catch (err) {
+        msg.style.color = "red";
+        msg.textContent = "Erreur lors de l'enregistrement : " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
