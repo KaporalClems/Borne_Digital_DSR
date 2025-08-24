@@ -155,34 +155,43 @@
             align-items: center;
             overflow: auto; /* Permet le défilement si le contenu est trop grand */
         }
+        /* Mise à jour des styles de la modale pour le format 16:9 et un meilleur affichage */
         .modal-content {
             background-color: #1e293b;
-            padding: 2rem;
+            padding: 0; /* Pas de padding ici, il sera sur l'iframe */
             border-radius: 1rem;
-            max-width: 800px;
             width: 90%;
+            max-width: 1200px; /* Augmentation de la largeur maximale pour 16:9 */
+            aspect-ratio: 16 / 9; /* Définition du format 16:9 */
             position: relative;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.3s ease-out;
-            margin: 20px; /* Ajoute une marge pour les petits écrans */
+            margin: 20px;
         }
+
         .close-button {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            top: -2.5rem; /* Déplacé à l'extérieur pour ne pas cacher le contenu */
+            right: -2.5rem;
             font-size: 2rem;
             color: white;
             cursor: pointer;
             transition: color 0.2s;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            padding: 0.5rem;
+            line-height: 1;
+            z-index: 10;
         }
         .close-button:hover {
             color: #ccc;
         }
+
         .modal-iframe {
             width: 100%;
-            height: 80vh; /* Hauteur relative pour s'adapter */
+            height: 100%; /* L'iframe prend 100% de la taille du conteneur 16:9 */
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 1rem; /* Bords arrondis pour l'iframe */
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
@@ -514,7 +523,7 @@
     <div id="destination-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h2 id="modal-destination-title" class="modal-title mb-4"></h2>
+            <!-- Nous n'affichons plus le titre à l'intérieur de la modale pour le laisser au sein de la page de destination -->
             <iframe id="modal-destination-iframe" class="modal-iframe" loading="lazy"></iframe>
         </div>
     </div>
@@ -710,7 +719,8 @@
 
                 if (url) {
                     modalDestinationIframe.src = url;
-                    modalDestinationTitle.textContent = title;
+                    // Comme la modale destination n'a plus de titre, on le retire
+                    // modalDestinationTitle.textContent = title; 
                     destinationModal.style.display = 'flex';
                     resetInactivityTimer();
                 }
