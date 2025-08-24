@@ -161,9 +161,10 @@
             background-color: #1e293b;
             padding: 0;
             border-radius: 1rem;
-            width: 90%;
-            max-width: 1200px;
-            aspect-ratio: 16 / 9;
+            width: 95%; /* Augmenté à 95% pour plus de largeur */
+            max-width: 1400px; /* Augmenté la largeur maximale */
+            /* Enlève l'aspect-ratio fixe pour que la modale s'ajuste au contenu */
+            max-height: 90vh; /* Limite la hauteur pour qu'elle ne déborde pas */
             position: relative;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.3s ease-out;
@@ -172,8 +173,8 @@
 
         /* Nouveaux styles pour le mode PORTRAIT */
         .modal-content.portrait-mode {
-            max-width: 700px; /* Largeur maximale pour le mode portrait */
-            aspect-ratio: 9 / 16; /* Format portrait */
+            max-width: 95%; /* Largeur maximale pour le mode portrait */
+            max-height: 90vh; /* Limite la hauteur */
         }
 
         .close-button {
