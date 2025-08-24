@@ -39,13 +39,9 @@
 
         <!-- Dashboard -->
         <div id="dashboard">
-            <button onclick="logout()">Se déconnecter</button>
-            
-            <div class="form-section">
-                <h2>Ajouter une nouvelle saisie</h2>
-                <input type="text" id="addPostalCodeInput" placeholder="Code postal" required>
-                <input type="text" id="addCityInput" placeholder="Ville" required>
-                <button onclick="addPostalCode()">Ajouter</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <button onclick="exporterEnPDF()" style="width: 48%;">Exporter en PDF</button>
+                <button onclick="logout()" style="width: 48%;">Se déconnecter</button>
             </div>
             
             <hr>
@@ -84,9 +80,12 @@
     <script type="module">
         // Import Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-        import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
         
+        // Import jsPDF pour l'exportation
+        import 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+
         // Configuration de Firebase
         // Remplacez par vos informations si elles sont différentes
         const firebaseConfig = {
@@ -103,6 +102,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+        
+        let allCodes = []; // Variable globale pour stocker les données
 
         // --- Fonctions d'authentification ---
         window.login = async function() {
@@ -121,78 +122,44 @@
             await signOut(auth);
         }
 
-        // --- Gestion de l'état d'authentification ---
+        // --- Gestion de l'état d'authentification et chargement initial ---
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 document.getElementById("loginDiv").style.display = "none";
                 document.getElementById("dashboard").style.display = "block";
-                // Met à jour le tableau de bord au chargement et après chaque ajout
-                await Promise.all([chargerCodes(), calculerStats()]);
+                // Écoute des changements en temps réel
+                onSnapshot(collection(db, "codesPostaux"), (snapshot) => {
+                    allCodes = snapshot.docs.map(doc => doc.data());
+                    mettreAJourUI();
+                });
             } else {
                 document.getElementById("loginDiv").style.display = "block";
                 document.getElementById("dashboard").style.display = "none";
             }
         });
 
-        // --- Fonctions de gestion des données ---
-        
-        // Ajoute un nouveau code postal et sa ville dans Firestore
-        window.addPostalCode = async function() {
-            const postalCode = document.getElementById("addPostalCodeInput").value;
-            const city = document.getElementById("addCityInput").value;
-            if (postalCode && city) {
-                try {
-                    await addDoc(collection(db, "codesPostaux"), {
-                        code: postalCode,
-                        ville: city,
-                        date: new Date() // Firestore stocke cela comme un Timestamp
-                    });
-                    document.getElementById("addPostalCodeInput").value = "";
-                    document.getElementById("addCityInput").value = "";
-                    // Met à jour l'affichage après l'ajout
-                    await Promise.all([chargerCodes(), calculerStats()]);
-                } catch (e) {
-                    console.error("Erreur lors de l'ajout du document: ", e);
-                    alert("Erreur lors de l'ajout des données.");
-                }
-            } else {
-                alert("Veuillez remplir les deux champs.");
-            }
-        }
-
-        // Charge les derniers codes postaux
-        async function chargerCodes() {
-            const docs = await getDocs(collection(db, "codesPostaux"));
-            const allCodes = docs.docs.map(doc => doc.data());
-            
+        // --- Mise à jour de l'UI avec les données ---
+        function mettreAJourUI() {
             // Trie les codes par date décroissante
             allCodes.sort((a, b) => b.date.toDate() - a.date.toDate());
             
+            // Charge les derniers codes postaux
             const liste = document.getElementById("listeCodes");
             liste.innerHTML = "";
-            
-            // Affiche seulement les 20 derniers
             allCodes.slice(0, 20).forEach(data => {
                 const li = document.createElement("li");
                 li.textContent = `${data.code} - ${data.ville} (${data.date?.toDate().toLocaleString()})`;
                 liste.appendChild(li);
             });
-        }
-        
-        // Calcule et affiche les statistiques
-        async function calculerStats() {
+
+            // Calcule et affiche les statistiques
             const now = new Date();
             const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
             const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
             const startOfYear = new Date(now.getFullYear(), 0, 1);
             
-            const docs = await getDocs(collection(db, "codesPostaux"));
-            const allCodes = docs.docs.map(doc => doc.data());
-            
-            // Total
             document.getElementById("totalCount").textContent = allCodes.length;
             
-            // Stats par période (tri en JavaScript)
             const todayCount = allCodes.filter(c => c.date.toDate() >= startOfDay).length;
             const monthCount = allCodes.filter(c => c.date.toDate() >= startOfMonth).length;
             const yearCount = allCodes.filter(c => c.date.toDate() >= startOfYear).length;
@@ -201,7 +168,6 @@
             document.getElementById("monthCount").textContent = monthCount;
             document.getElementById("yearCount").textContent = yearCount;
             
-            // Stats par villes
             const villesStats = allCodes.reduce((acc, current) => {
                 const ville = current.ville || "Inconnu";
                 acc[ville] = (acc[ville] || 0) + 1;
@@ -216,6 +182,38 @@
                 villesListe.appendChild(li);
             });
         }
+        
+        // Exporte les données en PDF
+        window.exporterEnPDF = function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFontSize(22);
+            doc.text("Statistiques des Codes Postaux DSR", 10, 20);
+            
+            doc.setFontSize(16);
+            let y = 35;
+            
+            doc.text(`Total: ${document.getElementById("totalCount").textContent}`, 10, y);
+            y += 10;
+            doc.text(`Aujourd'hui: ${document.getElementById("todayCount").textContent}`, 10, y);
+            y += 10;
+            doc.text(`Ce mois-ci: ${document.getElementById("monthCount").textContent}`, 10, y);
+            y += 10;
+            doc.text(`Cette année: ${document.getElementById("yearCount").textContent}`, 10, y);
+            y += 20;
+
+            doc.text("Totaux par villes:", 10, y);
+            y += 10;
+            const villesListe = document.getElementById("villesListe").children;
+            for (let i = 0; i < villesListe.length; i++) {
+                doc.text(villesListe[i].textContent, 20, y);
+                y += 7;
+            }
+            
+            doc.save("statistiques-codes-postaux.pdf");
+        }
+
     </script>
 </body>
 </html>
