@@ -7,7 +7,7 @@
     <style>
         body { font-family: 'Inter', Arial, sans-serif; padding: 20px; max-width: 900px; margin: auto; background-color: #f0f2f5; color: #333; }
         .container { background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        input, button { padding: 12px; margin: 8px 0; font-size: 16px; width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 8px; }
+        input, button, select { padding: 12px; margin: 8px 0; font-size: 16px; width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 8px; }
         button { background-color: #4CAF50; color: white; border: none; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; font-weight: bold; display: flex; align-items: center; justify-content: center; }
         button:hover { background-color: #45a049; transform: translateY(-2px); }
         button:active { transform: translateY(0); }
@@ -62,8 +62,18 @@
             </div>
             
             <hr>
-
-            <h2>Filtre par source</h2>
+            
+            <h2>Filtres</h2>
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;">
+                <div style="flex: 1; min-width: 45%;">
+                    <label for="startDate">Date de début:</label>
+                    <input type="date" id="startDate" onchange="filterByDate()">
+                </div>
+                <div style="flex: 1; min-width: 45%;">
+                    <label for="endDate">Date de fin:</label>
+                    <input type="date" id="endDate" onchange="filterByDate()">
+                </div>
+            </div>
             <select id="sourceFilter" onchange="filterBySource(this.value)" style="margin-bottom: 20px;">
                 <option value="all">Toutes les sources</option>
                 <option value="borne_st_pierre">Borne Saint-Pierre</option>
@@ -82,8 +92,8 @@
                     <p id="uniqueCitiesCount"></p>
                 </div>
                 <div class="kpi-box">
-                    <h4>Saisies ce mois-ci</h4>
-                    <p id="monthCount"></p>
+                    <h4>Taux de Complétude</h4>
+                    <p id="completenessRate"></p>
                 </div>
             </div>
 
@@ -189,9 +199,28 @@
         
         let allRawCodes = []; // All data from the database
         let allCodes = [];    // Filtered data for display
-        let myBarChart, myPieChart, myDoughnutChart;
+        let myCombinedChart, myPieChart, myDoughnutChart;
         let currentPage = 1;
         const itemsPerPage = 10;
+        let currentSourceFilter = 'all';
+        let currentStartDate = null;
+        let currentEndDate = null;
+
+        // --- Initialise les dates de filtre par défaut (30 derniers jours) ---
+        function initializeDateFilters() {
+            const endDateInput = document.getElementById('endDate');
+            const startDateInput = document.getElementById('startDate');
+            
+            const endDate = new Date();
+            const startDate = new Date();
+            startDate.setDate(endDate.getDate() - 30);
+            
+            endDateInput.value = endDate.toISOString().split('T')[0];
+            startDateInput.value = startDate.toISOString().split('T')[0];
+            
+            currentStartDate = startDate;
+            currentEndDate = endDate;
+        }
 
         // --- Fonctions d'authentification ---
         window.login = async function() {
@@ -214,14 +243,18 @@
             if (user) {
                 document.getElementById("loginDiv").style.display = "none";
                 document.getElementById("dashboard").style.display = "block";
+                
+                // Initialise les filtres de date par défaut
+                initializeDateFilters();
+                
                 const q = query(collection(db, "codesPostaux"), orderBy("date", "desc"));
                 
                 // Listen to database changes
                 onSnapshot(q, (snapshot) => {
                     allRawCodes = snapshot.docs.map(doc => doc.data());
                     
-                    // Initially filter to show all data
-                    filterBySource('all');
+                    // Initially apply all filters
+                    applyFilters();
                 });
             } else {
                 document.getElementById("loginDiv").style.display = "block";
@@ -229,19 +262,55 @@
             }
         });
 
-        // --- Filter function ---
+        // --- Filter functions ---
         window.filterBySource = function(source) {
-            if (source === 'all') {
-                allCodes = [...allRawCodes];
-                // Affiche les statistiques et le graphique par source
-                document.getElementById('sourceStatsSection').style.display = 'block';
-                document.getElementById('sourceChartBox').style.display = 'block';
-            } else {
-                allCodes = allRawCodes.filter(c => c.source === source);
-                // Masque les statistiques et le graphique par source
-                document.getElementById('sourceStatsSection').style.display = 'none';
-                document.getElementById('sourceChartBox').style.display = 'none';
+            currentSourceFilter = source;
+            applyFilters();
+        }
+        
+        window.filterByDate = function() {
+            const startDateValue = document.getElementById('startDate').value;
+            const endDateValue = document.getElementById('endDate').value;
+            
+            currentStartDate = startDateValue ? new Date(startDateValue) : null;
+            currentEndDate = endDateValue ? new Date(endDateValue) : null;
+            
+            applyFilters();
+        }
+        
+        function applyFilters() {
+            let filteredData = [...allRawCodes];
+            
+            // Filter by source
+            if (currentSourceFilter !== 'all') {
+                filteredData = filteredData.filter(c => c.source === currentSourceFilter);
             }
+            
+            // Filter by date range
+            if (currentStartDate && currentEndDate) {
+                // Adjust end date to include the full day
+                const adjustedEndDate = new Date(currentEndDate);
+                adjustedEndDate.setDate(adjustedEndDate.getDate() + 1);
+                
+                filteredData = filteredData.filter(c => {
+                    const date = c.date?.toDate();
+                    return date >= currentStartDate && date < adjustedEndDate;
+                });
+            }
+            
+            allCodes = filteredData;
+            
+            // Affiche/Masque les statistiques et le graphique par source
+            const sourceStatsSection = document.getElementById('sourceStatsSection');
+            const sourceChartBox = document.getElementById('sourceChartBox');
+            if (currentSourceFilter === 'all' && (!currentStartDate || !currentEndDate)) {
+                sourceStatsSection.style.display = 'block';
+                sourceChartBox.style.display = 'block';
+            } else {
+                sourceStatsSection.style.display = 'none';
+                sourceChartBox.style.display = 'none';
+            }
+            
             // Reset page to 1 on filter change
             currentPage = 1;
             mettreAJourUI();
@@ -250,16 +319,17 @@
         // --- Mise à jour de l'UI avec les données ---
         function mettreAJourUI() {
             // Mise à jour des KPI
-            const now = new Date();
-            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-            const monthCount = allCodes.filter(c => c.date.toDate() >= startOfMonth).length;
             const uniqueCitiesCount = new Set(allCodes.map(c => c.ville)).size;
+            
+            const totalCount = allCodes.length;
+            const validCount = allCodes.filter(c => c.code && c.ville).length;
+            const completenessRate = totalCount > 0 ? ((validCount / totalCount) * 100).toFixed(1) : 0;
 
-            document.getElementById("totalCount").textContent = allCodes.length;
+            document.getElementById("totalCount").textContent = totalCount;
             document.getElementById("uniqueCitiesCount").textContent = uniqueCitiesCount;
-            document.getElementById("monthCount").textContent = monthCount;
+            document.getElementById("completenessRate").textContent = `${completenessRate}%`;
 
-            // Mise à jour des KPI par source
+            // Mise à jour des KPI par source (se base sur le total non-filtré)
             const stPierreCount = allRawCodes.filter(c => c.source === 'borne_st_pierre').length;
             const etangSaleCount = allRawCodes.filter(c => c.source === 'borne_etang_sale').length;
             const tabletteCount = allRawCodes.filter(c => c.source === 'tablette').length;
@@ -321,8 +391,8 @@
             const pageInfo = document.getElementById("pageInfo");
             const totalPages = Math.ceil(allCodes.length / itemsPerPage);
             pageInfo.textContent = `Page ${page} sur ${totalPages}`;
-            document.getElementById("prevPage").disabled = page === 1;
-            document.getElementById("nextPage").disabled = page === totalPages;
+            document.getElementById("prevPage").disabled = page <= 1;
+            document.getElementById("nextPage").disabled = page >= totalPages;
         }
 
         // Change la page de la pagination
@@ -343,7 +413,9 @@
             const villesData = {};
 
             data.forEach(item => {
-                const date = item.date.toDate();
+                const date = item.date?.toDate();
+                if (!date) return;
+                
                 const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
                 const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
                 const yearKey = `${date.getFullYear()}`;
@@ -381,27 +453,38 @@
             };
         }
 
-        // Initialise les deux graphiques
+        // Initialise les graphiques
         function initialiserGraphiques(dataSets, sourceData) {
-            const barCtx = document.getElementById('saisiesChart').getContext('2d');
+            const combinedCtx = document.getElementById('saisiesChart').getContext('2d');
             const pieCtx = document.getElementById('villesChart').getContext('2d');
             const doughnutCtx = document.getElementById('sourceChart').getContext('2d');
             
-            if (myBarChart) myBarChart.destroy();
+            if (myCombinedChart) myCombinedChart.destroy();
             if (myPieChart) myPieChart.destroy();
             if (myDoughnutChart) myDoughnutChart.destroy();
 
-            myBarChart = new Chart(barCtx, {
+            myCombinedChart = new Chart(combinedCtx, {
                 type: 'bar',
                 data: {
                     labels: dataSets.day.labels,
-                    datasets: [{
-                        label: 'Saisies par jour',
-                        data: dataSets.day.data,
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
+                    datasets: [
+                        {
+                            label: 'Volume par jour',
+                            data: dataSets.day.data,
+                            backgroundColor: 'rgba(52, 152, 219, 0.8)', // Bleu pour les barres
+                            borderColor: 'rgba(52, 152, 219, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Tendance',
+                            data: dataSets.day.data,
+                            type: 'line',
+                            borderColor: 'rgba(46, 204, 113, 1)', // Vert pour la courbe
+                            backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                            fill: true,
+                            tension: 0.4
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
@@ -409,18 +492,11 @@
                     scales: {
                         y: { beginAtZero: true },
                         x: {
-                            ticks: {
-                                maxRotation: 90,
-                                minRotation: 90
-                            }
+                            ticks: { maxRotation: 90, minRotation: 90 }
                         }
                     },
                     plugins: {
-                        title: {
-                            display: true,
-                            text: 'Évolution des Saisies',
-                            font: { size: 18 }
-                        }
+                        title: { display: true, text: 'Évolution des Saisies', font: { size: 18 } }
                     }
                 }
             });
@@ -451,11 +527,7 @@
                                 }
                             }
                         },
-                        title: {
-                            display: true,
-                            text: 'Répartition par Villes',
-                            font: { size: 18 }
-                        }
+                        title: { display: true, text: 'Répartition par Villes', font: { size: 18 } }
                     }
                 }
             });
@@ -477,14 +549,8 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        title: {
-                            display: true,
-                            text: 'Répartition par Source',
-                            font: { size: 18 }
-                        }
+                        legend: { position: 'top' },
+                        title: { display: true, text: 'Répartition par Source', font: { size: 18 } }
                     }
                 }
             });
@@ -493,23 +559,22 @@
         // Met à jour un graphique spécifique
         window.updateChart = function(chartId, view) {
             const dataSets = preparerDonneesGraphique(allCodes);
-            const chart = chartId === 'saisiesChart' ? myBarChart : myPieChart;
             
             if (chartId === 'saisiesChart') {
                 const newData = dataSets[view];
                 const labels = { 'day': 'Saisies par jour', 'month': 'Saisies par mois', 'year': 'Saisies par année' };
-                chart.data.labels = newData.labels;
-                chart.data.datasets[0].data = newData.data;
-                chart.data.datasets[0].label = labels[view];
-                chart.update();
+                myCombinedChart.data.labels = newData.labels;
+                myCombinedChart.data.datasets[0].data = newData.data;
+                myCombinedChart.data.datasets[0].label = `Volume par ${view}`;
+                myCombinedChart.data.datasets[1].data = newData.data;
+                myCombinedChart.data.datasets[1].label = `Tendance par ${view}`;
+                myCombinedChart.update();
             } else {
+                const chart = myPieChart;
                 const newData = dataSets.villes;
                 chart.data.labels = newData.labels;
                 chart.data.datasets[0].data = newData;
-                
-                // Ajustement de la taille de la police de la légende
                 chart.options.plugins.legend.labels.font.size = Math.max(12, 16 - (newData.labels.length > 5 ? Math.floor(newData.labels.length / 5) * 1.5 : 0));
-                
                 chart.update();
             }
         }
@@ -519,26 +584,27 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            // Récupère le texte de l'option sélectionnée pour la source
             const sourceSelect = document.getElementById('sourceFilter');
             const selectedSourceText = sourceSelect.options[sourceSelect.selectedIndex].text;
+            
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const dateRangeText = (startDate && endDate) ? `Période : du ${new Date(startDate).toLocaleDateString()} au ${new Date(endDate).toLocaleDateString()}` : "Période : Toutes les dates";
 
-            // Ajoute les titres
             doc.setFontSize(22);
             doc.text("Statistiques des Codes Postaux DSR", 10, 20);
             doc.setFontSize(16);
             doc.text(`Source : ${selectedSourceText}`, 10, 30);
+            doc.text(dateRangeText, 10, 38);
             
-            let y = 45;
+            let y = 50;
             const pageMargin = 15;
             const maxWidth = doc.internal.pageSize.getWidth() - (pageMargin * 2);
 
-            // Fonction utilitaire pour ajouter une image redimensionnée
             const addScaledImage = (canvas, yPos) => {
                 const imgData = canvas.toDataURL('image/png');
                 const imgWidth = canvas.width;
                 const imgHeight = canvas.height;
-                
                 const scaleFactor = maxWidth / imgWidth;
                 const scaledWidth = maxWidth;
                 const scaledHeight = imgHeight * scaleFactor;
@@ -549,7 +615,7 @@
                 }
                 
                 doc.addImage(imgData, 'PNG', pageMargin, yPos, scaledWidth, scaledHeight);
-                return yPos + scaledHeight + 10; // Retourne la nouvelle position y
+                return yPos + scaledHeight + 10;
             };
             
             doc.setFontSize(14);
@@ -559,10 +625,9 @@
             y += 8;
             doc.text(`Villes Uniques: ${document.getElementById("uniqueCitiesCount").textContent}`, 10, y);
             y += 8;
-            doc.text(`Saisies ce mois-ci: ${document.getElementById("monthCount").textContent}`, 10, y);
+            doc.text(`Taux de Complétude: ${document.getElementById("completenessRate").textContent}`, 10, y);
             y += 15;
 
-            // Partie 2: Statistiques par source et graphique (seulement si "Toutes les sources" est sélectionné)
             if (document.getElementById('sourceStatsSection').style.display !== 'none') {
                 doc.setFontSize(18);
                 doc.text("Statistiques par Source", 10, y);
@@ -574,20 +639,16 @@
                 y += 8;
                 doc.text(`Saisies Tablettes: ${document.getElementById("tabletteCount").textContent}`, 10, y);
                 y += 20;
-
                 const doughnutChartCanvas = document.getElementById('sourceChart');
                 y = addScaledImage(doughnutChartCanvas, y);
             }
 
-            // Partie 3: Ajout des graphiques d'évolution et de répartition par ville
-            const barChartCanvas = document.getElementById('saisiesChart');
+            const combinedChartCanvas = document.getElementById('saisiesChart');
             const pieChartCanvas = document.getElementById('villesChart');
             
-            y = addScaledImage(barChartCanvas, y);
-            
+            y = addScaledImage(combinedChartCanvas, y);
             y = addScaledImage(pieChartCanvas, y);
             
-            // Partie 4: Ajout du tableau des statistiques par ville
             const villesData = {};
             allCodes.forEach(item => {
                 const ville = item.ville || "Inconnu";
@@ -620,7 +681,6 @@
             
             y = doc.autoTable.previous.finalY + 10;
 
-            // Partie 5: Ajout de la liste des codes dans un tableau
             if (y + 50 > doc.internal.pageSize.getHeight() - pageMargin) {
                 doc.addPage();
                 y = pageMargin;
@@ -645,15 +705,8 @@
                 margin: { top: 10, left: 10, right: 10, bottom: 10 },
             });
             
-            // Ajout de la date dans le nom du fichier
             const now = new Date();
-            const dateStr = now.getFullYear() + "-" +
-                            String(now.getMonth() + 1).padStart(2, '0') + "-" +
-                            String(now.getDate()).padStart(2, '0') + "-" +
-                            String(now.getHours()).padStart(2, '0') + "-" +
-                            String(now.getMinutes()).padStart(2, '0') + "-" +
-                            String(now.getSeconds()).padStart(2, '0');
-                            
+            const dateStr = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, '0') + "-" + String(now.getDate()).padStart(2, '0') + "-" + String(now.getHours()).padStart(2, '0') + "-" + String(now.getMinutes()).padStart(2, '0') + "-" + String(now.getSeconds()).padStart(2, '0');
             doc.save(`statistiques-codes-postaux-${dateStr}.pdf`);
         }
 
@@ -680,3 +733,4 @@
     </script>
 </body>
 </html>
+
