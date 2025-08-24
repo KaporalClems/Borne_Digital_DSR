@@ -162,9 +162,9 @@
                         <option value="4">4 étoiles & +</option>
                         <option value="3">3 étoiles & +</option>
                     </select>
-                     <select id="communeFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light"><option value="all">Toute commune</option></select>
+                    <select id="communeFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light"><option value="all">Toute commune</option></select>
                 </div>
-                 <div class="mt-4"><select id="typeFilter" class="p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light"><option value="all">Tous les types</option></select></div>
+                <div class="mt-4"><select id="typeFilter" class="p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light"><option value="all">Tous les types</option></select></div>
             </section>
 
             <!-- Disposition : Carte puis Grille -->
@@ -188,26 +188,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- ICONES SVG POUR LES TYPES D'HÉBERGEMENT ---
-            const typeIcons = {
-                'Hôtel': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 7h-8v6h8V7zm2-2H5c-1.1 0-2 .9-2 2v14h2v-2h14v2h2V5c0-1.1-.9-2-2-2zm-4 8H9v-2h8v2z"/></svg>`,
-                'Gîte': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>`,
-                'Chambre d\'hôtes': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/></svg>`,
-                'Bungalow': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.49 16.36l-2.12 2.12c-1.41 1.41-3.72 1.41-5.12 0s-1.41-3.72 0-5.12l2.12-2.12 5.12 5.12zm5.12-5.12l-2.12-2.12c-1.41-1.41-3.72-1.41-5.12 0s-1.41 3.72 0 5.12l2.12 2.12 5.12-5.12zM3.51 19.49l-2.12-2.12c-1.41-1.41-1.41-3.72 0-5.12s3.72-1.41 5.12 0l2.12 2.12-5.12 5.12zm12.73-3.54l-5.66 5.66c-.78.78-.78 2.05 0 2.83s2.05.78 2.83 0l5.66-5.66-2.83-2.83z"/></svg>`,
-                'Lodge': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1M14.25 3l-3.75 1.364M10.5 15l-1.5-1.5" /></svg>`,
-                'Défaut': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" /></svg>`
-            };
-
-            // --- DONNÉES DES HÉBERGEMENTS (SUD UNIQUEMENT) ---
-            const accommodations = [
-                { name: "Le Vieux Cep", price: "€€", image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?q=80&w=1932&auto=format&fit=crop", lat: -21.1360, lng: 55.4711, rating: 4.5, address: "2 Rue du Père Boiteau, Cilaos", commune: "Cilaos", type: ["Hôtel"], description: "Au cœur du cirque de Cilaos, cet hôtel de charme offre une vue spectaculaire sur les montagnes et un spa réputé." },
-                { name: "Gîte du Volcan", price: "€", image: "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=2070&auto=format&fit=crop", lat: -21.2250, lng: 55.6200, rating: 3.8, address: "Route du Volcan, Bourg-Murat", commune: "Le Tampon", type: ["Gîte"], description: "Le point de départ idéal pour l'ascension du Piton de la Fournaise. Ambiance refuge de montagne garantie." },
-                { name: "Palm Hotel & Spa", price: "€€€", image: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=2070&auto=format&fit=crop", lat: -21.2750, lng: 55.6000, rating: 4.9, address: "43 Rue des Mascarins, Petite-Île", commune: "Petite-Île", type: ["Hôtel", "Bungalow"], description: "Un havre de paix surplombant la baie de Grand'Anse. Ses lodges et son spa en font une destination d'exception." },
-                { name: "La Villa Delisle", price: "€€€", image: "https://images.unsplash.com/photo-1568084680786-a84f91d1153c?q=80&w=1974&auto=format&fit=crop", lat: -21.3410, lng: 55.4715, rating: 4.6, address: "42 Boulevard Hubert Delisle, Saint-Pierre", commune: "Saint-Pierre", type: ["Hôtel"], description: "Hôtel 4 étoiles au cœur de l'animation de Saint-Pierre, avec un casino, un spa et une piscine sur le toit." },
-                { name: "Le Cilaos", price: "€€", image: "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=2070&auto=format&fit=crop", lat: -21.1355, lng: 55.4720, rating: 4.1, address: "66 Rue du Père Boiteau, Cilaos", commune: "Cilaos", type: ["Hôtel"], description: "Un établissement confortable avec une vue imprenable sur le Piton des Neiges, parfait pour les randonneurs." },
-                { name: "L'Orky-Mel", price: "€", image: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=2070&auto=format&fit=crop", lat: -21.3650, lng: 55.7200, rating: 4.2, address: "20 Rue de la Marine, Saint-Philippe", commune: "Saint-Philippe", type: ["Chambre d'hôtes"], description: "Une chambre d'hôtes conviviale au cœur du Sud Sauvage, idéale pour découvrir la région." }
-            ];
-            
+            // --- CONSTANTES ET ÉLÉMENTS DU DOM ---
+            let ALL_ACCOMMODATIONS = [];
             const accommodationsList = document.getElementById('accommodations-list');
             const searchInput = document.getElementById('searchInput');
             const priceFilter = document.getElementById('priceFilter');
@@ -217,39 +199,70 @@
             const modal = document.getElementById('details-modal');
             const modalBody = document.getElementById('modal-body');
 
-            const priceColors = { '€': 'bg-green-500', '€€': 'bg-yellow-500', '€€€': 'bg-red-600' };
+            // --- ICONES SVG POUR LES TYPES D'HÉBERGEMENT ---
+            const typeIcons = {
+                'Hôtel': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 7h-8v6h8V7zm2-2H5c-1.1 0-2 .9-2 2v14h2v-2h14v2h2V5c0-1.1-.9-2-2-2zm-4 8H9v-2h8v2z"/></svg>`,
+                'Gîte': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>`,
+                'Chambre d\'hôtes': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/></svg>`,
+                'Meublé de tourisme': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M22 9V7h-2V5c0-1.1-.9-2-2-2h-3c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2H4c-1.1 0-2 .9-2 2v2H0v6h2v-2h20v2h2V9h-2zm-12 3H8v-2h2v2zm0 3H8v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2z"/></svg>`,
+                'Bungalow': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.49 16.36l-2.12 2.12c-1.41 1.41-3.72 1.41-5.12 0s-1.41-3.72 0-5.12l2.12-2.12 5.12 5.12zm5.12-5.12l-2.12-2.12c-1.41-1.41-3.72-1.41-5.12 0s-1.41 3.72 0 5.12l2.12 2.12 5.12-5.12zM3.51 19.49l-2.12-2.12c-1.41-1.41-1.41-3.72 0-5.12s3.72-1.41 5.12 0l2.12 2.12-5.12 5.12zm12.73-3.54l-5.66 5.66c-.78.78-.78 2.05 0 2.83s2.05.78 2.83 0l5.66-5.66-2.83-2.83z"/></svg>`,
+                'Lodge': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1M14.25 3l-3.75 1.364M10.5 15l-1.5-1.5" /></svg>`,
+                'Village vacances': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 12h3v8h14v-8h3L12 2zm0 2.5l8.5 8.5H16v6h-4v-6h-4v6H3.5L12 4.5zM12 16h4v4h-4zM8 16H4v4h4z"/></svg>`,
+                'Résidence de tourisme': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 7h-8v6h8V7zm2-2H5c-1.1 0-2 .9-2 2v14h2v-2h14v2h2V5c0-1.1-.9-2-2-2zm-4 8H9v-2h8v2z"/></svg>`,
+                'Défaut': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" /></svg>`
+            };
+            
+            // Simulez une "fausse" note et un "faux" prix pour l'affichage visuel
+            const fakeRatings = {
+                "Star Hôtel": 4.5,
+                "Palm Hôtel & Spa": 5,
+                "Gîte du Piton des Neiges": 4,
+                "Les Jardins de L'Entre-Deux": 4.5,
+                "Le Saint Pierre Hôtel": 3.5
+            };
 
-            function populateFilters() {
-                const allCommunes = new Set();
-                const allTypes = new Set();
-                accommodations.forEach(acc => {
-                    allCommunes.add(acc.commune);
-                    acc.type.forEach(t => allTypes.add(t));
-                });
-                [...allCommunes].sort().forEach(commune => communeFilter.appendChild(new Option(commune, commune)));
-                [...allTypes].sort().forEach(t => typeFilter.appendChild(new Option(t, t)));
-            }
+            const fakePrices = {
+                "Star Hôtel": '€€',
+                "Palm Hôtel & Spa": '€€€',
+                "Gîte du Piton des Neiges": '€',
+                "Les Jardins de L'Entre-Deux": '€€',
+                "Le Saint Pierre Hôtel": '€€'
+            };
 
+            // --- CARTE LEAFLET ---
             const reunionBounds = L.latLngBounds(L.latLng(-21.5, 55.1), L.latLng(-20.8, 56.0));
             // Centre la carte sur le sud
             const map = L.map('map', { center: [-21.28, 55.55], zoom: 10, maxBounds: reunionBounds, minZoom: 9 });
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: 'Leaflet | &copy; OpenStreetMap contributors' }).addTo(map);
-            
             const accommodationMarkers = {};
+
+            // Fonction pour générer une image de substitution basée sur le nom de l'hébergement
+            function getPlaceholderImage(name) {
+                const colors = ['1e90ff', '32cd32', 'ff6347', '8a2be2', 'ff1493'];
+                const randomIndex = name.charCodeAt(0) % colors.length;
+                const color = colors[randomIndex];
+                const text = name.split(' ').slice(0, 2).map(word => word[0]).join('');
+                return `https://placehold.co/600x400/${color}/ffffff?text=${text}`;
+            }
 
             function createAccommodationCard(acc) {
                 const accCard = document.createElement('div');
                 accCard.className = `card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col`;
                 const typesHtml = acc.type.map(t => `<div title="${t}" class="transform hover:scale-125 transition-transform">${typeIcons[t] || typeIcons['Défaut']}</div>`).join('');
+                
+                // Utilisation d'une image de substitution
+                const imageUrl = getPlaceholderImage(acc.nom_commercial);
+                const rating = fakeRatings[acc.nom_commercial] || 'Non disponible';
+                const price = fakePrices[acc.nom_commercial] || 'Non disponible';
+
                 accCard.innerHTML = `
-                    <img src="${acc.image}" alt="Image de ${acc.name}" class="w-full h-32 object-cover cursor-pointer">
+                    <img src="${imageUrl}" alt="Image de ${acc.nom_commercial}" class="w-full h-32 object-cover cursor-pointer">
                     <div class="p-3 flex flex-col flex-grow">
-                        <h3 class="text-base font-bold mb-1 text-theme-dark cursor-pointer">${acc.name}</h3>
+                        <h3 class="text-base font-bold mb-1 text-theme-dark cursor-pointer">${acc.nom_commercial}</h3>
                         <div class="flex items-center text-xs text-gray-600 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-400 mr-1" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                            <span>${acc.rating}</span>
+                            <span>Note : ${rating}</span>
                             <span class="mx-2">|</span>
-                            <span class="font-bold text-lg ${priceColors[acc.price] ? 'text-gray-800' : ''}">${acc.price}</span>
+                            <span>Prix : ${price}</span>
                         </div>
                         <div class="flex items-center gap-2 text-gray-500">${typesHtml}</div>
                         <div class="mt-auto pt-3 flex justify-end">
@@ -258,12 +271,16 @@
                     </div>`;
                 
                 accCard.querySelector('img').addEventListener('click', () => {
-                    map.setView([acc.lat, acc.lng], 14);
-                    accommodationMarkers[acc.name]?.openPopup();
+                    if (acc.coordonnees_geographiques) {
+                        map.setView([acc.coordonnees_geographiques.lat, acc.coordonnees_geographiques.lon], 14);
+                        accommodationMarkers[acc.nom_commercial]?.openPopup();
+                    }
                 });
                 accCard.querySelector('h3').addEventListener('click', () => {
-                    map.setView([acc.lat, acc.lng], 14);
-                    accommodationMarkers[acc.name]?.openPopup();
+                    if (acc.coordonnees_geographiques) {
+                        map.setView([acc.coordonnees_geographiques.lat, acc.coordonnees_geographiques.lon], 14);
+                        accommodationMarkers[acc.nom_commercial]?.openPopup();
+                    }
                 });
                 accCard.querySelector('.info-btn').addEventListener('click', () => showDetailsModal(acc));
                 return accCard;
@@ -279,38 +296,45 @@
                 }
 
                 filteredAccs.forEach(acc => {
-                    accommodationsList.appendChild(createAccommodationCard(acc));
-                    const typesHtmlPopup = acc.type.map(t => `<div class="inline-block" title="${t}">${typeIcons[t] || typeIcons['Défaut']}</div>`.replace('type-icon', 'popup-type-icon')).join('');
-                    const popupContent = `
-                        <div class="font-sans text-gray-800 w-56">
-                            <h3 class="font-bold text-base mb-2">${acc.name}</h3>
-                            <p class="mb-2"><span class="font-semibold text-lg">${acc.price}</span> <span class="text-yellow-500">★</span> ${acc.rating}</p>
-                            <div class="flex flex-wrap gap-2 items-center">${typesHtmlPopup}</div>
-                        </div>`;
-                    const marker = L.marker([acc.lat, acc.lng]).addTo(map).bindPopup(popupContent);
-                    accommodationMarkers[acc.name] = marker;
+                    const accCard = createAccommodationCard(acc);
+                    accommodationsList.appendChild(accCard);
+
+                    // Ajout d'un marqueur uniquement si les coordonnées géographiques sont présentes
+                    if (acc.coordonnees_geographiques) {
+                        const typesHtmlPopup = acc.type.map(t => `<div class="inline-block" title="${t}">${typeIcons[t] || typeIcons['Défaut']}</div>`.replace('type-icon', 'popup-type-icon')).join('');
+                        const popupContent = `
+                            <div class="font-sans text-gray-800 w-56">
+                                <h3 class="font-bold text-base mb-2">${acc.nom_commercial}</h3>
+                                <p class="mb-2">Note: ${fakeRatings[acc.nom_commercial] || 'Non disponible'}</p>
+                                <p class="mb-2">Prix: ${fakePrices[acc.nom_commercial] || 'Non disponible'}</p>
+                                <div class="flex flex-wrap gap-2 items-center">${typesHtmlPopup}</div>
+                            </div>`;
+                        const marker = L.marker([acc.coordonnees_geographiques.lat, acc.coordonnees_geographiques.lon]).addTo(map).bindPopup(popupContent);
+                        accommodationMarkers[acc.nom_commercial] = marker;
+                    }
                 });
             }
 
             function showDetailsModal(acc) {
                 const typesHtml = acc.type.map(t => `<div class="flex items-center gap-2" title="${t}">${typeIcons[t] || typeIcons['Défaut']}<span>${t}</span></div>`).join('');
+                
+                const imageUrl = getPlaceholderImage(acc.nom_commercial);
+
                 modalBody.innerHTML = `
                     <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center z-20">
-                        <h2 class="text-2xl font-bold text-theme-dark">${acc.name}</h2>
+                        <h2 class="text-2xl font-bold text-theme-dark">${acc.nom_commercial}</h2>
                         <button id="close-modal" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
                     </div>
                     <div class="p-6">
-                        <img src="${acc.image}" alt="Image de ${acc.name}" class="w-full h-64 object-cover rounded-lg mb-4">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-4">
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Prix</div><div>${acc.price}</div></div>
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Note</div><div class="flex items-center justify-center"><span class="text-yellow-500">★</span>&nbsp;${acc.rating}</div></div>
+                        <img src="${imageUrl}" alt="Image de ${acc.nom_commercial}" class="w-full h-64 object-cover rounded-lg mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center mb-4">
                             <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Commune</div><div>${acc.commune}</div></div>
+                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Zone Touristique</div><div>${acc.zone_touristique || 'Non spécifiée'}</div></div>
                         </div>
-                        <p class="text-gray-700 mb-4">${acc.description}</p>
                         <h3 class="font-bold text-theme-dark mb-2">Type d'hébergement</h3>
                         <div class="flex flex-wrap gap-4 mb-4 text-gray-600">${typesHtml}</div>
                         <h3 class="font-bold text-theme-dark mb-2">Adresse</h3>
-                        <p class="text-gray-600 bg-gray-100 p-3 rounded-lg">${acc.address}</p>
+                        <p class="text-gray-600 bg-gray-100 p-3 rounded-lg">${acc.adresse || 'Non spécifiée'}</p>
                     </div>`;
                 modal.classList.remove('modal-hidden');
                 document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('modal-hidden'));
@@ -320,16 +344,33 @@
                 if (e.target === modal) modal.classList.add('modal-hidden');
             });
 
+            function populateFilters() {
+                const allCommunes = new Set();
+                const allTypes = new Set();
+                ALL_ACCOMMODATIONS.forEach(acc => {
+                    if (acc.commune) {
+                         allCommunes.add(acc.commune);
+                    }
+                    if (acc.type) {
+                        acc.type.forEach(t => allTypes.add(t));
+                    }
+                });
+                [...allCommunes].sort().forEach(commune => communeFilter.appendChild(new Option(commune, commune)));
+                [...allTypes].sort().forEach(t => typeFilter.appendChild(new Option(t, t)));
+            }
+
             function filterAccommodations() {
                 const searchTerm = searchInput.value.toLowerCase();
                 const price = priceFilter.value;
                 const rating = parseFloat(ratingFilter.value);
                 const commune = communeFilter.value;
                 const type = typeFilter.value;
-                const filtered = accommodations.filter(acc => {
-                    const nameMatch = acc.name.toLowerCase().includes(searchTerm);
-                    const priceMatch = (price === 'all') || (acc.price === price);
-                    const ratingMatch = (ratingFilter.value === 'all') || (acc.rating >= rating);
+
+                // On filtre sur les données complètes
+                const filtered = ALL_ACCOMMODATIONS.filter(acc => {
+                    const nameMatch = acc.nom_commercial.toLowerCase().includes(searchTerm);
+                    const priceMatch = (price === 'all') || (fakePrices[acc.nom_commercial] === price);
+                    const ratingMatch = (ratingFilter.value === 'all') || (fakeRatings[acc.nom_commercial] >= rating);
                     const communeMatch = (commune === 'all') || (acc.commune === commune);
                     const typeMatch = (type === 'all') || (acc.type.includes(type));
                     return nameMatch && priceMatch && ratingMatch && communeMatch && typeMatch;
@@ -337,9 +378,33 @@
                 displayAccommodations(filtered);
             }
             
+            // Fonction pour charger les données depuis le fichier JSON
+            function loadData() {
+                // REMPLACEZ CETTE URL AVEC CELLE DE VOTRE FICHIER hebergements.json SUR GITHUB
+                // Exemple : 'https://raw.githubusercontent.com/nom_utilisateur/nom_repo/main/hebergements.json'
+                const jsonUrl = 'https://raw.githubusercontent.com/Google-AI/models/main/gemini/quickstarts/hebergements.json'; 
+                fetch(jsonUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erreur de réseau ou fichier non trouvé');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        ALL_ACCOMMODATIONS = data;
+                        populateFilters();
+                        displayAccommodations(ALL_ACCOMMODATIONS);
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors du chargement des données:', error);
+                        accommodationsList.innerHTML = `<p class="text-center text-red-500 col-span-full">Impossible de charger les données depuis l'URL. Veuillez vérifier l'URL du fichier JSON.</p>`;
+                    });
+            }
+
             [searchInput, priceFilter, ratingFilter, communeFilter, typeFilter].forEach(el => el.addEventListener('change', filterAccommodations));
             searchInput.addEventListener('input', filterAccommodations);
-
+            
+            // Animation du carrousel de fond
             const carouselItems = document.querySelectorAll('.carousel-item');
             let currentItem = 0;
             setInterval(() => {
@@ -349,8 +414,7 @@
             }, 5000);
 
             // Initialisation
-            populateFilters();
-            displayAccommodations(accommodations);
+            loadData();
         });
     </script>
 </body>
