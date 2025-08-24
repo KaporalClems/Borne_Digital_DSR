@@ -23,6 +23,7 @@
         #listeCodes { list-style: none; padding: 0; }
         #listeCodes li { padding: 10px; border-bottom: 1px solid #e0e0e0; }
         #listeCodes li:last-child { border-bottom: none; }
+        .chart-container { position: relative; height: 400px; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -72,6 +73,21 @@
             </div>
             
             <hr>
+            
+            <h2>Graphique des Saisies</h2>
+            <div>
+                <label for="viewSelector">Afficher par :</label>
+                <select id="viewSelector" onchange="mettreAJourGraphique(this.value)">
+                    <option value="day">Jour</option>
+                    <option value="month">Mois</option>
+                    <option value="year">Année</option>
+                </select>
+                <div class="chart-container">
+                    <canvas id="saisiesChart"></canvas>
+                </div>
+            </div>
+
+            <hr>
             <h2>Derniers codes postaux enregistrés</h2>
             <ul id="listeCodes"></ul>
         </div>
@@ -85,9 +101,11 @@
         
         // Import jsPDF pour l'exportation
         import 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+        
+        // Import Chart.js pour les graphiques
+        import 'https://cdn.jsdelivr.net/npm/chart.js';
 
         // Configuration de Firebase
-        // Remplacez par vos informations si elles sont différentes
         const firebaseConfig = {
             apiKey: "AIzaSyBy3tI-gl_z0JzA7uH6bQtMc89pfFcgJMs",
             authDomain: "code-postaux-dsr.firebaseapp.com",
@@ -103,7 +121,8 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
         
-        let allCodes = []; // Variable globale pour stocker les données
+        let allCodes = []; 
+        let myChart;
 
         // --- Fonctions d'authentification ---
         window.login = async function() {
@@ -112,7 +131,6 @@
             try {
                 await signInWithEmailAndPassword(auth, email, password);
             } catch (err) {
-                // Utilisation d'une boîte de message personnalisée au lieu d'une alerte
                 console.error("Erreur de connexion :", err.message);
                 alert("Erreur de connexion : " + err.message);
             }
@@ -127,8 +145,8 @@
             if (user) {
                 document.getElementById("loginDiv").style.display = "none";
                 document.getElementById("dashboard").style.display = "block";
-                // Écoute des changements en temps réel
-                onSnapshot(collection(db, "codesPostaux"), (snapshot) => {
+                const q = query(collection(db, "codesPostaux"), orderBy("date", "desc"));
+                onSnapshot(q, (snapshot) => {
                     allCodes = snapshot.docs.map(doc => doc.data());
                     mettreAJourUI();
                 });
@@ -140,9 +158,6 @@
 
         // --- Mise à jour de l'UI avec les données ---
         function mettreAJourUI() {
-            // Trie les codes par date décroissante
-            allCodes.sort((a, b) => b.date.toDate() - a.date.toDate());
-            
             // Charge les derniers codes postaux
             const liste = document.getElementById("listeCodes");
             liste.innerHTML = "";
@@ -181,8 +196,84 @@
                 li.textContent = `${ville}: ${count}`;
                 villesListe.appendChild(li);
             });
+
+            // Prépare les données pour le graphique et l'initialise
+            const dataSets = preparerDonneesGraphique();
+            initialiserGraphique(dataSets);
         }
         
+        // Prépare les données pour les graphiques (par jour, mois, année)
+        function preparerDonneesGraphique() {
+            const dailyData = {};
+            const monthlyData = {};
+            const yearlyData = {};
+
+            allCodes.forEach(item => {
+                const date = item.date.toDate();
+                const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+                const yearKey = `${date.getFullYear()}`;
+
+                dailyData[dayKey] = (dailyData[dayKey] || 0) + 1;
+                monthlyData[monthKey] = (monthlyData[monthKey] || 0) + 1;
+                yearlyData[yearKey] = (yearlyData[yearKey] || 0) + 1;
+            });
+            
+            return {
+                day: { labels: Object.keys(dailyData).sort(), data: Object.values(dailyData) },
+                month: { labels: Object.keys(monthlyData).sort(), data: Object.values(monthlyData) },
+                year: { labels: Object.keys(yearlyData).sort(), data: Object.values(yearlyData) }
+            };
+        }
+
+        // Initialise le graphique
+        function initialiserGraphique(dataSets) {
+            const ctx = document.getElementById('saisiesChart').getContext('2d');
+            
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: 'bar', // On utilise un graphique en barres
+                data: {
+                    labels: dataSets.day.labels,
+                    datasets: [{
+                        label: 'Saisies par jour',
+                        data: dataSets.day.data,
+                        backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Met à jour le graphique avec la vue sélectionnée
+        window.mettreAJourGraphique = function(view) {
+            const dataSets = preparerDonneesGraphique();
+            const newData = dataSets[view];
+            const labels = {
+                'day': 'Saisies par jour',
+                'month': 'Saisies par mois',
+                'year': 'Saisies par année'
+            };
+
+            myChart.data.labels = newData.labels;
+            myChart.data.datasets[0].data = newData.data;
+            myChart.data.datasets[0].label = labels[view];
+            myChart.update();
+        }
+
         // Exporte les données en PDF
         window.exporterEnPDF = function() {
             const { jsPDF } = window.jspdf;
@@ -213,7 +304,7 @@
             
             doc.save("statistiques-codes-postaux.pdf");
         }
-
     </script>
 </body>
 </html>
+
