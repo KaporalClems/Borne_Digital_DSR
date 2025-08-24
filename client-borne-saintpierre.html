@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saisie Borne Saint-Pierre</title>
+    <style>
+        body { font-family: 'Inter', Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background-color: #e8f5e9; color: #333; }
+        .container { background-color: white; padding: 40px; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); width: 90%; max-width: 500px; text-align: center; }
+        h1 { color: #2e7d32; font-size: 2.2em; margin-bottom: 0.5em; }
+        p { color: #555; margin-bottom: 2em; }
+        input { padding: 15px; margin: 10px 0; font-size: 1.2em; width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 10px; transition: border-color 0.3s; }
+        input:focus { outline: none; border-color: #4CAF50; }
+        button { padding: 15px; font-size: 1.2em; background-color: #4CAF50; color: white; border: none; border-radius: 10px; cursor: pointer; transition: background-color 0.3s, transform 0.2s; width: 100%; font-weight: bold; margin-top: 15px; }
+        button:hover { background-color: #45a049; transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
+        #message { margin-top: 20px; font-size: 1.1em; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Saisie des Codes Postaux</h1>
+        <p>Veuillez entrer votre code postal et votre ville.</p>
+
+        <form id="postalCodeForm">
+            <input type="text" id="postalCode" placeholder="Code Postal" required maxlength="5" pattern="\d{5}">
+            <input type="text" id="city" placeholder="Ville" required>
+            <button type="submit">Envoyer</button>
+        </form>
+
+        <div id="message"></div>
+    </div>
+
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+        // Configuration de Firebase (à remplacer par vos propres clés)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy3tI-gl_z0JzA7uH6bQtMc89pfFcgJMs",
+            authDomain: "code-postaux-dsr.firebaseapp.com",
+            projectId: "code-postaux-dsr",
+            storageBucket: "code-postaux-dsr.firebasestorage.app",
+            messagingSenderId: "317015321347",
+            appId: "1:317015321347:web:27a95ea854064b21561736",
+            measurementId: "G-25B25N3GP9"
+        };
+
+        // Initialisation de Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Cette variable identifie la borne de Saint-Pierre
+        const source = 'borne_st_pierre';
+
+        const form = document.getElementById('postalCodeForm');
+        const messageDiv = document.getElementById('message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const postalCode = document.getElementById('postalCode').value;
+            const city = document.getElementById('city').value;
+            
+            try {
+                // Ajoute un nouveau document à la collection "codesPostaux"
+                await addDoc(collection(db, "codesPostaux"), {
+                    code: postalCode,
+                    ville: city,
+                    date: new Date(),
+                    source: source // Ajoute la source pour le filtrage dans le dashboard
+                });
+                
+                // Affiche un message de succès
+                messageDiv.style.color = 'green';
+                messageDiv.textContent = 'Merci ! Votre code postal a été enregistré avec succès.';
+                
+                // Réinitialise le formulaire
+                form.reset();
+                
+            } catch (e) {
+                console.error("Erreur lors de l'ajout du document : ", e);
+                messageDiv.style.color = 'red';
+                messageDiv.textContent = 'Une erreur est survenue. Veuillez réessayer.';
+            }
+        });
+    </script>
+</body>
+</html>
+
