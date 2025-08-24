@@ -3,7 +3,7 @@
   "results": [
     {
       "type": [
-        "Restauration"
+        "Microbrasserie"
       ],
       "nom_commercial": "3 Brasseurs (Les)",
       "zone_touristique": "Sud",
@@ -22,10 +22,10 @@
         "lon": 55.4747657,
         "lat": -21.3230872
       },
-      "photo": "",
-      "prix_fourchette": "Non renseigné",
-      "notation": "Non noté",
-      "url_qr_code": ""
+      "photo": "https://www.cartedelareunion.fr/wp-content/uploads/2016/01/f5f9e_BAT-NUIT-redimensionner.jpg",
+      "prix_fourchette": "20–30 €",
+      "notation": "3,6",
+      "url_qr_code": "https://maps.app.goo.gl/5W4vtb5YruiiCSvT6"
     },
     {
       "type": [
