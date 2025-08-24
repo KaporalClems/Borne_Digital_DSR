@@ -1,0 +1,357 @@
+{
+  "total_count": 17,
+  "results": [
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Caze Alambic (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": "Maison du Tourisme du Sud Sauvage,OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "e-carte bleue",
+        "Chèque",
+        "Traveller chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "112, rue des Platanes - Piton des Goyaves 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.55664272,
+        "lat": -21.32304224
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Badamiers (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "22, chemin Neuf 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.553725,
+        "lat": -21.369183
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Cherry Narcisse (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "10, rue du Casino 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.56138,
+        "lat": -21.351743
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Pizza Lé O",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "106, rue des Maraichers 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.551694,
+        "lat": -21.351883
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Chez Ti Fred",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "Chemin Terrain Paulette 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.56391,
+        "lat": -21.363176
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Oiseau Blanc (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "25, route de Grande Anse 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.553367,
+        "lat": -21.369707
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Makassar (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "Rue des Mascarins - Grand Anse 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.550683,
+        "lat": -21.366668
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Resto M'île Saveurs",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "201 rue Mahé de Labourdonnais 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.565302,
+        "lat": -21.350899
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Ferme Auberge Dy-Na",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "3, rue des Tangors 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.587062,
+        "lat": -21.339637
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Allo Pizza",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "218 bis, rue Mahé de Labourdonnais 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.565519,
+        "lat": -21.35495
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Restaurant Le Surya",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "15 A chemin Neuf 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.553877,
+        "lat": -21.36865
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Cap Petite Ile",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "103, chemin Neuf 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.568089,
+        "lat": -21.3712
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Petit Délice Créole (Le) - Chez Payet",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "97, rue Anse 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.554677,
+        "lat": -21.340867
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Restaurant Epoca",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "56 route de Grande Anse 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.552439,
+        "lat": -21.367985
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Entracte (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "American express"
+      ],
+      "adresse": "96 rue Maxime Payet 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.576622,
+        "lat": -21.369562
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Instant Présent (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "129, rue Mahé de Labourdonnais 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.566374,
+        "lat": -21.358845
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Snack du Vieux Moulin",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Petite-Ile",
+      "code_insee_de_la_commune": 97405,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "201, rue Mahé de Labourdonnais 97429 Petite-Ile",
+      "coordonnees_geographiques": {
+        "lon": 55.565336,
+        "lat": -21.355875
+      }
+    }
+  ]
+}
