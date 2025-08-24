@@ -115,6 +115,34 @@
             width: 1rem;
             height: 1rem;
         }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid var(--theme-color-dark);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -150,17 +178,12 @@
                 <h2 class="text-3xl font-bold mb-6 text-theme-dark text-center">Trouvez votre prochain restaurant</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                     <input type="text" id="searchInput" placeholder="Nom du restaurant..." class="lg:col-span-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light">
-                    <select id="priceFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light">
+                    <!-- Note: Le filtre de prix et de note a été désactivé car les données sont manquantes dans le JSON -->
+                    <select id="priceFilter" class="hidden p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light">
                         <option value="all">Tous les prix</option>
-                        <option value="€">€ (Abordable)</option>
-                        <option value="€€">€€ (Modéré)</option>
-                        <option value="€€€">€€€ (Chic)</option>
                     </select>
-                    <select id="ratingFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light">
+                    <select id="ratingFilter" class="hidden p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light">
                         <option value="all">Toutes les notes</option>
-                        <option value="4.5">4.5 étoiles & +</option>
-                        <option value="4">4 étoiles & +</option>
-                        <option value="3">3 étoiles & +</option>
                     </select>
                      <select id="communeFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light"><option value="all">Toute commune</option></select>
                 </div>
@@ -186,28 +209,19 @@
         </div>
     </div>
 
+    <!-- Indicateur de chargement -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p class="mt-4 text-theme-dark text-lg">Chargement des données...</p>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- ICONES SVG POUR LES TYPES DE CUISINE ---
-            const cuisineIcons = {
-                'Créole': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.26 11.77C17.26 10.34 16.1 9.18 14.67 9.18C13.24 9.18 12.08 10.34 12.08 11.77C12.08 13.13 13.13 14.21 14.5 14.37V19.38C14.5 19.93 14.95 20.38 15.5 20.38C16.05 20.38 16.5 19.93 16.5 19.38V9.75C17.63 9.75 18.55 8.83 18.55 7.75C18.55 6.67 17.63 5.75 16.5 5.75H8.5C7.37 5.75 6.45 6.67 6.45 7.75C6.45 8.83 7.37 9.75 8.5 9.75V19.38C8.5 19.93 8.95 20.38 9.5 20.38C10.05 20.38 10.5 19.93 10.5 19.38V14.37C11.87 14.21 12.92 13.13 12.92 11.77C12.92 10.34 11.76 9.18 10.33 9.18C8.9 9.18 7.74 10.34 7.74 11.77C7.74 13.2 8.9 14.36 10.33 14.36C10.37 14.36 10.4 14.36 10.44 14.36C10.48 14.36 10.51 14.36 10.55 14.36V19.38H14.45V14.36C14.49 14.36 14.52 14.36 14.56 14.36C14.6 14.36 14.63 14.36 14.67 14.36C16.1 14.36 17.26 13.2 17.26 11.77Z"/></svg>`,
-                'Française': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 3H8C6.9 3 6 3.9 6 5V12.28C6 12.83 6.21 13.35 6.59 13.74L11.29 18.44C11.68 18.83 12.31 18.83 12.7 18.44L17.4 13.74C17.79 13.35 18 12.83 18 12.28V5C18 3.9 17.1 3 16 3M13 11H11V6H13V11Z"/></svg>`,
-                'Pizzeria': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.43 2 5.23 4.43 4.29 7.57C4.04 8.4 4.03 9.28 4.21 10.13C4.39 11 4.76 11.88 5.29 12.64L11.29 21.05C11.68 21.58 12.32 21.58 12.71 21.05L18.71 12.64C19.24 11.88 19.61 11 19.79 10.13C19.97 9.28 19.96 8.4 19.71 7.57C18.77 4.43 15.57 2 12 2M12 6C13.11 6 14 6.9 14 8C14 9.11 13.11 10 12 10C10.9 10 10 9.11 10 8C10 6.9 10.9 6 12 6M16 11C14.9 11 14 11.9 14 13C14 14.11 14.9 15 16 15C17.11 15 18 14.11 18 13C18 11.9 17.11 11 16 11Z"/></svg>`,
-                'Poisson': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.362-3.797zM12 12.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" /></svg>`,
-                'Défaut': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>`
-            };
+            // URL du fichier JSON fourni par l'utilisateur
+            const JSON_URL = 'https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/heads/main/restaurants.json';
 
-            // --- DONNÉES DES RESTAURANTS (SUD UNIQUEMENT) ---
-            const restaurants = [
-                { name: "Le Reflet des Îles", price: "€€€", image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop", lat: -21.3399, lng: 55.4711, rating: 4.8, address: "12 Rue de la Plage, Saint-Pierre", commune: "Saint-Pierre", cuisine: ["Créole", "Française"], description: "Une cuisine créole raffinée avec une touche de modernité, dans un cadre exceptionnel face au lagon." },
-                { name: "Chez Tante Athalie", price: "€€", image: "https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=2070&auto=format&fit=crop", lat: -21.1350, lng: 55.4781, rating: 4.5, address: "45 Rue du Père Boiteau, Cilaos", commune: "Cilaos", cuisine: ["Créole"], description: "Le rendez-vous incontournable pour goûter au fameux carri feu de bois, une institution à Cilaos." },
-                { name: "Le Lagon Bleu", price: "€€", image: "https://images.unsplash.com/photo-1606811445326-b7b1e4a2a2a0?q=80&w=1974&auto=format&fit=crop", lat: -21.345, lng: 55.478, rating: 4.6, address: "8 Rue des Bons Enfants, Saint-Pierre", commune: "Saint-Pierre", cuisine: ["Poisson"], description: "Poissons frais et fruits de mer directement du port. Ambiance locale et authentique garantie." },
-                { name: "La Fournaise Gourmande", price: "€", image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1981&auto=format&fit=crop", lat: -21.36, lng: 55.75, rating: 4.3, address: "10 route nationale, Saint-Philippe", commune: "Saint-Philippe", cuisine: ["Créole"], description: "Spécialités du sud sauvage, notamment le vacoa et les produits de la mer." },
-                { name: "Pizza Gadiamb", price: "€", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=2070&auto=format&fit=crop", lat: -21.23, lng: 55.57, rating: 4.7, address: "15 Rue du Stade, Le Tampon", commune: "Le Tampon", cuisine: ["Pizzeria"], description: "Des pizzas généreuses et originales, une adresse prisée des habitants de la Plaine des Cafres." },
-                { name: "Le Belvédère", price: "€€€", image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop", lat: -21.28, lng: 55.59, rating: 4.9, address: "25 Chemin du Belvédère, Petite-Île", commune: "Petite-Île", cuisine: ["Française"], description: "Restaurant gastronomique offrant une vue imprenable sur l'océan. Une expérience culinaire inoubliable." },
-                { name: "Le Vieux Bardeau", price: "€€", image: "https://images.unsplash.com/photo-1592861956120-e524fc739696?q=80&w=2070&auto=format&fit=crop", lat: -21.35, lng: 55.65, rating: 4.4, address: "100 Rue de la Rivière, Saint-Joseph", commune: "Saint-Joseph", cuisine: ["Créole"], description: "Cuisine créole authentique dans un cadre rustique et chaleureux, au bord de la Rivière des Remparts." }
-            ];
-            
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const mainContent = document.querySelector('main');
             const restaurantsList = document.getElementById('restaurants-list');
             const searchInput = document.getElementById('searchInput');
             const priceFilter = document.getElementById('priceFilter');
@@ -217,38 +231,63 @@
             const modal = document.getElementById('details-modal');
             const modalBody = document.getElementById('modal-body');
 
-            const priceColors = { '€': 'bg-green-500', '€€': 'bg-yellow-500', '€€€': 'bg-red-600' };
+            // --- VARIABLES GLOBALES ---
+            let restaurants = [];
+            let map;
+            let restaurantMarkers = {};
+            // Les données de prix et de note sont absentes du JSON, on utilise des valeurs par défaut pour l'affichage
+            const priceDisplay = '€€';
+            const ratingDisplay = 'N/A';
+            const placeholderImage = 'https://placehold.co/600x400/CCCCCC/333333?text=Image+non+disponible';
+            const placeholderDescription = 'Aucune description disponible pour ce restaurant.';
 
-            function populateFilters() {
-                const allCommunes = new Set();
-                const allCuisines = new Set();
-                restaurants.forEach(resto => {
-                    allCommunes.add(resto.commune);
-                    resto.cuisine.forEach(c => allCuisines.add(c));
-                });
-                [...allCommunes].sort().forEach(commune => communeFilter.appendChild(new Option(commune, commune)));
-                [...allCuisines].sort().forEach(c => cuisineFilter.appendChild(new Option(c, c)));
+            const cuisineIcons = {
+                // J'ai ajouté des icônes pour d'autres types de cuisine courants.
+                'Créole': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.26 11.77C17.26 10.34 16.1 9.18 14.67 9.18C13.24 9.18 12.08 10.34 12.08 11.77C12.08 13.13 13.13 14.21 14.5 14.37V19.38C14.5 19.93 14.95 20.38 15.5 20.38C16.05 20.38 16.5 19.93 16.5 19.38V9.75C17.63 9.75 18.55 8.83 18.55 7.75C18.55 6.67 17.63 5.75 16.5 5.75H8.5C7.37 5.75 6.45 6.67 6.45 7.75C6.45 8.83 7.37 9.75 8.5 9.75V19.38C8.5 19.93 8.95 20.38 9.5 20.38C10.05 20.38 10.5 19.93 10.5 19.38V14.37C11.87 14.21 12.92 13.13 12.92 11.77C12.92 10.34 11.76 9.18 10.33 9.18C8.9 9.18 7.74 10.34 7.74 11.77C7.74 13.2 8.9 14.36 10.33 14.36C10.37 14.36 10.4 14.36 10.44 14.36C10.48 14.36 10.51 14.36 10.55 14.36V19.38H14.45V14.36C14.49 14.36 14.52 14.36 14.56 14.36C14.6 14.36 14.63 14.36 14.67 14.36C16.1 14.36 17.26 13.2 17.26 11.77Z"/></svg>`,
+                'Restauration': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.69 2 6 4.69 6 8V16C6 19.31 8.69 22 12 22C15.31 22 18 19.31 18 16V8C18 4.69 15.31 2 12 2M12 4C14.21 4 16 5.79 16 8V16C16 18.21 14.21 20 12 20C9.79 20 8 18.21 8 16V8C8 5.79 9.79 4 12 4M12 10C10.9 10 10 10.9 10 12C10 13.11 10.9 14 12 14C13.11 14 14 13.11 14 12C14 10.9 13.11 10 12 10Z"/></svg>`,
+                'Hébergement': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.15-.439 1.59 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" /></svg>`,
+                'Activités': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.362-3.797zM12 12.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" /></svg>`,
+                'Défaut': `<svg class="cuisine-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>`
+            };
+            
+            // --- FONCTION POUR CHARGER LES DONNÉES JSON ---
+            async function fetchRestaurants() {
+                try {
+                    loadingOverlay.style.display = 'flex';
+                    const response = await fetch(JSON_URL);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    // On ne conserve que les restaurants de type "Restauration"
+                    const filteredData = data.results.filter(item => item.type && item.type.includes('Restauration'));
+                    return filteredData;
+                } catch (error) {
+                    console.error("Erreur lors du chargement des données :", error);
+                    restaurantsList.innerHTML = `<p class="text-red-500 text-center col-span-full">Une erreur est survenue lors du chargement des restaurants. Veuillez réessayer plus tard.</p>`;
+                    return [];
+                } finally {
+                    loadingOverlay.style.display = 'none';
+                }
             }
 
-            const reunionBounds = L.latLngBounds(L.latLng(-21.5, 55.1), L.latLng(-20.8, 56.0));
-            const map = L.map('map', { center: [-21.28, 55.55], zoom: 10, maxBounds: reunionBounds, minZoom: 9 });
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: 'Leaflet | &copy; OpenStreetMap contributors' }).addTo(map);
-            
-            const restaurantMarkers = {};
-
+            // --- FONCTION POUR AFFICHER LES CARTES DES RESTAURANTS ---
             function createRestaurantCard(resto) {
                 const restoCard = document.createElement('div');
                 restoCard.className = `card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col`;
-                const cuisinesHtml = resto.cuisine.map(c => `<div title="${c}" class="transform hover:scale-125 transition-transform">${cuisineIcons[c] || cuisineIcons['Défaut']}</div>`).join('');
+                
+                // Le champ "type" du JSON est utilisé pour la cuisine
+                const cuisinesHtml = resto.type.map(c => `<div title="${c}" class="transform hover:scale-125 transition-transform">${cuisineIcons[c] || cuisineIcons['Défaut']}</div>`).join('');
+                
                 restoCard.innerHTML = `
-                    <img src="${resto.image}" alt="Image de ${resto.name}" class="w-full h-32 object-cover cursor-pointer">
+                    <img src="${resto.image || placeholderImage}" alt="Image de ${resto.nom_commercial}" class="w-full h-32 object-cover cursor-pointer">
                     <div class="p-3 flex flex-col flex-grow">
-                        <h3 class="text-base font-bold mb-1 text-theme-dark cursor-pointer">${resto.name}</h3>
+                        <h3 class="text-base font-bold mb-1 text-theme-dark cursor-pointer">${resto.nom_commercial}</h3>
                         <div class="flex items-center text-xs text-gray-600 mb-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-400 mr-1" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                            <span>${resto.rating}</span>
+                            <span>${resto.rating || ratingDisplay}</span>
                             <span class="mx-2">|</span>
-                            <span class="font-bold text-lg ${priceColors[resto.price] ? 'text-gray-800' : ''}">${resto.price}</span>
+                            <span class="font-bold text-lg text-gray-800">${resto.price || priceDisplay}</span>
                         </div>
                         <div class="flex items-center gap-2 text-gray-500">${cuisinesHtml}</div>
                         <div class="mt-auto pt-3 flex justify-end">
@@ -257,12 +296,12 @@
                     </div>`;
                 
                 restoCard.querySelector('img').addEventListener('click', () => {
-                    map.setView([resto.lat, resto.lng], 14);
-                    restaurantMarkers[resto.name]?.openPopup();
+                    map.setView([resto.coordonnees_geographiques.lat, resto.coordonnees_geographiques.lon], 14);
+                    restaurantMarkers[resto.nom_commercial]?.openPopup();
                 });
                 restoCard.querySelector('h3').addEventListener('click', () => {
-                    map.setView([resto.lat, resto.lng], 14);
-                    restaurantMarkers[resto.name]?.openPopup();
+                    map.setView([resto.coordonnees_geographiques.lat, resto.coordonnees_geographiques.lon], 14);
+                    restaurantMarkers[resto.nom_commercial]?.openPopup();
                 });
                 restoCard.querySelector('.info-btn').addEventListener('click', () => showDetailsModal(resto));
                 return restoCard;
@@ -271,6 +310,7 @@
             function displayRestaurants(filteredRestos) {
                 restaurantsList.innerHTML = '';
                 Object.values(restaurantMarkers).forEach(marker => map.removeLayer(marker));
+                restaurantMarkers = {}; 
                 
                 if (filteredRestos.length === 0) {
                     restaurantsList.innerHTML = `<p class="text-gray-500 text-center col-span-full">Aucun restaurant ne correspond à votre recherche.</p>`;
@@ -279,37 +319,40 @@
 
                 filteredRestos.forEach(resto => {
                     restaurantsList.appendChild(createRestaurantCard(resto));
-                    const cuisinesHtmlPopup = resto.cuisine.map(c => `<div class="inline-block" title="${c}">${cuisineIcons[c] || cuisineIcons['Défaut']}</div>`.replace('cuisine-icon', 'popup-cuisine-icon')).join('');
+                    // Le champ "type" est utilisé pour les icônes de la popup
+                    const cuisinesHtmlPopup = resto.type.map(c => `<div class="inline-block" title="${c}">${cuisineIcons[c] || cuisineIcons['Défaut']}</div>`.replace('cuisine-icon', 'popup-cuisine-icon')).join('');
                     const popupContent = `
                         <div class="font-sans text-gray-800 w-56">
-                            <h3 class="font-bold text-base mb-2">${resto.name}</h3>
-                            <p class="mb-2"><span class="font-semibold text-lg">${resto.price}</span> <span class="text-yellow-500">★</span> ${resto.rating}</p>
+                            <h3 class="font-bold text-base mb-2">${resto.nom_commercial}</h3>
+                            <p class="mb-2"><span class="font-semibold text-lg">${priceDisplay}</span> <span class="text-yellow-500">★</span> ${ratingDisplay}</p>
                             <div class="flex flex-wrap gap-2 items-center">${cuisinesHtmlPopup}</div>
                         </div>`;
-                    const marker = L.marker([resto.lat, resto.lng]).addTo(map).bindPopup(popupContent);
-                    restaurantMarkers[resto.name] = marker;
+                    const marker = L.marker([resto.coordonnees_geographiques.lat, resto.coordonnees_geographiques.lon]).addTo(map).bindPopup(popupContent);
+                    restaurantMarkers[resto.nom_commercial] = marker;
                 });
             }
 
+            // --- FONCTION POUR GÉRER LA MODALE DES DÉTAILS ---
             function showDetailsModal(resto) {
-                const cuisinesHtml = resto.cuisine.map(c => `<div class="flex items-center gap-2" title="${c}">${cuisineIcons[c] || cuisineIcons['Défaut']}<span>${c}</span></div>`).join('');
+                // Le champ "type" est utilisé pour les icônes de la modale
+                const cuisinesHtml = resto.type.map(c => `<div class="flex items-center gap-2" title="${c}">${cuisineIcons[c] || cuisineIcons['Défaut']}<span>${c}</span></div>`).join('');
                 modalBody.innerHTML = `
                     <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center z-20">
-                        <h2 class="text-2xl font-bold text-theme-dark">${resto.name}</h2>
+                        <h2 class="text-2xl font-bold text-theme-dark">${resto.nom_commercial}</h2>
                         <button id="close-modal" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
                     </div>
                     <div class="p-6">
-                        <img src="${resto.image}" alt="Image de ${resto.name}" class="w-full h-64 object-cover rounded-lg mb-4">
+                        <img src="${resto.image || placeholderImage}" onerror="this.onerror=null;this.src='${placeholderImage}';" alt="Image de ${resto.nom_commercial}" class="w-full h-64 object-cover rounded-lg mb-4">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-4">
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Prix</div><div>${resto.price}</div></div>
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Note</div><div class="flex items-center justify-center"><span class="text-yellow-500">★</span>&nbsp;${resto.rating}</div></div>
+                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Prix</div><div>${priceDisplay}</div></div>
+                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Note</div><div class="flex items-center justify-center"><span class="text-yellow-500">★</span>&nbsp;${ratingDisplay}</div></div>
                             <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Commune</div><div>${resto.commune}</div></div>
                         </div>
-                        <p class="text-gray-700 mb-4">${resto.description}</p>
-                        <h3 class="font-bold text-theme-dark mb-2">Type de cuisine</h3>
+                        <p class="text-gray-700 mb-4">${resto.description || placeholderDescription}</p>
+                        <h3 class="font-bold text-theme-dark mb-2">Type d'établissement</h3>
                         <div class="flex flex-wrap gap-4 mb-4 text-gray-600">${cuisinesHtml}</div>
                         <h3 class="font-bold text-theme-dark mb-2">Adresse</h3>
-                        <p class="text-gray-600 bg-gray-100 p-3 rounded-lg">${resto.address}</p>
+                        <p class="text-gray-600 bg-gray-100 p-3 rounded-lg">${resto.adresse}</p>
                     </div>`;
                 modal.classList.remove('modal-hidden');
                 document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('modal-hidden'));
@@ -318,27 +361,54 @@
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) modal.classList.add('modal-hidden');
             });
+            
+            // --- FONCTIONS DE FILTRAGE ET D'INITIALISATION ---
+            function populateFilters() {
+                const allCommunes = new Set();
+                const allTypes = new Set();
+                restaurants.forEach(resto => {
+                    allCommunes.add(resto.commune);
+                    if (resto.type) {
+                      resto.type.forEach(t => allTypes.add(t));
+                    }
+                });
+                [...allCommunes].sort().forEach(commune => communeFilter.appendChild(new Option(commune, commune)));
+                [...allTypes].sort().forEach(t => cuisineFilter.appendChild(new Option(t, t)));
+            }
 
             function filterRestaurants() {
                 const searchTerm = searchInput.value.toLowerCase();
-                const price = priceFilter.value;
-                const rating = parseFloat(ratingFilter.value);
+                // Les filtres de prix et de note sont désactivés
                 const commune = communeFilter.value;
-                const cuisine = cuisineFilter.value;
+                const type = cuisineFilter.value;
                 const filtered = restaurants.filter(resto => {
-                    const nameMatch = resto.name.toLowerCase().includes(searchTerm);
-                    const priceMatch = (price === 'all') || (resto.price === price);
-                    const ratingMatch = (ratingFilter.value === 'all') || (resto.rating >= rating);
+                    const nameMatch = resto.nom_commercial.toLowerCase().includes(searchTerm);
                     const communeMatch = (commune === 'all') || (resto.commune === commune);
-                    const cuisineMatch = (cuisine === 'all') || (resto.cuisine.includes(cuisine));
-                    return nameMatch && priceMatch && ratingMatch && communeMatch && cuisineMatch;
+                    // Le filtre de cuisine est basé sur le type du restaurant
+                    const typeMatch = (type === 'all') || (resto.type && resto.type.includes(type));
+                    return nameMatch && communeMatch && typeMatch;
                 });
                 displayRestaurants(filtered);
             }
-            
-            [searchInput, priceFilter, ratingFilter, communeFilter, cuisineFilter].forEach(el => el.addEventListener('change', filterRestaurants));
-            searchInput.addEventListener('input', filterRestaurants);
 
+            // --- INITIALISATION DE L'APPLICATION ---
+            async function initializeApp() {
+                restaurants = await fetchRestaurants();
+                if (restaurants.length > 0) {
+                    // Initialiser la carte après le chargement des données
+                    const reunionBounds = L.latLngBounds(L.latLng(-21.5, 55.1), L.latLng(-20.8, 56.0));
+                    map = L.map('map', { center: [-21.28, 55.55], zoom: 10, maxBounds: reunionBounds, minZoom: 9 });
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: 'Leaflet | &copy; OpenStreetMap contributors' }).addTo(map);
+                    
+                    populateFilters();
+                    displayRestaurants(restaurants);
+
+                    [searchInput, communeFilter, cuisineFilter].forEach(el => el.addEventListener('change', filterRestaurants));
+                    searchInput.addEventListener('input', filterRestaurants);
+                }
+            }
+
+            // --- CARROUSEL ---
             const carouselItems = document.querySelectorAll('.carousel-item');
             let currentItem = 0;
             setInterval(() => {
@@ -347,9 +417,8 @@
                 carouselItems[currentItem].classList.add('active');
             }, 5000);
 
-            // Initialisation
-            populateFilters();
-            displayRestaurants(restaurants);
+            // Lancer l'initialisation de l'application
+            initializeApp();
         });
     </script>
 </body>
