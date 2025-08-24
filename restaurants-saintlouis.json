@@ -1,0 +1,574 @@
+{
+  "total_count": 28,
+  "results": [
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Noméolvidès",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "20, rue de la Poudrière 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.408413,
+        "lat": -21.283678
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Endormi (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "1 bis, rue Georges Paulin 97421 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.438607,
+        "lat": -21.271522
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Campaye Traiteur",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "150 avenue Principale 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.412027,
+        "lat": -21.289322
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Bai Hua",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "5, rue Saint-Philippe 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.405059,
+        "lat": -21.287525
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Snack bar chez Imbola",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "Rue de l’Eglise 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.408593,
+        "lat": -21.287403
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Matouccino Cat Café",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "1 rue Georges Paulin 97421 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.4386881,
+        "lat": -21.2715479
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Snack La Gourmandise",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Espèces"
+      ],
+      "adresse": "16 A avenue Sarda Garriga 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.406373,
+        "lat": -21.282938
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Oasis d'Abdel (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "95c avenue Principale 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.407363,
+        "lat": -21.285706
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Chez Tatie Nelly",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "56 rue Saint-Philippe 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.411651,
+        "lat": -21.291273
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Meln'zo",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "21, rue François de Mahy 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.414682,
+        "lat": -21.289897
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Vieil Alambic (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud- Maison du Tourisme de Saint-Louis",
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "55, rue Montplaisir - Les Makes 97421 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.412169,
+        "lat": -21.210819
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Bons Enfants (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "52, avenue Raymond Vergès 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.4059,
+        "lat": -21.285253
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Kaz Do (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "31, rue Saint-Philippe 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.406887,
+        "lat": -21.288902
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Case à Pizzas",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "48, route de Cilaos 97421 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.437092,
+        "lat": -21.276299
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Helado glacier",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "95 A Rue Raymond Vergès 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.463781,
+        "lat": -21.335431
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Resto Gedeas",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "25 C rue de l'Eglise 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.405922,
+        "lat": -21.287819
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Sandwicherie La Bella Océane",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "69 rue de Saint-Louis 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.440966,
+        "lat": -21.263213
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Restaurant Bade",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "e-carte bleue",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "9, rue Saint-Philippe 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.40536071,
+        "lat": -21.2878298
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Instant Présent (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "24, rue des Petites Nattes 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.41692,
+        "lat": -21.283118
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Petite Italie (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "95 avenue Principale 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.407056,
+        "lat": -21.285936
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Eléphant Gourmet (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Chèque vacances",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "1, rue de l’Etang - Z.I. Bel-Air 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.40095519,
+        "lat": -21.29149143
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Restaurant de la Plage",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Traveller chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "1, rue Lambert - Bel-Air 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.39875398,
+        "lat": -21.29628494
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Chez Sarah",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "2, rue Samuel Treuthard 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.410262,
+        "lat": -21.285468
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Délices de la Rivière (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "15, rue Père Laporte 97421 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.437572,
+        "lat": -21.264373
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "O'Jacaré",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "6, rue François de Mahy 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.414147,
+        "lat": -21.290499
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Z'Olie Crêpe (la)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "12 D, rue François de Mahy 97450 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.414486,
+        "lat": -21.290188
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Pti Goût (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud- Maison du Tourisme de Saint-Louis",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Virement",
+        "Mandat postal",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "121, route de Cilaos 97421 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.43725906,
+        "lat": -21.27168913
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Case Pitey (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Louis",
+      "code_insee_de_la_commune": 97414,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "105, rue du Docteur Schweitzer 97421 Saint-Louis",
+      "coordonnees_geographiques": {
+        "lon": 55.44863,
+        "lat": -21.271576
+      }
+    }
+  ]
+}
