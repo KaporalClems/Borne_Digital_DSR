@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module social futuriste</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Bibliothèque pour la génération de QR code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Conteneur du module */
+        .module-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        /* Style des boutons */
+        .btn {
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 9999px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Couleurs et icônes spécifiques */
+        .btn-main {
+            background-image: linear-gradient(135deg, #6EE7B7, #34D399); /* Tailwind: from-emerald-400 to-green-500 */
+        }
+        .btn-chatbot { background-color: #60A5FA; /* Tailwind: blue-400 */ }
+        .btn-message { background-color: #F87171; /* Tailwind: red-400 */ }
+        .btn-newsletter { background-color: #FBBF24; /* Tailwind: amber-400 */ }
+        .btn-facebook { background-color: #3B82F6; /* Tailwind: blue-500 */ }
+        .btn-instagram { background-color: #EC4899; /* Tailwind: pink-500 */ }
+
+        /* Style des fenêtres modales */
+        .modal {
+            position: absolute;
+            bottom: calc(100% + 1rem); /* Positionne au-dessus des boutons */
+            right: 0;
+            width: 25rem;
+            max-width: 90vw;
+            border-radius: 1.5rem; /* Tailwind: rounded-3xl */
+            padding: 1.5rem;
+            color: #E5E7EB; /* Couleur du texte par défaut */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            transform-origin: bottom right;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: scale(0.95) translateY(1rem);
+            pointer-events: none;
+        }
+        /* Couleurs des modales basées sur les boutons */
+        .modal-chatbot { background-color: #3B82F6; }
+        .modal-message { background-color: #F87171; }
+        .modal-newsletter { background-color: #FBBF24; }
+        .modal-facebook { background-color: #3B82F6; }
+        .modal-instagram { background-color: #EC4899; }
+
+        .modal.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem; /* Tailwind: text-xl */
+            font-weight: 700; /* Tailwind: font-bold */
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: white; /* Bouton de fermeture blanc pour une meilleure lisibilité */
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-close-btn:hover {
+            opacity: 0.7;
+        }
+
+        .modal-content {
+            font-size: 1rem;
+            color: #E5E7EB; /* Tailwind: gray-200 */
+        }
+
+        /* Animation des boutons individuels */
+        .btn-group {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            gap: 1rem;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .btn-group.hidden {
+            transform: translateY(2rem);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .qr-code {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: white;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Conteneur principal du module -->
+    <div class="module-container">
+
+        <!-- Groupe de boutons secondaires -->
+        <div class="btn-group hidden">
+            <!-- Bouton Chatbot -->
+            <div id="btn-chatbot" class="btn btn-chatbot">
+                <i class="fas fa-comment-dots text-xl"></i>
+            </div>
+            <!-- Bouton Message -->
+            <div id="btn-message" class="btn btn-message">
+                <i class="fas fa-envelope text-xl"></i>
+            </div>
+            <!-- Bouton Newsletter -->
+            <div id="btn-newsletter" class="btn btn-newsletter">
+                <i class="fas fa-paper-plane text-xl"></i>
+            </div>
+            <!-- Bouton Facebook -->
+            <div id="btn-facebook" class="btn btn-facebook">
+                <i class="fab fa-facebook-f text-xl"></i>
+            </div>
+            <!-- Bouton Instagram -->
+            <div id="btn-instagram" class="btn btn-instagram">
+                <i class="fab fa-instagram text-xl"></i>
+            </div>
+        </div>
+
+        <!-- Bouton principal (bouton d'ouverture/fermeture) -->
+        <div id="btn-main" class="btn btn-main">
+            <i class="fas fa-plus text-2xl transition-transform duration-300 rotate-0"></i>
+        </div>
+
+        <!-- Fenêtres modales -->
+
+        <!-- Modale Chatbot -->
+        <div id="modal-chatbot" class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Besoin d'aide?</h3>
+                <button class="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-content">
+                <p>Nous sommes experts en design web et SEO technique.</p>
+                <div class="mt-4">
+                    <input type="text" placeholder="Envoyez votre message..." class="w-full p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modale Message -->
+        <div id="modal-message" class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Laissez-nous un message</h3>
+                <button class="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-content">
+                <p>Contactez-nous directement par e-mail ou via ce formulaire. Nous vous répondrons dans les plus brefs délais.</p>
+                <form action="https://formspree.io/f/mgvzjnvl" method="POST" class="mt-4">
+                    <input type="email" name="email" placeholder="Votre adresse e-mail" class="w-full mb-2 p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none">
+                    <textarea name="message" placeholder="Votre message" rows="4" class="w-full p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none"></textarea>
+                    <button type="submit" class="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg hover:bg-opacity-30 transition-colors">Envoyer</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modale Newsletter -->
+        <div id="modal-newsletter" class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Abonnez-vous à notre Newsletter</h3>
+                <button class="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-content">
+                <p>Restez informé des dernières actualités, des offres exclusives et des nouveautés.</p>
+                <div class="mt-4">
+                    <input type="email" placeholder="Votre adresse e-mail" class="w-full p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none">
+                    <button class="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg hover:bg-opacity-30 transition-colors">S'abonner</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modale Facebook -->
+        <div id="modal-facebook" class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Retrouvez-nous sur Facebook</h3>
+                <button class="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-content">
+                <p>Scannez le code QR ci-dessous avec l'appareil photo de votre téléphone pour accéder directement à notre page Facebook.</p>
+                <div id="qrcode-facebook" class="qr-code"></div>
+            </div>
+        </div>
+
+        <!-- Modale Instagram -->
+        <div id="modal-instagram" class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Suivez-nous sur Instagram</h3>
+                <button class="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-content">
+                <p>Scannez le code QR ci-dessous pour découvrir nos dernières publications et histoires sur Instagram.</p>
+                <div id="qrcode-instagram" class="qr-code"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainButton = document.getElementById('btn-main');
+            const mainIcon = mainButton.querySelector('i');
+            const buttonGroup = document.querySelector('.btn-group');
+            const modals = document.querySelectorAll('.modal');
+            const closeButtons = document.querySelectorAll('.modal-close-btn');
+            const socialButtons = document.querySelectorAll('.btn-group .btn');
+
+            let isOpen = false;
+            
+            // Mappe les ID des boutons aux couleurs correspondantes
+            const modalColorClasses = [
+                'modal-chatbot',
+                'modal-message',
+                'modal-newsletter',
+                'modal-facebook',
+                'modal-instagram'
+            ];
+
+            // Fonction pour générer le QR code
+            function generateQRCode(url, elementId) {
+                const element = document.getElementById(elementId);
+                // Effacer le contenu existant
+                element.innerHTML = '';
+                new QRCode(element, {
+                    text: url,
+                    width: 128,
+                    height: 128,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+            }
+
+            // Fonction pour fermer toutes les modales
+            function closeAllModals() {
+                modals.forEach(modal => {
+                    modal.classList.remove('active', ...modalColorClasses);
+                });
+            }
+
+            // Gère l'ouverture/fermeture du groupe de boutons
+            mainButton.addEventListener('click', () => {
+                isOpen = !isOpen;
+                if (isOpen) {
+                    buttonGroup.classList.remove('hidden');
+                    mainIcon.classList.add('rotate-45');
+                } else {
+                    buttonGroup.classList.add('hidden');
+                    mainIcon.classList.remove('rotate-45');
+                    closeAllModals(); // Ferme les modales si on ferme le groupe
+                }
+            });
+
+            // Gère l'ouverture des modales spécifiques et le changement de couleur
+            socialButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    closeAllModals(); // Ferme d'abord toutes les modales existantes
+                    const buttonId = event.currentTarget.id;
+                    const modalId = 'modal-' + buttonId.replace('btn-', '');
+                    const targetModal = document.getElementById(modalId);
+                    
+                    if (targetModal) {
+                        // Ajoute la classe de couleur et la classe active à la modale
+                        targetModal.classList.add('active', 'modal-' + buttonId.replace('btn-', ''));
+                    }
+
+                    // Générer le QR code si c'est le bouton Facebook ou Instagram
+                    if (buttonId === 'btn-facebook') {
+                        generateQRCode('https://www.facebook.com/Destination.Sud.Reunion.974', 'qrcode-facebook');
+                    } else if (buttonId === 'btn-instagram') {
+                        generateQRCode('https://www.instagram.com/destinationsudreunion/?hl=fr', 'qrcode-instagram');
+                    }
+                });
+            });
+
+            // Gère la fermeture des modales via le bouton 'x'
+            closeButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const modalToClose = event.target.closest('.modal');
+                    if (modalToClose) {
+                        modalToClose.classList.remove('active', ...modalColorClasses);
+                    }
+                });
+            });
+
+            // Fermer les modales si l'utilisateur clique en dehors
+            document.addEventListener('click', (event) => {
+                const isClickInsideModule = event.target.closest('.module-container');
+                if (!isClickInsideModule && isOpen) {
+                    closeAllModals();
+                    buttonGroup.classList.add('hidden');
+                    mainIcon.classList.remove('rotate-45');
+                    isOpen = false;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
