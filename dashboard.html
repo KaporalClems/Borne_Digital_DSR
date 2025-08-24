@@ -1,98 +1,221 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard Code Postaux DSR</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 30px; max-width: 600px; margin: auto; }
-    input, button { padding: 10px; margin: 5px 0; font-size: 16px; width: 100%; }
-    #dashboard { display: none; margin-top: 20px; }
-    ul { list-style: none; padding: 0; }
-    li { padding: 8px; border-bottom: 1px solid #ccc; }
-    h1, h2 { text-align: center; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Code Postaux DSR</title>
+    <style>
+        body { font-family: 'Inter', Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; background-color: #f4f7f9; color: #333; }
+        .container { background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        input, button { padding: 12px; margin: 8px 0; font-size: 16px; width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 8px; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s ease; }
+        button:hover { background-color: #0056b3; }
+        #dashboard { display: none; margin-top: 20px; }
+        h1, h2 { text-align: center; color: #2c3e50; }
+        .stats-container { display: flex; justify-content: space-around; flex-wrap: wrap; margin: 20px 0; }
+        .stat-box { flex: 1; min-width: 150px; padding: 15px; border: 1px solid #e0e0e0; margin: 10px; border-radius: 12px; background-color: #fafafa; text-align: center; }
+        .stat-box h3 { margin-top: 0; color: #34495e; }
+        #villes-stats { text-align: left; }
+        #villes-stats ul { list-style: none; padding: 0; }
+        #villes-stats li { padding: 5px 0; border-bottom: 1px dotted #ccc; }
+        #villes-stats li:last-child { border-bottom: none; }
+        .form-section { border-top: 2px solid #eee; padding-top: 20px; margin-top: 20px; }
+        #listeCodes { list-style: none; padding: 0; }
+        #listeCodes li { padding: 10px; border-bottom: 1px solid #e0e0e0; }
+        #listeCodes li:last-child { border-bottom: none; }
+    </style>
 </head>
 <body>
-  <h1>Dashboard Code Postaux DSR</h1>
+    <div class="container">
+        <h1>Dashboard Code Postaux DSR</h1>
 
-  <!-- Formulaire connexion -->
-  <div id="loginDiv">
-    <h2>Connexion</h2>
-    <input type="email" id="loginEmail" placeholder="Email">
-    <input type="password" id="loginPassword" placeholder="Mot de passe">
-    <button onclick="login()">Se connecter</button>
-  </div>
+        <!-- Formulaire de connexion -->
+        <div id="loginDiv">
+            <h2>Connexion</h2>
+            <input type="email" id="loginEmail" placeholder="Email">
+            <input type="password" id="loginPassword" placeholder="Mot de passe">
+            <button onclick="login()">Se connecter</button>
+        </div>
 
-  <!-- Dashboard -->
-  <div id="dashboard">
-    <button onclick="logout()">Se déconnecter</button>
-    <h2>Codes postaux enregistrés</h2>
-    <ul id="listeCodes"></ul>
-  </div>
+        <!-- Dashboard -->
+        <div id="dashboard">
+            <button onclick="logout()">Se déconnecter</button>
+            
+            <div class="form-section">
+                <h2>Ajouter une nouvelle saisie</h2>
+                <input type="text" id="addPostalCodeInput" placeholder="Code postal" required>
+                <input type="text" id="addCityInput" placeholder="Ville" required>
+                <button onclick="addPostalCode()">Ajouter</button>
+            </div>
+            
+            <hr>
 
-  <script type="module">
-    // Import Firebase
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+            <h2>Statistiques</h2>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <h3>Total</h3>
+                    <p id="totalCount"></p>
+                </div>
+                <div class="stat-box">
+                    <h3>Aujourd'hui</h3>
+                    <p id="todayCount"></p>
+                </div>
+                <div class="stat-box">
+                    <h3>Ce mois-ci</h3>
+                    <p id="monthCount"></p>
+                </div>
+                <div class="stat-box">
+                    <h3>Cette année</h3>
+                    <p id="yearCount"></p>
+                </div>
+            </div>
+            
+            <div class="stat-box" id="villes-stats">
+                <h3>Totaux par villes</h3>
+                <ul id="villesListe"></ul>
+            </div>
+            
+            <hr>
+            <h2>Derniers codes postaux enregistrés</h2>
+            <ul id="listeCodes"></ul>
+        </div>
+    </div>
 
-    // ⚠️ Mets ici ta config Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyBy3tI-gl_z0JzA7uH6bQtMc89pfFcgJMs",
-      authDomain: "code-postaux-dsr.firebaseapp.com",
-      projectId: "code-postaux-dsr",
-      storageBucket: "code-postaux-dsr.firebasestorage.app",
-      messagingSenderId: "317015321347",
-      appId: "1:317015321347:web:27a95ea854064b21561736",
-      measurementId: "G-25B25N3GP9"
-    };
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+        
+        // Configuration de Firebase
+        // Remplacez par vos informations si elles sont différentes
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy3tI-gl_z0JzA7uH6bQtMc89pfFcgJMs",
+            authDomain: "code-postaux-dsr.firebaseapp.com",
+            projectId: "code-postaux-dsr",
+            storageBucket: "code-postaux-dsr.firebasestorage.app",
+            messagingSenderId: "317015321347",
+            appId: "1:317015321347:web:27a95ea854064b21561736",
+            measurementId: "G-25B25N3GP9"
+        };
 
-    // Init Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
+        // Initialisation de Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
 
-    // Connexion
-    async function login() {
-      const email = document.getElementById("loginEmail").value;
-      const password = document.getElementById("loginPassword").value;
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-      } catch (err) {
-        alert("Erreur : " + err.message);
-      }
-    }
+        // --- Fonctions d'authentification ---
+        window.login = async function() {
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (err) {
+                // Utilisation d'une boîte de message personnalisée au lieu d'une alerte
+                console.error("Erreur de connexion :", err.message);
+                alert("Erreur de connexion : " + err.message);
+            }
+        }
+        
+        window.logout = async function() {
+            await signOut(auth);
+        }
 
-    // Déconnexion
-    async function logout() {
-      await signOut(auth);
-    }
+        // --- Gestion de l'état d'authentification ---
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                document.getElementById("loginDiv").style.display = "none";
+                document.getElementById("dashboard").style.display = "block";
+                // Met à jour le tableau de bord au chargement et après chaque ajout
+                await Promise.all([chargerCodes(), calculerStats()]);
+            } else {
+                document.getElementById("loginDiv").style.display = "block";
+                document.getElementById("dashboard").style.display = "none";
+            }
+        });
 
-    // Sur changement d'état d'auth
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        document.getElementById("loginDiv").style.display = "none";
-        document.getElementById("dashboard").style.display = "block";
-        chargerCodes();
-      } else {
-        document.getElementById("loginDiv").style.display = "block";
-        document.getElementById("dashboard").style.display = "none";
-      }
-    });
+        // --- Fonctions de gestion des données ---
+        
+        // Ajoute un nouveau code postal et sa ville dans Firestore
+        window.addPostalCode = async function() {
+            const postalCode = document.getElementById("addPostalCodeInput").value;
+            const city = document.getElementById("addCityInput").value;
+            if (postalCode && city) {
+                try {
+                    await addDoc(collection(db, "codesPostaux"), {
+                        code: postalCode,
+                        ville: city,
+                        date: new Date() // Firestore stocke cela comme un Timestamp
+                    });
+                    document.getElementById("addPostalCodeInput").value = "";
+                    document.getElementById("addCityInput").value = "";
+                    // Met à jour l'affichage après l'ajout
+                    await Promise.all([chargerCodes(), calculerStats()]);
+                } catch (e) {
+                    console.error("Erreur lors de l'ajout du document: ", e);
+                    alert("Erreur lors de l'ajout des données.");
+                }
+            } else {
+                alert("Veuillez remplir les deux champs.");
+            }
+        }
 
-    // Charger les codes postaux
-    async function chargerCodes() {
-      const q = query(collection(db, "codesPostaux"), orderBy("date", "desc"));
-      const snapshot = await getDocs(q);
-      const liste = document.getElementById("listeCodes");
-      liste.innerHTML = "";
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const li = document.createElement("li");
-        li.textContent = `${data.code} (${data.date?.toDate().toLocaleString()})`;
-        liste.appendChild(li);
-      });
-    }
-  </script>
+        // Charge les derniers codes postaux
+        async function chargerCodes() {
+            const docs = await getDocs(collection(db, "codesPostaux"));
+            const allCodes = docs.docs.map(doc => doc.data());
+            
+            // Trie les codes par date décroissante
+            allCodes.sort((a, b) => b.date.toDate() - a.date.toDate());
+            
+            const liste = document.getElementById("listeCodes");
+            liste.innerHTML = "";
+            
+            // Affiche seulement les 20 derniers
+            allCodes.slice(0, 20).forEach(data => {
+                const li = document.createElement("li");
+                li.textContent = `${data.code} - ${data.ville} (${data.date?.toDate().toLocaleString()})`;
+                liste.appendChild(li);
+            });
+        }
+        
+        // Calcule et affiche les statistiques
+        async function calculerStats() {
+            const now = new Date();
+            const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+            const startOfYear = new Date(now.getFullYear(), 0, 1);
+            
+            const docs = await getDocs(collection(db, "codesPostaux"));
+            const allCodes = docs.docs.map(doc => doc.data());
+            
+            // Total
+            document.getElementById("totalCount").textContent = allCodes.length;
+            
+            // Stats par période (tri en JavaScript)
+            const todayCount = allCodes.filter(c => c.date.toDate() >= startOfDay).length;
+            const monthCount = allCodes.filter(c => c.date.toDate() >= startOfMonth).length;
+            const yearCount = allCodes.filter(c => c.date.toDate() >= startOfYear).length;
+            
+            document.getElementById("todayCount").textContent = todayCount;
+            document.getElementById("monthCount").textContent = monthCount;
+            document.getElementById("yearCount").textContent = yearCount;
+            
+            // Stats par villes
+            const villesStats = allCodes.reduce((acc, current) => {
+                const ville = current.ville || "Inconnu";
+                acc[ville] = (acc[ville] || 0) + 1;
+                return acc;
+            }, {});
+            
+            const villesListe = document.getElementById("villesListe");
+            villesListe.innerHTML = "";
+            Object.entries(villesStats).sort(([, a], [, b]) => b - a).forEach(([ville, count]) => {
+                const li = document.createElement("li");
+                li.textContent = `${ville}: ${count}`;
+                villesListe.appendChild(li);
+            });
+        }
+    </script>
 </body>
 </html>
