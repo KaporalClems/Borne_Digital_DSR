@@ -120,6 +120,20 @@
             width: 1rem;
             height: 1rem;
         }
+        
+        /* Styles pour le QR Code */
+        .qr-container {
+            transition: all 0.3s ease-in-out;
+            transform-origin: center;
+        }
+        .qr-container.hidden {
+            opacity: 0;
+            transform: scale(0.5);
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
 
         #loading-overlay {
             position: fixed;
@@ -388,6 +402,10 @@
                     `;
                 }
 
+                // Ajouter le bouton QR code et le conteneur
+                const hasQrCode = resto.url_qr_code && resto.url_qr_code.length > 0;
+                const qrButtonHtml = hasQrCode ? `<button id="qr-btn" class="mt-4 w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow hover:bg-blue-700 transition-colors">Afficher le QR Code</button>` : '';
+
                 modalBody.innerHTML = `
                     <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center z-20">
                         <h2 class="text-2xl font-bold text-theme-dark">${resto.nom_commercial}</h2>
@@ -408,9 +426,24 @@
                         <h3 class="font-bold text-theme-dark mb-2">Localisation</h3>
                         <p class="text-gray-600 bg-gray-100 p-3 rounded-lg">${adresse}</p>
                         ${paymentIconsHtml}
+                        ${qrButtonHtml}
+                        <div id="qr-container" class="qr-container hidden mt-4 flex justify-center p-4 bg-gray-100 rounded-lg">
+                            <img id="qr-code-image" class="w-48 h-48 rounded-lg" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(resto.url_qr_code)}">
+                        </div>
                     </div>`;
+                
                 modal.classList.remove('modal-hidden');
                 document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('modal-hidden'));
+
+                if (hasQrCode) {
+                    const qrBtn = document.getElementById('qr-btn');
+                    const qrContainer = document.getElementById('qr-container');
+                    
+                    qrBtn.addEventListener('click', () => {
+                        qrContainer.classList.toggle('hidden');
+                        qrBtn.textContent = qrContainer.classList.contains('hidden') ? 'Afficher le QR Code' : 'Masquer le QR Code';
+                    });
+                }
             }
 
             modal.addEventListener('click', (e) => {
@@ -474,3 +507,4 @@
     </script>
 </body>
 </html>
+
