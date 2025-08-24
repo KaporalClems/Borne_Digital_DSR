@@ -88,7 +88,26 @@
             </div>
 
             <hr>
-
+            
+            <!-- Section des statistiques par source (masquée par défaut) -->
+            <div id="sourceStatsSection" style="display: none;">
+                <h2>Statistiques par Source</h2>
+                <div class="kpi-container">
+                    <div class="kpi-box">
+                        <h4>Saisies Borne St-Pierre</h4>
+                        <p id="stPierreCount"></p>
+                    </div>
+                    <div class="kpi-box">
+                        <h4>Saisies Borne L'Étang-Salé</h4>
+                        <p id="etangSaleCount"></p>
+                    </div>
+                    <div class="kpi-box">
+                        <h4>Saisies Tablettes</h4>
+                        <p id="tabletteCount"></p>
+                    </div>
+                </div>
+            </div>
+            
             <div class="chart-section">
                 <div class="chart-box">
                     <h2>Évolution des Saisies</h2>
@@ -106,6 +125,13 @@
                     <h2>Répartition par Villes</h2>
                     <div class="chart-canvas-wrapper">
                       <canvas id="villesChart"></canvas>
+                    </div>
+                </div>
+                <!-- Graphique de répartition par source (masqué par défaut) -->
+                <div class="chart-box" id="sourceChartBox" style="display: none;">
+                    <h2>Répartition par Source</h2>
+                    <div class="chart-canvas-wrapper">
+                      <canvas id="sourceChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -156,7 +182,7 @@
         
         let allRawCodes = []; // All data from the database
         let allCodes = [];    // Filtered data for display
-        let myBarChart, myPieChart;
+        let myBarChart, myPieChart, myDoughnutChart;
         let currentPage = 1;
         const itemsPerPage = 10;
 
@@ -187,14 +213,6 @@
                 onSnapshot(q, (snapshot) => {
                     allRawCodes = snapshot.docs.map(doc => doc.data());
                     
-                    // Note: You need to add a 'source' field when saving new data.
-                    // For example: await addDoc(collection(db, "codesPostaux"), {
-                    //     code: "97410",
-                    //     ville: "Saint-Pierre",
-                    //     date: new Date(),
-                    //     source: "borne_st_pierre" // Add this field
-                    // });
-                    
                     // Initially filter to show all data
                     filterBySource('all');
                 });
@@ -208,8 +226,14 @@
         window.filterBySource = function(source) {
             if (source === 'all') {
                 allCodes = [...allRawCodes];
+                // Affiche les statistiques et le graphique par source
+                document.getElementById('sourceStatsSection').style.display = 'block';
+                document.getElementById('sourceChartBox').style.display = 'block';
             } else {
                 allCodes = allRawCodes.filter(c => c.source === source);
+                // Masque les statistiques et le graphique par source
+                document.getElementById('sourceStatsSection').style.display = 'none';
+                document.getElementById('sourceChartBox').style.display = 'none';
             }
             // Reset page to 1 on filter change
             currentPage = 1;
@@ -228,12 +252,22 @@
             document.getElementById("uniqueCitiesCount").textContent = uniqueCitiesCount;
             document.getElementById("monthCount").textContent = monthCount;
 
+            // Mise à jour des KPI par source
+            const stPierreCount = allRawCodes.filter(c => c.source === 'borne_st_pierre').length;
+            const etangSaleCount = allRawCodes.filter(c => c.source === 'borne_etang_sale').length;
+            const tabletteCount = allRawCodes.filter(c => c.source === 'tablette').length;
+
+            document.getElementById("stPierreCount").textContent = stPierreCount;
+            document.getElementById("etangSaleCount").textContent = etangSaleCount;
+            document.getElementById("tabletteCount").textContent = tabletteCount;
+
             // Pagination
             displayCodes(currentPage);
 
             // Prépare les données pour les graphiques et les initialise
             const dataSets = preparerDonneesGraphique(allCodes);
-            initialiserGraphiques(dataSets);
+            const sourceData = preparerDonneesSource(allRawCodes);
+            initialiserGraphiques(dataSets, sourceData);
         }
         
         // Gère la pagination
@@ -294,14 +328,34 @@
                 villes: { labels: Object.keys(villesData).sort(), data: Object.values(villesData) }
             };
         }
+        
+        // Prépare les données pour le graphique de répartition par source
+        function preparerDonneesSource(data) {
+            const sourceData = {
+                'Borne Saint-Pierre': 0,
+                'Borne L\'Étang-Salé': 0,
+                'Tablette': 0
+            };
+            data.forEach(item => {
+                if (item.source === 'borne_st_pierre') sourceData['Borne Saint-Pierre']++;
+                else if (item.source === 'borne_etang_sale') sourceData['Borne L\'Étang-Salé']++;
+                else if (item.source === 'tablette') sourceData['Tablette']++;
+            });
+            return {
+                labels: Object.keys(sourceData),
+                data: Object.values(sourceData)
+            };
+        }
 
         // Initialise les deux graphiques
-        function initialiserGraphiques(dataSets) {
+        function initialiserGraphiques(dataSets, sourceData) {
             const barCtx = document.getElementById('saisiesChart').getContext('2d');
             const pieCtx = document.getElementById('villesChart').getContext('2d');
+            const doughnutCtx = document.getElementById('sourceChart').getContext('2d');
             
             if (myBarChart) myBarChart.destroy();
             if (myPieChart) myPieChart.destroy();
+            if (myDoughnutChart) myDoughnutChart.destroy();
 
             myBarChart = new Chart(barCtx, {
                 type: 'bar',
@@ -359,6 +413,30 @@
                     }
                 }
             });
+            
+            myDoughnutChart = new Chart(doughnutCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: sourceData.labels,
+                    datasets: [{
+                        label: 'Saisies par source',
+                        data: sourceData.data,
+                        backgroundColor: [
+                            '#2e7d32', '#66bb6a', '#a5d6a7'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    }
+                }
+            });
         }
         
         // Met à jour un graphique spécifique
@@ -390,36 +468,80 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            // Partie 1: Statistiques et KPI
+            // Récupère le texte de l'option sélectionnée pour la source
+            const sourceSelect = document.getElementById('sourceFilter');
+            const selectedSourceText = sourceSelect.options[sourceSelect.selectedIndex].text;
+
+            // Ajoute les titres
             doc.setFontSize(22);
             doc.text("Statistiques des Codes Postaux DSR", 10, 20);
-            
             doc.setFontSize(16);
-            let y = 35;
+            doc.text(`Source : ${selectedSourceText}`, 10, 30);
             
-            doc.text(`Total des Saisies: ${document.getElementById("totalCount").textContent}`, 10, y);
-            y += 10;
-            doc.text(`Villes Uniques: ${document.getElementById("uniqueCitiesCount").textContent}`, 10, y);
-            y += 10;
-            doc.text(`Saisies ce mois-ci: ${document.getElementById("monthCount").textContent}`, 10, y);
-            y += 20;
+            let y = 45;
+            const pageMargin = 15;
+            const maxWidth = doc.internal.pageSize.getWidth() - (pageMargin * 2);
 
-            // Partie 2: Ajout des graphiques au PDF avec un meilleur dimensionnement
+            // Fonction utilitaire pour ajouter une image redimensionnée
+            const addScaledImage = (canvas, yPos) => {
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = canvas.width;
+                const imgHeight = canvas.height;
+                
+                const scaleFactor = maxWidth / imgWidth;
+                const scaledWidth = maxWidth;
+                const scaledHeight = imgHeight * scaleFactor;
+                
+                doc.addImage(imgData, 'PNG', pageMargin, yPos, scaledWidth, scaledHeight);
+                return yPos + scaledHeight + 10; // Retourne la nouvelle position y
+            };
+            
+            doc.setFontSize(14);
+            doc.text(`Total des Saisies: ${document.getElementById("totalCount").textContent}`, 10, y);
+            y += 8;
+            doc.text(`Villes Uniques: ${document.getElementById("uniqueCitiesCount").textContent}`, 10, y);
+            y += 8;
+            doc.text(`Saisies ce mois-ci: ${document.getElementById("monthCount").textContent}`, 10, y);
+            y += 15;
+
+            // Partie 2: Statistiques par source et graphique (seulement si "Toutes les sources" est sélectionné)
+            if (document.getElementById('sourceStatsSection').style.display !== 'none') {
+                doc.setFontSize(18);
+                doc.text("Statistiques par Source", 10, y);
+                y += 10;
+                doc.setFontSize(14);
+                doc.text(`Saisies Borne St-Pierre: ${document.getElementById("stPierreCount").textContent}`, 10, y);
+                y += 8;
+                doc.text(`Saisies Borne L'Étang-Salé: ${document.getElementById("etangSaleCount").textContent}`, 10, y);
+                y += 8;
+                doc.text(`Saisies Tablettes: ${document.getElementById("tabletteCount").textContent}`, 10, y);
+                y += 20;
+
+                const doughnutChartCanvas = document.getElementById('sourceChart');
+                y = addScaledImage(doughnutChartCanvas, y);
+            }
+
+            // Partie 3: Ajout des graphiques d'évolution et de répartition par ville
             const barChartCanvas = document.getElementById('saisiesChart');
             const pieChartCanvas = document.getElementById('villesChart');
-
-            const barChartImg = barChartCanvas.toDataURL('image/png');
-            doc.addImage(barChartImg, 'PNG', 15, y, 180, 100);
-            y += 110;
-
-            const pieChartImg = pieChartCanvas.toDataURL('image/png');
-            doc.addImage(pieChartImg, 'PNG', 15, y, 180, 100);
-            y += 110;
             
-            // Partie 3: Ajout de la liste des codes dans un tableau
-            doc.addPage();
+            y = addScaledImage(barChartCanvas, y);
+            
+            // On vérifie s'il reste assez de place sur la page pour le dernier graphique
+            if (y + pieChartCanvas.height * (maxWidth / pieChartCanvas.width) > doc.internal.pageSize.getHeight() - pageMargin) {
+                doc.addPage();
+                y = pageMargin;
+            }
+            y = addScaledImage(pieChartCanvas, y);
+            
+            // Partie 4: Ajout de la liste des codes dans un tableau
+            if (y + 50 > doc.internal.pageSize.getHeight() - pageMargin) {
+                doc.addPage();
+                y = pageMargin;
+            }
+
             doc.setFontSize(18);
-            doc.text("Derniers codes postaux enregistrés", 10, 20);
+            doc.text("Derniers codes postaux enregistrés", 10, y);
             
             const tableData = allCodes.slice(0, 50).map(item => [
                 item.code,
@@ -429,7 +551,7 @@
             ]);
 
             doc.autoTable({
-                startY: 30,
+                startY: y + 10,
                 head: [['Code Postal', 'Ville', 'Date', 'Source']],
                 body: tableData,
                 theme: 'striped',
