@@ -1,403 +1,998 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Destination Cocoon - Sud Réunion</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page d'Accueil Glissante</title>
+    <!-- Inclut Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet" />
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
+            background-color: #0d121c;
+            overflow: hidden; /* Empêche le défilement du corps de la page */
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: none; /* Empêche le pinch-to-zoom */
         }
-        :root {
-            --theme-color-dark: #064e3b; /* Vert forêt foncé pour le calme */
-            --theme-color-light: #34d399; /* Vert émeraude pour la fraîcheur */
-            --theme-white: #ffffff;
-        }
-        .bg-theme-dark { background-color: var(--theme-color-dark); }
-        .text-theme-light { color: var(--theme-color-light); }
-        .ring-theme-light:focus { ring-color: var(--theme-color-light); }
-        .hover-bg-theme-dark:hover { background-color: var(--theme-color-dark); }
 
-        .card {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-        .card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        /* Styles pour le mode contraste élevé */
+        body.high-contrast {
+            filter: invert(1) hue-rotate(180deg);
+            background-color: #fff; /* S'assure que le fond est blanc */
         }
         
-        #fullscreen-carousel {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        body.high-contrast #video-background {
+             filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* Styles pour la taille de police augmentée */
+        body.larger-text h1 { font-size: 8rem; }
+        body.larger-text h2 { font-size: 5rem; }
+        body.larger-text .text-2xl { font-size: 2rem; }
+        body.larger-text .text-lg { font-size: 1.5rem; }
+
+        .slider-container {
+            width: 100vw;
             height: 100vh;
-            z-index: -1;
-        }
-        #fullscreen-carousel::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-        }
-        .carousel-item {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            z-index: 0;
-        }
-        .carousel-item.active {
-            opacity: 1;
-        }
-        .carousel-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
         }
 
-        #map {
-            height: 500px;
-            border-radius: 0.5rem;
+        .screen {
+            min-width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
-        .type-icon {
-            width: 1.25rem;
-            height: 1.25rem;
+
+        /* Disposition en colonne par défaut, en ligne sur les grands écrans */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            max-width: 1280px;
+            width: 100%;
         }
-        
-        .animate-title {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUP 1s ease-out 0.5s forwards;
-        }
-        @keyframes fadeInUP {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+        @media (min-width: 1024px) {
+            .main-content {
+                flex-direction: row;
             }
         }
         
-        /* Styles pour la modale */
-        .modal {
-            transition: opacity 0.25s ease;
-        }
-        .modal-hidden {
-            pointer-events: none;
-            opacity: 0;
-        }
-        .modal-content {
-            transition: transform 0.25s ease;
-        }
-        .modal-hidden .modal-content {
-            transform: scale(0.95);
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            max-width: 100%;
         }
 
-        /* Styles pour les popups de la carte */
-        .leaflet-popup-content-wrapper {
-            border-radius: 8px;
+        .right-panel {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 1.5rem;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 2rem;
         }
-        .leaflet-popup-content {
-            margin: 12px !important;
+
+        @media (min-width: 1024px) {
+            .right-panel {
+                grid-template-columns: repeat(3, 1fr);
+                margin-top: 0;
+            }
         }
-        .popup-type-icon {
-            width: 1rem;
-            height: 1rem;
+
+        .grid-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            will-change: transform, box-shadow;
+            text-align: center;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Styles pour le widget de pagination */
+        .dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 9999px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .dot.active {
+            background-color: white;
+            transform: scale(1.2);
+        }
+        
+        .grid-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Styles de base de la modale */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+        }
+
+        /* NOUVEAU: Styles pour la modale universelle */
+        .modal-content {
+            background-color: #1e293b;
+            padding: 1.5rem; /* Ajout de padding */
+            border-radius: 1rem;
+            width: 95%;
+            max-width: 1400px;
+            max-height: 90vh;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-out;
+            margin: 20px;
+            display: flex; /* Utilisation de flexbox */
+            flex-direction: column;
+            overflow: hidden; /* Empêche le défilement à l'intérieur de la modale */
+        }
+
+        .close-button {
+            position: absolute;
+            top: 1rem; /* Mieux positionné */
+            right: 1rem; /* Mieux positionné */
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            transition: color 0.2s;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            padding: 0.5rem;
+            line-height: 1;
+            z-index: 10;
+        }
+        .close-button:hover {
+            color: #ccc;
+        }
+
+        .modal-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 1rem;
+            flex-grow: 1; /* Permet à l'iframe de prendre tout l'espace restant */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .widget-iframe {
+            width: 100%;
+            height: 350px;
+            border: none;
+            border-radius: 10px;
+        }
+        .modal-title {
+            font-family: 'Pacifico', cursive;
+            font-size: 3rem;
+            color: #d1d5db;
+        }
+        #video-background {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            transform: translateX(-50%) translateY(-50%);
+            background-size: cover;
+        }
+        .fixed-buttons {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .icon-button {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 9999px;
+            padding: 0.75rem;
+            color: white;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .icon-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        
+        /* Styles pour les flèches de navigation */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 9999px;
+            padding: 1rem;
+            color: white;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: opacity 0.3s, transform 0.3s;
+            will-change: transform;
+            opacity: 1;
+        }
+        .nav-arrow.left {
+            left: 2rem;
+        }
+        .nav-arrow.right {
+            right: 2rem;
+        }
+        .nav-arrow.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .nav-arrow svg {
+            width: 2rem;
+            height: 2rem;
+        }
+        .nav-arrow:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Animation de pulsation pour attirer le regard */
+        @keyframes pulse-arrow {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.05); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+        .nav-arrow.animate-pulse {
+            animation: pulse-arrow 1.5s infinite;
+        }
+
+        /* NOUVEAU: Styles pour optimiser la modale en mode paysage */
+        @media (orientation: landscape) and (min-width: 768px) {
+            .modal-content.landscape-mode {
+                max-width: 90%;
+                max-height: 90vh;
+                width: 90vw;
+                height: 90vh;
+                padding: 2rem;
+            }
+            .modal-iframe.landscape-mode {
+                /* S'assure que l'iframe remplit l'espace vertical */
+                height: calc(100% - 4rem); /* Hauteur moins le padding */
+            }
+        }
+
+        /* NOUVEAU: Styles pour optimiser la modale en mode portrait */
+        @media (orientation: portrait) {
+            .modal-content.portrait-mode {
+                max-width: 95%;
+                max-height: 90vh;
+                padding: 1.5rem;
+            }
+            .modal-iframe.portrait-mode {
+                height: calc(100% - 3rem); /* Hauteur moins le padding */
+            }
+        }
+
+        /* NOUVEAU: Styles pour l'affichage de l'heure et de la date */
+        .time-date-widget {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            color: white;
+            text-align: left;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .time-date-widget .time {
+            font-size: 3rem; /* Taille de la police pour l'heure */
+            font-weight: 700;
+        }
+
+        .time-date-widget .date {
+            font-size: 1.5rem; /* Taille de la police pour la date */
+            font-weight: 400;
+            opacity: 0.8;
+            margin-top: -0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .time-date-widget {
+                top: 1rem;
+                left: 1rem;
+            }
+            .time-date-widget .time {
+                font-size: 2rem;
+            }
+            .time-date-widget .date {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
-<body class="text-gray-800">
+<body>
+    <video autoplay muted loop id="video-background">
+        <source src="https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/4b24136854869ddd073bf02729c517f463686795/Destination%20Sud%20R%C3%A9union_HD.mp4" type="video/mp4">
+    </video>
 
-    <!-- Carrousel en fond d'écran -->
-    <section id="fullscreen-carousel">
-        <div class="carousel-item active"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2070&auto=format&fit=crop" alt="Piscine d'hôtel de luxe"></div>
-        <div class="carousel-item"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2070&auto=format&fit=crop" alt="Chambre d'hôtel avec vue"></div>
-        <div class="carousel-item"><img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=1925&auto=format&fit=crop" alt="Bungalow sur l'eau"></div>
-    </section>
-
-    <!-- Contenu de la page -->
-    <div class="relative z-10">
-        <header class="bg-theme-dark/70 backdrop-blur-sm shadow-md sticky top-0">
-            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <div class="text-2xl font-bold text-white">Destination <span class="text-theme-light">Cocoon</span></div>
-                <div>
-                    <a href="#" class="text-gray-200 hover:text-white px-3 py-2">Accueil</a>
-                    <a href="#content-start" class="text-gray-200 hover:text-white px-3 py-2">Hébergements</a>
-                    <a href="#" class="text-gray-200 hover:text-white px-3 py-2">Contact</a>
-                </div>
-            </nav>
-        </header>
-
-        <div class="h-[calc(100vh-68px)] flex flex-col items-center justify-center text-white text-center px-4">
-            <h1 class="text-5xl md:text-7xl font-black uppercase animate-title" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">Ressourcez-vous dans le Sud</h1>
-            <p class="mt-4 text-lg md:text-xl max-w-2xl animate-title" style="animation-delay: 0.7s; text-shadow: 1px 1px 4px rgba(0,0,0,0.7);">Trouvez le nid douillet parfait pour votre séjour dans le Sud de l'île intense.</p>
-            <a href="#filters" class="mt-8 animate-bounce"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5" /></svg></a>
-        </div>
-
-        <main class="container mx-auto px-6 py-8 bg-f0f4f8" id="content-start">
-            <section id="filters" class="mb-12 p-6 bg-white rounded-lg shadow-xl">
-                <h2 class="text-3xl font-bold mb-6 text-theme-dark text-center">Trouvez votre hébergement idéal</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                    <input type="text" id="searchInput" placeholder="Nom de l'hébergement..." class="lg:col-span-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light">
-                    <select id="priceFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light">
-                        <option value="all">Tous les prix</option>
-                        <option value="€">€ (Abordable)</option>
-                        <option value="€€">€€ (Modéré)</option>
-                        <option value="€€€">€€€ (Luxe)</option>
-                    </select>
-                    <select id="ratingFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light">
-                        <option value="all">Toutes les notes</option>
-                        <option value="4.5">4.5 étoiles & +</option>
-                        <option value="4">4 étoiles & +</option>
-                        <option value="3">3 étoiles & +</option>
-                    </select>
-                     <select id="communeFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light"><option value="all">Toute commune</option></select>
-                </div>
-                 <div class="mt-4"><select id="typeFilter" class="p-3 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light"><option value="all">Tous les types</option></select></div>
-            </section>
-
-            <!-- Disposition : Carte puis Grille -->
-            <div class="space-y-8">
-                <div class="bg-white p-4 rounded-lg shadow-xl"><h3 class="text-xl font-bold mb-4 text-theme-dark">Carte des hébergements</h3><div id="map"></div></div>
-                <div><div id="accommodations-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div></div>
-            </div>
-        </main>
-
-        <footer class="bg-theme-dark text-white text-center p-4 mt-12"><p>&copy; Destination Sud Réunion 2025</p></footer>
+    <!-- NOUVEAU: Élément pour afficher l'heure et la date en haut à gauche -->
+    <div class="time-date-widget">
+        <div id="time-display" class="time"></div>
+        <div id="date-display" class="date"></div>
     </div>
 
-    <!-- Modale pour les détails -->
-    <div id="details-modal" class="modal modal-hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-        <div class="modal-content bg-white rounded-lg shadow-2xl m-4 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div id="modal-body">
-                <!-- Contenu injecté par JS -->
+
+    <!-- Flèches de navigation animées -->
+    <button id="prev-arrow" class="nav-arrow left hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+    <button id="next-arrow" class="nav-arrow right">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
+
+
+    <div class="slider-container">
+        <!-- Écran 1 -->
+        <div id="screen-1" class="screen">
+            <div class="main-content lg:flex-row flex-col">
+                <div class="left-panel">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de La Réunion" class="h-auto w-48 mb-4 object-contain">
+                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">Destination Sud Réunion</h1>
+                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">Office de Tourisme du Sud de La Réunion</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button id="open-button-1" class="px-4 py-3 sm:px-6 sm:py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                        <button id="next-screen-1" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Découvrir les activités</button>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <!-- CHANGEMENT : utilisation de div avec un attribut de données pour la modale -->
+                    <div class="grid-item" data-modal-target="Destinationplage.html" data-modal-title="Les Plages">
+                        <span class="grid-icon">🏖️</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Plages</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationvolcan.html" data-modal-title="Le Volcan">
+                        <span class="grid-icon">🌋</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Le Volcan</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationforet.html" data-modal-title="Les Forêts">
+                        <span class="grid-icon">🌲</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Forêts</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationvillages.html" data-modal-title="Les Villages">
+                        <span class="grid-icon">🏡</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Villages</span>
+                    </div>
+                    <!-- NOUVEAU WIDGET : Pour ajouter un nouveau widget/bouton, copiez l'une des structures ci-dessus. -->
+                    <!-- Vous pouvez utiliser `div`, `button`, ou `a` et lui donner la classe `grid-item` -->
+                    <div id="new-custom-widget" class="grid-item bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-xl">
+                        <span class="grid-icon">✨</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Widget Personnalisé</span>
+                        <p class="text-xs mt-2 text-center text-gray-200">Cliquez pour un effet !</p>
+                    </div>
+                     <!-- AJOUT DU BOUTON HEBERGEMENTS -->
+                    <div class="grid-item" data-modal-target="Destinationhebergements.html" data-modal-title="Hébergements">
+                        <span class="grid-icon">🏨</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Hébergements</span>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- Écran 2 -->
+        <div id="screen-2" class="screen">
+            <div class="main-content lg:flex-row flex-col">
+                <div class="left-panel">
+                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">L'île authentique</h1>
+                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">La Réunion</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button id="open-button-2" class="px-4 py-3 sm:px-6 sm:py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                        <button id="prev-screen-2" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                        <button id="next-screen-2" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Activités ludiques</button>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <!-- CHANGEMENT : utilisation de div avec un attribut de données pour la modale -->
+                    <div class="grid-item" data-modal-target="DestinationRandos.html" data-modal-title="Les Randonnées">
+                        <span class="grid-icon">🥾</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Randonnées</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationactivitesnautiques.html" data-modal-title="Activités Nautiques">
+                        <span class="grid-icon">🌊</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Activités Nautiques</span>
+                    </div>
+
+                    <!-- Widget Météo -->
+                    <div class="grid-item col-span-2 bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-xl">
+                        <div class="flex flex-col items-center justify-center h-full">
+                            <span class="text-4xl md:text-5xl lg:text-6xl mb-2">☀️</span>
+                            <div class="flex items-end justify-center">
+                                <span class="text-5xl md:text-6xl font-extrabold">+27</span>
+                                <span class="text-xl md:text-2xl font-bold">°C</span>
+                            </div>
+                            <span class="text-xs md:text-sm lg:text-lg font-medium mt-1">Paris</span>
+                            <span class="text-xs md:text-sm">Ensoleillé avec quelques nuages</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Widget Restaurants -->
+                    <div class="grid-item col-span-2 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl">
+                        <div class="flex flex-col items-center justify-center h-full w-full">
+                            <h3 class="text-lg md:text-xl font-semibold mb-2">
+                            <iframe src="widget-restos.html"
+                                onload="resizeIframe(this)"
+                                style="border:none; width:100%; height:350px; border-radius:10px;"
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <div class="grid-item" data-modal-target="Destinationculture.html" data-modal-title="Culture & Traditions">
+                        <span class="grid-icon">🎭</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Culture & Traditions</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationproduits.html" data-modal-title="Produits du Terroir">
+                        <span class="grid-icon">🍍</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Produits du Terroir</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Écran 3 -->
+        <div id="screen-3" class="screen">
+            <div class="main-content lg:flex-row flex-col">
+                <div class="left-panel">
+                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">L'île aventure</h1>
+                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">La Réunion</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button id="open-button-3" class="px-4 py-3 sm:px-6 sm:py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
+                        <button id="prev-screen-3" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                        <button id="next-screen-3" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Transports</button>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div class="grid-item col-span-2" data-modal-target="DestinationActivitesaeriennes.html" data-modal-title="Activités Aériennes">
+                        <span class="grid-icon">🚁</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Activités Aériennes</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationparcs.html" data-modal-title="Parcs & Aventures">
+                        <span class="grid-icon">🎢</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Parcs & Aventures</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationbienetre.html" data-modal-title="Bien-être & Spa">
+                        <span class="grid-icon">🧘‍♀️</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Bien-être & Spa</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationgolf.html" data-modal-title="Golf">
+                        <span class="grid-icon">⛳</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Golf</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Écran 4 : Transports (NOUVEAU) -->
+        <div id="screen-4" class="screen">
+            <div class="main-content lg:flex-row flex-col">
+                <div class="left-panel">
+                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">Transports</h1>
+                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">Se déplacer sur l'île</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button id="prev-screen-4" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div class="grid-item" data-modal-target="Destinationavion.html" data-modal-title="Vols">
+                        <span class="grid-icon">✈️</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Avion</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationbus.html" data-modal-title="Bus">
+                        <span class="grid-icon">🚌</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Bus</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationtrain.html" data-modal-title="Train">
+                        <span class="grid-icon">🚆</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Train</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationvoiture.html" data-modal-title="Voiture">
+                        <span class="grid-icon">🚗</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Voiture</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Widgets de pagination -->
+    <div class="pagination fixed bottom-8 w-full flex justify-center gap-2 z-50">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div> <!-- Nouveau point pour le 4ème écran -->
+    </div>
+
+    <!-- Modals existantes (laissez-les telles quelles) -->
+    <div id="modal-1" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title mb-4">L'île intense</h2>
+            <div class="modal-grid-content">
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+1" alt="Description Image 1" />
+                    <p class="mt-2 text-lg">Découvrez des paysages à couper le souffle, entre pics majestueux et plages de rêve.</p>
+                </div>
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+2" alt="Description Image 2" />
+                    <p class="mt-2 text-lg">L'île de La Réunion offre une diversité incroyable pour les voyageurs en quête d'aventure et de détente.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-2" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title mb-4">L'île authentique</h2>
+            <div class="modal-grid-content">
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+3" alt="Description Image 3" />
+                    <p class="mt-2 text-lg">Plongez au cœur de la culture créole et de ses traditions.</p>
+                </div>
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+4" alt="Description Image 4" />
+                    <p class="mt-2 text-lg">Goûtez aux saveurs locales et rencontrez les habitants chaleureux.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-3" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="modal-title mb-4">L'île aventure</h2>
+            <div class="modal-grid-content">
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+5" alt="Description Image 5" />
+                    <p class="mt-2 text-lg">Explorez l'île à travers des activités uniques et mémorables.</p>
+                </div>
+                <div class="modal-grid-item">
+                    <img src="https://via.placeholder.com/400x300.png?text=Image+6" alt="Description Image 6" />
+                    <p class="mt-2 text-lg">Que vous soyez fan de sensations fortes ou de relaxation, l'île a tout pour vous plaire.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MODALE UNIVERSELLE POUR LES DESTINATIONS -->
+    <div id="destination-modal" class="modal">
+        <!-- Ajout de la classe "landscape-mode" ici pour l'initialisation -->
+        <div class="modal-content landscape-mode"> 
+            <!-- Ajout d'un titre pour que l'utilisateur sache où il se trouve -->
+            <h2 id="modal-destination-title" class="modal-title text-2xl font-semibold mb-4 text-white text-center"></h2>
+            <span class="close-button">&times;</span>
+            <!-- Ajout de la classe "landscape-mode" ici pour l'initialisation -->
+            <iframe id="modal-destination-iframe" class="modal-iframe landscape-mode" loading="lazy"></iframe>
+        </div>
+    </div>
+
+    <!-- Boutons de contrôle -->
+    <div class="fixed-buttons">
+        <button id="toggle-contrast" class="icon-button" aria-label="Toggle high contrast">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+        </button>
+        <button id="toggle-text-size" class="icon-button" aria-label="Toggle larger text">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M7 9l4 4 4-4m-4 12v-8" />
+            </svg>
+        </button>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- VARIABLES GLOBALES ---
-            let accommodations = []; // Sera rempli par les données du JSON
-            const accommodationsList = document.getElementById('accommodations-list');
-            const searchInput = document.getElementById('searchInput');
-            const priceFilter = document.getElementById('priceFilter');
-            const ratingFilter = document.getElementById('ratingFilter');
-            const communeFilter = document.getElementById('communeFilter');
-            const typeFilter = document.getElementById('typeFilter');
-            const modal = document.getElementById('details-modal');
-            const modalBody = document.getElementById('modal-body');
-            
-            const priceColors = { '€': 'bg-green-500', '€€': 'bg-yellow-500', '€€€': 'bg-red-600' };
-            const accommodationMarkers = {};
+        // ===============================
+        // VARIABLES GLOBALES
+        // ===============================
+        const slider = document.querySelector('.slider-container');
+        const screens = document.querySelectorAll('.screen');
+        const nextButtons = document.querySelectorAll('[id^="next-screen-"]');
+        const prevButtons = document.querySelectorAll('[id^="prev-screen-"]');
+        const openButtons = document.querySelectorAll('[id^="open-button-"]');
+        const modals = document.querySelectorAll('.modal');
+        const closeButtons = document.querySelectorAll('.close-button');
+        const toggleContrastButton = document.getElementById('toggle-contrast');
+        const toggleTextSizeButton = document.getElementById('toggle-text-size');
+        const body = document.body;
+        const dots = document.querySelectorAll('.dot');
+        const newCustomWidget = document.getElementById('new-custom-widget');
+        const destinationButtons = document.querySelectorAll('.right-panel .grid-item');
 
-            // --- ICONES SVG POUR LES TYPES D'HÉBERGEMENT ---
-            const typeIcons = {
-                'Hôtel': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 7h-8v6h8V7zm2-2H5c-1.1 0-2 .9-2 2v14h2v-2h14v2h2V5c0-1.1-.9-2-2-2zm-4 8H9v-2h8v2z"/></svg>`,
-                'Gîte': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>`,
-                'Chambre d\'hôtes': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 11.55C9.64 9.35 6.48 8 3 8v11c3.48 0 6.64 1.35 9 3.55 2.36-2.19 5.52-3.55 9-3.55V8c-3.48 0-6.64 1.35-9 3.55zM12 8c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3z"/></svg>`,
-                'Bungalow': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.49 16.36l-2.12 2.12c-1.41 1.41-3.72 1.41-5.12 0s-1.41-3.72 0-5.12l2.12-2.12 5.12 5.12zm5.12-5.12l-2.12-2.12c-1.41-1.41-3.72-1.41-5.12 0s-1.41 3.72 0 5.12l2.12 2.12 5.12-5.12zM3.51 19.49l-2.12-2.12c-1.41-1.41-1.41-3.72 0-5.12s3.72-1.41 5.12 0l2.12 2.12-5.12 5.12zm12.73-3.54l-5.66 5.66c-.78.78-.78 2.05 0 2.83s2.05.78 2.83 0l5.66-5.66-2.83-2.83z"/></svg>`,
-                'Lodge': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205l3 1M14.25 3l-3.75 1.364M10.5 15l-1.5-1.5" /></svg>`,
-                'Défaut': `<svg class="type-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h7.5" /></svg>`
-            };
+        const destinationModal = document.getElementById('destination-modal');
+        const modalDestinationIframe = document.getElementById('modal-destination-iframe');
+        const modalDestinationTitle = document.getElementById('modal-destination-title');
+        // Mise à jour de la référence pour capturer l'élément modal-content
+        const modalContent = document.querySelector('#destination-modal .modal-content');
 
-            // --- INITIALISATION DE LA CARTE ---
-            const reunionBounds = L.latLngBounds(L.latLng(-21.5, 55.1), L.latLng(-20.8, 56.0));
-            const map = L.map('map', { center: [-21.28, 55.55], zoom: 10, maxBounds: reunionBounds, minZoom: 9 });
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: 'Leaflet | &copy; OpenStreetMap contributors' }).addTo(map);
+        // Références aux flèches de navigation
+        const prevArrow = document.getElementById('prev-arrow');
+        const nextArrow = document.getElementById('next-arrow');
+        
+        // NOUVEAU: Références aux éléments d'affichage de l'heure et de la date
+        const timeDisplay = document.getElementById('time-display');
+        const dateDisplay = document.getElementById('date-display');
 
-            // --- FONCTIONS AUXILIAIRES POUR GÉNÉRER DES DONNÉES MANQUANTES ---
-            const possibleTypes = ['Hôtel', 'Gîte', 'Chambre d\'hôtes', 'Bungalow', 'Lodge'];
-            const randomImages = [
-                "https://images.unsplash.com/photo-1564501049412-61c2a3083791?q=80&w=1932&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=2070&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=2070&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1568084680786-a84f91d1153c?q=80&w=1974&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=2070&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=2070&auto=format&fit=crop"
-            ];
-            const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
-            const getRandomRating = () => (Math.random() * (5 - 3) + 3).toFixed(1);
-            const getRandomPrice = () => getRandomElement(['€', '€€', '€€€']);
+        let currentScreen = 0;
+        let isDragging = false;
+        let startX = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let animationID;
+        let inactivityTimer;
 
-            // --- FONCTIONS PRINCIPALES ---
-            function populateFilters() {
-                const allCommunes = new Set();
-                const allTypes = new Set();
-                accommodations.forEach(acc => {
-                    allCommunes.add(acc.commune);
-                    acc.type.forEach(t => allTypes.add(t));
-                });
-                [...allCommunes].sort().forEach(commune => communeFilter.appendChild(new Option(commune, commune)));
-                [...allTypes].sort().forEach(t => typeFilter.appendChild(new Option(t, t)));
-            }
+        // ===============================
+        // GESTION DU SLIDER ET DE LA NAVIGATION
+        // ===============================
+        function updateSlider() {
+            currentTranslate = -currentScreen * window.innerWidth;
+            slider.style.transform = `translateX(${currentTranslate}px)`;
 
-            function createAccommodationCard(acc) {
-                const accCard = document.createElement('div');
-                accCard.className = `card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col`;
-                const typesHtml = acc.type.map(t => `<div title="${t}" class="transform hover:scale-125 transition-transform">${typeIcons[t] || typeIcons['Défaut']}</div>`).join('');
-                accCard.innerHTML = `
-                    <img src="${acc.image}" alt="Image de ${acc.name}" class="w-full h-32 object-cover cursor-pointer" onerror="this.onerror=null;this.src='https://placehold.co/600x400/064e3b/ffffff?text=Image';">
-                    <div class="p-3 flex flex-col flex-grow">
-                        <h3 class="text-base font-bold mb-1 text-theme-dark cursor-pointer">${acc.name}</h3>
-                        <div class="flex items-center text-xs text-gray-600 mb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-400 mr-1" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                            <span>${acc.rating}</span>
-                            <span class="mx-2">|</span>
-                            <span class="font-bold text-lg ${priceColors[acc.price] ? 'text-gray-800' : ''}">${acc.price}</span>
-                        </div>
-                        <div class="flex items-center gap-2 text-gray-500">${typesHtml}</div>
-                        <div class="mt-auto pt-3 flex justify-end">
-                            <button class="info-btn text-xs bg-gray-600 text-white font-semibold px-3 py-1 rounded-full hover-bg-theme-dark transition-colors">+ d'infos</button>
-                        </div>
-                    </div>`;
-                
-                accCard.querySelector('img').addEventListener('click', () => {
-                    map.setView([acc.lat, acc.lng], 14);
-                    accommodationMarkers[acc.name]?.openPopup();
-                });
-                accCard.querySelector('h3').addEventListener('click', () => {
-                    map.setView([acc.lat, acc.lng], 14);
-                    accommodationMarkers[acc.name]?.openPopup();
-                });
-                accCard.querySelector('.info-btn').addEventListener('click', () => showDetailsModal(acc));
-                return accCard;
-            }
-
-            function displayAccommodations(filteredAccs) {
-                accommodationsList.innerHTML = '';
-                Object.values(accommodationMarkers).forEach(marker => map.removeLayer(marker));
-                
-                if (filteredAccs.length === 0) {
-                    accommodationsList.innerHTML = `<p class="text-gray-500 text-center col-span-full">Aucun hébergement ne correspond à votre recherche.</p>`;
-                    return;
+            // Met à jour les marqueurs de pagination
+            dots.forEach((dot, index) => {
+                if (index === currentScreen) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
                 }
-
-                filteredAccs.forEach(acc => {
-                    accommodationsList.appendChild(createAccommodationCard(acc));
-                    const typesHtmlPopup = acc.type.map(t => `<div class="inline-block" title="${t}">${typeIcons[t] || typeIcons['Défaut']}</div>`.replace('type-icon', 'popup-type-icon')).join('');
-                    const popupContent = `
-                        <div class="font-sans text-gray-800 w-56">
-                            <h3 class="font-bold text-base mb-2">${acc.name}</h3>
-                            <p class="mb-2"><span class="font-semibold text-lg">${acc.price}</span> <span class="text-yellow-500">★</span> ${acc.rating}</p>
-                            <div class="flex flex-wrap gap-2 items-center">${typesHtmlPopup}</div>
-                        </div>`;
-                    const marker = L.marker([acc.lat, acc.lng]).addTo(map).bindPopup(popupContent);
-                    accommodationMarkers[acc.name] = marker;
-                });
-            }
-
-            function showDetailsModal(acc) {
-                const typesHtml = acc.type.map(t => `<div class="flex items-center gap-2" title="${t}">${typeIcons[t] || typeIcons['Défaut']}<span>${t}</span></div>`).join('');
-                modalBody.innerHTML = `
-                    <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center z-20">
-                        <h2 class="text-2xl font-bold text-theme-dark">${acc.name}</h2>
-                        <button id="close-modal" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
-                    </div>
-                    <div class="p-6">
-                        <img src="${acc.image}" alt="Image de ${acc.name}" class="w-full h-64 object-cover rounded-lg mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/064e3b/ffffff?text=Image';">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center mb-4">
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Prix</div><div>${acc.price}</div></div>
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Note</div><div class="flex items-center justify-center"><span class="text-yellow-500">★</span>&nbsp;${acc.rating}</div></div>
-                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Commune</div><div>${acc.commune}</div></div>
-                        </div>
-                        <p class="text-gray-700 mb-4">${acc.description}</p>
-                        <h3 class="font-bold text-theme-dark mb-2">Type d'hébergement</h3>
-                        <div class="flex flex-wrap gap-4 mb-4 text-gray-600">${typesHtml}</div>
-                        <h3 class="font-bold text-theme-dark mb-2">Adresse</h3>
-                        <p class="text-gray-600 bg-gray-100 p-3 rounded-lg">${acc.address}</p>
-                    </div>`;
-                modal.classList.remove('modal-hidden');
-                document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('modal-hidden'));
-            }
-
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) modal.classList.add('modal-hidden');
             });
 
-            function filterAccommodations() {
-                const searchTerm = searchInput.value.toLowerCase();
-                const price = priceFilter.value;
-                const rating = parseFloat(ratingFilter.value);
-                const commune = communeFilter.value;
-                const type = typeFilter.value;
-                const filtered = accommodations.filter(acc => {
-                    const nameMatch = acc.name.toLowerCase().includes(searchTerm);
-                    const priceMatch = (price === 'all') || (acc.price === price);
-                    const ratingMatch = (ratingFilter.value === 'all') || (acc.rating >= rating);
-                    const communeMatch = (commune === 'all') || (acc.commune === commune);
-                    const typeMatch = (type === 'all') || (acc.type.includes(type));
-                    return nameMatch && priceMatch && ratingMatch && communeMatch && typeMatch;
-                });
-                displayAccommodations(filtered);
+            // Met à jour la visibilité des flèches
+            // Flèche gauche
+            if (currentScreen === 0) {
+                prevArrow.classList.add('hidden');
+                prevArrow.classList.remove('animate-pulse');
+            } else {
+                prevArrow.classList.remove('hidden');
+                prevArrow.classList.add('animate-pulse');
             }
+            // Flèche droite
+            if (currentScreen === screens.length - 1) {
+                nextArrow.classList.add('hidden');
+                nextArrow.classList.remove('animate-pulse');
+            } else {
+                nextArrow.classList.remove('hidden');
+                nextArrow.classList.add('animate-pulse');
+            }
+        }
+
+        function handleStart(event) {
+            isDragging = true;
+            startX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+            prevTranslate = currentTranslate;
+            animationID = requestAnimationFrame(animation);
+            slider.style.transition = 'none';
+        }
+
+        function handleMove(event) {
+            if (!isDragging) return;
+            const currentX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+            const deltaX = currentX - startX;
+            currentTranslate = prevTranslate + deltaX;
+            if (event.type.includes('touch')) {
+                event.preventDefault();
+            }
+        }
+
+        function handleEnd() {
+            cancelAnimationFrame(animationID);
+            isDragging = false;
+            const movedBy = currentTranslate - prevTranslate;
+            if (movedBy < -100 && currentScreen < screens.length - 1) {
+                currentScreen++;
+            } else if (movedBy > 100 && currentScreen > 0) {
+                currentScreen--;
+            }
+            updateSlider();
+            slider.style.transition = 'transform 0.5s ease-in-out';
+            resetInactivityTimer();
+        }
+
+        function animation() {
+            slider.style.transform = `translateX(${currentTranslate}px)`;
+            if (isDragging) {
+                requestAnimationFrame(animation);
+            }
+        }
+
+        function handleWheel(event) {
+            if (event.deltaY > 0 && currentScreen < screens.length - 1) {
+                currentScreen++;
+                updateSlider();
+            } else if (event.deltaY < 0 && currentScreen > 0) {
+                currentScreen--;
+                updateSlider();
+            }
+            event.preventDefault();
+            resetInactivityTimer();
+        }
+
+        // Gestionnaires pour la navigation par boutons
+        nextButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                currentScreen++;
+                updateSlider();
+                resetInactivityTimer();
+            });
+        });
+
+        prevButtons.forEach((button) => {
+            button.addEventListener('click', () => {
+                currentScreen--;
+                updateSlider();
+                resetInactivityTimer();
+            });
+        });
+
+        // Gestionnaires pour les flèches de navigation
+        nextArrow.addEventListener('click', () => {
+            if (currentScreen < screens.length - 1) {
+                currentScreen++;
+                updateSlider();
+                resetInactivityTimer();
+            }
+        });
+
+        prevArrow.addEventListener('click', () => {
+            if (currentScreen > 0) {
+                currentScreen--;
+                updateSlider();
+                resetInactivityTimer();
+            }
+        });
+
+
+        // ===============================
+        // GESTION DES MODALS
+        // ===============================
+        openButtons.forEach((button, index) => {
+            button.addEventListener('click', (event) => {
+                modals[index].style.display = 'flex';
+                resetInactivityTimer();
+            });
+        });
+
+        // Écouteur pour les boutons de destination
+        destinationButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                // Empêche la navigation par défaut si c'est une balise <a>
+                event.preventDefault(); 
+                
+                const url = button.getAttribute('data-modal-target');
+                const title = button.getAttribute('data-modal-title');
+
+                if (url) {
+                    modalDestinationTitle.textContent = title; // Met à jour le titre
+                    modalDestinationIframe.src = url;
+                    destinationModal.style.display = 'flex';
+                    checkOrientation(); // Appel immédiat pour appliquer les styles corrects
+                    resetInactivityTimer();
+                }
+            });
+        });
+
+        // Fermeture des modales
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                button.closest('.modal').style.display = 'none';
+                resetInactivityTimer();
+            });
+        });
+
+        window.addEventListener('click', (event) => {
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    resetInactivityTimer();
+                }
+            });
+        });
+
+        // ===============================
+        // GESTION DES FONCTIONNALITÉS SUPPLÉMENTAIRES
+        // ===============================
+        
+        // Exemple de widget personnalisé : un simple clic qui change un texte
+        newCustomWidget.addEventListener('click', () => {
+            const newText = "Super !";
+            const currentText = newCustomWidget.querySelector('p');
+            currentText.textContent = newText;
+            currentText.style.color = '#c7f407'; // Un petit effet visuel !
+            resetInactivityTimer();
+        });
+
+
+        // Fonction pour afficher une modale de message personnalisée
+        function showCustomMessage(message) {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                background: #1e293b; color: white; padding: 2rem; border-radius: 1rem;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 2000; text-align: center;
+                animation: fadeIn 0.3s ease-out; max-width: 80%;
+            `;
+            modal.innerHTML = `
+                <p class="text-lg mb-4">${message}</p>
+                <button class="px-4 py-2 bg-white text-gray-900 rounded-full font-semibold">Fermer</button>
+            `;
+            document.body.appendChild(modal);
+
+            modal.querySelector('button').addEventListener('click', () => {
+                modal.remove();
+            });
+
+            // Ferme la modale si l'utilisateur clique en dehors
+            document.addEventListener('click', (e) => {
+                if (!modal.contains(e.target) && e.target !== newButtonExample) {
+                    modal.remove();
+                }
+            }, { once: true });
+        }
+
+
+        // ===============================
+        // GESTION DE L'ACCESSIBILITÉ
+        // ===============================
+        toggleContrastButton.addEventListener('click', () => {
+            body.classList.toggle('high-contrast');
+            resetInactivityTimer();
+        });
+
+        toggleTextSizeButton.addEventListener('click', () => {
+            body.classList.toggle('larger-text');
+            resetInactivityTimer();
+        });
+        
+        // ===============================
+        // MINUTEUR D'INACTIVITÉ
+        // ===============================
+        function startAutoScroll() {
+            inactivityTimer = setTimeout(() => {
+                if (currentScreen < screens.length - 1) {
+                    currentScreen++;
+                } else {
+                    currentScreen = 0;
+                }
+                updateSlider();
+                startAutoScroll();
+            }, 60000); // 1 minute
+        }
+        
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            startAutoScroll();
+        }
+
+        // ===============================
+        // GESTION DU WIDGET DATE/HEURE
+        // ===============================
+        function updateDateTime() {
+            const now = new Date();
+            const timeOptions = { hour: '2-digit', minute: '2-digit' };
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             
-            // --- CHARGEMENT DES DONNÉES ET INITIALISATION ---
-            async function initializeApp() {
-                try {
-                    // On charge les données depuis votre URL GitHub
-                    const jsonUrl = 'https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/heads/main/hebergements.json';
-                    const response = await fetch(jsonUrl);
-                    if (!response.ok) {
-                        throw new Error(`Erreur HTTP: ${response.status}`);
-                    }
-                    const data = await response.json();
-                    
-                    // Transformation des données JSON pour correspondre à la structure attendue
-                    accommodations = data.results.map((item, index) => {
-                         if (!item.coordonnees_geographiques || !item.coordonnees_geographiques.lat || !item.coordonnees_geographiques.lon) {
-                            return null; // Ignorer les entrées sans coordonnées
-                        }
-                        return {
-                            name: item.nom_commercial,
-                            price: getRandomPrice(),
-                            image: randomImages[index % randomImages.length],
-                            lat: item.coordonnees_geographiques.lat,
-                            lng: item.coordonnees_geographiques.lon,
-                            rating: getRandomRating(),
-                            address: item.adresse,
-                            commune: item.commune,
-                            type: [getRandomElement(possibleTypes)],
-                            description: `Un établissement charmant situé à ${item.commune}, offrant un accès facile aux merveilles locales. Parfait pour un séjour relaxant.`
-                        };
-                    }).filter(item => item !== null); // Retirer les éléments nuls
+            const formattedTime = now.toLocaleTimeString('fr-FR', timeOptions).replace(':', ' : ');
+            const formattedDate = now.toLocaleDateString('fr-FR', dateOptions);
 
-                    // Une fois les données chargées et transformées, on initialise l'interface
-                    populateFilters();
-                    displayAccommodations(accommodations);
+            // Mise à jour des nouveaux éléments d'affichage
+            if (timeDisplay && dateDisplay) {
+                timeDisplay.textContent = formattedTime;
+                dateDisplay.textContent = formattedDate;
+            }
+        }
+        
+        // ===============================
+        // Redimensionnement de l'iframe
+        // ===============================
+        function resizeIframe(obj) {
+            obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+        }
 
-                } catch (error) {
-                    console.error("Impossible de charger les hébergements:", error);
-                    accommodationsList.innerHTML = `<p class="text-red-500 text-center col-span-full">Erreur: Impossible de charger les données des hébergements. Veuillez vérifier votre connexion internet.</p>`;
+        // ===============================
+        // DÉTECTION DE L'ORIENTATION DE L'ÉCRAN
+        // ===============================
+        function checkOrientation() {
+            if (modalContent && modalDestinationIframe) {
+                // Vérifie si l'orientation actuelle est en paysage
+                if (window.matchMedia("(orientation: landscape)").matches) {
+                    modalContent.classList.add('landscape-mode');
+                    modalDestinationIframe.classList.add('landscape-mode');
+                    modalContent.classList.remove('portrait-mode');
+                    modalDestinationIframe.classList.remove('portrait-mode');
+                } else {
+                    // Sinon, c'est le mode portrait
+                    modalContent.classList.add('portrait-mode');
+                    modalDestinationIframe.classList.add('portrait-mode');
+                    modalContent.classList.remove('landscape-mode');
+                    modalDestinationIframe.classList.remove('landscape-mode');
                 }
             }
+        }
 
-            // Ajout des écouteurs d'événements pour les filtres
-            [searchInput, priceFilter, ratingFilter, communeFilter, typeFilter].forEach(el => el.addEventListener('change', filterAccommodations));
-            searchInput.addEventListener('input', filterAccommodations);
 
-            // Animation du carrousel
-            const carouselItems = document.querySelectorAll('.carousel-item');
-            let currentItem = 0;
-            setInterval(() => {
-                carouselItems[currentItem].classList.remove('active');
-                currentItem = (currentItem + 1) % carouselItems.length;
-                carouselItems[currentItem].classList.add('active');
-            }, 5000);
+        // ===============================
+        // ÉCOUTEURS D'ÉVÉNEMENTS ET INITIALISATION
+        // ===============================
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSlider();
+            resetInactivityTimer();
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
 
-            // Lancement de l'application
-            initializeApp();
+            // Écouteurs pour le glissement de l'écran principal
+            document.addEventListener('mousedown', handleStart);
+            document.addEventListener('mousemove', handleMove);
+            document.addEventListener('mouseup', handleEnd);
+            document.addEventListener('touchstart', handleStart);
+            document.addEventListener('touchmove', handleMove);
+            document.addEventListener('touchend', handleEnd);
+            document.addEventListener('wheel', handleWheel, { passive: false });
+            
+            // Écouteur pour les changements d'orientation et de redimensionnement de la fenêtre
+            window.addEventListener('resize', checkOrientation);
         });
     </script>
 </body>
