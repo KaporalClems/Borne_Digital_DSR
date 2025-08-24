@@ -504,6 +504,7 @@
                     <div class="mt-8 flex flex-col sm:flex-row gap-4">
                         <button id="open-button-3" class="px-4 py-3 sm:px-6 sm:py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
                         <button id="prev-screen-3" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                        <button id="next-screen-3" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Transports</button>
                     </div>
                 </div>
                 <div class="right-panel">
@@ -511,9 +512,6 @@
                         <span class="grid-icon">🚁</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Activités Aériennes</span>
                     </div>
-                    
-                    <!-- L'ancien widget date/heure a été supprimé d'ici -->
-                    
                     <div class="grid-item" data-modal-target="Destinationparcs.html" data-modal-title="Parcs & Aventures">
                         <span class="grid-icon">🎢</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Parcs & Aventures</span>
@@ -529,6 +527,37 @@
                 </div>
             </div>
         </div>
+
+        <!-- Écran 4 : Transports (NOUVEAU) -->
+        <div id="screen-4" class="screen">
+            <div class="main-content lg:flex-row flex-col">
+                <div class="left-panel">
+                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">Transports</h1>
+                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">Se déplacer sur l'île</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button id="prev-screen-4" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div class="grid-item" data-modal-target="Destinationavion.html" data-modal-title="Vols">
+                        <span class="grid-icon">✈️</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Avion</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationbus.html" data-modal-title="Bus">
+                        <span class="grid-icon">🚌</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Bus</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationtrain.html" data-modal-title="Train">
+                        <span class="grid-icon">🚆</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Train</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="Destinationvoiture.html" data-modal-title="Voiture">
+                        <span class="grid-icon">🚗</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Voiture</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     
     <!-- Widgets de pagination -->
@@ -536,6 +565,7 @@
         <div class="dot active"></div>
         <div class="dot"></div>
         <div class="dot"></div>
+        <div class="dot"></div> <!-- Nouveau point pour le 4ème écran -->
     </div>
 
     <!-- Modals existantes (laissez-les telles quelles) -->
