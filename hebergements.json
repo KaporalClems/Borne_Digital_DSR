@@ -1,0 +1,2126 @@
+{
+  "total_count": 131,
+  "results": [
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Résidence Phoenix",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "e-carte bleue",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "88 bis, Condée 400 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.5085216,
+        "lat": -21.29587537
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Alizés (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Espèces"
+      ],
+      "adresse": "2, rue Pêche Cavale - Terre Sainte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.484288,
+        "lat": -21.349998
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Frangipanier (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "29, chemin Bernardin Lucie 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4784152,
+        "lat": -21.2823491
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Tropinion (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "4, impasse des Citronnelles, apt n° 16 D - Ravine des Cafres 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.50967,
+        "lat": -21.349949
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Casayoul",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "6, chemin Anda - Ligne Paradis 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4959886,
+        "lat": -21.3041712
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Pti Coin Letchis",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Chèque",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "40, chemin Bassin Plat 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.5040626,
+        "lat": -21.31835517
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Lindsey Hôtel",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement"
+      ],
+      "adresse": "21 bis, rue François Isautier 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.472271,
+        "lat": -21.340913
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Runkaz",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "33, chemin Cachalot - Pierrefonds 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.430076,
+        "lat": -21.302095
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa 4 Epices",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "31 bis, chemin Bernardin Lucie 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478419,
+        "lat": -21.282085
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Gîte de la Falaise",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Espèces"
+      ],
+      "adresse": "244, chemin de la Falaise - Ligne des 400 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.500157,
+        "lat": -21.288148
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Junot Marie Reine",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "2, rue François Isautier - Appt 9 résidence Albany 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.472168,
+        "lat": -21.34245
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Fleur de Prunier",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "20 boulevard Hubert Delisle - Apt 10 - Résidence le Newport 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.476062,
+        "lat": -21.343514
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Casalena 1",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "17 rue Casabona 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.470116,
+        "lat": -21.334056
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Blason (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de l'Etang Salé,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "13 bis, rue François Isautier 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47229215,
+        "lat": -21.34132026
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Case Paradis",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de Saint-Pierre",
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "194 bis, impasse Poudroux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.46037746,
+        "lat": -21.30228878
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Caz Dalon",
+      "zone_touristique": "Sud",
+      "classement": "1 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "20 rue Frère Denis 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.483953,
+        "lat": -21.347693
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa Kazabona",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "81 bis chemin Casabona 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.468753,
+        "lat": -21.332973
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Poinsettia Bungalow (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "26 allée des Camomilles - Mont-Vert les bas 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.5302,
+        "lat": -21.334237
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Zoiseaux Pays",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Chèque vacances",
+        "PassKdo",
+        "PassLoisirs",
+        "Espèces"
+      ],
+      "adresse": "95, chemin du Bonheur 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.49835678,
+        "lat": -21.28409623
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Oasis de Terre Rouge (L')",
+      "zone_touristique": "Sud",
+      "classement": "4 Aucun",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de Saint-Pierre",
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "41, chemin Mézino - Terre Rouge 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.50346,
+        "lat": -21.343706
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Soleil Couchant",
+      "zone_touristique": "Sud",
+      "classement": "2 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "2, chemin de l'Araucaria - Montvert les Bas 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.525029,
+        "lat": -21.330345
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa Samara",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "149, ancienne RN3 - Condé 400 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.510182,
+        "lat": -21.291156
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Emalias (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "126, chemin Emmanuel Hoareau - Ligne Paradis 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.468875,
+        "lat": -21.299776
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Camphrier 1 (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "273, chemin des Acajous 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.486796,
+        "lat": -21.271964
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Côté Lagon",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "Maison du Tourisme du Sud Sauvage,OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Chèque",
+        "Chèque vacances",
+        "Espèces"
+      ],
+      "adresse": "79, rue Amiral Lacaze 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.481228,
+        "lat": -21.347313
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa Mango",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "16, allée des Seychelles 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.468558,
+        "lat": -21.292624
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Case Fantézi",
+      "zone_touristique": "Sud",
+      "classement": "2 Clé(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "56, chemin Guillaume - Pierrefonds 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.427975,
+        "lat": -21.30043
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Chez Arlette et Philippe F4",
+      "zone_touristique": "Sud",
+      "classement": "4 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Espèces"
+      ],
+      "adresse": "22 impasse Hector Berlioz 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.507,
+        "lat": -21.287
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Aloha Réunion - Le Salazie",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "80, chemin Alexis Fontaine 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4902,
+        "lat": -21.2757
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "TiKaz Gabanna",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Virement"
+      ],
+      "adresse": "28 rue Caumont 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.470462,
+        "lat": -21.340444
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa du Patio (La)",
+      "zone_touristique": "Sud",
+      "classement": "4 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "24 A avenue du Général de Gaulle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.509079,
+        "lat": -21.353302
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Entre Ciel et Mer - Albany II",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "2 rue François Isautier 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.472618,
+        "lat": -21.341943
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Ti Papangue (Le)",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "24 chemin de la Savane 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.448768,
+        "lat": -21.296951
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Prestige (Le)",
+      "zone_touristique": "Sud",
+      "classement": "4 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "12 chemin Bernardin - apt 8 - Ligne Paradis 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.481797,
+        "lat": -21.322243
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Tropica Loc (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "3, rue Amiral Lacaze 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.48014523,
+        "lat": -21.34271933
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Hôtel Le Nathania",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Chèque vacances",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "12, rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.474674,
+        "lat": -21.34294
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Tikazbourbon",
+      "zone_touristique": "Sud",
+      "classement": "2 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "105 A, ancienne RN 3 - Condé 400 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.501714,
+        "lat": -21.3009
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Aloha Réunion - Le Piton de la Fournaise",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "80, chemin Alexis Fontaine 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4902,
+        "lat": -21.2757
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Baroudeurs Hostel",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "101 allée des Aubépines 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.490525,
+        "lat": -21.327155
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Kaz l'Isle Bourbon (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "91 chemin Petit Frère 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.491947,
+        "lat": -21.274427
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Kap Alizés",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "4 bis rue des Perroquets - Terre Sainte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.485419,
+        "lat": -21.350063
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Cocottes Terre Sainte",
+      "zone_touristique": "Sud",
+      "classement": "2 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "78 rue Auguste Langlois - Terre Sainte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.482978,
+        "lat": -21.344469
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Cap Sud",
+      "zone_touristique": "Sud",
+      "classement": "2 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "6, rue Caumont 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.469723,
+        "lat": -21.34278
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Résidence Le Tamil Nadu",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "35, route Ligne Paradis 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.484432,
+        "lat": -21.322359
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Entre Ciel et Mer",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "14, rue Frères Denis - Terre Sainte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.484421,
+        "lat": -21.3465555
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Aloha Réunion - Le Cilaos",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "80, chemin Alexis Fontaine 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4902,
+        "lat": -21.2757
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Altitude Relais Touristique",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de l'Etang Salé,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Chèque",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "13, rue François Isautier 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47234896,
+        "lat": -21.34142014
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Chez Madame Queland",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "7, allée des Flamboyants - Ravine Blanche 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.46622792,
+        "lat": -21.3338761
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Paradis Exotique (Le)",
+      "zone_touristique": "Sud",
+      "classement": "3 Epi(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Visa",
+        "e-carte bleue",
+        "Chèque",
+        "Chèque vacances",
+        "Virement",
+        "Mandat postal",
+        "PassKdo",
+        "PassLoisirs",
+        "Bon CE",
+        "Espèces"
+      ],
+      "adresse": "1 bis, chemin Ernest Payet - 66, CD 26 - Route de l'Entre-Deux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.43173004,
+        "lat": -21.30234938
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Endormi Hôtel (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de Saint-Pierre",
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "11, rue du Presbytère 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.471842,
+        "lat": -21.332787
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Carangaise (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Virement"
+      ],
+      "adresse": "29 rue Bertin Lauret 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.514399,
+        "lat": -21.355916
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Bresle Claude",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "55, ancienne RN3 Condé 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.50431193,
+        "lat": -21.29658776
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Hôtel Exsel Victoria",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Chèque vacances",
+        "PassLoisirs",
+        "Espèces"
+      ],
+      "adresse": "8-10 allée des Lataniers - Grand Bois 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.517307,
+        "lat": -21.357721
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Tipalais",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "80, allée Nelson Mandela - Ligne Paradis 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.467913,
+        "lat": -21.315703
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Entre Ciel et Mer",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "14 rue Frère Denis - Terre Sainte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.483134,
+        "lat": -21.348201
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Gadiamb City",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Chèque vacances",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "40 D chemin Bassin Martin 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.504161,
+        "lat": -21.318197
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Gîte le Moringa",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "124 chemin Boissy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.517048,
+        "lat": -21.332881
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa Belza",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "15 A chemin Bassin Martin 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.497738,
+        "lat": -21.32641
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa Delisle & Spa (La)",
+      "zone_touristique": "Sud",
+      "classement": "4 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "42, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.474358,
+        "lat": -21.343551
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Nymphes de Bourbon (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "484, chemin du Cimetière - Montvert-les-Hauts 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.539669,
+        "lat": -21.32414
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Kazkifo (La) - City Break Premium",
+      "zone_touristique": "Sud",
+      "classement": "3 Epi(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "7, rue Amiral Lacaze - Terre Sainte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.480011,
+        "lat": -21.343063
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Mélijo (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "90, rue du Havre - Ravine Blanche 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.463847,
+        "lat": -21.340417
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Casa Bois D'O",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "171 A, chemin 3 Mares - Bois d'Olives 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.444465,
+        "lat": -21.299479
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Gaïa",
+      "zone_touristique": "Sud",
+      "classement": "4 Clé(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "15, allée des Lataniers - Grand-Bois 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.517464,
+        "lat": -21.357427
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "O'Jardin de Merla",
+      "zone_touristique": "Sud",
+      "classement": "5 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "7, rue des Canots 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.484377,
+        "lat": -21.335402
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Entre Ciel et Mer",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "45 bis rue du Four à Chaux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4779042,
+        "lat": -21.342227
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Résidence Georgette",
+      "zone_touristique": "Sud",
+      "classement": "4 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "43 rue Auguste Langlois 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.482197,
+        "lat": -21.345941
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Chambre d'hôtes des Doudous",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Chèque vacances",
+        "Espèces"
+      ],
+      "adresse": "33 allée des Hortensias 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.494389,
+        "lat": -21.316238
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa des Palmes (La)",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Chèque vacances",
+        "Virement",
+        "Mandat postal",
+        "PassKdo",
+        "PassLoisirs",
+        "Espèces"
+      ],
+      "adresse": "38, chemin Charlemagne 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.457432,
+        "lat": -21.286671
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Hôtel Le Tamarin",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de l'Etang Salé,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "e-carte bleue",
+        "Chèque",
+        "Chèque vacances",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "64, rue Père Favron 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.46105077,
+        "lat": -21.33571665
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Tropic Hôtel",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de l'Etang Salé,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Chèque vacances",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "2, rue A. Babet 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47835876,
+        "lat": -21.34205279
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Meublés d'Abord (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "18, ruelle Lallemand 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47997813,
+        "lat": -21.34396436
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Ti Case Soleil",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "40 route Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.548957,
+        "lat": -21.319268
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Jardin Clos (Le)",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "20 rue Frère Denis 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.483953,
+        "lat": -21.347693
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Guest House Indigo",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "35 rue Emile Hugo 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.524579,
+        "lat": -21.3562
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Ti Case a Moin",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Virement"
+      ],
+      "adresse": "6 rue Albert Luthuli - appt 69 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.462021,
+        "lat": -21.340639
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Kaz Bourbon (La) - La Garçonnière",
+      "zone_touristique": "Sud",
+      "classement": "5 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Virement"
+      ],
+      "adresse": "257 avenue du Général de Gaulle - Grand Bois 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.527123,
+        "lat": -21.360761
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Paradise City Break",
+      "zone_touristique": "Sud",
+      "classement": "4 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Virement",
+        "Espèces",
+        "American express",
+        "Paypal"
+      ],
+      "adresse": "65 chemin Jean Hinglot - Ligne Paradis 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.466736,
+        "lat": -21.307282
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Bois de Santal",
+      "zone_touristique": "Sud",
+      "classement": "3 Epi(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "33, impasse Bois de Santal - Grand-Bois 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.515053,
+        "lat": -21.353107
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa Pluie d'Or",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "21, chemin Bernardin Lucie 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47803,
+        "lat": -21.282646
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Coacoa (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "9 bis, ruelle Lallemand - Terre Sainte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.479943,
+        "lat": -21.343979
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Océanides",
+      "zone_touristique": "Sud",
+      "classement": "4 Clé(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "17, allée des Lataniers - Grand-Bois 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.517461,
+        "lat": -21.357427
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Camphrier 2 (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "273, chemin des Acajous 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4772222,
+        "lat": -21.262222
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Chez Monique et Alain",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "24 rue des Goyaviers 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.480868,
+        "lat": -21.319543
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Coco Run",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Chèque vacances",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "31 rue Luc Lorion 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.469201,
+        "lat": -21.340281
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Clos des Mascareignes (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Chèque vacances",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "3 allée de l'Octant 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.523802,
+        "lat": -21.356315
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Jardin de Ravintsara Lodge et Spa (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "103 E ancienne route Nationale 3 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.5069993,
+        "lat": -21.296007842554
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Battant des Lames (Le)",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "117, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.462664,
+        "lat": -21.34144
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa Maé (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "3 bis rue Axel Dorseuil 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.480114,
+        "lat": -21.333384
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Longane (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "e-carte bleue",
+        "Chèque",
+        "Chèque vacances",
+        "Virement",
+        "Mandat postal",
+        "PassKdo",
+        "PassLoisirs",
+        "Bon CE",
+        "Espèces"
+      ],
+      "adresse": "273, chemin des Acajous 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.486796,
+        "lat": -21.271964
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Entre Ciel et Mer",
+      "zone_touristique": "Sud",
+      "classement": "4 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "14 rue Frère Denis 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.483134,
+        "lat": -21.348201
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Badamier (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "10 ter, ruelle Lallemand - Terre Sainte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.480421,
+        "lat": -21.343964
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Entre Ciel et Mer",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "91 rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.472195,
+        "lat": -21.34343
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Mangue et Passion",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "66, chemin Box 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.512778,
+        "lat": -21.289444
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Villa Australe",
+      "zone_touristique": "Sud",
+      "classement": "4 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "118 F, chemin Bassin Plat 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.51117,
+        "lat": -21.3418261
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Palmiers du Sud (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "32, 32 bis et 32 ter, chemin Bassin Martin 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.50475,
+        "lat": -21.317691
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Veloutier de Mel",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "8 allée Emmanuel Joron 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.486,
+        "lat": -21.348
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Casalena 2",
+      "zone_touristique": "Sud",
+      "classement": "3 Etoile(s)",
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "17 bis rue Casabona 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.469845,
+        "lat": -21.332049
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Star Hôtel",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de l'Etang Salé,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "88, Condé 400 - Ancienne RN 3 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.5085216,
+        "lat": -21.29587537
+      }
+    },
+    {
+      "type": [
+        "Hebergement"
+      ],
+      "nom_commercial": "Chez Papa Daya",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de l'Etang Salé,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "27, rue du Four à Chaux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47528723,
+        "lat": -21.34258498
+      }
+    }
+  ]
+}
