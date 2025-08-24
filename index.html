@@ -223,12 +223,11 @@
         
         input:focus { outline: none; border-color: #fff; }
         
+        /* Styles pour le bouton "Envoyer" de la modale */
         button { 
             height: 4rem; /* Hauteur du bouton ajustée */
             padding: 1rem 2rem; /* Padding du bouton ajusté */
             font-size: 1.5em; /* Taille de la police du bouton */
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
             color: white; 
             border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 2rem; /* Border radius du bouton ajusté */
@@ -243,13 +242,31 @@
             align-items: center;
             justify-content: center;
         }
+
+        /* Couleur par défaut pour l'état désactivé */
+        button[disabled] {
+            background-color: rgba(128, 128, 128, 0.5); /* Gris semi-transparent */
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Couleur pour l'état actif (quand les champs sont remplis) */
+        button:not([disabled]) {
+            background-color: #4CAF50; /* Couleur verte */
+        }
         
-        button:hover { 
-            background: rgba(255, 255, 255, 0.3);
+        button:not([disabled]):hover { 
+            background-color: #45a049; /* Légèrement plus foncé au survol */
             transform: translateY(-2px); 
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); 
         }
-        button:active { transform: translateY(0); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); }
+
+        /* Ajoute une animation de clic pour le bouton */
+        button:not([disabled]):active { 
+            transform: scale(0.98); 
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
         
         #message { margin-top: 1.25rem; font-size: 1.4em; font-weight: bold; color: #fff; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); }
         
@@ -311,24 +328,55 @@
             will-change: transform;
         }
         
+        /* Styles pour les logos en haut à gauche */
+        .logo-container {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 20;
+        }
+
+        .logo-container img {
+            height: 3rem; /* Ajustez la taille des logos ici */
+            width: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
         /* ===== Responsive Styles (Écran principal) ===== */
         @media (max-width: 767px) {
             .large-time { font-size: 3rem; }
             .current-date { font-size: 1rem; }
             .swipe-up-text-wrapper { font-size: 1rem; }
             .home-indicator-base { width: 5rem; }
+            .logo-container {
+                top: 1rem;
+                left: 1rem;
+                gap: 0.5rem;
+            }
+            .logo-container img {
+                height: 2rem;
+            }
         }
 
         @media (min-width: 768px) and (max-width: 1023px) {
             .large-time { font-size: 4rem; }
             .current-date { font-size: 1.25rem; }
             .swipe-up-text-wrapper { font-size: 1.1rem; }
+            .logo-container img {
+                height: 2.5rem;
+            }
         }
 
         @media (min-width: 1024px) {
             .large-time { font-size: 5rem; }
             .current-date { font-size: 1.5rem; }
             .swipe-up-text-wrapper { font-size: 1.125rem; }
+            .logo-container img {
+                height: 3rem;
+            }
         }
     </style>
     <!-- Lie au manifeste de l'application web pour les fonctionnalités PWA -->
@@ -342,6 +390,12 @@
     </video>
 
     <div id="lock-screen-container" class="absolute inset-0 z-10">
+        <!-- Conteneur des logos -->
+        <div class="logo-container">
+            <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo Destination Sud Réunion">
+            <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo Sud Réunion Tourisme">
+        </div>
+
         <div class="absolute top-0 right-0 left-0 flex justify-end items-center p-4 text-sm md:text-base z-20">
             <div class="flex items-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 94.72" fill="currentColor" class="w-5 h-5">
@@ -382,7 +436,7 @@
                 <form id="postalCodeForm">
                     <input type="text" id="postalCode" placeholder="Code Postal" required>
                     <input type="text" id="city" placeholder="Ville" required>
-                    <button type="submit" id="submitBtn">Envoyer</button>
+                    <button type="submit" id="submitBtn" disabled>Envoyer</button>
                 </form>
 
                 <div id="message"></div>
@@ -479,6 +533,22 @@
 
         // Définit la langue par défaut au chargement
         document.addEventListener('DOMContentLoaded', () => setLanguage('fr'));
+
+        // ===============================
+        // Ajout de la logique de validation des champs pour activer le bouton
+        // ===============================
+        function checkInputs() {
+            if (postalCodeInput.value.trim() !== '' && cityInput.value.trim() !== '') {
+                submitBtn.removeAttribute('disabled');
+            } else {
+                submitBtn.setAttribute('disabled', 'disabled');
+            }
+        }
+        
+        // Écoute les événements de saisie sur les deux champs
+        postalCodeInput.addEventListener('input', checkInputs);
+        cityInput.addEventListener('input', checkInputs);
+
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -679,6 +749,8 @@
         // ===============================
         function showModal() {
             elements.postalCodeModal.classList.add('active');
+            // Vérifie l'état initial du bouton au moment de l'ouverture de la modale
+            checkInputs();
         }
 
         function closeModal() {
@@ -734,3 +806,4 @@
     </script>
 </body>
 </html>
+
