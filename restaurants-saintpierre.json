@@ -1,0 +1,2145 @@
+{
+  "total_count": 145,
+  "results": [
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "3 Brasseurs (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "2, chemin de la Z.I n° 2 - Cité Canabady 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4747657,
+        "lat": -21.3230872
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Eté Indien (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "48, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47137,
+        "lat": -21.34351
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Colibri (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "48, chemin Bassin Plat 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.493651,
+        "lat": -21.327304
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Brasserie Carré d'As",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "42, Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.473465,
+        "lat": -21.343435
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Al Maidah",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "3, rue du Port 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.476804,
+        "lat": -21.343406
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Voile Blanche (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "42, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.474358,
+        "lat": -21.343551
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "16 (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "16, rue Rodier 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47791,
+        "lat": -21.336181
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Restaurant du Marché de Gros",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "3, avenue Charles Isautier - ZI N°3 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.448731,
+        "lat": -21.32165
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Downtown",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "4, rue des Bons Enfants 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478513,
+        "lat": -21.341114
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Burgers de Papa (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "69 rue des Bons Enfants 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.472581,
+        "lat": -21.339673
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Caraco (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "46, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47127632,
+        "lat": -21.34351505
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Cayenne (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "e-carte bleue",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "15, rue Cayenne 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.46701404,
+        "lat": -21.3389417
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "United Food",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "57 rue Désiré Barquisseau 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.476824,
+        "lat": -21.339492
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Jonque (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "2, rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.474357,
+        "lat": -21.343523
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Mc Donald's",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "Maison du Tourisme du Sud Sauvage,OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de Saint-Pierre,OTI Sud- Maison du Tourisme de Saint-Louis,OTI Sud - Office de Tourisme de l'Etang Salé,OTI Sud -  Office de Tourisme de Cilaos,Office de Tourisme de l’Entre Deux,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul,Office de Tourisme de la Possession",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "Chemin de la Salette - Boulevard Banks 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4724,
+        "lat": -21.329557
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "P'tit Creux (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "72, route Ligne Paradis 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.475214,
+        "lat": -21.313162
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Délices Thaï",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "54, rue Caumont 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.471024,
+        "lat": -21.338637
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Pizza Motors",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "20 C Ancienne RN3 -  Condé 400 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.502297,
+        "lat": -21.300524
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Grand Large (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "117, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.462664,
+        "lat": -21.34144
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Phoenix Beach",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "Boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.469306,
+        "lat": -21.343675
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Kazba (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Chèque vacances",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "32 rue auguste Babet 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.479,
+        "lat": -21.34
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Poké Run",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "2 A rue Victor Le Vigoureux - Résidence les Francolins - Bât C 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.473,
+        "lat": -21.343
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Chocola Té",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "79 rue du Four à Chaux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.470029,
+        "lat": -21.341009
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Festi Viandes",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "12, rue Archambaud 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47818906,
+        "lat": -21.33981108
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "L.G.M Le Glacier Moderne",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "55, rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.475698,
+        "lat": -21.33861
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Komodo (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "118, rue des Bons Enfants 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.471235,
+        "lat": -21.338917
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Croissanterie (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "Centre Commercial du Grand Large Jumbo Rue de la Poudrière - ZI n°1 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.456183,
+        "lat": -21.335006
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Aux Bougainvilliers",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "122, rue Luc Lorion 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.471955,
+        "lat": -21.331804
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Bodega (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de Saint-Pierre",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "2, rue Auguste Babet 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478553,
+        "lat": -21.34138
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Bistroké (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "53, rue Marius et Ary Leblond 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.473696,
+        "lat": -21.337445
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Exception (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "17, rue Benjamin Hoarau ZI N°3 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.454333,
+        "lat": -21.316103
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Oconvivial By Sarah",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant"
+      ],
+      "adresse": "9 rue Max Vauquelin - Petit boulevard de la Plage 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.471,
+        "lat": -21.344
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Caritologue (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "96 rue Marius et Ary Leblond 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.472161,
+        "lat": -21.336927
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Kaz à Poutines",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "12 rue François Isautier 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.473269,
+        "lat": -21.339387
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Flagrant Délice (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "115, rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47743865,
+        "lat": -21.33405031
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "M&G Traiteur Ile de La Réunion",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "207, Condé Concession 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.503305,
+        "lat": -21.292988
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "3 Pti Samoussas (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "2, rue Auguste Babet 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478524,
+        "lat": -21.341903
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Chez Touquette",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "175, chemin Stéphane 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.492399,
+        "lat": -21.271043
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Better Days",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "66 rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.477484,
+        "lat": -21.335664
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Aviaty Chez Fifi",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "1 rue Jules Bertin 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.4806,
+        "lat": -21.286062
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Papa's Terre Sainte",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque vacances",
+        "Espèces"
+      ],
+      "adresse": "2 rue des Roches 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.493621,
+        "lat": -21.343066
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Kalou (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "e-carte bleue",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "1, rue Lycée 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.49088451,
+        "lat": -21.34663708
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Baie des Anges (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "34, rue de l’église 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.481249,
+        "lat": -21.343074
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Restaurant des Bons Enfants",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Chèque vacances",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "124 rue des Bons Enfants 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.470825,
+        "lat": -21.338836
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Détente (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "4, rue François Isautier 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47257922,
+        "lat": -21.34153063
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Moana (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "e-carte bleue",
+        "Chèque",
+        "Traveller chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "25, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47130318,
+        "lat": -21.34371402
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Cour Grenade Inn (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "38, rue Marius et Ary Leblond 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47733885,
+        "lat": -21.33811422
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Crêperie Saint Malo",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "1, rue du Port 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47680309,
+        "lat": -21.34331233
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Ostéria (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de Saint-Pierre",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Chèque vacances",
+        "Ticket restaurant",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "16, rue Marius et Ary Leblond 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47829609,
+        "lat": -21.3387823
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Ti Case Pizza",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "2, rue Auguste Babet 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478379,
+        "lat": -21.342195
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Art i Show",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "107, rue Suffren 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.472669,
+        "lat": -21.337183
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Cafétéria Liberty",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "Centre Commercial Plein Sud Hyper Crack - Zac Canabady 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47155588,
+        "lat": -21.32677058
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Indochine",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de Saint-Pierre",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "1, rue Suffren 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.470602,
+        "lat": -21.343453
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Resto de la Zone",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "85 F, chemin Stéphane Rebecca - Z.I. n°2 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47284,
+        "lat": -21.317907
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Mont Glacier",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "13, rue Marius et Ary Leblond 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478366,
+        "lat": -21.338816
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Annexe(L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "3B, rue des Bons Enfants 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478479,
+        "lat": -21.341237
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Chenaï Express",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "67 bis, rue des Bons Enfants 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.473174,
+        "lat": -21.339533
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Maison GAC",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "51, rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47611,
+        "lat": -21.33822
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Safran (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "chemin Frédeline 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.466216,
+        "lat": -21.312742
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Délices du Maroc 97410 (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "2 rue Blanche Pierson 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.486948,
+        "lat": -21.339186
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Filaos (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "74, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.460271,
+        "lat": -21.340244
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Bonne Pizza (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de Saint-Pierre",
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "82, rue Victor le Vigoureux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.475273,
+        "lat": -21.337063
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Pierre Bistrot Chic (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "42, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.474358,
+        "lat": -21.343551
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Be Lounge",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "26, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.474775,
+        "lat": -21.343516
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Lune dans le Caniveau (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "1 bis, rue Auguste Babet 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478148,
+        "lat": -21.342499
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Secret Garden",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "31 D, rue Auguste Babet 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.479657,
+        "lat": -21.337866
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "O'Brothers",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "99 rue Augustin Archambaud 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478828,
+        "lat": -21.333757
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Ile Intense Restaurant (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "258, allée des Aubépines - Bassin Plat 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.489795,
+        "lat": -21.330014
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Restaurant Fleur de Tartare",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "94 avenue Président Mitterrand - Terre Sainte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.485057,
+        "lat": -21.345012
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Restaurant La Canne à Sucre 2",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "14 allée de la Desserte 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.475857,
+        "lat": -21.318148
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Wok Péï",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "4 rue Mon Caprice 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.49826,
+        "lat": -21.306275
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Auberge d'Antan",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "27 impasse des Papangues 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.458525,
+        "lat": -21.307988
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Boucherie (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,Office de Tourisme du Tampon-Plaine des Cafres,Office de Tourisme de Saint Leu ,Office de Tourisme de Saint-Paul",
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Chèque vacances",
+        "Traveller chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "34, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.47499756,
+        "lat": -21.3435579
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Cap Marine (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "17, avenue Daniel Ramin - Grand Bois 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.52859,
+        "lat": -21.362162
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Sush'Ile",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "63 chemin des Baobabs 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.535677,
+        "lat": -21.330419
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Kaz Nature",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "6, rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.474475,
+        "lat": -21.343314
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Plancha (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "57, rue Four à Chaux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.471928,
+        "lat": -21.341626
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Karaï Gourmand (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Espèces"
+      ],
+      "adresse": "9, Ligne Cambrai 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.471086,
+        "lat": -21.286515
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Five (Le) - Restaurant",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "8, rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.474591,
+        "lat": -21.34308
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Saint-Raphaël (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "Zac Mon Repos - 17, rue Benjamin Hoarau 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.452402,
+        "lat": -21.317487
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Akina",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "25 rue François Mitterand 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.480495,
+        "lat": -21.34234
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Avernza Café Saint-Pierre",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "32 boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.475204,
+        "lat": -21.343417
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Grilladine (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "72 rue Augustin Archambaud 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478809,
+        "lat": -21.333392
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Cœur de Blé",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "161 chemin Badamier ZI N°3 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.459463,
+        "lat": -21.303263
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Epicurieux (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "9 rue Suffren 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.470552,
+        "lat": -21.343061
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Table de Mimi'M (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "7 allée des Muguets 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.490384,
+        "lat": -21.328051
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Papi'es (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "8 chemin Ringuin 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.503686,
+        "lat": -21.336037
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Centre Ville (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "67, rue du Four à Chaux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.471459,
+        "lat": -21.341348
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Envers (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "13, rue Suffren 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.470844,
+        "lat": -21.342797
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Messina (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "87, chemin Bœuf 97432 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.463005,
+        "lat": -21.291329
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Ambiance et Tradition",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "89, chemin Stéphane Rébecca 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.471424,
+        "lat": -21.317187
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Palace (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "109, boulevard Hubert Delisle 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.467516,
+        "lat": -21.343561
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Plalada (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "19, route Pointe du Bois 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.445908,
+        "lat": -21.320581
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Bocal 974 (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Ticket restaurant"
+      ],
+      "adresse": "47 rue du Four à Chaux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.473007,
+        "lat": -21.341737
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "BubbleTplace Sud",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "50 rue François de Mahy 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.475899,
+        "lat": -21.33829
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Trois Petits Cochons (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "7, chemin Eliard Laude 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.483231,
+        "lat": -21.323532
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Sakimfo BBQ House",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "2, rue Auguste Babet 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.478359,
+        "lat": -21.342245
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Kazkfé",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "32, rue du Four à Chaux 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.475068,
+        "lat": -21.342337
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "7 Ô'trement",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "13, rue de Cayenne 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.466921,
+        "lat": -21.338895
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Crêperie La Saint Georges",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Saint-Pierre",
+      "code_insee_de_la_commune": 97416,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces",
+        "American express"
+      ],
+      "adresse": "23 rue François Isautier 97410 Saint-Pierre",
+      "coordonnees_geographiques": {
+        "lon": 55.473,
+        "lat": -21.34
+      }
+    }
+  ]
+}
