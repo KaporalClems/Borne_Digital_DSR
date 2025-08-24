@@ -30,29 +30,6 @@
       "type": [
         "Restauration"
       ],
-      "nom_commercial": "Eté Indien (L')",
-      "zone_touristique": "Sud",
-      "classement": null,
-      "commune": "Saint-Pierre",
-      "code_insee_de_la_commune": 97416,
-      "offices_de_tourisme": null,
-      "modes_de_paiement": [
-        "Chèque",
-        "Espèces"
-      ],
-      "adresse": "48, boulevard Hubert Delisle 97410 Saint-Pierre",
-      "coordonnees_geographiques": {
-        "lon": 55.47137,
-        "lat": -21.34351
-      },
-      "photo": "",
-      "prix_fourchette": "Non renseigné",
-      "notation": "Non noté"
-    },
-    {
-      "type": [
-        "Restauration"
-      ],
       "nom_commercial": "Colibri (Le)",
       "zone_touristique": "Sud",
       "classement": null,
