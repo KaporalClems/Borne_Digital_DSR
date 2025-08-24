@@ -1,0 +1,359 @@
+{
+  "total_count": 17,
+  "results": [
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Délices et Douceurs",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "15, avenue de Bretagne 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.335415,
+        "lat": -21.272685
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Table Zen (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "Z.I. des Dunes 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.370981,
+        "lat": -21.273821
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Moustache et Béret",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Visa",
+        "Mastercard",
+        "Espèces"
+      ],
+      "adresse": "125 Allée de Montaignac 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.362238,
+        "lat": -21.263441
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Green Tee (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": null,
+      "adresse": "140 les Sables - Bourbon Golf Club 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.357951,
+        "lat": -21.27606
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Lawfli",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Espèces"
+      ],
+      "adresse": "30, rue Octave Bénard 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.335126,
+        "lat": -21.268654
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Langue d'Oc (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "137 bis, avenue Raymond Barre 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.362592,
+        "lat": -21.263091
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Ilot (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "2, avenue de l’Océan 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.33421248,
+        "lat": -21.264975
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Ferme Auberge Coeur des Isles",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "259, route du Maniron 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.388439,
+        "lat": -21.247265
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Carangue (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "1, rue Roger Payet 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.333799,
+        "lat": -21.265164
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Bambou (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Chèque vacances",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "56, rue Octave Bénard 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.33410769,
+        "lat": -21.26572366
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Play Off (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "140 bis, rue des Sables - Z.I. Les Sables Golf Club de Bourbon 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.36059969,
+        "lat": -21.27596457
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Macao (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "30 B, avenue Octave Bénard 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.334593,
+        "lat": -21.267309
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Marmite (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Espèces"
+      ],
+      "adresse": "2 avenue de l'Océan 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.356165,
+        "lat": -21.259979
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Mille Fleurs (Les)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Espèces"
+      ],
+      "adresse": "231, route du Maniron 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.38847093,
+        "lat": -21.24928897
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Eté Indien (L')",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+      "modes_de_paiement": [
+        "Visa",
+        "Eurocard",
+        "Mastercard",
+        "Chèque",
+        "Ticket restaurant",
+        "Espèces"
+      ],
+      "adresse": "1, rue des Salines 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.334621,
+        "lat": -21.266087
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Caza Mama (La)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "Route des Canots 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.366335,
+        "lat": -21.246822
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Restaurant Ti Zardin",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Etang-Salé",
+      "code_insee_de_la_commune": 97404,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Espèces"
+      ],
+      "adresse": "195 avenue Raymond Barre 97427 Etang-Salé",
+      "coordonnees_geographiques": {
+        "lon": 55.357715,
+        "lat": -21.260194
+      }
+    }
+  ]
+}
