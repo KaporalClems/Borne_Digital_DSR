@@ -1,0 +1,88 @@
+{
+  "total_count": 4,
+  "results": [
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Tipary Anne",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Avirons (Les)",
+      "code_insee_de_la_commune": 97401,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "17, Route du Tévelave 97425 Avirons (Les)",
+      "coordonnees_geographiques": {
+        "lon": 55.34709737,
+        "lat": -21.21992084
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Kaki (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Avirons (Les)",
+      "code_insee_de_la_commune": 97401,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Virement",
+        "Mandat postal",
+        "Espèces"
+      ],
+      "adresse": "1 bis, ruelle des Canas 97425 Avirons (Les)",
+      "coordonnees_geographiques": {
+        "lon": 55.35693915,
+        "lat": -21.20803963
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "Ferme Auberge du Pont Neuf",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Avirons (Les)",
+      "code_insee_de_la_commune": 97401,
+      "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "59 ter, CD 11 97425 Avirons (Les)",
+      "coordonnees_geographiques": {
+        "lon": 55.348227,
+        "lat": -21.254319
+      }
+    },
+    {
+      "type": [
+        "Restauration"
+      ],
+      "nom_commercial": "P'tit Resto (Le)",
+      "zone_touristique": "Sud",
+      "classement": null,
+      "commune": "Avirons (Les)",
+      "code_insee_de_la_commune": 97401,
+      "offices_de_tourisme": null,
+      "modes_de_paiement": [
+        "Chèque",
+        "Espèces"
+      ],
+      "adresse": "44, avenue du Général de Gaulle 97425 Avirons (Les)",
+      "coordonnees_geographiques": {
+        "lon": 55.332948,
+        "lat": -21.240195
+      }
+    }
+  ]
+}
