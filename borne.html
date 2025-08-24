@@ -1,63 +1,90 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Borne Code Postaux DSR</title>
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-    input, button { padding: 10px; font-size: 18px; margin: 10px; }
-    h1 { margin-bottom: 30px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saisie Code Postaux DSR</title>
+    <style>
+        body { font-family: 'Inter', Arial, sans-serif; padding: 20px; max-width: 500px; margin: auto; background-color: #f4f7f9; color: #333; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .container { background-color: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; }
+        h1 { text-align: center; color: #2c3e50; }
+        input, button { padding: 12px; margin: 8px 0; font-size: 16px; width: 100%; box-sizing: border-box; border: 1px solid #ddd; border-radius: 8px; }
+        button { background-color: #28a745; color: white; border: none; cursor: pointer; transition: background-color 0.3s ease; }
+        button:hover { background-color: #218838; }
+        #message { text-align: center; margin-top: 15px; font-weight: bold; }
+    </style>
 </head>
 <body>
-  <h1>Borne - Saisie Code Postal</h1>
+    <div class="container">
+        <h1>Saisie de Code Postal</h1>
+        <p style="text-align: center; color: #666;">Veuillez entrer votre code postal et votre ville.</p>
 
-  <input type="text" id="codePostal" placeholder="Ex: 75001" maxlength="5">
-  <button onclick="validerCode()">Valider</button>
+        <!-- Formulaire de saisie -->
+        <input type="text" id="postalCodeInput" placeholder="Code postal" required>
+        <input type="text" id="cityInput" placeholder="Ville" required>
+        <button onclick="savePostalCode()">Soumettre</button>
 
-  <p id="message" style="color: green; font-weight: bold;"></p>
+        <!-- Message de confirmation ou d'erreur -->
+        <p id="message"></p>
+    </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+        
+        // Configuration de Firebase
+        // Remplacez par vos informations si elles sont différentes
+        const firebaseConfig = {
+            apiKey: "AIzaSyBy3tI-gl_z0JzA7uH6bQtMc89pfFcgJMs",
+            authDomain: "code-postaux-dsr.firebaseapp.com",
+            projectId: "code-postaux-dsr",
+            storageBucket: "code-postaux-dsr.firebasestorage.app",
+            messagingSenderId: "317015321347",
+            appId: "1:317015321347:web:27a95ea854064b21561736",
+            measurementId: "G-25B25N3GP9"
+        };
 
-    // ⚠️ Mets ici ta config Firebase
-    const firebaseConfig = {
-      apiKey: "AIzaSyBy3tI-gl_z0JzA7uH6bQtMc89pfFcgJMs",
-      authDomain: "code-postaux-dsr.firebaseapp.com",
-      projectId: "code-postaux-dsr",
-      storageBucket: "code-postaux-dsr.firebasestorage.app",
-      messagingSenderId: "317015321347",
-      appId: "1:317015321347:web:27a95ea854064b21561736",
-      measurementId: "G-25B25N3GP9"
-    };
+        // Initialisation de Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+        // Sauvegarde du code postal dans Firestore
+        window.savePostalCode = async function() {
+            const postalCode = document.getElementById("postalCodeInput").value.trim();
+            const city = document.getElementById("cityInput").value.trim();
+            const messageElement = document.getElementById("message");
 
-    async function validerCode() {
-      const code = document.getElementById('codePostal').value.trim();
-      const msg = document.getElementById('message');
+            // Valide les champs
+            if (postalCode === "" || city === "") {
+                messageElement.textContent = "Veuillez remplir tous les champs.";
+                messageElement.style.color = "red";
+                return;
+            }
 
-      if (!/^[0-9]{5}$/.test(code)) {
-        msg.style.color = "red";
-        msg.textContent = "Veuillez entrer un code postal valide (5 chiffres).";
-        return;
-      }
+            try {
+                // Ajoute un nouveau document à la collection "codesPostaux"
+                await addDoc(collection(db, "codesPostaux"), {
+                    code: postalCode,
+                    ville: city,
+                    date: new Date()
+                });
+                
+                // Affiche un message de succès
+                messageElement.textContent = "Merci ! Vos informations ont été enregistrées.";
+                messageElement.style.color = "green";
 
-      try {
-        await addDoc(collection(db, "codesPostaux"), {
-          code: code,
-          date: serverTimestamp()
-        });
-        msg.style.color = "green";
-        msg.textContent = "Code postal enregistré ✅";
-        document.getElementById('codePostal').value = "";
-      } catch (err) {
-        msg.style.color = "red";
-        msg.textContent = "Erreur lors de l'enregistrement : " + err.message;
-      }
-    }
-  </script>
+                // Réinitialise les champs
+                document.getElementById("postalCodeInput").value = "";
+                document.getElementById("cityInput").value = "";
+
+            } catch (e) {
+                // Affiche un message d'erreur
+                console.error("Erreur lors de l'ajout du document: ", e);
+                messageElement.textContent = "Une erreur est survenue. Veuillez réessayer.";
+                messageElement.style.color = "red";
+            }
+        }
+    </script>
 </body>
 </html>
