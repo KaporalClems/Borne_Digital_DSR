@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destination Activités - Sud Réunion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        :root {
+            --theme-color-dark: #1e3a8a; /* Un bleu foncé pour les activités */
+            --theme-color-light: #3b82f6; /* Un bleu plus clair et vif */
+            --theme-white: #ffffff;
+        }
+        .bg-theme-dark { background-color: var(--theme-color-dark); }
+        .text-theme-light { color: var(--theme-color-light); }
+        .ring-theme-light:focus { ring-color: var(--theme-color-light); }
+        .hover-bg-theme-dark:hover { background-color: var(--theme-color-dark); }
+
+        .card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        
+        #fullscreen-carousel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: -1;
+        }
+        #fullscreen-carousel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Slightly darker for readability */
+            z-index: 1;
+        }
+        .carousel-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 0;
+        }
+        .carousel-item.active {
+            opacity: 1;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #map {
+            height: 500px;
+            border-radius: 0.5rem;
+        }
+        .activity-icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+        
+        .animate-title {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUP 1s ease-out 0.5s forwards;
+        }
+        @keyframes fadeInUP {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Modal styles */
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+        .modal-hidden {
+            pointer-events: none;
+            opacity: 0;
+        }
+        .modal-content {
+            transition: transform 0.25s ease;
+        }
+        .modal-hidden .modal-content {
+            transform: scale(0.95);
+        }
+
+        /* Map popup styles */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+        }
+        .leaflet-popup-content {
+            margin: 12px !important;
+        }
+        .popup-activity-icon {
+            width: 1rem;
+            height: 1rem;
+        }
+        
+        /* QR Code styles */
+        .qr-container {
+            transition: all 0.3s ease-in-out;
+            transform-origin: center;
+        }
+        .qr-container.hidden {
+            opacity: 0;
+            transform: scale(0.5);
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid var(--theme-color-dark);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Background Carousel -->
+    <section id="fullscreen-carousel">
+        <div class="carousel-item active"><img src="https://images.unsplash.com/photo-1548544149-a29d6344549f?q=80&w=2070&auto=format&fit=crop" alt="Randonnée à La Réunion"></div>
+        <div class="carousel-item"><img src="https://images.unsplash.com/photo-1628109312151-540ac0626391?q=80&w=1974&auto=format&fit=crop" alt="Plongée sous-marine"></div>
+        <div class="carousel-item"><img src="https://images.unsplash.com/photo-1549419194-e316d9b04f14?q=80&w=1974&auto=format&fit=crop" alt="Parapente au-dessus de l'île"></div>
+    </section>
+
+    <!-- Page Content -->
+    <div class="relative z-10">
+        <header class="bg-theme-dark/70 backdrop-blur-sm shadow-md sticky top-0">
+            <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <div class="text-2xl font-bold text-white">Destination <span class="text-theme-light">Activités</span></div>
+                <div>
+                    <a href="#" class="text-gray-200 hover:text-white px-3 py-2">Accueil</a>
+                    <a href="#" class="text-gray-200 hover:text-white px-3 py-2">Activités</a>
+                    <a href="#" class="text-gray-200 hover:text-white px-3 py-2">Contact</a>
+                </div>
+            </nav>
+        </header>
+
+        <div class="h-[calc(100vh-68px)] flex flex-col items-center justify-center text-white text-center px-4">
+            <h1 class="text-5xl md:text-7xl font-black uppercase animate-title" style="text-shadow: 2px 2px 8px rgba(0,0,0,0.7);">Explorez le Sud</h1>
+            <p class="mt-4 text-lg md:text-xl max-w-2xl animate-title" style="animation-delay: 0.7s; text-shadow: 1px 1px 4px rgba(0,0,0,0.7);">Découvrez les loisirs et aventures de l'île intense.</p>
+            <a href="#filters" class="mt-8 animate-bounce"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10"><path stroke-linecap="round" stroke-linejoin="round" d="m9 12.75 3 3m0 0 3-3m-3 3v-7.5" /></svg></a>
+        </div>
+
+        <main class="container mx-auto px-6 py-8 bg-f0f4f8" id="content-start">
+            <section id="filters" class="mb-12 p-6 bg-white rounded-lg shadow-xl">
+                <h2 class="text-3xl font-bold mb-6 text-theme-dark text-center">Trouvez votre prochaine aventure</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <input type="text" id="searchInput" placeholder="Nom de l'activité..." class="lg:col-span-2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light">
+                    <select id="communeFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light"><option value="all">Toute commune</option></select>
+                    <select id="typeFilter" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 ring-theme-light"><option value="all">Tous types</option></select>
+                </div>
+            </section>
+
+            <!-- Layout: Map then Activity Grid -->
+            <div class="space-y-8">
+                <div class="bg-white p-4 rounded-lg shadow-xl"><h3 class="text-xl font-bold mb-4 text-theme-dark">Carte des activités</h3><div id="map"></div></div>
+                <div><div id="activities-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div></div>
+            </div>
+        </main>
+
+        <footer class="bg-theme-dark text-white text-center p-4 mt-12"><p>&copy; Destination Sud Réunion 2025</p></footer>
+    </div>
+
+    <!-- Modal for activity details -->
+    <div id="details-modal" class="modal modal-hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="modal-content bg-white rounded-lg shadow-2xl m-4 max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div id="modal-body">
+                <!-- Content injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <p class="mt-4 text-theme-dark text-lg">Chargement des données...</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const activitiesList = document.getElementById('activities-list');
+            const searchInput = document.getElementById('searchInput');
+            const communeFilter = document.getElementById('communeFilter');
+            const typeFilter = document.getElementById('typeFilter');
+            const modal = document.getElementById('details-modal');
+            const modalBody = document.getElementById('modal-body');
+            const loadingOverlay = document.getElementById('loading-overlay');
+            
+            // --- GLOBAL VARIABLES ---
+            let allActivities = [];
+            let map;
+            let activityMarkers = {};
+            const placeholderImage = 'https://placehold.co/600x400/CCCCCC/333333?text=Image+non+disponible';
+            const placeholderDescription = 'Aucune description disponible pour cette activité.';
+            const placeholderPrice = 'Non renseigné';
+
+            // SVG icons for different activity types
+            const activityIcons = {
+                'Randonnée': `<svg class="activity-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.69 2 6 4.69 6 8V16C6 19.31 8.69 22 12 22C15.31 22 18 19.31 18 16V8C18 4.69 15.31 2 12 2M12 4C14.21 4 16 5.79 16 8V16C16 18.21 14.21 20 12 20C9.79 20 8 18.21 8 16V8C8 5.79 9.79 4 12 4M12 10C10.9 10 10 10.9 10 12C10 13.11 10.9 14 12 14C13.11 14 14 13.11 14 12C14 10.9 13.11 10 12 10Z"/></svg>`,
+                'Plongée': `<svg class="activity-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.69 2 6 4.69 6 8V16C6 19.31 8.69 22 12 22C15.31 22 18 19.31 18 16V8C18 4.69 15.31 2 12 2M12 4C14.21 4 16 5.79 16 8V16C16 18.21 14.21 20 12 20C9.79 20 8 18.21 8 16V8C8 5.79 9.79 4 12 4M12 10C10.9 10 10 10.9 10 12C10 13.11 10.9 14 12 14C13.11 14 14 13.11 14 12C14 10.9 13.11 10 12 10Z"/></svg>`,
+                'Parapente': `<svg class="activity-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.69 2 6 4.69 6 8V16C6 19.31 8.69 22 12 22C15.31 22 18 19.31 18 16V8C18 4.69 15.31 2 12 2M12 4C14.21 4 16 5.79 16 8V16C16 18.21 14.21 20 12 20C9.79 20 8 18.21 8 16V8C8 5.79 9.79 4 12 4M12 10C10.9 10 10 10.9 10 12C10 13.11 10.9 14 12 14C13.11 14 14 13.11 14 12C14 10.9 13.11 10 12 10Z"/></svg>`,
+                'Défaut': `<svg class="activity-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>`
+            };
+
+            // --- FUNCTION TO LOAD DATA FROM MULTIPLE SOURCES ---
+            async function fetchAllActivities() {
+                loadingOverlay.style.display = 'flex';
+                // URLs of JSON files on GitHub
+                const filePaths = [
+                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-saintpierre.json",
+                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-saintlouis.json",
+                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-letangsale.json",
+                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-lesavirons.json",
+                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-petiteile.json"
+                ];
+                
+                let combinedData = [];
+                
+                try {
+                    const promises = filePaths.map(path => 
+                        fetch(path).then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status} for file: ${path}`);
+                            }
+                            return response.json();
+                        })
+                    );
+                    const results = await Promise.all(promises);
+                    // Access the 'results' array in each JSON object before merging
+                    combinedData = results.flatMap(data => data.results);
+                    return combinedData;
+                } catch (error) {
+                    console.error("Error loading data:", error);
+                    activitiesList.innerHTML = `<p class="text-red-500 text-center col-span-full">Une erreur est survenue lors du chargement des activités. Veuillez réessayer plus tard.</p>`;
+                    return [];
+                } finally {
+                    loadingOverlay.style.display = 'none';
+                }
+            }
+            
+            function createActivityCard(activity) {
+                const activityCard = document.createElement('div');
+                activityCard.className = `card bg-white rounded-lg shadow-lg overflow-hidden flex flex-col`;
+                
+                // Use the new JSON keys
+                const name = activity.nom_commercial;
+                const type = activity.type?.[0] || 'Défaut'; // Use the first type or a default
+                const commune = activity.commune;
+                const lat = activity.coordonnees_geographiques?.lat;
+                const lon = activity.coordonnees_geographiques?.lon;
+
+                const activityIconHtml = activityIcons[type] || activityIcons['Défaut'];
+                const price = activity.prix_fourchette || placeholderPrice;
+                const image = activity.photo || placeholderImage;
+
+                activityCard.innerHTML = `
+                    <img src="${image}" onerror="this.onerror=null;this.src='${placeholderImage}';" alt="Image de ${name}" class="w-full h-32 object-cover cursor-pointer">
+                    <div class="p-3 flex flex-col flex-grow">
+                        <h3 class="text-base font-bold mb-1 text-theme-dark cursor-pointer">${name}</h3>
+                        <div class="flex items-center text-xs text-gray-600 mb-2">
+                            <span class="font-bold text-lg text-gray-800">${price}</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-gray-500">${activityIconHtml}</div>
+                        <div class="mt-auto pt-3 flex justify-end">
+                            <button class="info-btn text-xs bg-gray-600 text-white font-semibold px-3 py-1 rounded-full hover-bg-theme-dark transition-colors">+ d'infos</button>
+                        </div>
+                    </div>`;
+                
+                // Check if coordinates are valid before adding events
+                if (lat && lon && !isNaN(lat) && !isNaN(lon)) {
+                    activityCard.querySelector('img').addEventListener('click', () => {
+                        map.setView([lat, lon], 14);
+                        activityMarkers[name]?.openPopup();
+                    });
+                    activityCard.querySelector('h3').addEventListener('click', () => {
+                        map.setView([lat, lon], 14);
+                        activityMarkers[name]?.openPopup();
+                    });
+                }
+                
+                activityCard.querySelector('.info-btn').addEventListener('click', () => showDetailsModal(activity));
+                return activityCard;
+            }
+
+            function displayActivities(filteredActivities) {
+                activitiesList.innerHTML = '';
+                Object.values(activityMarkers).forEach(marker => map.removeLayer(marker));
+                activityMarkers = {}; 
+                
+                if (filteredActivities.length === 0) {
+                    activitiesList.innerHTML = `<p class="text-gray-500 text-center col-span-full">Aucune activité ne correspond à votre recherche.</p>`;
+                    return;
+                }
+
+                filteredActivities.forEach(activity => {
+                    activitiesList.appendChild(createActivityCard(activity));
+                    const lat = activity.coordonnees_geographiques?.lat;
+                    const lon = activity.coordonnees_geographiques?.lon;
+                    
+                    if (lat && lon && !isNaN(lat) && !isNaN(lon)) {
+                        const type = activity.type?.[0] || 'Défaut';
+                        const activityIconHtmlPopup = (activityIcons[type] || activityIcons['Défaut']).replace('activity-icon', 'popup-activity-icon');
+                        const popupContent = `
+                            <div class="font-sans text-gray-800 w-56">
+                                <h3 class="font-bold text-base mb-2">${activity.nom_commercial}</h3>
+                                <div class="flex flex-wrap gap-2 items-center">${activityIconHtmlPopup}</div>
+                                <p class="mt-2 text-sm">${activity.description || 'Description non disponible.'}</p>
+                            </div>`;
+                        const marker = L.marker([lat, lon]).addTo(map).bindPopup(popupContent);
+                        activityMarkers[activity.nom_commercial] = marker;
+                    }
+                });
+            }
+
+            // --- FUNCTION TO MANAGE THE DETAILS MODAL ---
+            function showDetailsModal(activity) {
+                const type = activity.type?.[0] || 'Défaut';
+                const activityIconHtml = (activityIcons[type] || activityIcons['Défaut']);
+                const adresse = activity.adresse || 'Adresse non disponible';
+                const description = activity.description || placeholderDescription;
+                
+                // Add QR code button and container
+                const hasQrCode = activity.url_qr_code && activity.url_qr_code.length > 0;
+                const qrButtonHtml = hasQrCode ? `<button id="qr-btn" class="mt-4 w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-full shadow hover:bg-blue-700 transition-colors">Afficher le QR Code</button>` : '';
+
+                modalBody.innerHTML = `
+                    <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center z-20">
+                        <h2 class="text-2xl font-bold text-theme-dark">${activity.nom_commercial}</h2>
+                        <button id="close-modal" class="text-gray-500 hover:text-gray-800 text-3xl leading-none">&times;</button>
+                    </div>
+                    <div class="p-6">
+                        <img src="${activity.photo || placeholderImage}" onerror="this.onerror=null;this.src='${placeholderImage}';" alt="Image de ${activity.nom_commercial}" class="w-full h-64 object-cover rounded-lg mb-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-center mb-4">
+                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Prix</div><div>${activity.prix_fourchette || placeholderPrice}</div></div>
+                            <div class="bg-gray-100 p-2 rounded-lg"><div class="font-bold">Commune</div><div>${activity.commune}</div></div>
+                        </div>
+                        <p class="text-gray-700 mb-4">${description}</p>
+                        <h3 class="font-bold text-theme-dark mb-2">Type d'activité</h3>
+                        <div class="flex flex-wrap gap-4 mb-4 text-gray-600">
+                            <div class="flex items-center gap-2" title="${type}">${activityIconHtml}<span>${type}</span></div>
+                        </div>
+                        <h3 class="font-bold text-theme-dark mb-2">Localisation</h3>
+                        <p class="text-gray-600 bg-gray-100 p-3 rounded-lg">${adresse}</p>
+                        ${qrButtonHtml}
+                        <div id="qr-container" class="qr-container hidden mt-4 flex justify-center p-4 bg-gray-100 rounded-lg">
+                            <img id="qr-code-image" class="w-48 h-48 rounded-lg" alt="QR Code" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(activity.url_qr_code)}">
+                        </div>
+                    </div>`;
+                
+                modal.classList.remove('modal-hidden');
+                document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('modal-hidden'));
+
+                if (hasQrCode) {
+                    const qrBtn = document.getElementById('qr-btn');
+                    const qrContainer = document.getElementById('qr-container');
+                    
+                    qrBtn.addEventListener('click', () => {
+                        qrContainer.classList.toggle('hidden');
+                        qrBtn.textContent = qrContainer.classList.contains('hidden') ? 'Afficher le QR Code' : 'Masquer le QR Code';
+                    });
+                }
+            }
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.classList.add('modal-hidden');
+            });
+            
+            // --- FILTERING AND INITIALIZATION FUNCTIONS ---
+            function populateFilters() {
+                const allCommunes = new Set();
+                const allTypes = new Set();
+                allActivities.forEach(activity => {
+                    allCommunes.add(activity.commune);
+                    if (activity.type) {
+                        activity.type.forEach(t => allTypes.add(t));
+                    }
+                });
+                [...allCommunes].sort().forEach(commune => communeFilter.appendChild(new Option(commune, commune)));
+                [...allTypes].sort().forEach(type => typeFilter.appendChild(new Option(type, type)));
+            }
+
+            function filterActivities() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const commune = communeFilter.value;
+                const type = typeFilter.value;
+                const filtered = allActivities.filter(activity => {
+                    const nameMatch = activity.nom_commercial.toLowerCase().includes(searchTerm);
+                    const communeMatch = (commune === 'all') || (activity.commune === commune);
+                    const typeMatch = (type === 'all') || (activity.type && activity.type.includes(type));
+                    return nameMatch && communeMatch && typeMatch;
+                });
+                displayActivities(filtered);
+            }
+
+            // --- APPLICATION INITIALIZATION ---
+            async function initializeApp() {
+                allActivities = await fetchAllActivities();
+                if (allActivities.length > 0) {
+                    const reunionBounds = L.latLngBounds(L.latLng(-21.5, 55.1), L.latLng(-20.8, 56.0));
+                    map = L.map('map', { center: [-21.28, 55.55], zoom: 10, maxBounds: reunionBounds, minZoom: 9 });
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: 'Leaflet | &copy; OpenStreetMap contributors' }).addTo(map);
+                    
+                    populateFilters();
+                    displayActivities(allActivities);
+
+                    [searchInput, communeFilter, typeFilter].forEach(el => el.addEventListener('change', filterActivities));
+                    searchInput.addEventListener('input', filterActivities);
+                }
+            }
+
+            // --- CAROUSEL ---
+            const carouselItems = document.querySelectorAll('.carousel-item');
+            let currentItem = 0;
+            setInterval(() => {
+                carouselItems[currentItem].classList.remove('active');
+                currentItem = (currentItem + 1) % carouselItems.length;
+                carouselItems[currentItem].classList.add('active');
+            }, 5000);
+
+            initializeApp();
+        });
+    </script>
+</body>
+</html>
