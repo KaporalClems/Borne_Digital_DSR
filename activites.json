@@ -1,0 +1,2646 @@
+[
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Ecurie du Relais (L')",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": "Maison du Tourisme du Sud Sauvage,OTI Sud-Maison du Tourisme de Petite-Ile",
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "75, chemin Léopold Lebon - Domaine du Relais 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.58612126,
+      "lat": -21.32331079
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Mafate Hélicoptères",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Aéroport de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.426819,
+      "lat": -21.320114
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Eveil et Sens",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "3, impasse du Soleil 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.56081,
+      "lat": -21.369366
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Elliptigo Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "8, impasse Ylang Ylang 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.333854,
+      "lat": -21.264118
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Pauline Verre et Carton",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "9, rue des Cyprès 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.563925,
+      "lat": -21.336348
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Eddyrando",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "157, chemin Cendrine 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.34548,
+      "lat": -21.24361
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Aqua Détente",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "11 bis impasse des Margosiers 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.36512,
+      "lat": -21.257884
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Aéroclub du Sud",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de Saint-Pierre",
+    "modes_de_paiement": [
+      "Chèque",
+      "Virement",
+      "Espèces"
+    ],
+    "adresse": "Aérodrome de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.42706866,
+      "lat": -21.31918816
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "E-Run Bike",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque vacances",
+      "Virement",
+      "Espèces"
+    ],
+    "adresse": "41 A avenue du Général de Gaulle 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.331772,
+      "lat": -21.238345
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Comptoir de la Vanille (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Espèces"
+    ],
+    "adresse": "168 B avenue principale 97450 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.408821,
+      "lat": -21.28737
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Ferme Equestre du Pont Neuf",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "59 ter CD 11 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.348227,
+      "lat": -21.254319
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Golden Club (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "20, rue Francis Rivière - Le Tévelave 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.359129,
+      "lat": -21.212147
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Equirun",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "37, allée Montaignac 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.359269,
+      "lat": -21.261968
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Plaza (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": "OTI Sud- Maison du Tourisme de Saint-Louis",
+    "modes_de_paiement": null,
+    "adresse": "68, rue Saint-Louis 97450 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.413117,
+      "lat": -21.287592
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Quadbike Runners",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "214 bis, avenue Raymond Barre 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.416656,
+      "lat": -21.290631
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Air Aventures",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Aérodrome de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.423611,
+      "lat": -21.320606
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Akéa Spa",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile",
+    "modes_de_paiement": [
+      "Tous modes de paiement"
+    ],
+    "adresse": "Rue des Mascarins - Grand'Anse 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.550683,
+      "lat": -21.366668
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Roulib",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "3, allée Céleste 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.331021,
+      "lat": -21.232292
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Amandine Fruteau – Esprit Randonnée",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "15 C, chemin Cabris 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.350577,
+      "lat": -21.250526
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Five (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Espèces",
+      "American express"
+    ],
+    "adresse": "8, rue François de Mahy 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.474591,
+      "lat": -21.34308
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Crazy Adventures Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "67, chemin Vétyvers - Mont-Vert-les-Hauts 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.54776,
+      "lat": -21.320487
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Ze Trott",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Espèces"
+    ],
+    "adresse": "13 bis chemin Bois de Nèfles 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.368828,
+      "lat": -21.262156
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Au Cœur des Bois",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "26 rue des Merisiers - Village Artisanal Argamasse - Atelier B3 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.551037,
+      "lat": -21.356255
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Enjoy Bikes",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "64 rue des Mariniers 97432 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.497811,
+      "lat": -21.3037
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Casino du Sud",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Espèces",
+      "American express"
+    ],
+    "adresse": "42, boulevard Hubert Delisle 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.473465,
+      "lat": -21.343435
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Toit (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "16, rue Auguste Babet 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.478888,
+      "lat": -21.340562
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Réunion Volcan Evasion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Chèque vacances",
+      "Espèces"
+    ],
+    "adresse": "65 C, chemin Papaye 97421 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.434983,
+      "lat": -21.277733
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Cathelain Jean-Marie",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "21, route des Merles 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.355496,
+      "lat": -21.208031
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "J'Escape",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Espèces"
+    ],
+    "adresse": "9 chemin Maxime Rivière 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.510364,
+      "lat": -21.350075
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Jardin des Tortues (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "56 chemin numéro 1 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.34161,
+      "lat": -21.248722
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "VolKaventure",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "63 A chemin Cimetière - Mont Vert les Bas 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.515929,
+      "lat": -21.340465
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Heliréunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque vacances",
+      "Espèces",
+      "American express"
+    ],
+    "adresse": "Chemin de l'Aérodrome - Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.43166,
+      "lat": -21.312176
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Endémik Club Sport et Nature",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "9 chemin des Tilapias 97450 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.392712,
+      "lat": -21.290254
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Aquavertige",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": "Office de Tourisme de Saint Leu",
+    "modes_de_paiement": [
+      "Visa",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "7, rue de la Goélette 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.483132,
+      "lat": -21.334668
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Alpanes",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": "OTI Nord,OTI Est - Antenne de Saint-Benoît,Office de Tourisme de la Possession",
+    "modes_de_paiement": [
+      "Visa",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": ". 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.529781,
+      "lat": -21.362539
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Ecuries d'Eldorado (Les)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "22, chemin Band'Colons 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.364699,
+      "lat": -21.26654
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Fangourin (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "44, rue du Général de Gaulle - BP 23 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.565907,
+      "lat": -21.354897
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Sabrina Artisanat",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "48 rue Théodore Thomas 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.480938,
+      "lat": -21.326198
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Profundo",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Chèque vacances",
+      "Espèces"
+    ],
+    "adresse": "9A chemin des Maraîchers 97450 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.431132,
+      "lat": -21.284265
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Plongée Salée",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "5 rue Motais de Narbonne 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.334,
+      "lat": -21.266
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Rex",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de Saint-Pierre",
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "rue Auguste Babet 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.478148,
+      "lat": -21.342041
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Planétair974",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Aéroport de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.42593357,
+      "lat": -21.31896075
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Roc Evolution",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "23, chemin Bassin Martin 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.498089,
+      "lat": -21.331944
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Garden Spa",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "42, boulevard Hubert Delisle 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.474358,
+      "lat": -21.343551
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "9zailes4",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Aéroport de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.426,
+      "lat": -21.319
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Air Dimitile",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces",
+      "Paypal"
+    ],
+    "adresse": "Hangar P ULM  chemin de l'aérodrome Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.4259,
+      "lat": -21.318963
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Golf de Bourbon",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Chèque vacances",
+      "Espèces"
+    ],
+    "adresse": "140, ZI les Sables 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.360344,
+      "lat": -21.275749
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Services Cycles",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": ". 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.479841,
+      "lat": -21.343624
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Alazard Romain",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": ". 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.520438,
+      "lat": -21.336696
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Acroroc Parc Aventure",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Chèque vacances",
+      "Espèces"
+    ],
+    "adresse": "24 chemin Bassin Plat 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.490551,
+      "lat": -21.3252674
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Stages Photo Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Chèque vacances",
+      "Espèces"
+    ],
+    "adresse": "11 impasse Strélitzias 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.356547,
+      "lat": -21.241389
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Locamot.re",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Espèces"
+    ],
+    "adresse": "92 rue du Four à Chaux 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.469399,
+      "lat": -21.340613
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "EZ run Adventures",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "27 avenue du Dr Jean Marie Dambreville - bât Alpha 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.491915,
+      "lat": -21.340278
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Réunion Mountain Bike",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Virement"
+    ],
+    "adresse": "rue Guy Hoarau 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.334455,
+      "lat": -21.263155
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Kaz à Kam (La)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "139 avenue Raymond Barre 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.362504,
+      "lat": -21.263239
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Ecomusée du Tévelave",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Route du Kiosque - Tévelave 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.359313,
+      "lat": -21.211076
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Hang'Art",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": null,
+    "adresse": "Place Napoléon Hoareau - Quai de la  Capitainerie - Port de Saint-Pierre 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.476903,
+      "lat": -21.34375
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Route des Perles (La)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "13, impasse des Macouas 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.553052,
+      "lat": -21.349989
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Buggy Loc Run",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "132 chemin Bancoule 97432 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.455837,
+      "lat": -21.292451
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Centre Equestre de la Fenêtre",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud- Maison du Tourisme de Saint-Louis",
+    "modes_de_paiement": [
+      "Chèque",
+      "Virement",
+      "Bon CE",
+      "Espèces"
+    ],
+    "adresse": "31, route de Mont Plaisir 97421 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.4113033,
+      "lat": -21.21091745
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Sal'Gosses",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de Saint-Pierre",
+    "modes_de_paiement": [
+      "Visa",
+      "Chèque",
+      "Ticket restaurant",
+      "Espèces"
+    ],
+    "adresse": "38, boulevard Hubert Delisle 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.47477657,
+      "lat": -21.34348364
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Survol Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Chèque vacances",
+      "Espèces"
+    ],
+    "adresse": "Chemin de l'Aérodrome de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.43166,
+      "lat": -21.312176
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Réunion Pêche",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Bassin Pirogue 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.334013,
+      "lat": -21.267063
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Volcano Explorer",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque vacances",
+      "Espèces"
+    ],
+    "adresse": "11 ter, allée des Verveines 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.519277,
+      "lat": -21.305083
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Zoo Parc de La Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque vacances",
+      "PassLoisirs",
+      "Espèces"
+    ],
+    "adresse": "20 route Forestière du Zoo 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.3527398,
+      "lat": -21.266972289255
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Anaïs Merland",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "24 allée des Camélias 97432 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.452049,
+      "lat": -21.293503
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Zen Altitude Ulm",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Chèque vacances",
+      "Virement",
+      "Espèces"
+    ],
+    "adresse": "60 chemin de l'Aérodrome 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.425367,
+      "lat": -21.318599
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Sham's Théâtre",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "9, chemin Bureaux - Ancienne Usine Sucrière de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.428822,
+      "lat": -21.302569
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Makes Aventures",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "e-carte bleue",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Route Forestière des Makes - Camp Montplaisir 97421 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.4254,
+      "lat": -21.191514
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Richard Artisanat",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "78, rue du Four à Chaux 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.473414,
+      "lat": -21.3419
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Moulin à Café (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Rue Bon Pasteur 97432 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.471604,
+      "lat": -21.283866
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Mobilboard La Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "PassLoisirs",
+      "Espèces"
+    ],
+    "adresse": "Les Comptoirs du Sud - 6, Place Napoléon Hoareau 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.476691,
+      "lat": -21.343917
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Yogeshwari Tricot",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Virement",
+      "Espèces"
+    ],
+    "adresse": "10, impasse Cellaye Patché - Grand Bois 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.519183,
+      "lat": -21.355977
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Reborn (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Espèces"
+    ],
+    "adresse": "77 CD - 29 Ravine des Cafres 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.521100166329,
+      "lat": -21.335745629812
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Run Hélico",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "99 chemin de l'Aérodrome - Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.429461,
+      "lat": -21.316747
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Théâtre les Sables",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Place Fourcade 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.359184,
+      "lat": -21.267088
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Casimir Vincent",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "12, rue Théodore Thomas - Basse Terre 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.482147,
+      "lat": -21.324683
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Bato Péi",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Port de Plaisance 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.475182,
+      "lat": -21.3453
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Corail Hélicoptères - Base de Saint-Pierre",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de Saint-Pierre",
+    "modes_de_paiement": [
+      "Visa",
+      "Chèque",
+      "Chèque vacances",
+      "Espèces",
+      "American express"
+    ],
+    "adresse": "Aéroport de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.427801,
+      "lat": -21.319328
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Bourbon Nature",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "72, rue Maxime Payet - Manapany-les-Bains 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.576864,
+      "lat": -21.369078
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Saisons Gourmandes de Marie (Les)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque"
+    ],
+    "adresse": "38, avenue de Président Mitterrand - Terre Sainte 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.482091,
+      "lat": -21.343396
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Etc Réunion Saint-Pierre",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": null,
+    "adresse": "16 A rue François de Mahy 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.474821,
+      "lat": -21.342154
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Factory Pub (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": "OTI Sud-Maison du Tourisme de Petite-Ile,OTI Sud - Office de Tourisme de Saint-Pierre",
+    "modes_de_paiement": [
+      "Chèque",
+      "Ticket restaurant",
+      "Espèces"
+    ],
+    "adresse": "40, boulevard Hubert Delisle 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.47457393,
+      "lat": -21.34349986
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Kerveguen (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "15, rue de la République 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.465721,
+      "lat": -21.333686
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Centre Lucet Langenier",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "15, rue de la République 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.465893,
+      "lat": -21.333468
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Laser Quest",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Chèque vacances",
+      "PassLoisirs",
+      "Espèces"
+    ],
+    "adresse": "16, rue Auguste Babet 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.478752,
+      "lat": -21.340693
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Elsa Lafon",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "40, rue du Ouaki 97421 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.44144,
+      "lat": -21.275503
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Bureau Montagne Rando Volcan",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque vacances",
+      "Espèces"
+    ],
+    "adresse": "11 ter, allée des Verveines 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.519432,
+      "lat": -21.305167
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Moulin Maïs",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": null,
+    "adresse": "13, chemin Canne Tamarin 97450 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.41891,
+      "lat": -21.288545
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Essences et Couleurs",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "RD 26, pont du Bras de la Plaine - Kiosque du pont de l'Entre-Deux 97432 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.46745,
+      "lat": -21.277511
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Madiana Restaurant - Bar - Tapas",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": null,
+    "adresse": "83 Boulevard Hubert Delisle 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.467639,
+      "lat": -21.343185
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Ulm Volcanair",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Aéroport de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.428431,
+      "lat": -21.318194
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Legendre Christian",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "49 chemin Grosset 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.535712,
+      "lat": -21.332778
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Vertikal Jump Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Chèque vacances",
+      "Espèces"
+    ],
+    "adresse": "Pont du Bras de la Plaine 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.478349,
+      "lat": -21.333135
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Maxland",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Espèces"
+    ],
+    "adresse": "14 place Napoléon Hoarau 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.476691,
+      "lat": -21.343917
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Road Trip Moto Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Espèces"
+    ],
+    "adresse": "4 avenue du Père René Payet 97450 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.406572,
+      "lat": -21.289672
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Atelier Culinaire - Le Goût Créole",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "42 chemin Mélina 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.344841,
+      "lat": -21.230915
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Lé Zarts d'Ici",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Marché couvert - Galerie Frappier Montbenoit - Box n°4 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.473639,
+      "lat": -21.340827
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Marché Couvert de Saint-Pierre",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de Saint-Pierre",
+    "modes_de_paiement": [
+      "Espèces"
+    ],
+    "adresse": "Rue Victor le Vigoureux 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.473639,
+      "lat": -21.340812
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Fly 974 Tandem",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "Aéroport de Pierrefonds 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.260788,
+      "lat": -21.035183
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Neptune (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "Espèces",
+      "American express"
+    ],
+    "adresse": "117, boulevard Hubert Delisle 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.462664,
+      "lat": -21.34144
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Loca Run",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Virement",
+      "Espèces"
+    ],
+    "adresse": "4 chemin Palama 97432 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.474627,
+      "lat": -21.279915
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Prizoners",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "71, route Ligne Paradis 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.475549,
+      "lat": -21.31347
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Makes Astro",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "19, chemin Anatole Gastrin 97421 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.40357,
+      "lat": -21.219861
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Tortue fait Maison (La)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "68 rue Caumont 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.47164,
+      "lat": -21.337891
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Bike'R",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "6 chemin Lallemand 97432 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.47399,
+      "lat": -21.286623
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Run Escape Game",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Espèces"
+    ],
+    "adresse": "25 rue des Fabriques 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.453942,
+      "lat": -21.311814
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Diamant Noir - Tunnels de Lave",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "10 B chemin Parc Cabris 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.534455,
+      "lat": -21.360791
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Canyon Arrangé",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "5 rue des Oignons 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.554445,
+      "lat": -21.350782
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Lotte",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Virement",
+      "Espèces"
+    ],
+    "adresse": "Angle de la rue BenoiteBoulard et de la ZI n°2 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.473993,
+      "lat": -21.317593
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Urban Speed Run",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Espèces"
+    ],
+    "adresse": "131 C avenue Président Mitterrand - Terre-Sainte 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.487349,
+      "lat": -21.345932
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Instants Montagne",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Virement",
+      "Espèces"
+    ],
+    "adresse": "19 rue des Grands Palmiers 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.347328,
+      "lat": -20.956747
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Ecole de Canyoning 974",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Avirons (Les)",
+    "code_insee_de_la_commune": 97401,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "5 rue Sylvie Cadet 97425 Avirons (Les)",
+    "coordonnees_geographiques": {
+      "lon": 55.335936,
+      "lat": -21.243017
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Chakouat",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Louis",
+    "code_insee_de_la_commune": 97414,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Virement",
+      "Espèces"
+    ],
+    "adresse": "La Fabri'c - Zac Avenir 44 avenue des Maldives 97450 Saint-Louis",
+    "coordonnees_geographiques": {
+      "lon": 55.406338,
+      "lat": -21.291583
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "AkOatys",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "PassLoisirs",
+      "Bon CE",
+      "Espèces"
+    ],
+    "adresse": "84, rue Octave Bénard 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.33381931,
+      "lat": -21.26309234
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Long Board Café (Le)",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "18, Petit Boulevard de la Plage 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.468904,
+      "lat": -21.344021
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Kalela Massage",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "401 impasse résidence les Tennis 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.469462,
+      "lat": -21.317701
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Kréol Tours Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Virement"
+    ],
+    "adresse": "24 allée des Verveines 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.560323,
+      "lat": -21.338596
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Rando Run Trekking",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+    "modes_de_paiement": [
+      "Chèque",
+      "Virement",
+      "Espèces"
+    ],
+    "adresse": "2, impasse des Acacias 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.366008,
+      "lat": -21.261586
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Croc Parc",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+    "modes_de_paiement": [
+      "Visa",
+      "Eurocard",
+      "Mastercard",
+      "Chèque",
+      "PassLoisirs",
+      "Espèces"
+    ],
+    "adresse": "1, route forestière 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.35300008,
+      "lat": -21.26695719
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "El Pueblo",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "8, boulevard Hubert Delisle 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.476775,
+      "lat": -21.343484
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Rando Sensation - Zulmé Patrice",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Saint-Pierre",
+    "code_insee_de_la_commune": 97416,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "4, ruelle Georges Personne - Terre-Sainte 97410 Saint-Pierre",
+    "coordonnees_geographiques": {
+      "lon": 55.480522,
+      "lat": -21.341213
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Terre Caméléon",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Chèque",
+      "Virement",
+      "Espèces",
+      "Paypal"
+    ],
+    "adresse": "189, chemin Charbonnier 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.366633,
+      "lat": -21.253967
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Adrénal'Ile",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Visa",
+      "Mastercard",
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "11, impasse des Strélitzias 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.357151,
+      "lat": -21.241477
+    }
+  },
+  {
+    "type": [
+      "PleinAir"
+    ],
+    "nom_commercial": "Nomad-Treks",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Etang-Salé",
+    "code_insee_de_la_commune": 97404,
+    "offices_de_tourisme": "OTI Sud - Office de Tourisme de l'Etang Salé",
+    "modes_de_paiement": [
+      "Chèque",
+      "Espèces"
+    ],
+    "adresse": "BP 70  - PDC 1 97427 Etang-Salé",
+    "coordonnees_geographiques": {
+      "lon": 55.362148,
+      "lat": -21.254792
+    }
+  },
+  {
+    "type": [
+      "Loisir"
+    ],
+    "nom_commercial": "Aguasofro Réunion",
+    "zone_touristique": "Sud",
+    "classement": null,
+    "commune": "Petite-Ile",
+    "code_insee_de_la_commune": 97405,
+    "offices_de_tourisme": null,
+    "modes_de_paiement": [
+      "Espèces"
+    ],
+    "adresse": "47 rue Verger Hemery 97429 Petite-Ile",
+    "coordonnees_geographiques": {
+      "lon": 55.550946,
+      "lat": -21.356466
+    }
+  }
+]
