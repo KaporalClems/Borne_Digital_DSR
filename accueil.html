@@ -145,6 +145,12 @@
             margin-bottom: 0.5rem;
         }
 
+        .grid-icon.image {
+            width: 4rem; /* Taille de l'image */
+            height: 4rem; /* Taille de l'image */
+            object-fit: contain; /* S'assure que l'image tient dans le conteneur */
+        }
+        
         /* Styles de base de la modale */
         .modal {
             display: none;
@@ -546,12 +552,10 @@
                         <span class="grid-icon">🏡</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Les Villages</span>
                     </div>
-                    <!-- NOUVEAU WIDGET : Pour ajouter un nouveau widget/bouton, copiez l'une des structures ci-dessus. -->
-                    <!-- Vous pouvez utiliser `div`, `button`, ou `a` et lui donner la classe `grid-item` -->
-                    <div id="new-custom-widget" class="grid-item bg-gradient-to-br from-indigo-400 to-indigo-600 text-white shadow-xl">
-                        <span class="grid-icon">✨</span>
-                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Widget Personnalisé</span>
-                        <p class="text-xs mt-2 text-center text-gray-200">Cliquez pour un effet !</p>
+                    <!-- CHANGEMENT ICI : Remplacement du bouton 'Widget Personnalisé' par 'Restaurants' -->
+                    <div class="grid-item" data-modal-target="DestinationRestos.html" data-modal-title="Restaurants">
+                        <span class="grid-icon"><i class="fas fa-utensils"></i></span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Restaurants</span>
                     </div>
                      <!-- AJOUT DU BOUTON HEBERGEMENTS -->
                     <div class="grid-item" data-modal-target="Destinationhebergements.html" data-modal-title="Hébergements">
@@ -646,6 +650,41 @@
                     <div class="grid-item" data-modal-target="Destinationshops.html" data-modal-title="Boutiques & Shopping">
                         <span class="grid-icon">🛍️</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Boutiques & Shopping</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Écran 4 - Transports -->
+        <div id="screen-4" class="screen">
+            <div class="main-content lg:flex-row flex-col">
+                <div class="left-panel">
+                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">Se déplacer sur l'île</h1>
+                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">Transports à La Réunion</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button id="prev-screen-4" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div class="grid-item" data-modal-target="https://www.alterneo.re/" data-modal-title="Alternéo">
+                        <img src="https://play-lh.googleusercontent.com/Tx9xScdzNlrbW7Z9ZtAZGjgaEKuX3yb2MNI9fzgePfCwpJzWMFELLE3_R-50YLvtPS58" alt="Logo Alternéo" class="grid-icon image">
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold mt-2">Alternéo</span>
+                        <span class="text-xs mt-1 opacity-75">Bus</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="https://plan.iledelareunion-mobilites.re/fr/" data-modal-title="Île de la Réunion mobilité">
+                        <span class="grid-icon"><i class="fas fa-bus"></i></span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Île de la Réunion mobilité</span>
+                        <span class="text-xs mt-1 opacity-75">Bus</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="https://www.carjaune.re/" data-modal-title="Car Jaune">
+                        <span class="grid-icon"><i class="fas fa-bus"></i></span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Car Jaune</span>
+                        <span class="text-xs mt-1 opacity-75">Bus</span>
+                    </div>
+                    <div class="grid-item" data-modal-target="https://www.google.com/maps/d/u/0/viewer?mid=1wUlLrIM14aWYlVVK48vlBBeEA0-atJI&femb=1&ll=-21.31146667663178%2C55.441023438977055&z=14" data-modal-title="Altervélo">
+                        <span class="grid-icon"><i class="fas fa-biking"></i></span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Altervélo</span>
+                        <span class="text-xs mt-1 opacity-75">Carte</span>
                     </div>
                 </div>
             </div>
@@ -776,6 +815,7 @@
     <!-- Widget de pagination -->
     <div id="pagination-widget" class="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         <div class="dot active"></div>
+        <div class="dot"></div>
         <div class="dot"></div>
         <div class="dot"></div>
     </div>
@@ -1219,4 +1259,3 @@
     </script>
 </body>
 </html>
-
