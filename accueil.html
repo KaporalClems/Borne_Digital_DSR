@@ -7,7 +7,11 @@
     <!-- Inclut Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bibliothèque pour la génération de QR code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0d121c;
@@ -359,6 +363,133 @@
                 font-size: 1rem;
             }
         }
+        
+        /* Styles pour le module de contact en bas à droite */
+        .module-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        /* Style des boutons */
+        .btn {
+            width: 3.5rem;
+            height: 3.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 9999px;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Couleurs et icônes spécifiques */
+        .btn-main {
+            background-image: linear-gradient(135deg, #6EE7B7, #34D399); /* Tailwind: from-emerald-400 to-green-500 */
+        }
+        .btn-chatbot { background-color: #60A5FA; /* Tailwind: blue-400 */ }
+        .btn-message { background-color: #F87171; /* Tailwind: red-400 */ }
+        .btn-newsletter { background-color: #FBBF24; /* Tailwind: amber-400 */ }
+        .btn-facebook { background-color: #3B82F6; /* Tailwind: blue-500 */ }
+        .btn-instagram { background-color: #EC4899; /* Tailwind: pink-500 */ }
+
+        /* Style des fenêtres modales du module de contact */
+        .modal-contact {
+            position: absolute;
+            bottom: calc(100% + 1rem); /* Positionne au-dessus des boutons */
+            right: 0;
+            width: 25rem;
+            max-width: 90vw;
+            border-radius: 1.5rem; /* Tailwind: rounded-3xl */
+            padding: 1.5rem;
+            color: #E5E7EB; /* Couleur du texte par défaut */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            transform-origin: bottom right;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: scale(0.95) translateY(1rem);
+            pointer-events: none;
+        }
+        /* Couleurs des modales basées sur les boutons */
+        .modal-chatbot { background-color: #3B82F6; }
+        .modal-message { background-color: #F87171; }
+        .modal-newsletter { background-color: #FBBF24; }
+        .modal-facebook { background-color: #3B82F6; }
+        .modal-instagram { background-color: #EC4899; }
+
+        .modal-contact.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .modal-contact-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .modal-contact-title {
+            font-size: 1.25rem; /* Tailwind: text-xl */
+            font-weight: 700; /* Tailwind: font-bold */
+        }
+
+        .modal-contact-close-btn {
+            background: none;
+            border: none;
+            color: white; /* Bouton de fermeture blanc pour une meilleure lisibilité */
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-contact-close-btn:hover {
+            opacity: 0.7;
+        }
+
+        .modal-contact-content {
+            font-size: 1rem;
+            color: #E5E7EB; /* Tailwind: gray-200 */
+        }
+
+        /* Animation des boutons individuels */
+        .btn-group {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            gap: 1rem;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .btn-group.hidden {
+            transform: translateY(2rem);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .qr-code {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background-color: white;
+            border-radius: 0.5rem;
+        }
     </style>
 </head>
 <body>
@@ -366,12 +497,11 @@
         <source src="https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/4b24136854869ddd073bf02729c517f463686795/Destination%20Sud%20R%C3%A9union_HD.mp4" type="video/mp4">
     </video>
 
-    <!-- NOUVEAU: Élément pour afficher l'heure et la date en haut à gauche -->
+    <!-- Élément pour afficher l'heure et la date en haut à gauche -->
     <div class="time-date-widget">
         <div id="time-display" class="time"></div>
         <div id="date-display" class="date"></div>
     </div>
-
 
     <!-- Flèches de navigation animées -->
     <button id="prev-arrow" class="nav-arrow left hidden">
@@ -384,7 +514,6 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
     </button>
-
 
     <div class="slider-container">
         <!-- Écran 1 -->
@@ -428,7 +557,6 @@
                     <div class="grid-item" data-modal-target="Destinationhebergements.html" data-modal-title="Hébergements">
                         <span class="grid-icon">🏨</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Hébergements</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -469,19 +597,11 @@
                             <span class="text-xs md:text-sm">Ensoleillé avec quelques nuages</span>
                         </div>
                     </div>
-                    
-                    <!-- Widget Restaurants -->
+                     <!-- Widget Restaurants -->
                     <div class="grid-item col-span-2 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl">
                         <div class="flex flex-col items-center justify-center h-full w-full">
-                            <h3 class="text-lg md:text-xl font-semibold mb-2">
-                            <iframe src="widget-restos.html"
-                                onload="resizeIframe(this)"
-                                style="border:none; width:100%; height:350px; border-radius:10px;"
-                                loading="lazy">
-                            </iframe>
+                            <h3 class="text-lg md:text-xl font-semibold mb-2"> <iframe src="widget-restos.html" onload="resizeIframe(this)" style="border:none; width:100%; height:350px; border-radius:10px;" loading="lazy"> </iframe> </div>
                         </div>
-                    </div>
-
                     <div class="grid-item" data-modal-target="Destinationculture.html" data-modal-title="Culture & Traditions">
                         <span class="grid-icon">🎭</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Culture & Traditions</span>
@@ -519,456 +639,364 @@
                         <span class="grid-icon">🧘‍♀️</span>
                         <span class="text-sm md:text-lg lg:text-xl font-semibold">Bien-être & Spa</span>
                     </div>
-                    <div class="grid-item" data-modal-target="Destinationgolf.html" data-modal-title="Golf">
-                        <span class="grid-icon">⛳</span>
-                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Golf</span>
+                    <div class="grid-item" data-modal-target="Destinationgastronomie.html" data-modal-title="Gastronomie">
+                        <span class="grid-icon">🍽️</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Gastronomie</span>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Écran 4 : Transports (NOUVEAU) -->
-        <div id="screen-4" class="screen">
-            <div class="main-content lg:flex-row flex-col">
-                <div class="left-panel">
-                    <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">Transports</h1>
-                    <h2 class="text-white text-xl md:text-2xl lg:text-3xl mt-4">Se déplacer sur l'île</h2>
-                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
-                        <button id="prev-screen-4" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
-                    </div>
-                </div>
-                <div class="right-panel">
-                    <div class="grid-item" data-modal-target="Destinationavion.html" data-modal-title="Vols">
-                        <span class="grid-icon">✈️</span>
-                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Avion</span>
-                    </div>
-                    <div class="grid-item" data-modal-target="Destinationbus.html" data-modal-title="Bus">
-                        <span class="grid-icon">🚌</span>
-                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Bus</span>
-                    </div>
-                    <div class="grid-item" data-modal-target="Destinationtrain.html" data-modal-title="Train">
-                        <span class="grid-icon">🚆</span>
-                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Train</span>
-                    </div>
-                    <div class="grid-item" data-modal-target="Destinationvoiture.html" data-modal-title="Voiture">
-                        <span class="grid-icon">🚗</span>
-                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Voiture</span>
+                    <div class="grid-item" data-modal-target="Destinationshops.html" data-modal-title="Boutiques & Shopping">
+                        <span class="grid-icon">🛍️</span>
+                        <span class="text-sm md:text-lg lg:text-xl font-semibold">Boutiques & Shopping</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <!-- Conteneur principal du module de contact -->
+    <div class="module-container">
+
+        <!-- Groupe de boutons secondaires -->
+        <div class="btn-group hidden">
+            <!-- Bouton Chatbot -->
+            <div id="btn-chatbot" class="btn btn-chatbot">
+                <i class="fas fa-comment-dots text-xl"></i>
+            </div>
+            <!-- Bouton Message -->
+            <div id="btn-message" class="btn btn-message">
+                <i class="fas fa-envelope text-xl"></i>
+            </div>
+            <!-- Bouton Newsletter -->
+            <div id="btn-newsletter" class="btn btn-newsletter">
+                <i class="fas fa-paper-plane text-xl"></i>
+            </div>
+            <!-- Bouton Facebook -->
+            <div id="btn-facebook" class="btn btn-facebook">
+                <i class="fab fa-facebook-f text-xl"></i>
+            </div>
+            <!-- Bouton Instagram -->
+            <div id="btn-instagram" class="btn btn-instagram">
+                <i class="fab fa-instagram text-xl"></i>
+            </div>
+        </div>
+
+        <!-- Bouton principal (bouton d'ouverture/fermeture) -->
+        <div id="btn-main-contact" class="btn btn-main">
+            <i class="fas fa-plus text-2xl transition-transform duration-300 rotate-0"></i>
+        </div>
+
+        <!-- Fenêtres modales -->
+
+        <!-- Modale Chatbot -->
+        <div id="modal-chatbot" class="modal-contact">
+            <div class="modal-contact-header">
+                <h3 class="modal-contact-title">Besoin d'aide?</h3>
+                <button class="modal-contact-close-btn">&times;</button>
+            </div>
+            <div class="modal-contact-content">
+                <p>Nous sommes experts en design web et SEO technique.</p>
+                <div class="mt-4">
+                    <input type="text" placeholder="Envoyez votre message..." class="w-full p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modale Message -->
+        <div id="modal-message" class="modal-contact">
+            <div class="modal-contact-header">
+                <h3 class="modal-contact-title">Laissez-nous un message</h3>
+                <button class="modal-contact-close-btn">&times;</button>
+            </div>
+            <div class="modal-contact-content">
+                <p>Contactez-nous directement par e-mail ou via ce formulaire. Nous vous répondrons dans les plus brefs délais.</p>
+                <!-- Formulaire de contact qui sera soumis avec fetch -->
+                <form id="message-form" class="mt-4">
+                    <input type="email" name="email" placeholder="Votre adresse e-mail" class="w-full mb-2 p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none" required>
+                    <textarea name="message" placeholder="Votre message" rows="4" class="w-full p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none" required></textarea>
+                    <button type="submit" class="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg hover:bg-opacity-30 transition-colors">Envoyer</button>
+                    <!-- Message de confirmation -->
+                    <p id="message-status" class="hidden text-center mt-2"></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modale Newsletter -->
+        <div id="modal-newsletter" class="modal-contact">
+            <div class="modal-contact-header">
+                <h3 class="modal-contact-title">Abonnez-vous à notre Newsletter</h3>
+                <button class="modal-contact-close-btn">&times;</button>
+            </div>
+            <div class="modal-contact-content">
+                <p>Restez informé des dernières actualités, des offres exclusives et des nouveautés.</p>
+                <!-- Formulaire de newsletter -->
+                <form id="newsletter-form" class="mt-4">
+                    <input type="email" name="email" placeholder="Votre adresse e-mail" class="w-full p-3 rounded-lg bg-white bg-opacity-20 border-none text-white placeholder-gray-200 focus:outline-none" required>
+                    <button type="submit" class="w-full mt-2 p-3 bg-white bg-opacity-20 text-white rounded-lg hover:bg-opacity-30 transition-colors">S'abonner</button>
+                    <!-- Message de confirmation pour la newsletter -->
+                    <p id="newsletter-status" class="hidden text-center mt-2"></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modale Facebook -->
+        <div id="modal-facebook" class="modal-contact">
+            <div class="modal-contact-header">
+                <h3 class="modal-contact-title">Retrouvez-nous sur Facebook</h3>
+                <button class="modal-contact-close-btn">&times;</button>
+            </div>
+            <div class="modal-contact-content">
+                <p>Scannez le code QR ci-dessous avec l'appareil photo de votre téléphone pour accéder directement à notre page Facebook.</p>
+                <div id="qrcode-facebook" class="qr-code"></div>
+            </div>
+        </div>
+
+        <!-- Modale Instagram -->
+        <div id="modal-instagram" class="modal-contact">
+            <div class="modal-contact-header">
+                <h3 class="modal-contact-title">Suivez-nous sur Instagram</h3>
+                <button class="modal-contact-close-btn">&times;</button>
+            </div>
+            <div class="modal-contact-content">
+                <p>Scannez le code QR ci-dessous pour découvrir nos dernières publications et histoires sur Instagram.</p>
+                <div id="qrcode-instagram" class="qr-code"></div>
+            </div>
+        </div>
+
+    </div>
     
-    <!-- Widgets de pagination -->
-    <div class="pagination fixed bottom-8 w-full flex justify-center gap-2 z-50">
+    <!-- Modale universelle pour les liens des grilles -->
+    <div id="universal-modal" class="modal">
+        <div id="modal-content" class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title" class="modal-title mb-4"></h2>
+            <iframe id="modal-destination-iframe" class="modal-iframe"></iframe>
+        </div>
+    </div>
+    
+    <!-- Widget de pagination -->
+    <div id="pagination-widget" class="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
         <div class="dot active"></div>
         <div class="dot"></div>
         <div class="dot"></div>
-        <div class="dot"></div> <!-- Nouveau point pour le 4ème écran -->
     </div>
 
-    <!-- Modals existantes (laissez-les telles quelles) -->
-    <div id="modal-1" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 class="modal-title mb-4">L'île intense</h2>
-            <div class="modal-grid-content">
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+1" alt="Description Image 1" />
-                    <p class="mt-2 text-lg">Découvrez des paysages à couper le souffle, entre pics majestueux et plages de rêve.</p>
-                </div>
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+2" alt="Description Image 2" />
-                    <p class="mt-2 text-lg">L'île de La Réunion offre une diversité incroyable pour les voyageurs en quête d'aventure et de détente.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-2" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 class="modal-title mb-4">L'île authentique</h2>
-            <div class="modal-grid-content">
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+3" alt="Description Image 3" />
-                    <p class="mt-2 text-lg">Plongez au cœur de la culture créole et de ses traditions.</p>
-                </div>
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+4" alt="Description Image 4" />
-                    <p class="mt-2 text-lg">Goûtez aux saveurs locales et rencontrez les habitants chaleureux.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-3" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 class="modal-title mb-4">L'île aventure</h2>
-            <div class="modal-grid-content">
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+5" alt="Description Image 5" />
-                    <p class="mt-2 text-lg">Explorez l'île à travers des activités uniques et mémorables.</p>
-                </div>
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+6" alt="Description Image 6" />
-                    <p class="mt-2 text-lg">Que vous soyez fan de sensations fortes ou de relaxation, l'île a tout pour vous plaire.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- MODALE UNIVERSELLE POUR LES DESTINATIONS -->
-    <div id="destination-modal" class="modal">
-        <!-- Ajout de la classe "landscape-mode" ici pour l'initialisation -->
-        <div class="modal-content landscape-mode"> 
-            <!-- Ajout d'un titre pour que l'utilisateur sache où il se trouve -->
-            <h2 id="modal-destination-title" class="modal-title text-2xl font-semibold mb-4 text-white text-center"></h2>
-            <span class="close-button">&times;</span>
-            <!-- Ajout de la classe "landscape-mode" ici pour l'initialisation -->
-            <iframe id="modal-destination-iframe" class="modal-iframe landscape-mode" loading="lazy"></iframe>
-        </div>
-    </div>
-
-    <!-- Boutons de contrôle -->
-    <div class="fixed-buttons">
-        <button id="toggle-contrast" class="icon-button" aria-label="Toggle high contrast">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-        </button>
-        <button id="toggle-text-size" class="icon-button" aria-label="Toggle larger text">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M7 9l4 4 4-4m-4 12v-8" />
-            </svg>
-        </button>
-    </div>
-
+    <!-- Script principal -->
     <script>
         // ===============================
         // VARIABLES GLOBALES
         // ===============================
-        const slider = document.querySelector('.slider-container');
-        const screens = document.querySelectorAll('.screen');
-        const nextButtons = document.querySelectorAll('[id^="next-screen-"]');
-        const prevButtons = document.querySelectorAll('[id^="prev-screen-"]');
-        const openButtons = document.querySelectorAll('[id^="open-button-"]');
-        const modals = document.querySelectorAll('.modal');
-        const closeButtons = document.querySelectorAll('.close-button');
-        const toggleContrastButton = document.getElementById('toggle-contrast');
-        const toggleTextSizeButton = document.getElementById('toggle-text-size');
-        const body = document.body;
-        const dots = document.querySelectorAll('.dot');
-        const newCustomWidget = document.getElementById('new-custom-widget');
-        const destinationButtons = document.querySelectorAll('.right-panel .grid-item');
-
-        const destinationModal = document.getElementById('destination-modal');
-        const modalDestinationIframe = document.getElementById('modal-destination-iframe');
-        const modalDestinationTitle = document.getElementById('modal-destination-title');
-        // Mise à jour de la référence pour capturer l'élément modal-content
-        const modalContent = document.querySelector('#destination-modal .modal-content');
-
-        // Références aux flèches de navigation
-        const prevArrow = document.getElementById('prev-arrow');
-        const nextArrow = document.getElementById('next-arrow');
-        
-        // NOUVEAU: Références aux éléments d'affichage de l'heure et de la date
-        const timeDisplay = document.getElementById('time-display');
-        const dateDisplay = document.getElementById('date-display');
-
-        let currentScreen = 0;
+        let slider = document.querySelector('.slider-container');
+        let screens = document.querySelectorAll('.screen');
+        let currentIndex = 0;
         let isDragging = false;
-        let startX = 0;
+        let startPos = 0;
         let currentTranslate = 0;
         let prevTranslate = 0;
-        let animationID;
+        let animationID = 0;
+        let lastInteractionTime = Date.now();
+        const inactivityTimeout = 30000; // 30 secondes d'inactivité
         let inactivityTimer;
 
+        // Récupération des éléments
+        const prevArrow = document.getElementById('prev-arrow');
+        const nextArrow = document.getElementById('next-arrow');
+        const dots = document.querySelectorAll('#pagination-widget .dot');
+        const modal = document.getElementById('universal-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDestinationIframe = document.getElementById('modal-destination-iframe');
+        const closeButton = document.querySelector('.close-button');
+        const gridItems = document.querySelectorAll('.grid-item[data-modal-target]');
+
+        // Variables pour le module de contact
+        const mainButtonContact = document.getElementById('btn-main-contact');
+        const mainIconContact = mainButtonContact.querySelector('i');
+        const buttonGroupContact = document.querySelector('.btn-group');
+        const modalsContact = document.querySelectorAll('.modal-contact');
+        const closeButtonsContact = document.querySelectorAll('.modal-contact-close-btn');
+        const socialButtons = document.querySelectorAll('.btn-group .btn');
+        const messageForm = document.getElementById('message-form');
+        const newsletterForm = document.getElementById('newsletter-form');
+        let isContactOpen = false;
+            
+        // Mappe les ID des boutons aux couleurs correspondantes
+        const modalColorClasses = [
+            'modal-chatbot',
+            'modal-message',
+            'modal-newsletter',
+            'modal-facebook',
+            'modal-instagram'
+        ];
+
+
         // ===============================
-        // GESTION DU SLIDER ET DE LA NAVIGATION
+        // FONCTIONS DE GESTION DU SLIDER
         // ===============================
-        function updateSlider() {
-            currentTranslate = -currentScreen * window.innerWidth;
+
+        function setSliderPosition() {
             slider.style.transform = `translateX(${currentTranslate}px)`;
-
-            // Met à jour les marqueurs de pagination
-            dots.forEach((dot, index) => {
-                if (index === currentScreen) {
-                    dot.classList.add('active');
-                } else {
-                    dot.classList.remove('active');
-                }
-            });
-
-            // Met à jour la visibilité des flèches
-            // Flèche gauche
-            if (currentScreen === 0) {
-                prevArrow.classList.add('hidden');
-                prevArrow.classList.remove('animate-pulse');
-            } else {
-                prevArrow.classList.remove('hidden');
-                prevArrow.classList.add('animate-pulse');
-            }
-            // Flèche droite
-            if (currentScreen === screens.length - 1) {
-                nextArrow.classList.add('hidden');
-                nextArrow.classList.remove('animate-pulse');
-            } else {
-                nextArrow.classList.remove('hidden');
-                nextArrow.classList.add('animate-pulse');
-            }
         }
 
-        function handleStart(event) {
+        function handleStart(e) {
+            resetInactivityTimer();
             isDragging = true;
-            startX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-            prevTranslate = currentTranslate;
+            startPos = getPositionX(e);
             animationID = requestAnimationFrame(animation);
-            slider.style.transition = 'none';
+            slider.classList.add('transition-none');
         }
 
-        function handleMove(event) {
+        function handleMove(e) {
             if (!isDragging) return;
-            const currentX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-            const deltaX = currentX - startX;
-            currentTranslate = prevTranslate + deltaX;
-            if (event.type.includes('touch')) {
-                event.preventDefault();
-            }
+            const currentPosition = getPositionX(e);
+            currentTranslate = prevTranslate + currentPosition - startPos;
         }
 
         function handleEnd() {
             cancelAnimationFrame(animationID);
             isDragging = false;
             const movedBy = currentTranslate - prevTranslate;
-            if (movedBy < -100 && currentScreen < screens.length - 1) {
-                currentScreen++;
-            } else if (movedBy > 100 && currentScreen > 0) {
-                currentScreen--;
+
+            if (movedBy < -100 && currentIndex < screens.length - 1) {
+                currentIndex += 1;
+            } else if (movedBy > 100 && currentIndex > 0) {
+                currentIndex -= 1;
             }
-            updateSlider();
-            slider.style.transition = 'transform 0.5s ease-in-out';
+
+            setPositionByIndex();
+            slider.classList.remove('transition-none');
+        }
+        
+        function handleWheel(e) {
+            e.preventDefault();
             resetInactivityTimer();
+            
+            if (e.deltaX > 0 && currentIndex < screens.length - 1) {
+                currentIndex++;
+            } else if (e.deltaX < 0 && currentIndex > 0) {
+                currentIndex--;
+            }
+            setPositionByIndex();
+        }
+
+
+        function getPositionX(e) {
+            return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        }
+
+        function setPositionByIndex() {
+            currentTranslate = currentIndex * -window.innerWidth;
+            prevTranslate = currentTranslate;
+            setSliderPosition();
+            updateSlider();
         }
 
         function animation() {
-            slider.style.transform = `translateX(${currentTranslate}px)`;
-            if (isDragging) {
-                requestAnimationFrame(animation);
+            setSliderPosition();
+            if (isDragging) requestAnimationFrame(animation);
+        }
+
+        function updateSlider() {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+            prevArrow.classList.toggle('hidden', currentIndex === 0);
+            nextArrow.classList.toggle('hidden', currentIndex === screens.length - 1);
+
+            prevArrow.classList.remove('animate-pulse');
+            nextArrow.classList.remove('animate-pulse');
+
+            if (currentIndex === 0) {
+                nextArrow.classList.add('animate-pulse');
+            } else if (currentIndex === screens.length - 1) {
+                prevArrow.classList.add('animate-pulse');
             }
         }
 
-        function handleWheel(event) {
-            if (event.deltaY > 0 && currentScreen < screens.length - 1) {
-                currentScreen++;
-                updateSlider();
-            } else if (event.deltaY < 0 && currentScreen > 0) {
-                currentScreen--;
-                updateSlider();
-            }
-            event.preventDefault();
-            resetInactivityTimer();
+        // ===============================
+        // FONCTIONS DE GESTION DE LA MODALE
+        // ===============================
+        function openUniversalModal(targetUrl, titleText) {
+            modalTitle.textContent = titleText;
+            modalDestinationIframe.src = targetUrl;
+            modal.style.display = 'flex';
+            checkOrientation();
+            document.body.style.overflow = 'hidden';
+            closeAllContactModals(); // Ferme les modales de contact si elles sont ouvertes
         }
 
-        // Gestionnaires pour la navigation par boutons
-        nextButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                currentScreen++;
-                updateSlider();
-                resetInactivityTimer();
-            });
-        });
-
-        prevButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                currentScreen--;
-                updateSlider();
-                resetInactivityTimer();
-            });
-        });
-
-        // Gestionnaires pour les flèches de navigation
-        nextArrow.addEventListener('click', () => {
-            if (currentScreen < screens.length - 1) {
-                currentScreen++;
-                updateSlider();
-                resetInactivityTimer();
-            }
-        });
-
-        prevArrow.addEventListener('click', () => {
-            if (currentScreen > 0) {
-                currentScreen--;
-                updateSlider();
-                resetInactivityTimer();
-            }
-        });
-
+        function closeUniversalModal() {
+            modal.style.display = 'none';
+            modalDestinationIframe.src = '';
+            document.body.style.overflow = '';
+        }
 
         // ===============================
-        // GESTION DES MODALS
+        // FONCTIONS DE GESTION DU MODULE DE CONTACT
         // ===============================
-        openButtons.forEach((button, index) => {
-            button.addEventListener('click', (event) => {
-                modals[index].style.display = 'flex';
-                resetInactivityTimer();
+
+        // Fonction pour fermer toutes les modales de contact
+        function closeAllContactModals() {
+            modalsContact.forEach(modal => {
+                modal.classList.remove('active', ...modalColorClasses);
             });
-        });
+        }
 
-        // Écouteur pour les boutons de destination
-        destinationButtons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                // Empêche la navigation par défaut si c'est une balise <a>
-                event.preventDefault(); 
-                
-                const url = button.getAttribute('data-modal-target');
-                const title = button.getAttribute('data-modal-title');
-
-                if (url) {
-                    modalDestinationTitle.textContent = title; // Met à jour le titre
-                    modalDestinationIframe.src = url;
-                    destinationModal.style.display = 'flex';
-                    checkOrientation(); // Appel immédiat pour appliquer les styles corrects
-                    resetInactivityTimer();
-                }
+        // Fonction pour générer le QR code
+        function generateQRCode(url, elementId) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = '';
+            new QRCode(element, {
+                text: url,
+                width: 128,
+                height: 128,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
             });
-        });
-
-        // Fermeture des modales
-        closeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                button.closest('.modal').style.display = 'none';
-                resetInactivityTimer();
-            });
-        });
-
-        window.addEventListener('click', (event) => {
-            modals.forEach(modal => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                    resetInactivityTimer();
-                }
-            });
-        });
-
-        // ===============================
-        // GESTION DES FONCTIONNALITÉS SUPPLÉMENTAIRES
-        // ===============================
-        
-        // Exemple de widget personnalisé : un simple clic qui change un texte
-        newCustomWidget.addEventListener('click', () => {
-            const newText = "Super !";
-            const currentText = newCustomWidget.querySelector('p');
-            currentText.textContent = newText;
-            currentText.style.color = '#c7f407'; // Un petit effet visuel !
-            resetInactivityTimer();
-        });
-
-
-        // Fonction pour afficher une modale de message personnalisée
-        function showCustomMessage(message) {
-            const modal = document.createElement('div');
-            modal.style.cssText = `
-                position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                background: #1e293b; color: white; padding: 2rem; border-radius: 1rem;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 2000; text-align: center;
-                animation: fadeIn 0.3s ease-out; max-width: 80%;
-            `;
-            modal.innerHTML = `
-                <p class="text-lg mb-4">${message}</p>
-                <button class="px-4 py-2 bg-white text-gray-900 rounded-full font-semibold">Fermer</button>
-            `;
-            document.body.appendChild(modal);
-
-            modal.querySelector('button').addEventListener('click', () => {
-                modal.remove();
-            });
-
-            // Ferme la modale si l'utilisateur clique en dehors
-            document.addEventListener('click', (e) => {
-                if (!modal.contains(e.target) && e.target !== newButtonExample) {
-                    modal.remove();
-                }
-            }, { once: true });
         }
 
 
         // ===============================
-        // GESTION DE L'ACCESSIBILITÉ
+        // FONCTIONS DIVERSES
         // ===============================
-        toggleContrastButton.addEventListener('click', () => {
-            body.classList.toggle('high-contrast');
-            resetInactivityTimer();
-        });
 
-        toggleTextSizeButton.addEventListener('click', () => {
-            body.classList.toggle('larger-text');
-            resetInactivityTimer();
-        });
-        
-        // ===============================
-        // MINUTEUR D'INACTIVITÉ
-        // ===============================
-        function startAutoScroll() {
-            inactivityTimer = setTimeout(() => {
-                if (currentScreen < screens.length - 1) {
-                    currentScreen++;
-                } else {
-                    currentScreen = 0;
-                }
-                updateSlider();
-                startAutoScroll();
-            }, 60000); // 1 minute
-        }
-        
         function resetInactivityTimer() {
             clearTimeout(inactivityTimer);
-            startAutoScroll();
+            inactivityTimer = setTimeout(() => {
+                if (modal.style.display === 'flex') {
+                    closeUniversalModal();
+                }
+                closeAllContactModals();
+                isContactOpen = false;
+                buttonGroupContact.classList.add('hidden');
+                mainIconContact.classList.remove('rotate-45');
+
+                currentIndex = 0; // Retourne à l'écran d'accueil
+                setPositionByIndex();
+            }, inactivityTimeout);
         }
 
-        // ===============================
-        // GESTION DU WIDGET DATE/HEURE
-        // ===============================
         function updateDateTime() {
             const now = new Date();
             const timeOptions = { hour: '2-digit', minute: '2-digit' };
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            
-            const formattedTime = now.toLocaleTimeString('fr-FR', timeOptions).replace(':', ' : ');
-            const formattedDate = now.toLocaleDateString('fr-FR', dateOptions);
 
-            // Mise à jour des nouveaux éléments d'affichage
-            if (timeDisplay && dateDisplay) {
-                timeDisplay.textContent = formattedTime;
-                dateDisplay.textContent = formattedDate;
-            }
-        }
-        
-        // ===============================
-        // Redimensionnement de l'iframe
-        // ===============================
-        function resizeIframe(obj) {
-            obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+            document.getElementById('time-display').textContent = now.toLocaleTimeString('fr-FR', timeOptions);
+            document.getElementById('date-display').textContent = now.toLocaleDateString('fr-FR', dateOptions);
         }
 
-        // ===============================
-        // DÉTECTION DE L'ORIENTATION DE L'ÉCRAN
-        // ===============================
         function checkOrientation() {
-            if (modalContent && modalDestinationIframe) {
-                // Vérifie si l'orientation actuelle est en paysage
-                if (window.matchMedia("(orientation: landscape)").matches) {
-                    modalContent.classList.add('landscape-mode');
-                    modalDestinationIframe.classList.add('landscape-mode');
-                    modalContent.classList.remove('portrait-mode');
-                    modalDestinationIframe.classList.remove('portrait-mode');
-                } else {
-                    // Sinon, c'est le mode portrait
+            if (modal.style.display === 'flex') {
+                if (window.innerHeight > window.innerWidth) {
                     modalContent.classList.add('portrait-mode');
                     modalDestinationIframe.classList.add('portrait-mode');
                     modalContent.classList.remove('landscape-mode');
                     modalDestinationIframe.classList.remove('landscape-mode');
+                } else {
+                    modalContent.classList.add('landscape-mode');
+                    modalDestinationIframe.classList.add('landscape-mode');
+                    modalContent.classList.remove('portrait-mode');
+                    modalDestinationIframe.classList.remove('portrait-mode');
                 }
             }
         }
@@ -994,7 +1022,201 @@
             
             // Écouteur pour les changements d'orientation et de redimensionnement de la fenêtre
             window.addEventListener('resize', checkOrientation);
+
+            // Écouteurs pour les flèches de navigation
+            prevArrow.addEventListener('click', () => {
+                resetInactivityTimer();
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    setPositionByIndex();
+                }
+            });
+            nextArrow.addEventListener('click', () => {
+                resetInactivityTimer();
+                if (currentIndex < screens.length - 1) {
+                    currentIndex++;
+                    setPositionByIndex();
+                }
+            });
+
+            // Écouteurs pour les boutons d'ouverture de modale
+            gridItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    resetInactivityTimer();
+                    const targetUrl = item.dataset.modalTarget;
+                    const titleText = item.dataset.modalTitle;
+                    openUniversalModal(targetUrl, titleText);
+                });
+            });
+
+            // Écouteurs pour le bouton de fermeture de la modale universelle
+            closeButton.addEventListener('click', () => {
+                resetInactivityTimer();
+                closeUniversalModal();
+            });
+
+            // Gère la fermeture de la modale universelle lorsque l'on clique en dehors
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    resetInactivityTimer();
+                    closeUniversalModal();
+                }
+            });
+
+            // Gère l'ouverture/fermeture du groupe de boutons du module de contact
+            mainButtonContact.addEventListener('click', () => {
+                resetInactivityTimer();
+                isContactOpen = !isContactOpen;
+                if (isContactOpen) {
+                    buttonGroupContact.classList.remove('hidden');
+                    mainIconContact.classList.add('rotate-45');
+                    closeUniversalModal();
+                } else {
+                    buttonGroupContact.classList.add('hidden');
+                    mainIconContact.classList.remove('rotate-45');
+                    closeAllContactModals();
+                }
+            });
+
+            // Gère l'ouverture des modales spécifiques et le changement de couleur
+            socialButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    resetInactivityTimer();
+                    closeAllContactModals();
+                    const buttonId = event.currentTarget.id;
+                    const modalId = 'modal-' + buttonId.replace('btn-', '');
+                    const targetModal = document.getElementById(modalId);
+                    
+                    if (targetModal) {
+                        targetModal.classList.add('active', 'modal-' + buttonId.replace('btn-', ''));
+                    }
+
+                    if (buttonId === 'btn-facebook') {
+                        generateQRCode('https://www.facebook.com/Destination.Sud.Reunion.974', 'qrcode-facebook');
+                    } else if (buttonId === 'btn-instagram') {
+                        generateQRCode('https://www.instagram.com/destinationsudreunion/?hl=fr', 'qrcode-instagram');
+                    }
+                });
+            });
+
+            // Gère la fermeture des modales de contact via le bouton 'x'
+            closeButtonsContact.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    resetInactivityTimer();
+                    const modalToClose = event.target.closest('.modal-contact');
+                    if (modalToClose) {
+                        modalToClose.classList.remove('active', ...modalColorClasses);
+                    }
+                });
+            });
+
+            // Gère la soumission du formulaire de message
+            if (messageForm) {
+                messageForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const statusElement = document.getElementById('message-status');
+                    const formButton = messageForm.querySelector('button[type="submit"]');
+
+                    statusElement.textContent = 'Envoi en cours...';
+                    statusElement.classList.remove('hidden');
+                    formButton.disabled = true;
+
+                    try {
+                        const formData = new FormData(messageForm);
+                        const response = await fetch('https://formspree.io/f/mgvzjnvl', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+
+                        if (response.ok) {
+                            statusElement.textContent = 'Message envoyé !';
+                            messageForm.reset();
+                            setTimeout(() => {
+                                statusElement.classList.add('hidden');
+                                closeAllContactModals();
+                            }, 3000);
+                        } else {
+                            statusElement.textContent = 'Une erreur est survenue.';
+                            const data = await response.json();
+                            if (data.errors) {
+                                statusElement.textContent = data.errors.map(error => error.message).join(", ");
+                            }
+                        }
+                    } catch (error) {
+                        statusElement.textContent = 'Erreur: Impossible de se connecter au serveur.';
+                        console.error('Erreur de soumission du formulaire:', error);
+                    } finally {
+                        formButton.disabled = false;
+                    }
+                });
+            }
+
+            // Gère la soumission du formulaire de newsletter
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    const statusElement = document.getElementById('newsletter-status');
+                    const formButton = newsletterForm.querySelector('button[type="submit"]');
+
+                    statusElement.textContent = "Abonnement en cours...";
+                    statusElement.classList.remove('hidden');
+                    formButton.disabled = true;
+
+                    try {
+                        const formData = new FormData(newsletterForm);
+                        const response = await fetch('https://formspree.io/f/xovlokvl', {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+
+                        if (response.ok) {
+                            statusElement.textContent = 'Abonnement confirmé !';
+                            newsletterForm.reset();
+                            setTimeout(() => {
+                                statusElement.classList.add('hidden');
+                                closeAllContactModals();
+                            }, 3000);
+                        } else {
+                            statusElement.textContent = "Une erreur est survenue.";
+                            const data = await response.json();
+                            if (data.errors) {
+                                statusElement.textContent = data.errors.map(error => error.message).join(", ");
+                            }
+                        }
+                    } catch (error) {
+                        statusElement.textContent = 'Erreur: Impossible de se connecter au serveur.';
+                        console.error('Erreur de soumission du formulaire de newsletter:', error);
+                    } finally {
+                        formButton.disabled = false;
+                    }
+                });
+            }
+
+            // Gère l'inactivité globale
+            document.addEventListener('mousemove', resetInactivityTimer);
+            document.addEventListener('touchstart', resetInactivityTimer);
+            
+            // Écouteur pour fermer les modales de contact si on clique en dehors
+            document.addEventListener('click', (event) => {
+                const isClickInsideModule = event.target.closest('.module-container');
+                const isClickInsideUniversalModal = event.target.closest('#universal-modal');
+                if (!isClickInsideModule && !isClickInsideUniversalModal && isContactOpen) {
+                    closeAllContactModals();
+                    buttonGroupContact.classList.add('hidden');
+                    mainIconContact.classList.remove('rotate-45');
+                    isContactOpen = false;
+                }
+            });
         });
     </script>
 </body>
 </html>
+
