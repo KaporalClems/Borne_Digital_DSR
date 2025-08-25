@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Responsive - Destination Sud Réunion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --jaune-sud: #FFD700;
+            --bleu-lagon: #1E90FF;
+            --blanc: #FFFFFF;
+            --gris-clair: #F8F9FA;
+            --noir: #000000;
+            --vert-fonce: #2E8B57;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: var(--noir);
+            background-color: var(--gris-clair);
+            line-height: 1.6;
+        }
+
+        /* Header responsive */
+        header {
+            background-color: var(--blanc);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--bleu-lagon);
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+            color: var(--jaune-sud);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--bleu-lagon);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--noir);
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Menu hamburger pour mobile */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--blanc);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                transform: scaleY(0);
+                transform-origin: top;
+                transition: transform 0.3s ease;
+                z-index: 100;
+            }
+
+            nav.open {
+                transform: scaleY(1);
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem;
+            }
+        }
+
+        /* Bannière responsive */
+        .banner {
+            background: linear-gradient(135deg, var(--jaune-sud), #FFB347);
+            padding: 2rem 1rem;
+            color: var(--noir);
+        }
+
+        .banner-content {
+            max-width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .banner h1 {
+            font-size: 2rem;
+            margin: 0;
+            color: var(--bleu-lagon);
+        }
+
+        .banner p {
+            font-size: 1rem;
+            margin: 1rem 0;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 0.8rem;
+            border: 2px solid var(--bleu-lagon);
+            background: transparent;
+            color: var(--bleu-lagon);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .shop-now-btn {
+            padding: 0.6rem 1.2rem;
+            background: var(--blanc);
+            color: var(--bleu-lagon);
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .banner-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .banner-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--bleu-lagon);
+            color: var(--blanc);
+            padding: 0.3rem 0.6rem;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .banner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 3rem 2rem;
+            }
+
+            .banner-content {
+                flex: 1;
+                max-width: 50%;
+                margin: 0;
+            }
+
+            .banner h1 {
+                font-size: 3rem;
+            }
+
+            .banner p {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Catégories */
+        .categories {
+            padding: 2rem 1rem;
+            text-align: center;
+            background: var(--blanc);
+        }
+
+        .category-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gris-clair);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            color: var(--bleu-lagon);
+        }
+
+        /* Promotions */
+        .promo-section {
+            padding: 2rem 1rem;
+            background: var(--blanc);
+        }
+
+        .promo-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .promo-card {
+            background: var(--jaune-sud);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            color: var(--noir);
+            cursor: pointer;
+        }
+
+        .promo-badge {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: var(--vert-fonce);
+            color: var(--blanc);
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            z-index: 10;
+        }
+
+        .promo-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .promo-content {
+            padding: 1rem;
+        }
+
+        .promo-btn {
+            background: var(--bleu-lagon);
+            color: var(--blanc);
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        @media (min-width: 768px) {
+            .promo-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .promo-card img {
+                height: 200px;
+            }
+        }
+
+        /* Offres de la semaine */
+        .deals-section {
+            padding: 2rem 1rem;
+            background: var(--gris-clair);
+        }
+
+        .deals-header {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .deals-timer {
+            display: flex;
+            gap: 0.3rem;
+            margin-top: 0.5rem;
+        }
+
+        .timer-box {
+            background: var(--jaune-sud);
+            color: var(--noir);
+            padding: 0.4rem;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 40px;
+            font-size: 0.8rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+
+        .product-card {
+            background: var(--blanc);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 0.8rem;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: var(--jaune-sud);
+            margin: 0.3rem 0;
+            font-size: 1rem;
+        }
+
+        .rating {
+            color: var(--jaune-sud);
+            margin: 0.3rem 0;
+            font-size: 0.8rem;
+        }
+
+        .stock {
+            font-size: 0.7rem;
+            color: var(--vert-fonce);
+            margin-bottom: 0.5rem;
+        }
+
+        .promo-btn {
+            width: 100%;
+            padding: 0.4rem;
+            font-size: 0.7rem;
+        }
+
+        @media (min-width: 768px) {
+            .deals-header {
+                flex-direction: row;
+                text-align: left;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .product-card img {
+                height: 150px;
+            }
+        }
+
+        /* Panier */
+        .cart {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: var(--bleu-lagon);
+            color: var(--blanc);
+            padding: 0.7rem;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 90%;
+            max-width: 350px;
+            height: 100%;
+            background: var(--blanc);
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+            padding: 1rem;
+        }
+
+        .cart-modal.open {
+            transform: translateX(0);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--gris-clair);
+        }
+
+        .cart-item img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            margin-right: 0.5rem;
+        }
+
+        footer {
+            background: var(--bleu-lagon);
+            color: var(--blanc);
+            text-align: center;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <span>Destination Sud</span>
+        </div>
+        <div class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </div>
+        <nav id="mainNav">
+            <ul>
+                <li><a href="#" onclick="alert('Redirection vers la page d\'accueil')">Accueil</a></li>
+                <li><a href="#" onclick="alert('Vous êtes déjà sur la boutique !')">Boutique</a></li>
+                <li><a href="#" onclick="alert('Redirection vers la page Produits')">Produits</a></li>
+                <li><a href="#" onclick="alert('Redirection vers la page À propos')">À propos</a></li>
+                <li><a href="#" onclick="alert('Redirection vers la page Contact')">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <span style="font-size: 0.8rem;">☎ +262 123 456 789</span>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-content">
+            <h1>Boutique du Sud Sauvage</h1>
+            <p>Découvrez les trésors artisanaux et gourmands du Sud de La Réunion.</p>
+            <div class="filter-buttons">
+                <button class="filter-btn" onclick="filterProducts('épices')">🌿 Produits Locaux</button>
+                <button class="filter-btn" onclick="filterProducts('miel')">🍯 Miel & Épices</button>
+            </div>
+            <button class="shop-now-btn" onclick="alert('Redirection vers tous les produits')">Acheter maintenant</button>
+        </div>
+        <div class="banner-image">
+            <div class="discount-badge">-25%</div>
+            <img src="https://soubik.reunion.fr/uploads/media/etablissement/0001/25/thumb_24051_etablissement_large.jpeg" alt="Vanille Bourbon de La Réunion">
+        </div>
+    </section>
+
+    <section class="categories">
+        <h2>Catégories Populaires</h2>
+        <div class="category-grid">
+            <div class="category-item" onclick="alert('Afficher les produits de la catégorie Épices')">
+                <div class="category-icon"><i class="fas fa-pepper-hot"></i></div>
+                <span style="font-size: 0.8rem;">Épices</span>
+            </div>
+            <div class="category-item" onclick="alert('Afficher les produits de la catégorie Miel')">
+                <div class="category-icon"><i class="fas fa-honey-pot"></i></div>
+                <span style="font-size: 0.8rem;">Miel</span>
+            </div>
+            <div class="category-item" onclick="alert('Afficher les produits de la catégorie Artisanat')">
+                <div class="category-icon"><i class="fas fa-paint-brush"></i></div>
+                <span style="font-size: 0.8rem;">Artisanat</span>
+            </div>
+            <div class="category-item" onclick="alert('Afficher les produits de la catégorie Plantes')">
+                <div class="category-icon"><i class="fas fa-leaf"></i></div>
+                <span style="font-size: 0.8rem;">Plantes</span>
+            </div>
+            <div class="category-item" onclick="alert('Afficher les produits de la catégorie Rhum')">
+                <div class="category-icon"><i class="fas fa-wine-bottle"></i></div>
+                <span style="font-size: 0.8rem;">Rhum</span>
+            </div>
+            <div class="category-item" onclick="alert('Afficher les produits de la catégorie Café')">
+                <div class="category-icon"><i class="fas fa-coffee"></i></div>
+                <span style="font-size: 0.8rem;">Café</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="promo-section">
+        <div class="promo-grid">
+            <div class="promo-card" onclick="alert('Détails du produit : Vanille Bourbon')">
+                <div class="promo-badge">NOUVEAU</div>
+                <div class="promo-content">
+                    <h3 style="font-size: 1.2rem;">Vanille Bourbon</h3>
+                    <p style="font-size: 0.9rem;">La vanille la plus réputée au monde, cultivée dans le Sud.</p>
+                    <button class="promo-btn" onclick="event.stopPropagation(); addToCart('Vanille Bourbon', 12.99)">Voir plus</button>
+                </div>
+                <img src="https://mistralaiblackforestprod.blob.core.windows.net/images/blackforest/1dc9/65c4/-0be/3-410c-ac9f-83f890dfb5d9/image.jpg?se=2025-08-25T11%3A54%3A22Z&sp=r&sv=2025-07-05&sr=b&sig=MGSNX9ySiI90HjIPE1jGAOQsRXtc3pMlzzHUXRvRL%2BE%3D" alt="Vanille Bourbon">
+            </div>
+            <div class="promo-card" onclick="alert('Détails du produit : Coffret Épices')">
+                <div class="promo-badge">-30%</div>
+                <div class="promo-content">
+                    <h3 style="font-size: 1.2rem;">Coffret Épices</h3>
+                    <p style="font-size: 0.9rem;">Un mélange unique d'épices locales pour sublimer vos plats.</p>
+                    <button class="promo-btn" onclick="event.stopPropagation(); addToCart('Coffret Épices', 15.99)">Acheter maintenant</button>
+                </div>
+                <img src="https://media.cdnws.com/_i/229126/1027/1760/27/coffret-6-tubes-melange-epices-du-monde-voyage-epice-ras-el-hanout.jpeg" alt="Coffret Épices">
+            </div>
+            <div class="promo-card" onclick="alert('Détails du produit : Rhum Arrangé Banane')">
+                <div class="promo-badge">MEILLEURE VENTE</div>
+                <div class="promo-content">
+                    <h3 style="font-size: 1.2rem;">Rhum Arrangé Banane</h3>
+                    <p style="font-size: 0.9rem;">Le rhum artisanal à la banane du Sud, à déguster sans modération.</p>
+                    <button class="promo-btn" onclick="event.stopPropagation(); addToCart('Rhum Arrangé Banane', 22.99)">Acheter maintenant</button>
+                </div>
+                <img src="https://nicolas.re/glide/local/attachments/2rx/ttm/jmg/2rxttmjmgs5fkgnwvou64qqqp.jpg?w=355&h=475&fit=fill&fm=webp&s=a5439cc487f2c6d33ac4ed13091fcad2" alt="Rhum Arrangé Banane">
+            </div>
+        </div>
+    </section>
+
+    <section class="deals-section">
+        <div class="deals-header">
+            <h2 style="font-size: 1.5rem;">Meilleures Offres de la Semaine !</h2>
+            <div class="deals-timer">
+                <div class="timer-box" id="days">17</div>
+                <div class="timer-box" id="hours">13</div>
+                <div class="timer-box" id="minutes">17</div>
+                <div class="timer-box" id="seconds">20</div>
+            </div>
+        </div>
+        <div class="products-grid">
+            <div class="product-card" onclick="alert('Détails : Vanille en Gousse')">
+                <div class="discount-badge">-15%</div>
+                <img src="https://soubik.reunion.fr/uploads/media/etablissement/0001/25/thumb_24051_etablissement_large.jpeg" alt="Vanille en Gousse">
+                <div class="product-info">
+                    <h4 style="font-size: 0.9rem;">Vanille en Gousse</h4>
+                    <div class="product-price">12,99 €</div>
+                    <div class="rating">★★★★★</div>
+                    <div class="stock">Disponible: 47</div>
+                    <button class="promo-btn" onclick="event.stopPropagation(); addToCart('Vanille en Gousse', 12.99)">Ajouter</button>
+                </div>
+            </div>
+            <div class="product-card" onclick="alert('Détails : Miel de Letchis')">
+                <div class="discount-badge">-25%</div>
+                <img src="https://tisanesdebourbon.fr/cdn/shop/products/plkm004_miel_de_letchis_2048x.png?v=1610963083" alt="Miel de Letchis">
+                <div class="product-info">
+                    <h4 style="font-size: 0.9rem;">Miel de Letchis</h4>
+                    <div class="product-price">8,99 €</div>
+                    <div class="rating">★★★★★</div>
+                    <div class="stock">Disponible: 34</div>
+                    <button class="promo-btn" onclick="event.stopPropagation(); addToCart('Miel de Letchis', 8.99)">Ajouter</button>
+                </div>
+            </div>
+            <div class="product-card" onclick="alert('Détails : Coffret 5 Épices')">
+                <div class="discount-badge">-30%</div>
+                <img src="https://media.cdnws.com/_i/229126/1027/1760/27/coffret-6-tubes-melange-epices-du-monde-voyage-epice-ras-el-hanout.jpeg" alt="Coffret Épices">
+                <div class="product-info">
+                    <h4 style="font-size: 0.9rem;">Coffret 5 Épices</h4>
+                    <div class="product-price">15,99 €</div>
+                    <div class="rating">★★★★★</div>
+                    <div class="stock">Disponible: 23</div>
+                    <button class="promo-btn" onclick="event.stopPropagation(); addToCart('Coffret 5 Épices', 15.99)">Ajouter</button>
+                </div>
+            </div>
+            <div class="product-card" onclick="alert('Détails : Rhum Arrangé Banane')">
+                <div class="discount-badge">-25%</div>
+                <img src="https://nicolas.re/glide/local/attachments/2rx/ttm/jmg/2rxttmjmgs5fkgnwvou64qqqp.jpg?w=355&h=475&fit=fill&fm=webp&s=a5439cc487f2c6d33ac4ed13091fcad2" alt="Rhum Arrangé Banane">
+                <div class="product-info">
+                    <h4 style="font-size: 0.9rem;">Rhum Arrangé Banane</h4>
+                    <div class="product-price">22,99 €</div>
+                    <div class="rating">★★★★★</div>
+                    <div class="stock">Disponible: 16</div>
+                    <button class="promo-btn" onclick="event.stopPropagation(); addToCart('Rhum Arrangé Banane', 22.99)">Ajouter</button>
+                </div>
+            </div>
+            <div class="product-card" onclick="alert('Détails : Poster Case de Pêcheur')">
+                <div class="discount-badge">-40%</div>
+                <img src="https://www.univile.com/cdn/shop/products/Case-de-P_cheur-UNIV_LE-38961236.png" alt="Poster Case de Pêcheur">
+                <div class="product-info">
+                    <h4 style="font-size: 0.9rem;">Poster Case de Pêcheur</h4>
+                    <div class="product-price">39,99 €</div>
+                    <div class="rating">★★★★★</div>
+                    <div class="stock">Disponible: 12</div>
+                    <button class="promo-btn" onclick="event.stopPropagation(); addToCart('Poster Case de Pêcheur', 39.99)">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p style="font-size: 0.9rem;">&copy; 2025 Destination Sud Réunion. Tous droits réservés.</p>
+    </footer>
+
+    <!-- Panier -->
+    <div class="cart" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+    </div>
+
+    <div class="cart-modal" id="cartModal">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="font-size: 1.2rem;">Votre Panier</h3>
+            <i class="fas fa-times" onclick="toggleCart()" style="cursor: pointer;"></i>
+        </div>
+        <div id="cartItems"></div>
+        <div id="cartTotal" style="font-weight: bold; margin-top: 1rem; font-size: 1.1rem;">Total : 0,00 €</div>
+    </div>
+
+    <script>
+        // Menu hamburger
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('open');
+        });
+
+        // Gestion du panier
+        let cart = [];
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+            alert(`${name} ajouté au panier !`);
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartTotal');
+            const cartButton = document.querySelector('.cart');
+
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <img src="https://source.unsplash.com/random/50x50/?\${item.name.split(' ')[0]}" alt="\${item.name}">
+                    <div style="flex: 1;">
+                        <div style="font-size: 0.9rem; font-weight: bold;">${item.name}</div>
+                        <div style="font-size: 0.8rem;">${item.price.toFixed(2)} €</div>
+                    </div>
+                `;
+                cartItems.appendChild(itemElement);
+                total += item.price;
+            });
+
+            cartTotal.textContent = `Total : ${total.toFixed(2)} €`;
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.classList.toggle('open');
+        }
+
+        // Compte à rebours (simulé)
+        function updateTimer() {
+            const secondsElement = document.getElementById('seconds');
+            let seconds = parseInt(secondsElement.textContent);
+            setInterval(() => {
+                seconds--;
+                if (seconds < 0) seconds = 59;
+                secondsElement.textContent = seconds.toString().padStart(2, '0');
+            }, 1000);
+        }
+
+        // Filtres (simulés)
+        function filterProducts(category) {
+            alert(`Filtre appliqué : ${category}`);
+        }
+
+        // Initialisation
+        updateTimer();
+    </script>
+</body>
+</html>
