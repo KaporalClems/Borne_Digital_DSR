@@ -163,9 +163,14 @@
 
     <!-- Background Carousel -->
     <section id="fullscreen-carousel">
-        <div class="carousel-item active"><img src="https://images.unsplash.com/photo-1548544149-a29d6344549f?q=80&w=2070&auto=format&fit=crop" alt="Randonnée à La Réunion"></div>
-        <div class="carousel-item"><img src="https://images.unsplash.com/photo-1628109312151-540ac0626391?q=80&w=1974&auto=format&fit=crop" alt="Plongée sous-marine"></div>
-        <div class="carousel-item"><img src="https://images.unsplash.com/photo-1549419194-e316d9b04f14?q=80&w=1974&auto=format&fit=crop" alt="Parapente au-dessus de l'île"></div>
+        <!-- Toutes les images sont maintenant incluses -->
+        <div class="carousel-item active"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/73/39/d9/le-paille-en-queue-au.jpg?w=1200&h=1200&s=1" alt="Oiseau Paille-en-Queue en vol au-dessus du littoral réunionnais"></div>
+        <div class="carousel-item"><img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/30/a4/ed/c4/ssv-974-reunion-randonnee.jpg?w=1200&h=-1&s=1" alt="Randonneurs sur un sentier du cirque de Mafate, La Réunion"></div>
+        <div class="carousel-item"><img src="https://res.cloudinary.com/manawa/image/private/f_auto,c_limit,w_3840,q_auto/gkunukuysvjs2lgenbfp" alt="Canyoning le long d'une cascade à La Réunion"></div>
+        <div class="carousel-item"><img src="https://www.eldorado.re/wp-content/uploads/2018/05/IMG_7997.jpg" alt="Activité de quad à La Réunion"></div>
+        <div class="carousel-item"><img src="https://res.cloudinary.com/funbooker/image/upload/c_fill,f_auto,q_auto,w_1500/v1/marketplace-listing/i52umph4gtrn5w8nxk4x" alt="Parapente au-dessus du littoral réunionnais"></div>
+        <div class="carousel-item"><img src="https://www.helicopassion.com/images/la_reunion/corail/EC130-034h.jpg" alt="Vol en hélicoptère au-dessus du cirque de Salazie"></div>
+        <div class="carousel-item"><img src="https://images.citybreakcdn.com/image.aspx?ImageId=8763333&width=1400&height=700&fitaspect=1" alt="Plongée sous-marine avec des poissons multicolores à La Réunion"></div>
     </section>
 
     <!-- Page Content -->
@@ -248,32 +253,21 @@
                 'Défaut': `<svg class="activity-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>`
             };
 
-            // --- FUNCTION TO LOAD DATA FROM MULTIPLE SOURCES ---
+            // --- FUNCTION TO LOAD DATA FROM A SINGLE SOURCE ---
             async function fetchAllActivities() {
                 loadingOverlay.style.display = 'flex';
-                // URLs of JSON files on GitHub
-                const filePaths = [
-                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-saintpierre.json",
-                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-saintlouis.json",
-                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-letangsale.json",
-                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-lesavirons.json",
-                    "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/main/activites-petiteile.json"
-                ];
+                // URL of the new single JSON file on GitHub
+                const filePath = "https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/refs/heads/main/activites.json";
                 
                 let combinedData = [];
                 
                 try {
-                    const promises = filePaths.map(path => 
-                        fetch(path).then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status} for file: ${path}`);
-                            }
-                            return response.json();
-                        })
-                    );
-                    const results = await Promise.all(promises);
-                    // Access the 'results' array in each JSON object before merging
-                    combinedData = results.flatMap(data => data.results);
+                    const response = await fetch(filePath);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status} for file: ${filePath}`);
+                    }
+                    const data = await response.json();
+                    combinedData = data.results; // Access the 'results' array from the new file
                     return combinedData;
                 } catch (error) {
                     console.error("Error loading data:", error);
