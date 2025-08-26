@@ -7,7 +7,11 @@
     <!-- Inclut Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Bibliothèque pour la génération de QR code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0d121c;
@@ -20,14 +24,11 @@
         /* Styles pour le mode contraste élevé */
         body.high-contrast {
             filter: invert(1) hue-rotate(180deg);
-            background-color: #fff; /* S'assure que le fond est blanc */
+            background-color: #fff;
         }
-        
         body.high-contrast #video-background {
              filter: invert(1) hue-rotate(180deg);
         }
-
-        /* Styles pour la taille de police augmentée */
         body.larger-text h1 { font-size: 8rem; }
         body.larger-text h2 { font-size: 5rem; }
         body.larger-text .text-2xl { font-size: 2rem; }
@@ -39,7 +40,6 @@
             display: flex;
             transition: transform 0.5s ease-in-out;
         }
-
         .screen {
             min-width: 100vw;
             height: 100vh;
@@ -48,30 +48,65 @@
             align-items: center;
             position: relative;
         }
-
-        .left-panel, .right-panel {
+        .main-content {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 4rem;
+            padding: 2rem;
+            max-width: 1280px;
+            width: 100%;
         }
-
+        @media (min-width: 1024px) {
+            .main-content {
+                flex-direction: row;
+            }
+        }
+        .left-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            max-width: 100%;
+        }
         .right-panel {
+            flex: 1;
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             grid-gap: 1.5rem;
             max-width: 900px;
+            width: 100%;
+            margin-top: 2rem;
         }
-
+        .pratiques-panel {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 1.5rem;
+            max-width: 900px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+        @media (min-width: 1024px) {
+            .right-panel {
+                grid-template-columns: repeat(3, 1fr);
+                margin-top: 0;
+            }
+            .pratiques-panel {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
         .grid-item {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 1.5rem;
+            padding: 1rem;
             background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 1rem;
@@ -82,61 +117,33 @@
             overflow: hidden;
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-            cursor: pointer; /* Indique que l'élément est interactif */
+            cursor: pointer;
             will-change: transform, box-shadow;
+            text-align: center;
         }
-
         .grid-item:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
-        /* Styles pour le glisser-déposer */
-        .grid-item.dragging {
-            position: fixed;
-            z-index: 999;
-            cursor: grabbing;
-            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.5), 0 10px 10px rgba(0, 0, 0, 0.2);
-            transform: scale(1.1);
-            transition: none; /* Désactive la transition pour un mouvement fluide */
+        .dot {
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 9999px;
+            transition: all 0.3s ease-in-out;
         }
-
-        /* Animation de vibration pour le clic prolongé */
-        @keyframes vibrate-animation {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-
-        .grid-item.vibrating {
-            animation: vibrate-animation 0.2s infinite;
-        }
-        
-        /* Classes pour le redimensionnement */
-        .grid-item-col-2 {
-            grid-column: span 2;
-        }
-        .grid-item-row-2 {
-            grid-row: span 2;
-        }
-        .grid-item-large-square {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-        .grid-item-large-rectangle {
-            grid-column: span 2;
+        .dot.active {
+            background-color: white;
+            transform: scale(1.2);
         }
         .grid-icon {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
+        }
+        .grid-icon.image {
+            width: 4rem;
+            height: 4rem;
+            object-fit: contain;
         }
         .modal {
             display: none;
@@ -149,14 +156,22 @@
             background-color: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
+            overflow: auto;
         }
         .modal-content {
             background-color: #1e293b;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 1rem;
-            max-width: 800px;
-            width: 90%;
+            width: 95%;
+            max-width: 1400px;
+            max-height: 90vh;
             position: relative;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease-out;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
         .close-button {
             position: absolute;
@@ -165,23 +180,32 @@
             font-size: 2rem;
             color: white;
             cursor: pointer;
+            transition: color 0.2s;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            padding: 0.5rem;
+            line-height: 1;
+            z-index: 10;
         }
-        .modal-grid-content {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+        .close-button:hover {
+            color: #ccc;
         }
-        .modal-grid-item {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            color: white;
-            text-align: center;
+        .modal-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 1rem;
+            flex-grow: 1;
         }
-        .modal-grid-item img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 0.5rem;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .widget-iframe {
+            width: 100%;
+            height: 350px;
+            border: none;
+            border-radius: 10px;
         }
         .modal-title {
             font-family: 'Pacifico', cursive;
@@ -224,644 +248,315 @@
             background-color: rgba(255, 255, 255, 0.2);
             transform: scale(1.05);
         }
-        
-        /* Style pour la poignée de redimensionnement */
-        .resize-handle {
-            position: absolute;
-            bottom: 0.5rem;
-            right: 0.5rem;
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 9999px;
+            padding: 1rem;
+            color: white;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: opacity 0.3s, transform 0.3s;
+            will-change: transform;
+            opacity: 1;
+        }
+        .nav-arrow.left {
+            left: 2rem;
+        }
+        .nav-arrow.right {
+            right: 2rem;
+        }
+        .nav-arrow.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .nav-arrow svg {
             width: 2rem;
             height: 2rem;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 0.5rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: nwse-resize;
-            opacity: 0;
-            transition: opacity 0.2s ease-in-out;
-            pointer-events: none; /* Rendu invisible aux événements de la souris par défaut */
         }
-        .show-handle .resize-handle {
-            opacity: 1;
-            pointer-events: auto; /* Rendu interactif lorsque la classe est présente */
+        .nav-arrow:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+        @keyframes pulse-arrow {
+            0% { transform: translateY(-50%) scale(1); }
+            50% { transform: translateY(-50%) scale(1.05); }
+            100% { transform: translateY(-50%) scale(1); }
+        }
+        .nav-arrow.animate-pulse {
+            animation: pulse-arrow 1.5s infinite;
+        }
+        @media (orientation: landscape) and (min-width: 768px) {
+            .modal-content.landscape-mode {
+                max-width: 90%;
+                max-height: 90vh;
+                width: 90vw;
+                height: 90vh;
+                padding: 2rem;
+            }
+            .modal-iframe.landscape-mode {
+                height: calc(100% - 4rem);
+            }
+        }
+        @media (orientation: portrait) {
+            .modal-content.portrait-mode {
+                max-width: 95%;
+                max-height: 90vh;
+                padding: 1.5rem;
+            }
+            .modal-iframe.portrait-mode {
+                height: calc(100% - 3rem);
+            }
+        }
+        .time-date-widget {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            color: white;
+            text-align: left;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+        .time-date-widget .time {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        .time-date-widget .date {
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.8;
+            margin-top: -0.5rem;
+        }
+        @media (max-width: 768px) {
+            .time-date-widget {
+                top: 1rem;
+                left: 1rem;
+            }
+            .time-date-widget .time {
+                font-size: 2rem;
+            }
+            .time-date-widget .date {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <video autoplay muted loop id="video-background">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-sunrise-over-the-mountains-9584-large.mp4" type="video/mp4">
+        <source src="https://raw.githubusercontent.com/KaporalClems/Borne_Digital_DSR/4b24136854869ddd073bf02729c517f463686795/Destination%20Sud%20R%C3%A9union_HD.mp4" type="video/mp4">
     </video>
 
+    <!-- Élément pour afficher l'heure et la date en haut à gauche -->
+    <div class="time-date-widget">
+        <div id="time-display" class="time"></div>
+        <div id="date-display" class="date"></div>
+    </div>
+
+    <!-- Conteneur principal pour les écrans glissants -->
     <div class="slider-container">
-        <!-- Écran 1 -->
+        <!-- Écran 1: Contenu principal et navigation vers l'écran 2 -->
         <div id="screen-1" class="screen">
-            <div class="left-panel">
-                <h1 class="text-white text-6xl font-bold">L'île intense</h1>
-                <h2 class="text-white text-3xl mt-4">La Réunion</h2>
-                <div class="mt-8 flex gap-4">
-                    <button id="open-button-1" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
-                    <button id="next-screen-1" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Découvrir les activités</button>
+            <div class="main-content">
+                <div class="left-panel">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de La Réunion" class="h-auto w-48 mb-4 object-contain">
+                    <h1 data-i18n="title" class="text-white text-4xl md:text-5xl lg:text-6xl font-bold">Destination Sud Réunion</h1>
+                    <h2 data-i18n="subtitle" class="text-white text-xl md:text-2xl lg:text-3xl mt-4">Office de Tourisme du Sud de La Réunion</h2>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+                        <button data-i18n="discover_button" id="next-screen-1" class="px-4 py-3 sm:px-6 sm:py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Découvrir les activités</button>
+                    </div>
                 </div>
-            </div>
-            <div class="right-panel">
-                <a href="Destinationplage.html" class="grid-item grid-item-row-2">
-                    <span class="grid-icon">🏖️</span>
-                    <span class="text-2xl font-semibold">Les Plages</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationvolcan.html" class="grid-item">
-                    <span class="grid-icon">🌋</span>
-                    <span class="text-2xl font-semibold">Le Volcan</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationforet.html" class="grid-item">
-                    <span class="grid-icon">🌲</span>
-                    <span class="text-2xl font-semibold">Les Forêts</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationvillages.html" class="grid-item">
-                    <span class="grid-icon">🏡</span>
-                    <span class="text-2xl font-semibold">Les Villages</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
             </div>
         </div>
 
-        <!-- Écran 2 -->
+        <!-- Écran 2: Conteneur de l'iframe -->
         <div id="screen-2" class="screen">
-            <div class="left-panel">
-                <h1 class="text-white text-6xl font-bold">L'île authentique</h1>
-                <h2 class="text-white text-3xl mt-4">La Réunion</h2>
-                <div class="mt-8 flex gap-4">
-                    <button id="open-button-2" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
-                    <button id="prev-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
-                    <button id="next-screen-2" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Activités ludiques</button>
-                </div>
-            </div>
-            <div class="right-panel">
-                <a href="DestinationRandos.html" class="grid-item">
-                    <span class="grid-icon">🥾</span>
-                    <span class="text-2xl font-semibold">Les Randonnées</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationactivitesnautiques.html" class="grid-item">
-                    <span class="grid-icon">🌊</span>
-                    <span class="text-2xl font-semibold">Activités Nautiques</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-
-                <!-- Widget Météo -->
-                <div class="grid-item grid-item-col-2 bg-gradient-to-br from-blue-400 to-blue-600 text-white shadow-xl">
-                    <div class="flex flex-col items-center justify-center h-full">
-                        <span class="text-6xl mb-2">☀️</span>
-                        <div class="flex items-end justify-center">
-                            <span class="text-6xl font-extrabold">+27</span>
-                            <span class="text-2xl font-bold">°C</span>
-                        </div>
-                        <span class="text-lg font-medium mt-1">Paris</span>
-                        <span class="text-sm">Ensoleillé avec quelques nuages</span>
-                    </div>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </div>
-                
-                <!-- Widget Restaurants -->
-                <div class="grid-item grid-item-col-2 bg-gradient-to-br from-green-400 to-green-600 text-white shadow-xl">
-                    <div class="flex flex-col items-center justify-center h-full w-full">
-                        <h3 class="text-2xl font-semibold mb-2">Les restaurants locaux</h3>
-                        <iframe src="widget-restos.html"
-                            style="border:none; width:100%; max-width:600px; height:350px; border-radius:10px;"
-                            loading="lazy">
-                        </iframe>
-                    </div>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </div>
-
-                <a href="Destinationculture.html" class="grid-item">
-                    <span class="grid-icon">🎭</span>
-                    <span class="text-2xl font-semibold">Culture & Traditions</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationproduits.html" class="grid-item">
-                    <span class="grid-icon">🍍</span>
-                    <span class="text-2xl font-semibold">Produits du Terroir</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-            </div>
+            <iframe id="content-iframe" src="index-plages.html" class="w-full h-full border-0"></iframe>
         </div>
-
-        <!-- Écran 3 -->
+        
+        <!-- Écran 3: Conteneur pour la page sud-aventure.html -->
         <div id="screen-3" class="screen">
-            <div class="left-panel">
-                <h1 class="text-white text-6xl font-bold">L'île aventure</h1>
-                <h2 class="text-white text-3xl mt-4">La Réunion</h2>
-                <div class="mt-8 flex gap-4">
-                    <button id="open-button-3" class="px-6 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-200 transition-colors">En savoir plus</button>
-                    <button id="prev-screen-3" class="px-6 py-3 border border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-colors">Retour</button>
-                </div>
-            </div>
-            <div class="right-panel">
-                <a href="DestinationActivitesaeriennes.html" class="grid-item grid-item-col-2">
-                    <span class="grid-icon">🚁</span>
-                    <span class="text-2xl font-semibold">Activités Aériennes</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <!-- Widget Heure/Date -->
-                <div class="grid-item bg-gradient-to-br from-purple-400 to-purple-600 text-white shadow-xl">
-                    <div class="flex flex-col items-center justify-center h-full">
-                        <span class="text-lg font-medium" id="date-widget"></span>
-                        <span class="text-5xl font-extrabold mt-1" id="time-widget"></span>
-                    </div>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </div>
-                <a href="Destinationparcs.html" class="grid-item">
-                    <span class="grid-icon">🎢</span>
-                    <span class="text-2xl font-semibold">Parcs & Aventures</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationbienetre.html" class="grid-item">
-                    <span class="grid-icon">🧘‍♀️</span>
-                    <span class="text-2xl font-semibold">Bien-être & Spa</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-                <a href="Destinationgolf.html" class="grid-item">
-                    <span class="grid-icon">⛳</span>
-                    <span class="text-2xl font-semibold">Golf</span>
-                    <div class="resize-handle">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </a>
-            </div>
+            <iframe id="content-iframe-2" src="sud-aventure.html" class="w-full h-full border-0"></iframe>
         </div>
     </div>
 
-    <!-- Modals -->
-    <div id="modal-1" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 class="modal-title mb-4">L'île intense</h2>
-            <div class="modal-grid-content">
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+1" alt="Description Image 1" />
-                    <p class="mt-2 text-lg">Découvrez des paysages à couper le souffle, entre pics majestueux et plages de rêve.</p>
-                </div>
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+2" alt="Description Image 2" />
-                    <p class="mt-2 text-lg">L'île de La Réunion offre une diversité incroyable pour les voyageurs en quête d'aventure et de détente.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Flèches de navigation animées -->
+    <button id="prev-arrow" class="nav-arrow left hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+    <button id="next-arrow" class="nav-arrow right">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
 
-    <div id="modal-2" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 class="modal-title mb-4">L'île authentique</h2>
-            <div class="modal-grid-content">
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+3" alt="Description Image 3" />
-                    <p class="mt-2 text-lg">Plongez au cœur de la culture créole et de ses traditions.</p>
-                </div>
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+4" alt="Description Image 4" />
-                    <p class="mt-2 text-lg">Goûtez aux saveurs locales et rencontrez les habitants chaleureux.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="modal-3" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2 class="modal-title mb-4">L'île aventure</h2>
-            <div class="modal-grid-content">
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+5" alt="Description Image 5" />
-                    <p class="mt-2 text-lg">Explorez l'île à travers des activités uniques et mémorables.</p>
-                </div>
-                <div class="modal-grid-item">
-                    <img src="https://via.placeholder.com/400x300.png?text=Image+6" alt="Description Image 6" />
-                    <p class="mt-2 text-lg">Que vous soyez fan de sensations fortes ou de relaxation, l'île a tout pour vous plaire.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Boutons de contrôle -->
+    <!-- Boutons fixes en haut à droite -->
     <div class="fixed-buttons">
-        <button id="toggle-contrast" class="icon-button" aria-label="Toggle high contrast">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-        </button>
-        <button id="toggle-text-size" class="icon-button" aria-label="Toggle larger text">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12h18M7 9l4 4 4-4m-4 12v-8" />
-            </svg>
-        </button>
+        <button id="text-size-button" class="icon-button"><i class="fas fa-font"></i></button>
+        <button id="contrast-button" class="icon-button"><i class="fas fa-adjust"></i></button>
     </div>
 
     <script>
-        // ===============================
-        // Variables Globales
-        // ===============================
-        const slider = document.querySelector('.slider-container');
-        const screens = document.querySelectorAll('.screen');
-        const nextButtons = document.querySelectorAll('[id^="next-screen-"]');
-        const prevButtons = document.querySelectorAll('[id^="prev-screen-"]');
-        const openButtons = document.querySelectorAll('[id^="open-button-"]');
-        const modals = document.querySelectorAll('.modal');
-        const closeButtons = document.querySelectorAll('.close-button');
-        const toggleContrastButton = document.getElementById('toggle-contrast');
-        const toggleTextSizeButton = document.getElementById('toggle-text-size');
-        const body = document.body;
+        document.addEventListener('DOMContentLoaded', () => {
+            let currentScreen = 0;
+            const screens = document.querySelectorAll('.screen');
+            const sliderContainer = document.querySelector('.slider-container');
+            const prevArrow = document.getElementById('prev-arrow');
+            const nextArrow = document.getElementById('next-arrow');
+            const totalScreens = screens.length;
+            let inactivityTimer;
 
-        let currentScreen = 0;
-        let isDragging = false;
-        let startX = 0;
-        let currentTranslate = 0;
-        let prevTranslate = 0;
-        let animationID;
-        let inactivityTimer;
+            const translatePage = (lang) => {
+                document.documentElement.lang = lang;
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    const translations = {
+                         fr: {
+                            title: "Destination Sud Réunion",
+                            subtitle: "Office de Tourisme du Sud de La Réunion",
+                            discover_button: "Découvrir les activités"
+                        }
+                    };
+                    if (translations[lang] && translations[lang][key]) {
+                        el.textContent = translations[lang][key];
+                    }
+                });
+                document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                    const key = el.getAttribute('data-i18n-placeholder');
+                     const translations = {
+                         fr: {}
+                    };
+                    if (translations[lang] && translations[lang][key]) {
+                        el.placeholder = translations[lang][key];
+                    }
+                });
+            };
 
-        // Variables pour le glisser-déposer et le redimensionnement
-        const gridItems = document.querySelectorAll('.grid-item');
-        let longPressTimer;
-        let isLongPress = false;
-        let draggedElement = null;
-        let isLinkClickBlocked = false;
-        let isResizing = false;
-        let resizeTarget = null;
-        let initialX = 0;
-        let initialY = 0;
+            const updateSlider = () => {
+                sliderContainer.style.transform = `translateX(-${currentScreen * 100}vw)`;
+                updateArrows();
+            };
 
-        // ===============================
-        // Gestion du Slider et de la Navigation
-        // ===============================
-        function updateSlider() {
-            currentTranslate = -currentScreen * window.innerWidth;
-            slider.style.transform = `translateX(${currentTranslate}px)`;
-        }
-
-        // Gère le glissement normal d'écran
-        function handleStart(event) {
-            // Empêche le défilement de l'écran si l'utilisateur est en train de glisser un widget
-            if (draggedElement) return;
-
-            isDragging = true;
-            startX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-            prevTranslate = currentTranslate;
-            animationID = requestAnimationFrame(animation);
-            slider.style.transition = 'none';
-        }
-
-        function handleMove(event) {
-            if (!isDragging) return;
-            const currentX = event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-            const deltaX = currentX - startX;
-            currentTranslate = prevTranslate + deltaX;
-            if (event.type.includes('touch')) {
-                event.preventDefault();
-            }
-        }
-
-        function handleEnd() {
-            cancelAnimationFrame(animationID);
-            isDragging = false;
-            const movedBy = currentTranslate - prevTranslate;
-            if (movedBy < -100 && currentScreen < screens.length - 1) {
-                currentScreen++;
-            } else if (movedBy > 100 && currentScreen > 0) {
-                currentScreen--;
-            }
-            updateSlider();
-            slider.style.transition = 'transform 0.5s ease-in-out';
-            resetInactivityTimer();
-        }
-
-        function animation() {
-            slider.style.transform = `translateX(${currentTranslate}px)`;
-            if (isDragging) {
-                requestAnimationFrame(animation);
-            }
-        }
-
-        function handleWheel(event) {
-            if (event.deltaY > 0 && currentScreen < screens.length - 1) {
-                currentScreen++;
+            const goToScreen = (index) => {
+                currentScreen = index;
                 updateSlider();
-            } else if (event.deltaY < 0 && currentScreen > 0) {
-                currentScreen--;
-                updateSlider();
-            }
-            event.preventDefault();
-            resetInactivityTimer();
-        }
+            };
 
-        // Gestionnaires pour la navigation par boutons
-        nextButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                currentScreen++;
-                updateSlider();
-                resetInactivityTimer();
-            });
-        });
-
-        prevButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                currentScreen--;
-                updateSlider();
-                resetInactivityTimer();
-            });
-        });
-
-        // ===============================
-        // Gestion des Modals
-        // ===============================
-        openButtons.forEach((button, index) => {
-            button.addEventListener('click', (event) => {
-                if (isLinkClickBlocked) {
-                    event.preventDefault();
-                    isLinkClickBlocked = false;
-                    return;
-                }
-                modals[index].style.display = 'flex';
-                resetInactivityTimer();
-            });
-        });
-
-        closeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                button.closest('.modal').style.display = 'none';
-                resetInactivityTimer();
-            });
-        });
-
-        window.addEventListener('click', (event) => {
-            modals.forEach(modal => {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                    resetInactivityTimer();
-                }
-            });
-        });
-
-        // ===============================
-        // Gestion de l'Accessibilité
-        // ===============================
-        toggleContrastButton.addEventListener('click', () => {
-            body.classList.toggle('high-contrast');
-            resetInactivityTimer();
-        });
-
-        toggleTextSizeButton.addEventListener('click', () => {
-            body.classList.toggle('larger-text');
-            resetInactivityTimer();
-        });
-        
-        // ===============================
-        // Minuteur d'inactivité pour le défilement automatique
-        // ===============================
-        function startAutoScroll() {
-            inactivityTimer = setTimeout(() => {
-                if (currentScreen < screens.length - 1) {
+            const nextScreen = () => {
+                if (currentScreen < totalScreens - 1) {
                     currentScreen++;
+                    updateSlider();
                 } else {
                     currentScreen = 0;
+                    updateSlider();
                 }
-                updateSlider();
-                startAutoScroll();
-            }, 60000); // 1 minute
-        }
-        
-        function resetInactivityTimer() {
-            clearTimeout(inactivityTimer);
-            startAutoScroll();
-        }
+            };
 
-        // ===============================
-        // Gestion du Widget Date/Heure
-        // ===============================
-        function updateDateTime() {
-            const now = new Date();
-            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            
-            const formattedDate = now.toLocaleDateString('fr-FR', dateOptions);
-            const formattedTime = now.toLocaleTimeString('fr-FR', timeOptions);
-
-            const dateElement = document.getElementById('date-widget');
-            const timeElement = document.getElementById('time-widget');
-
-            if (dateElement && timeElement) {
-                dateElement.textContent = formattedDate;
-                timeElement.textContent = formattedTime;
-            }
-        }
-        
-        // ===============================
-        // Fonctions de glisser-déposer & redimensionnement
-        // ===============================
-        function handleGridStart(event) {
-            const targetElement = event.currentTarget.closest('.grid-item');
-            if (!targetElement) return;
-
-            // Si c'est la poignée de redimensionnement qui est cliquée, on passe en mode redimensionnement
-            if (event.target.closest('.resize-handle')) {
-                isResizing = true;
-                resizeTarget = targetElement;
-                initialX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-                initialY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
-                return;
-            }
-
-            clearTimeout(longPressTimer);
-            isLongPress = false;
-            isLinkClickBlocked = false;
-            
-            initialX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-            initialY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
-
-            longPressTimer = setTimeout(() => {
-                isLongPress = true;
-                isLinkClickBlocked = true;
-                draggedElement = targetElement;
-                draggedElement.classList.add('dragging');
-                draggedElement.classList.add('vibrating'); // Ajoute la classe pour l'animation de vibration
-                draggedElement.classList.add('show-handle');
-                
-            }, 400);
-
-            if (event.type.includes('touch')) {
-                event.preventDefault();
-            }
-        }
-
-        function handleGridMove(event) {
-            // Gestion du redimensionnement
-            if (isResizing && resizeTarget) {
-                const currentX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-                const currentY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
-                const deltaX = currentX - initialX;
-                const deltaY = currentY - initialY;
-                const resizeThreshold = 50;
-
-                // Enlève toutes les classes de redimensionnement
-                resizeTarget.classList.remove('grid-item-col-2', 'grid-item-row-2', 'grid-item-large-square', 'grid-item-large-rectangle');
-                
-                // Si l'utilisateur tire horizontalement ou verticalement au-delà d'un seuil, on change la forme
-                if (Math.abs(deltaX) > resizeThreshold) {
-                    resizeTarget.classList.add('grid-item-large-rectangle');
-                } else if (Math.abs(deltaY) > resizeThreshold) {
-                    resizeTarget.classList.add('grid-item-large-square');
+            const prevScreen = () => {
+                if (currentScreen > 0) {
+                    currentScreen--;
+                    updateSlider();
                 }
-                if (event.type.includes('touch')) {
-                    event.preventDefault();
+            };
+
+            const updateArrows = () => {
+                if (currentScreen === 0) {
+                    prevArrow.classList.add('hidden');
+                } else {
+                    prevArrow.classList.remove('hidden');
                 }
-                return;
-            }
-
-            // Gestion du glisser-déposer principal
-            if (!isLongPress || !draggedElement) return;
-            
-            // Corrige la position de l'élément en mode glisser-déposer
-            draggedElement.classList.add('dragging');
-            
-            const currentX = event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
-            const currentY = event.type.includes('mouse') ? event.clientY : event.touches[0].clientY;
-            
-            draggedElement.style.left = `${currentX - draggedElement.offsetWidth / 2}px`;
-            draggedElement.style.top = `${currentY - draggedElement.offsetHeight / 2}px`;
-            
-            const screenWidth = window.innerWidth;
-            const threshold = screenWidth * 0.15;
-            
-            if (currentX > screenWidth - threshold && currentScreen < screens.length - 1) {
-                currentScreen++;
-                updateSlider();
-            } else if (currentX < threshold && currentScreen > 0) {
-                currentScreen--;
-                updateSlider();
-            }
-        }
-
-        function handleGridEnd(event) {
-            clearTimeout(longPressTimer);
-            
-            if (isResizing) {
-                // Fin du redimensionnement
-                isResizing = false;
-                resizeTarget = null;
-                // On cache la poignée
-                const allGridItems = document.querySelectorAll('.grid-item');
-                allGridItems.forEach(item => item.classList.remove('show-handle'));
-            }
-            
-            // Si le glisser-déposer principal était actif
-            if (isLongPress && draggedElement) {
-                const dropTarget = screens[currentScreen].querySelector('.right-panel');
-                if (dropTarget) {
-                    dropTarget.appendChild(draggedElement);
+                if (currentScreen === totalScreens - 1) {
+                    nextArrow.classList.add('hidden');
+                } else {
+                    nextArrow.classList.remove('hidden');
                 }
-                
-                draggedElement.classList.remove('dragging');
-                draggedElement.classList.remove('vibrating'); // Supprime la classe de vibration
-                draggedElement.style.left = '';
-                draggedElement.style.top = '';
-                draggedElement.style.position = '';
-
-                isLongPress = false;
-                draggedElement = null;
-                
-                // On cache la poignée après un drag
-                const allGridItems = document.querySelectorAll('.grid-item');
-                allGridItems.forEach(item => item.classList.remove('show-handle'));
-            } else {
-                isLinkClickBlocked = false;
-            }
-
-            if (event.type.includes('touch')) {
-                event.preventDefault();
-            }
-        }
-
-        // ===============================
-        // Écouteurs d'événements et Initialisation
-        // ===============================
-        document.addEventListener('DOMContentLoaded', () => {
-            updateSlider();
-            resetInactivityTimer();
-            updateDateTime();
-            setInterval(updateDateTime, 1000);
-
-            gridItems.forEach(item => {
-                item.addEventListener('mousedown', handleGridStart);
-                item.addEventListener('touchstart', handleGridStart);
+            };
+            
+            const nextButtons = document.querySelectorAll('[id^="next-screen-"]');
+            nextButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    goToScreen(1);
+                    resetInactivityTimer();
+                });
             });
-            document.addEventListener('mouseup', handleGridEnd);
-            document.addEventListener('touchend', handleGridEnd);
-            document.addEventListener('mousemove', handleGridMove);
-            document.addEventListener('touchmove', handleGridMove);
 
-            document.addEventListener('dragstart', (e) => e.preventDefault());
+            prevArrow.addEventListener('click', () => {
+                prevScreen();
+                resetInactivityTimer();
+            });
+            nextArrow.addEventListener('click', () => {
+                nextScreen();
+                resetInactivityTimer();
+            });
+
+            const updateTimeAndDate = () => {
+                const now = new Date();
+                const timeOptions = { hour: '2-digit', minute: '2-digit' };
+                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+                const timeString = now.toLocaleTimeString('fr-FR', timeOptions);
+                const dateString = now.toLocaleDateString('fr-FR', dateOptions);
+
+                document.getElementById('time-display').textContent = timeString;
+                document.getElementById('date-display').textContent = dateString;
+            };
+
+            setInterval(updateTimeAndDate, 1000);
+            updateTimeAndDate();
+
+            const contrastButton = document.getElementById('contrast-button');
+            const textSizeButton = document.getElementById('text-size-button');
+
+            const contentIframe = document.getElementById('content-iframe');
+            const contentIframe2 = document.getElementById('content-iframe-2');
+            
+            contrastButton.addEventListener('click', () => {
+                document.body.classList.toggle('high-contrast');
+                if (contentIframe && contentIframe.contentWindow) {
+                    contentIframe.contentWindow.postMessage({ type: 'toggle-contrast' }, '*');
+                }
+                if (contentIframe2 && contentIframe2.contentWindow) {
+                    contentIframe2.contentWindow.postMessage({ type: 'toggle-contrast' }, '*');
+                }
+                resetInactivityTimer();
+            });
+
+            textSizeButton.addEventListener('click', () => {
+                document.body.classList.toggle('larger-text');
+                if (contentIframe && contentIframe.contentWindow) {
+                    contentIframe.contentWindow.postMessage({ type: 'toggle-text-size' }, '*');
+                }
+                if (contentIframe2 && contentIframe2.contentWindow) {
+                    contentIframe2.contentWindow.postMessage({ type: 'toggle-text-size' }, '*');
+                }
+                resetInactivityTimer();
+            });
+
+            const resetInactivityTimer = () => {
+                clearTimeout(inactivityTimer);
+                inactivityTimer = setTimeout(() => {
+                    goToScreen(0);
+                }, 30000);
+            };
+
+            resetInactivityTimer();
+
+            document.addEventListener('mousemove', resetInactivityTimer);
+            document.addEventListener('touchstart', resetInactivityTimer);
+            
+            // Écouteur pour fermer les modales de contact si on clique en dehors
+            document.addEventListener('click', (event) => {
+                const isClickInsideContactModule = event.target.closest('.module-container');
+                const isClickInsideUniversalModal = event.target.closest('#universal-modal');
+                if (!isClickInsideContactModule) {
+                     // Logique de fermeture si nécessaire (actuellement, il n'y a plus de module de contact)
+                }
+            });
         });
     </script>
 </body>
