@@ -197,6 +197,10 @@
             border-radius: 1rem;
             flex-grow: 1;
         }
+        /* Style spécifique pour rendre l'iframe transparente */
+        .transparent-iframe {
+            background-color: transparent !important;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
@@ -379,7 +383,8 @@
         
         <!-- Écran 3: Conteneur pour la page sud-aventure.html -->
         <div id="screen-3" class="screen">
-            <iframe id="content-iframe-2" src="sud-aventure.html" class="w-full h-full border-0"></iframe>
+            <!-- La classe "transparent-iframe" est ajoutée ici pour tenter de rendre le fond transparent -->
+            <iframe id="content-iframe-2" src="sud-aventure.html" class="w-full h-full border-0 transparent-iframe" allowtransparency="true"></iframe>
         </div>
     </div>
 
