@@ -1,0 +1,267 @@
+<!-- Fichier principal pour l'interface de Sud Aventure -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sud Aventure</title>
+    <!-- Chargement de Tailwind CSS pour un stylisme rapide et efficace -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Le fond est maintenant transparent */
+            background-color: transparent;
+        }
+
+        /* Style pour l'effet de flou et de transparence (Glassmorphism) */
+        .glass-effect {
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Ajout d'un effet de survol simple sur les cartes */
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Retirer le conteneur de fond pour un fond transparent */
+        .bg-container {
+            display: none;
+        }
+
+        /* Style de la modale */
+        .message-box-container, .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .message-box {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Styles pour le contenu de la modale */
+        .modal-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            max-height: none;
+            background: none;
+            padding: 0;
+            box-shadow: none;
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+        }
+
+        .modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+    </style>
+</head>
+<body class="bg-transparent flex items-center justify-center p-4 min-h-screen">
+    <!-- Conteneur pour l'image de fond -->
+    <div class="bg-container"></div>
+    <div class="container mx-auto max-w-7xl relative w-full">
+        <!-- Conteneur principal de l'application -->
+        <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-8">
+            <!-- Section principale à gauche avec le titre et les boutons de navigation -->
+            <div class="flex flex-col items-center md:items-start text-center md:text-left space-y-4">
+                <div class="text-black">
+                    <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold leading-tight drop-shadow-lg">Sud Aventure</h1>
+                    <p class="text-xl md:text-2xl font-semibold opacity-80 drop-shadow-md mt-2">La Réunion</p>
+                </div>
+                <!-- Boutons de navigation -->
+                <div class="flex flex-wrap justify-center md:justify-start space-x-2 mt-4">
+                    <button id="btn-savoir-plus" class="px-6 py-3 bg-white bg-opacity-30 text-black font-medium rounded-full glass-effect shadow-lg transition duration-300 transform hover:scale-105 focus:outline-none">
+                        En savoir plus
+                    </button>
+                    <button id="btn-retour" class="px-6 py-3 bg-white bg-opacity-30 text-black font-medium rounded-full glass-effect shadow-lg transition duration-300 transform hover:scale-105 focus:outline-none">
+                        Retour
+                    </button>
+                    <button id="btn-transports" class="px-6 py-3 bg-white bg-opacity-30 text-black font-medium rounded-full glass-effect shadow-lg transition duration-300 transform hover:scale-105 focus:outline-none">
+                        Transports
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grille des cartes thématiques à droite -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 md:w-1/2">
+                <!-- Carte "Activité" - Modifiée pour ouvrir une modale -->
+                <div id="card-activites" class="card glass-effect rounded-2xl p-6 flex flex-col items-center justify-center text-black text-center shadow-2xl cursor-pointer transition-all duration-300">
+                    <div class="w-12 h-12 mb-2 flex items-center justify-center">
+                        <!-- Icône de Boussole SVG pour l'aventure -->
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10 text-black opacity-80">
+                            <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM1.5 12a10.5 10.5 0 1 1 21 0 10.5 10.5 0 0 1-21 0ZM12 7.5c-2.485 0-4.5 2.015-4.5 4.5S9.515 16.5 12 16.5 16.5 14.485 16.5 12 14.485 7.5 12 7.5Z" />
+                        </svg>
+                    </div>
+                    <span class="text-sm md:text-base font-semibold text-center">Activité</span>
+                </div>
+
+                <!-- Carte "Plages" - Mise à jour avec le nouveau logo -->
+                <div id="card-plages" class="card glass-effect rounded-2xl p-6 flex flex-col items-center justify-center text-black text-center shadow-2xl cursor-pointer transition-all duration-300">
+                    <div class="w-12 h-12 mb-2 flex items-center justify-center">
+                        <!-- Logo Plage en PNG -->
+                        <img src="https://cdn-icons-png.flaticon.com/512/88/88956.png" alt="Icône de plage" class="w-10 h-10 opacity-80" onerror="this.onerror=null; this.src='https://placehold.co/40x40/transparent/black?text=Plage';" />
+                    </div>
+                    <span class="text-sm md:text-base font-semibold text-center">Plages</span>
+                </div>
+
+                <!-- Carte "Randonnées" - Remplacement de Bien-être & Spa -->
+                <div id="card-randos" class="card glass-effect rounded-2xl p-6 flex flex-col items-center justify-center text-black text-center shadow-2xl cursor-pointer transition-all duration-300">
+                    <div class="w-12 h-12 mb-2 flex items-center justify-center">
+                        <!-- Logo Randonnées en PNG -->
+                        <img src="https://cdn-icons-png.flaticon.com/128/16830/16830419.png" alt="Icône de randonnées" class="w-10 h-10 opacity-80" onerror="this.onerror=null; this.src='https://placehold.co/40x40/transparent/black?text=Randonnées';" />
+                    </div>
+                    <span class="text-sm md:text-base font-semibold text-center">Randonnées</span>
+                </div>
+
+                <!-- Carte "Forêt" - Mise à jour avec le nouveau logo -->
+                <div id="card-foret" class="card glass-effect rounded-2xl p-6 flex flex-col items-center justify-center text-black text-center shadow-2xl cursor-pointer transition-all duration-300">
+                    <div class="w-12 h-12 mb-2 flex items-center justify-center">
+                        <!-- Logo Forêt en PNG -->
+                        <img src="https://cdn-icons-png.flaticon.com/128/2118/2118256.png" alt="Icône de forêt" class="w-10 h-10 opacity-80" onerror="this.onerror=null; this.src='https://placehold.co/40x40/transparent/black?text=Forêt';" />
+                    </div>
+                    <span class="text-sm md:text-base font-semibold text-center">Forêt</span>
+                </div>
+
+                <!-- Carte "ONF" - Remplacement de Boutiques & Shopping -->
+                <div id="card-onf" class="card glass-effect rounded-2xl p-6 flex flex-col items-center justify-center text-black text-center shadow-2xl cursor-pointer transition-all duration-300">
+                    <div class="w-12 h-12 mb-2 flex items-center justify-center">
+                        <!-- Logo ONF en PNG -->
+                        <img src="https://fransylva-paca.fr/wp/wp-content/uploads/2015/07/Logo-ONF.png" alt="Logo ONF" class="w-10 h-10 opacity-80" onerror="this.onerror=null; this.src='https://placehold.co/40x40/transparent/black?text=ONF';" />
+                    </div>
+                    <span class="text-sm md:text-base font-semibold text-center">ONF</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section pour les messages d'interaction -->
+        <div id="message-box-container" class="message-box-container hidden">
+            <div class="message-box">
+                <p id="message-text" class="text-lg font-medium"></p>
+                <button id="close-message" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-full">Fermer</button>
+            </div>
+        </div>
+
+        <!-- Fenêtre modale pour le contenu de l'activité -->
+        <div id="activity-modal" class="modal-container hidden">
+            <div class="modal-content">
+                <!-- Bouton de fermeture de la modale -->
+                <button id="close-activity-modal" class="text-white bg-gray-600 rounded-full w-8 h-8 flex items-center justify-center text-xl font-bold transition duration-300 hover:bg-gray-800 focus:outline-none">&times;</button>
+                <!-- Iframe pour afficher le contenu de la page web -->
+                <iframe id="activity-iframe" src="" class="w-full h-full rounded-md"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour afficher un message à l'utilisateur
+        function showMessage(text) {
+            const messageBoxContainer = document.getElementById('message-box-container');
+            const messageText = document.getElementById('message-text');
+            messageText.textContent = text;
+            messageBoxContainer.classList.remove('hidden');
+        }
+
+        // Fonction pour cacher la boîte de message
+        function hideMessage() {
+            const messageBoxContainer = document.getElementById('message-box-container');
+            messageBoxContainer.classList.add('hidden');
+        }
+        
+        // Fonction réutilisable pour ouvrir la modale avec une URL spécifique
+        function openActivityModal(url) {
+            const modal = document.getElementById('activity-modal');
+            const iframe = document.getElementById('activity-iframe');
+            iframe.src = url;
+            modal.classList.remove('hidden');
+        }
+
+        // Ajout des écouteurs d'événements pour les boutons de navigation
+        document.getElementById('btn-savoir-plus').addEventListener('click', () => {
+            showMessage("Vous avez cliqué sur 'En savoir plus' !");
+        });
+        document.getElementById('btn-retour').addEventListener('click', () => {
+            showMessage("Vous avez cliqué sur 'Retour' !");
+        });
+        document.getElementById('btn-transports').addEventListener('click', () => {
+            showMessage("Vous avez cliqué sur 'Transports' !");
+        });
+
+        // Gestion de la carte "Activité"
+        document.getElementById('card-activites').addEventListener('click', () => {
+            // URL du site pour les activités
+            const url = 'https://kaporalclems.github.io/Borne_Digital_DSR/DestinationActivites.html';
+            openActivityModal(url);
+        });
+
+        // Ajout des écouteurs d'événements pour les autres cartes thématiques
+        // NOTE: Les URLs ci-dessous sont des exemples. Remplacez-les par les sites correspondants.
+        document.getElementById('card-plages').addEventListener('click', () => {
+            const url = 'https://kaporalclems.github.io/Borne_Digital_DSR/Plages.html';
+            openActivityModal(url);
+        });
+
+        // Écouteur d'événement pour le nouveau bouton Randonnées
+        document.getElementById('card-randos').addEventListener('click', () => {
+            const url = 'https://kaporalclems.github.io/Borne_Digital_DSR/DestinationRandos.html';
+            openActivityModal(url);
+        });
+        
+        document.getElementById('card-foret').addEventListener('click', () => {
+            const url = 'https://kaporalclems.github.io/Borne_Digital_DSR/Foret.html';
+            openActivityModal(url);
+        });
+        
+        // Écouteur d'événement pour le bouton ONF
+        document.getElementById('card-onf').addEventListener('click', () => {
+            const url = 'https://www.onf.fr/vivre-la-foret/%2B/b90::randonnee-la-reunion-connaitre-les-sentiers-fermes.html';
+            openActivityModal(url);
+        });
+
+
+        // Écouteur d'événement pour le bouton de fermeture du message
+        document.getElementById('close-message').addEventListener('click', () => {
+            hideMessage();
+        });
+
+        // Écouteur d'événement pour le bouton de fermeture de la modale d'activité
+        document.getElementById('close-activity-modal').addEventListener('click', () => {
+            const modal = document.getElementById('activity-modal');
+            const iframe = document.getElementById('activity-iframe');
+            modal.classList.add('hidden');
+            // Arrête le chargement du contenu en réinitialisant l'iframe
+            iframe.src = ''; 
+        });
+    </script>
+</body>
+</html>
