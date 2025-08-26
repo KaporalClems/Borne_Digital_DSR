@@ -267,7 +267,15 @@
                         throw new Error(`HTTP error! status: ${response.status} for file: ${filePath}`);
                     }
                     const data = await response.json();
-                    combinedData = data.results; // Access the 'results' array from the new file
+                    console.log("Données JSON reçues :", data);
+                    // Check if 'results' property exists, otherwise assume the data itself is the array
+                    if (data.results && Array.isArray(data.results)) {
+                        combinedData = data.results;
+                    } else if (Array.isArray(data)) {
+                        combinedData = data;
+                    } else {
+                        throw new Error("Format de données JSON inattendu.");
+                    }
                     return combinedData;
                 } catch (error) {
                     console.error("Error loading data:", error);
@@ -284,7 +292,7 @@
                 
                 // Use the new JSON keys
                 const name = activity.nom_commercial;
-                const type = activity.type?.[0] || 'Défaut'; // Use the first type or a default
+                const type = Array.isArray(activity.type) ? activity.type[0] : activity.type || 'Défaut';
                 const commune = activity.commune;
                 const lat = activity.coordonnees_geographiques?.lat;
                 const lon = activity.coordonnees_geographiques?.lon;
@@ -338,7 +346,7 @@
                     const lon = activity.coordonnees_geographiques?.lon;
                     
                     if (lat && lon && !isNaN(lat) && !isNaN(lon)) {
-                        const type = activity.type?.[0] || 'Défaut';
+                        const type = Array.isArray(activity.type) ? activity.type[0] : activity.type || 'Défaut';
                         const activityIconHtmlPopup = (activityIcons[type] || activityIcons['Défaut']).replace('activity-icon', 'popup-activity-icon');
                         const popupContent = `
                             <div class="font-sans text-gray-800 w-56">
@@ -354,7 +362,7 @@
 
             // --- FUNCTION TO MANAGE THE DETAILS MODAL ---
             function showDetailsModal(activity) {
-                const type = activity.type?.[0] || 'Défaut';
+                const type = Array.isArray(activity.type) ? activity.type[0] : activity.type || 'Défaut';
                 const activityIconHtml = (activityIcons[type] || activityIcons['Défaut']);
                 const adresse = activity.adresse || 'Adresse non disponible';
                 const description = activity.description || placeholderDescription;
@@ -409,12 +417,20 @@
             function populateFilters() {
                 const allCommunes = new Set();
                 const allTypes = new Set();
-                allActivities.forEach(activity => {
-                    allCommunes.add(activity.commune);
-                    if (activity.type) {
-                        activity.type.forEach(t => allTypes.add(t));
-                    }
-                });
+                // We add a safety check here to ensure allActivities is an array before iterating
+                if (Array.isArray(allActivities)) {
+                    allActivities.forEach(activity => {
+                        allCommunes.add(activity.commune);
+                        if (activity.type) {
+                            // Ensure activity.type is an array before using forEach
+                            if (Array.isArray(activity.type)) {
+                                activity.type.forEach(t => allTypes.add(t));
+                            } else {
+                                allTypes.add(activity.type);
+                            }
+                        }
+                    });
+                }
                 [...allCommunes].sort().forEach(commune => communeFilter.appendChild(new Option(commune, commune)));
                 [...allTypes].sort().forEach(type => typeFilter.appendChild(new Option(type, type)));
             }
@@ -426,7 +442,7 @@
                 const filtered = allActivities.filter(activity => {
                     const nameMatch = activity.nom_commercial.toLowerCase().includes(searchTerm);
                     const communeMatch = (commune === 'all') || (activity.commune === commune);
-                    const typeMatch = (type === 'all') || (activity.type && activity.type.includes(type));
+                    const typeMatch = (type === 'all') || (activity.type && (Array.isArray(activity.type) ? activity.type.includes(type) : activity.type === type));
                     return nameMatch && communeMatch && typeMatch;
                 });
                 displayActivities(filtered);
@@ -435,7 +451,8 @@
             // --- APPLICATION INITIALIZATION ---
             async function initializeApp() {
                 allActivities = await fetchAllActivities();
-                if (allActivities.length > 0) {
+                // Add a check to ensure allActivities is not empty before proceeding
+                if (allActivities && allActivities.length > 0) {
                     const reunionBounds = L.latLngBounds(L.latLng(-21.5, 55.1), L.latLng(-20.8, 56.0));
                     map = L.map('map', { center: [-21.28, 55.55], zoom: 10, maxBounds: reunionBounds, minZoom: 9 });
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: 'Leaflet | &copy; OpenStreetMap contributors' }).addTo(map);
@@ -445,6 +462,9 @@
 
                     [searchInput, communeFilter, typeFilter].forEach(el => el.addEventListener('change', filterActivities));
                     searchInput.addEventListener('input', filterActivities);
+                } else {
+                    console.error("No activities loaded. Cannot initialize the map and filters.");
+                    activitiesList.innerHTML = `<p class="text-gray-500 text-center col-span-full">Désolé, aucune activité n'a pu être chargée. Veuillez vérifier la connexion et réessayer.</p>`;
                 }
             }
 
