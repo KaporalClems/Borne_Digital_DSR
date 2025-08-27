@@ -12,7 +12,6 @@
             font-family: 'Montserrat', sans-serif;
         }
         .hero-bg {
-            background-image: url('https://images.unsplash.com/photo-1596225791352-3a2d5954ceb6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
             background-size: cover;
             background-position: center;
         }
@@ -33,7 +32,6 @@
             opacity: 0;
             pointer-events: none;
         }
-
         .dropdown:hover .dropdown-menu {
             display: block;
             transform: translateY(0);
@@ -84,7 +82,6 @@
         .slider-button-next {
             right: 10px;
         }
-
         /* Modal styling */
         .modal {
             display: none;
@@ -123,6 +120,88 @@
             text-decoration: none;
             cursor: pointer;
         }
+        /* Styles pour le bouton coeur sur les cartes */
+        .card-like-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.2s ease-in-out;
+        }
+        .card-like-button .fa-heart {
+            color: #ccc; /* Couleur par défaut */
+            transition: color 0.2s;
+        }
+        .card-like-button.liked .fa-heart {
+            color: #ef4444; /* Rouge pour "aimé" */
+        }
+        .card-like-button:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 1);
+        }
+        /* Styles pour le badge de compteur dans l'en-tête */
+        .favorites-count, .notifications-count {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            font-size: 0.75rem;
+            line-height: 1;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 9999px;
+            padding: 0.25rem 0.5rem;
+            display: none; /* Masqué par défaut */
+        }
+        .notifications-count {
+            right: -10px;
+        }
+        /* Carrousel d'images en plein écran */
+        .hero-carousel-container {
+            position: relative;
+            width: 100%;
+            height: 60vh; /* Utiliser une hauteur relative à la fenêtre */
+            min-height: 400px; /* Hauteur minimale sur les petits écrans */
+            overflow: hidden;
+        }
+        .hero-carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .hero-carousel-image.active {
+            opacity: 1;
+        }
+        .hero-title-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+        .hero-title-overlay h1 {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        /* Mobile menu specific styles */
+        #mobile-menu {
+            display: none;
+        }
+        #mobile-menu.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -135,6 +214,7 @@
                     <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo2.png" onerror="this.onerror=null;this.src='https://placehold.co/48x48/CCCCCC/FFFFFF?text=Logo';" alt="Destination Sud Réunion" class="h-12">
                 </a>
             </div>
+            <!-- Navigation pour les grands écrans -->
             <div class="hidden lg:flex items-center space-x-6">
                 <!-- Destinations Dropdown -->
                 <div class="dropdown relative group">
@@ -159,7 +239,6 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Loisirs Dropdown -->
                 <div class="dropdown relative group">
                     <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
@@ -183,7 +262,6 @@
                         </div>
                     </div>
                 </div>
-                
                 <!-- Séjours Dropdown -->
                 <div class="dropdown relative group">
                     <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
@@ -195,7 +273,6 @@
                         <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-utensils"></i><span>Restaurants</span></a>
                     </div>
                 </div>
-
                 <!-- Agenda Dropdown -->
                 <div class="dropdown relative group">
                     <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
@@ -207,7 +284,6 @@
                         <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-calendar-day"></i><span>Manifestations sportives</span></a>
                     </div>
                 </div>
-
                 <!-- Pratique Dropdown -->
                 <div class="dropdown relative group">
                     <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
@@ -219,7 +295,6 @@
                         <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-shopping-bag"></i><span>Bons plans & Shopping</span></a>
                     </div>
                 </div>
-                
                 <!-- Inspiration Dropdown -->
                 <div class="dropdown relative group">
                     <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
@@ -232,28 +307,65 @@
                     </div>
                 </div>
             </div>
+            <!-- Icônes pour les grands écrans -->
             <div class="hidden lg:flex items-center space-x-4">
                 <a href="#" class="text-gray-700 hover:text-blue-600"><i class="fas fa-search"></i></a>
                 <a href="#" id="open-map-modal" class="text-gray-700 hover:text-blue-600"><i class="fas fa-map-marker-alt"></i></a>
-                <a href="#" class="text-gray-700 hover:text-blue-600"><i class="fas fa-heart"></i></a>
+                <!-- Bouton de notification -->
+                <a href="#" id="open-notifications-modal" class="text-gray-700 hover:text-blue-600 relative">
+                    <i class="fas fa-bell"></i>
+                    <span id="notifications-count-badge" class="notifications-count">1</span>
+                </a>
+                <a href="#" id="open-favorites-modal" class="text-gray-700 hover:text-blue-600 relative">
+                    <i class="fas fa-heart"></i>
+                    <span id="favorites-count-badge" class="favorites-count">0</span>
+                </a>
             </div>
+            <!-- Bouton de menu mobile -->
             <div class="lg:hidden">
-                <button class="text-gray-700 focus:outline-none">
+                <button id="mobile-menu-toggle" class="text-gray-700 focus:outline-none">
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
             </div>
         </nav>
+        <!-- Menu mobile (caché par défaut) -->
+        <div id="mobile-menu" class="bg-white lg:hidden px-6 py-4 shadow-md">
+            <nav class="flex flex-col space-y-4">
+                <a href="#" class="text-gray-700 hover:text-blue-600">Destinations</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600">Loisirs</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600">Séjours</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600">Agenda</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600">Pratique</a>
+                <a href="#" class="text-gray-700 hover:text-blue-600">Inspiration</a>
+                <div class="flex items-center justify-between mt-4 border-t pt-4">
+                    <a href="#" class="text-gray-700 hover:text-blue-600"><i class="fas fa-search mr-2"></i>Recherche</a>
+                    <a href="#" id="open-map-modal-mobile" class="text-gray-700 hover:text-blue-600"><i class="fas fa-map-marker-alt mr-2"></i>Carte</a>
+                    <a href="#" id="open-notifications-modal-mobile" class="text-gray-700 hover:text-blue-600 relative">
+                        <i class="fas fa-bell mr-2"></i>Notifications
+                        <span id="notifications-count-badge-mobile" class="notifications-count">1</span>
+                    </a>
+                    <a href="#" id="open-favorites-modal-mobile" class="text-gray-700 hover:text-blue-600 relative">
+                        <i class="fas fa-heart mr-2"></i>Favoris
+                        <span id="favorites-count-badge-mobile" class="favorites-count">0</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
     </header>
 
     <!-- Main Content -->
     <main>
-        <!-- Hero Section -->
-        <section class="hero-bg text-white">
-            <div class="bg-black bg-opacity-40 py-24">
-                <div class="container mx-auto px-6 text-center">
-                    <h1 class="text-4xl md:text-6xl font-bold mb-4">Fabuleux Voyages dans le Sud de la Réunion</h1>
+        <!-- Hero Section avec Carrousel -->
+        <section class="hero-carousel-container">
+            <div class="hero-title-overlay">
+                <div class="container mx-auto px-6 text-center text-white">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Fabuleux Voyages dans le Sud de la Réunion</h1>
                 </div>
             </div>
+            <!-- Images du carrousel -->
+            <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/fortevelave/foret_tevelave.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1920x600/CCCCCC/FFFFFF?text=Image+1';" class="hero-carousel-image active" alt="Forêt de Tévelave">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7wFLgdEzCadrOeNoIdoPsT9dgYpMAIUeEyA&s" onerror="this.onerror=null;this.src='https://placehold.co/1920x600/CCCCCC/FFFFFF?text=Image+2';" class="hero-carousel-image" alt="Paysage du Sud de la Réunion">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSc8Tvm8tjH5Q3dkIxwIF6fwSrhtWTo-CyWw&s" onerror="this.onerror=null;this.src='https://placehold.co/1920x600/CCCCCC/FFFFFF?text=Image+3';" class="hero-carousel-image" alt="Cascade de la Réunion">
         </section>
 
         <!-- Introduction Section -->
@@ -294,13 +406,17 @@
                         <option value="culture">Culture</option>
                         <option value="gastronomie">Gastronomie</option>
                         <option value="sport">Sport & Nature</option>
+                        <option value="plage">Plage</option>
                     </select>
                 </div>
 
                 <!-- Cards Grid -->
-                <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div id="cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Card 1 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300" data-location="volcan" data-season="ete" data-type="rando">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="volcan" data-season="ete" data-type="rando" data-id="card-1" data-title="Aventure au Piton de la Fournaise">
+                        <div class="card-like-button">
+                            <i class="fas fa-heart"></i>
+                        </div>
                         <img src="https://images.unsplash.com/photo-1596225791352-3a2d_5954ceb6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Piton+de+la+Fournaise';" alt="Piton de la Fournaise" class="w-full h-56 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-gray-800">Aventure au Piton de la Fournaise</h3>
@@ -308,7 +424,10 @@
                         </div>
                     </div>
                     <!-- Card 2 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300" data-location="lagon" data-season="ete" data-type="sport">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="lagon" data-season="ete" data-type="sport" data-id="card-2" data-title="Détente et Kayak au lagon de St-Pierre">
+                        <div class="card-like-button">
+                            <i class="fas fa-heart"></i>
+                        </div>
                         <img src="https://images.unsplash.com/photo-1600558133149-59b32757a221?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Lagon+de+Saint-Pierre';" alt="Lagon de Saint-Pierre" class="w-full h-56 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-gray-800">Détente et Kayak au lagon de St-Pierre</h3>
@@ -316,7 +435,10 @@
                         </div>
                     </div>
                     <!-- Card 3 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300" data-location="foret" data-season="hiver" data-type="rando">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="foret" data-season="hiver" data-type="rando" data-id="card-3" data-title="Balade en Forêt de l'Étang Salé">
+                        <div class="card-like-button">
+                            <i class="fas fa-heart"></i>
+                        </div>
                         <img src="https://guide-reunion.fr/fileadmin/_processed_/5/8/csm_foret-etang-sale-parcours-sante-07_cafdd0dc48.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Forêt+de+l\'Étang+Salé';" alt="Forêt de l'Étang Salé" class="w-full h-56 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-gray-800">Balade en Forêt de l'Étang Salé</h3>
@@ -324,7 +446,10 @@
                         </div>
                     </div>
                     <!-- Card 4 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300" data-location="lagon" data-season="hiver" data-type="gastronomie">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="lagon" data-season="hiver" data-type="gastronomie" data-id="card-4" data-title="Saveurs créoles au marché de St-Pierre">
+                        <div class="card-like-button">
+                            <i class="fas fa-heart"></i>
+                        </div>
                         <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/ac/27/74/marche-forain.jpg?w=1200&h=-1&s=1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Marché+de+Saint-Pierre';" alt="Marché de Saint-Pierre" class="w-full h-56 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-gray-800">Saveurs créoles au marché de St-Pierre</h3>
@@ -332,7 +457,10 @@
                         </div>
                     </div>
                     <!-- Card 5 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300" data-location="foret" data-season="ete" data-type="rando">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="foret" data-season="ete" data-type="rando" data-id="card-5" data-title="Vue panoramique depuis la Fenêtre des Makes">
+                        <div class="card-like-button">
+                            <i class="fas fa-heart"></i>
+                        </div>
                         <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/fenetremakes/fenetremakesreunion.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Fenêtre+des+Makes';" alt="Fenêtre des Makes" class="w-full h-56 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-gray-800">Vue panoramique depuis la Fenêtre des Makes</h3>
@@ -340,11 +468,14 @@
                         </div>
                     </div>
                     <!-- Card 6 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300" data-location="volcan" data-season="hiver" data-type="culture">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="volcan" data-season="hiver" data-type="culture" data-id="card-6" data-title="Les Festivités du Sud">
+                        <div class="card-like-button">
+                            <i class="fas fa-heart"></i>
+                        </div>
                         <div class="slider-container">
-                            <img src="https://la1ere.franceinfo.fr/image/xLE7O7snQqxH7-mUAk23_fsm5Dc/0x31:660x371/800x450/outremer/2019/10/03/5d963ea45c6cc_ail_3-906594.jpg" class="slider-image active" alt="Festivité 1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Festivité+1';">
-                            <img src="https://www.francebleu.fr/pikapi/images/cf22de72-aa04-4542-b703-cc853b6636d1/1200x680?webp=false" class="slider-image" alt="Festivité 2" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Festivité+2';">
-                            <img src="https://www.widermag.com/media/blog/2022/Mars%202022/LOGO%2030%20ANS%20GRAND%20RAID%20REUNION.png" class="slider-image" alt="Festivité 3" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Festivité+3';">
+                            <img src="https://la1ere.franceinfo.fr/image/xLE7O7snQqxH7-mUAk23_fsm5Dc/0x31:660x371/800x450/outremer/2019/10/03/5d963ea45c6cc_ail_3-906594.jpg" class="slider-image active" alt="Festivité 1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Festivit\u00E9+1';">
+                            <img src="https://www.francebleu.fr/pikapi/images/cf22de72-aa04-4542-b703-cc853b6636d1/1200x680?webp=false" class="slider-image" alt="Festivité 2" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Festivit\u00E9+2';">
+                            <img src="https://www.widermag.com/media/blog/2022/Mars%202022/LOGO%2030%20ANS%20GRAND%20RAID%20REUNION.png" class="slider-image" alt="Festivité 3" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Festivit\u00E9+3';">
                             <button class="slider-button slider-button-prev"><i class="fas fa-chevron-left"></i></button>
                             <button class="slider-button slider-button-next"><i class="fas fa-chevron-right"></i></button>
                         </div>
@@ -354,11 +485,14 @@
                         </div>
                     </div>
                      <!-- Card 7 - Plages -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300" data-location="lagon" data-season="ete" data-type="plage">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="lagon" data-season="ete" data-type="plage" data-id="card-7" data-title="Les plus belles plages du Sud">
+                        <div class="card-like-button">
+                            <i class="fas fa-heart"></i>
+                        </div>
                         <div class="slider-container">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7wFLgdEzCadrOeNoIdoPsT9dgYpMAIUeEyA&s" class="slider-image active" alt="Plage 1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Plage+de+l\'Étang+Salé';">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7wFLgdEzCadrOeNoIdoPsT9dgYpMAIUeEyA&s" class="slider-image active" alt="Plage 1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Plage+de+l\'\u00C9tang+Sal\u00E9';">
                             <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/grandeanse/grandeanse.jpg" class="slider-image" alt="Plage 2" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Plage+de+Grande+Anse';">
-                            <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/2/f/csm_plage_etangsale2_09b4d981fb.jpg" class="slider-image" alt="Plage 3" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Plage+de+l\'Étang+Salé';">
+                            <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/2/f/csm_plage_etangsale2_09b4d981fb.jpg" class="slider-image" alt="Plage 3" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Plage+de+l\'\u00C9tang+Sal\u00E9';">
                             <button class="slider-button slider-button-prev"><i class="fas fa-chevron-left"></i></button>
                             <button class="slider-button slider-button-next"><i class="fas fa-chevron-right"></i></button>
                         </div>
@@ -368,11 +502,14 @@
                         </div>
                     </div>
                     <!-- Card 8 - Forêt -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300" data-location="foret" data-season="hiver" data-type="rando">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="foret" data-season="hiver" data-type="rando" data-id="card-8" data-title="Tous en forêt !">
+                        <div class="card-like-button">
+                            <i class="fas fa-heart"></i>
+                        </div>
                         <div class="slider-container">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2uY-dN7KKhLAXWZQ4rbEmzRcPRMuCZcmrsQ&s" class="slider-image active" alt="Forêt 1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Forêt+de+Bébour';">
-                            <img src="https://guide-reunion.fr/fileadmin/_processed_/5/8/csm_foret-etang-sale-parcours-sante-07_cafdd0dc48.jpg" class="slider-image" alt="Forêt 2" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Forêt+de+l\'Étang+Salé';">
-                            <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/7/4/csm_sentiertevelave_67ce75c721.jpg" class="slider-image" alt="Forêt 3" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Sentier+de+Tévelave';">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2uY-dN7KKhLAXWZQ4rbEmzRcPRMuCZcmrsQ&s" class="slider-image active" alt="Forêt 1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=For\u00EAt+de+B\u00E9bour';">
+                            <img src="https://guide-reunion.fr/fileadmin/_processed_/5/8/csm_foret-etang-sale-parcours-sante-07_cafdd0dc48.jpg" class="slider-image" alt="Forêt 2" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=For\u00EAt+de+l\'\u00C9tang+Sal\u00E9';">
+                            <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/7/4/csm_sentiertevelave_67ce75c721.jpg" class="slider-image" alt="Forêt 3" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Sentier+de+T\u00E9velave';">
                             <button class="slider-button slider-button-prev"><i class="fas fa-chevron-left"></i></button>
                             <button class="slider-button slider-button-next"><i class="fas fa-chevron-right"></i></button>
                         </div>
@@ -382,7 +519,10 @@
                         </div>
                     </div>
                     <!-- Card 9 - Visites -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300" data-location="all" data-season="all" data-type="culture">
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="all" data-season="all" data-type="culture" data-id="card-9" data-title="Les plus belles visites du Sud !">
+                        <div class="card-like-button">
+                            <i class="fas fa-heart"></i>
+                        </div>
                         <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/fenetremakes/fenetremakesreunion.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Piton+de+la+Fournaise';" alt="Piton de la Fournaise" class="w-full h-56 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2 text-gray-800">Les plus belles visites du Sud !</h3>
@@ -463,7 +603,7 @@
     <!-- Footer -->
     <footer class="bg-gray-800 text-white">
         <div class="container mx-auto px-6 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
                 <div>
                     <h4 class="font-semibold mb-4">Nous contacter</h4>
                     <ul>
@@ -479,7 +619,7 @@
                 </div>
                 <div>
                     <h4 class="font-semibold mb-4">Suivez-nous</h4>
-                    <div class="flex space-x-4">
+                    <div class="flex justify-center md:justify-start space-x-4">
                         <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-instagram"></i></a>
                         <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
                         <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-youtube"></i></a>
@@ -487,9 +627,9 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-center">
                 <p class="text-sm">&copy; 2025 Destination Sud Réunion. Tous droits réservés.</p>
-                <div class="flex space-x-4 mt-4 md:mt-0">
+                <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-4 md:mt-0">
                     <a href="#" class="text-sm hover:text-blue-400">Plan du site</a>
                     <a href="#" class="text-sm hover:text-blue-400">Mentions légales</a>
                 </div>
@@ -522,7 +662,44 @@
         </div>
     </div>
 
+    <!-- Notifications Modal (Nouveau) -->
+    <div id="notifications-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="close-notifications-modal">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">Nouveautés</h2>
+            <p class="text-gray-600 mb-4">Voici les dernières actualités et offres de séjours qui pourraient vous intéresser :</p>
+            <ul class="list-disc pl-5 space-y-2 text-gray-800">
+                <li><span class="font-semibold text-blue-600">Nouveau :</span> Découvrez notre séjour "Aventure Volcanique" pour l'hiver austral !</li>
+                <li><span class="font-semibold text-blue-600">Offre spéciale :</span> 15% de réduction sur les randonnées guidées jusqu'à la fin du mois.</li>
+                <li><span class="font-semibold text-blue-600">Article de blog :</span> "5 raisons de visiter le cirque de Cilaos en famille".</li>
+            </ul>
+        </div>
+    </div>
 
+    <!-- Favorites Modal (Nouveau) -->
+    <div id="favorites-modal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" id="close-favorites-modal">&times;</span>
+            <h2 class="text-2xl font-bold mb-4">Mon Itinéraire</h2>
+            <p class="text-gray-600 mb-4">Voici la liste des activités que vous avez sélectionnées. Un séjour sur mesure pour vous !</p>
+            <ul id="favorites-list" class="list-disc pl-5 space-y-2 text-gray-800">
+                <!-- Les activités aimées seront insérées ici par le script -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Script pour le menu mobile -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenu.classList.toggle('active');
+            });
+        });
+    </script>
+    
     <!-- Script pour le filtrage des cartes -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -560,7 +737,7 @@
         });
     </script>
 
-    <!-- Script pour les diaporamas -->
+    <!-- Script pour les diaporamas des cartes -->
     <script>
         document.querySelectorAll('.slider-container').forEach(container => {
             const images = container.querySelectorAll('.slider-image');
@@ -613,48 +790,215 @@
             startSlide();
         });
     </script>
+    
+    <!-- Script pour le carrousel principal du "Hero" -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const heroImages = document.querySelectorAll('.hero-carousel-image');
+            let heroImageIndex = 0;
 
-    <!-- Script for modals -->
+            function showNextHeroImage() {
+                heroImages[heroImageIndex].classList.remove('active');
+                heroImageIndex = (heroImageIndex + 1) % heroImages.length;
+                heroImages[heroImageIndex].classList.add('active');
+            }
+
+            // Démarrer le défilement automatique
+            setInterval(showNextHeroImage, 5000); // Changement toutes les 5 secondes
+        });
+    </script>
+
+    <!-- Script pour les modales -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const mapModal = document.getElementById('map-modal');
             const subscribeModal = document.getElementById('subscribe-modal');
+            const favoritesModal = document.getElementById('favorites-modal');
+            const notificationsModal = document.getElementById('notifications-modal');
             
-            const openMapButtons = document.querySelectorAll('#open-map-modal, #open-footer-map-modal');
+            const openMapButtons = document.querySelectorAll('#open-map-modal, #open-map-modal-mobile');
             const closeMapButton = document.getElementById('close-map-modal');
 
             const openSubscribeButtons = document.querySelectorAll('#open-subscribe-modal, #open-footer-subscribe-modal');
             const closeSubscribeButton = document.getElementById('close-subscribe-modal');
 
+            const openFavoritesButton = document.getElementById('open-favorites-modal');
+            const openFavoritesButtonMobile = document.getElementById('open-favorites-modal-mobile');
+            const closeFavoritesButton = document.getElementById('close-favorites-modal');
+
+            const openNotificationsButton = document.getElementById('open-notifications-modal');
+            const openNotificationsButtonMobile = document.getElementById('open-notifications-modal-mobile');
+            const closeNotificationsButton = document.getElementById('close-notifications-modal');
+
+            // Fonction générique pour ouvrir une modale
+            function openModal(modal) {
+                modal.style.display = 'flex';
+            }
+
+            // Fonction générique pour fermer une modale
+            function closeModal(modal) {
+                modal.style.display = 'none';
+            }
+
             openMapButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
-                    mapModal.style.display = 'flex';
+                    openModal(mapModal);
                 });
             });
 
             closeMapButton.addEventListener('click', () => {
-                mapModal.style.display = 'none';
+                closeModal(mapModal);
             });
 
             openSubscribeButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
-                    subscribeModal.style.display = 'flex';
+                    openModal(subscribeModal);
                 });
             });
 
             closeSubscribeButton.addEventListener('click', () => {
-                subscribeModal.style.display = 'none';
+                closeModal(subscribeModal);
+            });
+            
+            openFavoritesButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                updateFavoritesList();
+                openModal(favoritesModal);
+            });
+            
+            openFavoritesButtonMobile.addEventListener('click', (event) => {
+                event.preventDefault();
+                updateFavoritesList();
+                closeModal(mobileMenu);
+                openModal(favoritesModal);
+            });
+
+            closeFavoritesButton.addEventListener('click', () => {
+                closeModal(favoritesModal);
+            });
+
+            openNotificationsButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                // Simuler la réinitialisation du compteur de notifications
+                const badge = document.getElementById('notifications-count-badge');
+                if (badge) {
+                    badge.style.display = 'none';
+                    badge.textContent = '0';
+                }
+                openModal(notificationsModal);
+            });
+            
+            openNotificationsButtonMobile.addEventListener('click', (event) => {
+                event.preventDefault();
+                const badge = document.getElementById('notifications-count-badge-mobile');
+                if (badge) {
+                    badge.style.display = 'none';
+                    badge.textContent = '0';
+                }
+                closeModal(mobileMenu);
+                openModal(notificationsModal);
+            });
+
+            closeNotificationsButton.addEventListener('click', () => {
+                closeModal(notificationsModal);
             });
 
             window.addEventListener('click', (event) => {
                 if (event.target === mapModal) {
-                    mapModal.style.display = 'none';
+                    closeModal(mapModal);
                 }
                 if (event.target === subscribeModal) {
-                    subscribeModal.style.display = 'none';
+                    closeModal(subscribeModal);
                 }
+                if (event.target === favoritesModal) {
+                    closeModal(favoritesModal);
+                }
+                if (event.target === notificationsModal) {
+                    closeModal(notificationsModal);
+                }
+            });
+        });
+    </script>
+    
+    <!-- Script pour les favoris et la gestion de l'itinéraire -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const likeButtons = document.querySelectorAll('.card-like-button');
+            const favoritesCountBadge = document.getElementById('favorites-count-badge');
+            const favoritesCountBadgeMobile = document.getElementById('favorites-count-badge-mobile');
+            const favoritesList = document.getElementById('favorites-list');
+
+            // Récupère les favoris du stockage local
+            let likedCards = JSON.parse(localStorage.getItem('likedCards')) || [];
+
+            // Fonction pour mettre à jour le badge de favoris
+            function updateFavoritesCount() {
+                const count = likedCards.length;
+                if (favoritesCountBadge) {
+                    favoritesCountBadge.textContent = count;
+                    favoritesCountBadge.style.display = count > 0 ? 'inline-block' : 'none';
+                }
+                if (favoritesCountBadgeMobile) {
+                    favoritesCountBadgeMobile.textContent = count;
+                    favoritesCountBadgeMobile.style.display = count > 0 ? 'inline-block' : 'none';
+                }
+            }
+
+            // Fonction pour mettre à jour la liste dans la modale
+            function updateFavoritesList() {
+                favoritesList.innerHTML = '';
+                if (likedCards.length === 0) {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = 'Vous n\'avez pas encore sélectionné d\'activités.';
+                    favoritesList.appendChild(listItem);
+                } else {
+                    likedCards.forEach(cardId => {
+                        const cardElement = document.querySelector(`[data-id="${cardId}"]`);
+                        if (cardElement) {
+                            const title = cardElement.dataset.title;
+                            const listItem = document.createElement('li');
+                            listItem.textContent = title;
+                            favoritesList.appendChild(listItem);
+                        }
+                    });
+                }
+            }
+
+            // Initialise l'état des coeurs et du badge
+            likeButtons.forEach(button => {
+                const card = button.closest('[data-id]');
+                const cardId = card.dataset.id;
+                if (likedCards.includes(cardId)) {
+                    button.classList.add('liked');
+                }
+            });
+
+            updateFavoritesCount();
+
+            // Ajoute les écouteurs d'événements pour les coeurs
+            likeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const card = button.closest('[data-id]');
+                    const cardId = card.dataset.id;
+                    
+                    if (button.classList.contains('liked')) {
+                        // Supprime de la liste des favoris
+                        likedCards = likedCards.filter(id => id !== cardId);
+                        button.classList.remove('liked');
+                    } else {
+                        // Ajoute à la liste des favoris
+                        likedCards.push(cardId);
+                        button.classList.add('liked');
+                    }
+                    
+                    // Sauvegarde la liste mise à jour dans le stockage local
+                    localStorage.setItem('likedCards', JSON.stringify(likedCards));
+                    
+                    // Met à jour le compteur
+                    updateFavoritesCount();
+                });
             });
         });
     </script>
