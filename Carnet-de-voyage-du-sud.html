@@ -27,943 +27,377 @@
             padding: 1.5rem;
             border-radius: 0.5rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease-in-out;
-            transform: translateY(10px);
-            opacity: 0;
-            pointer-events: none;
-        }
-        .dropdown:hover .dropdown-menu {
-            display: block;
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 224px;
-            overflow: hidden;
-        }
-        .slider-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-        .slider-image.active {
-            opacity: 1;
-        }
-        .slider-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.3s;
-            z-index: 5;
-        }
-        .slider-button:hover {
-            background: rgba(0, 0, 0, 0.8);
-        }
-        .slider-button-prev {
-            left: 10px;
-        }
-        .slider-button-next {
-            right: 10px;
-        }
-        /* Modal styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 90%;
-            max-width: 800px;
-            border-radius: 8px;
-            position: relative;
-        }
-        .modal-close {
-            color: #aaa;
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .modal-close:hover,
-        .modal-close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        /* Styles pour le bouton coeur sur les cartes */
-        .card-like-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-            padding: 8px;
-            cursor: pointer;
-            z-index: 10;
             transition: all 0.2s ease-in-out;
         }
-        .card-like-button .fa-heart {
-            color: #ccc; /* Couleur par défaut */
-            transition: color 0.2s;
+        .dropdown:hover .dropdown-menu,
+        .dropdown-menu:hover {
+            display: block;
         }
-        .card-like-button.liked .fa-heart {
-            color: #ef4444; /* Rouge pour "aimé" */
+        .like-button {
+            color: #ccc;
+            transition: color 0.2s ease-in-out;
         }
-        .card-like-button:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 1);
+        .like-button.liked {
+            color: #ef4444; /* Rouge pour le cœur rempli */
         }
-        /* Styles pour le badge de compteur dans l'en-tête */
-        .favorites-count, .notifications-count {
-            position: absolute;
-            top: -5px;
-            right: -10px;
-            font-size: 0.75rem;
-            line-height: 1;
-            background-color: #ef4444;
-            color: white;
-            border-radius: 9999px;
-            padding: 0.25rem 0.5rem;
-            display: none; /* Masqué par défaut */
-        }
-        .notifications-count {
-            right: -10px;
-        }
-        /* Carrousel d'images en plein écran */
-        .hero-carousel-container {
-            position: relative;
-            width: 100%;
-            height: 60vh; /* Utiliser une hauteur relative à la fenêtre */
-            min-height: 400px; /* Hauteur minimale sur les petits écrans */
-            overflow: hidden;
-        }
-        .hero-carousel-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-        }
-        .hero-carousel-image.active {
-            opacity: 1;
-        }
-        .hero-title-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .scroll-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.4);
-            z-index: 10;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
         }
-        .hero-title-overlay h1 {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        .scroll-item {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
         }
-        /* Mobile menu specific styles */
-        #mobile-menu {
+        .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
-        #mobile-menu.active {
-            display: block;
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-gray-800">
 
     <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <div>
-                <a href="#">
-                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo2.png" onerror="this.onerror=null;this.src='https://placehold.co/48x48/CCCCCC/FFFFFF?text=Logo';" alt="Destination Sud Réunion" class="h-12">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="#" class="text-2xl font-bold text-gray-800">
+                    <i class="fas fa-plane text-indigo-600"></i>
+                    Destination Sud
                 </a>
             </div>
-            <!-- Navigation pour les grands écrans -->
-            <div class="hidden lg:flex items-center space-x-6">
-                <!-- Destinations Dropdown -->
-                <div class="dropdown relative group">
-                    <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
-                        Destinations <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300">Accueil</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300">Destinations</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300">Activités</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300">Contact</a>
+                <div class="relative dropdown">
+                    <button class="flex items-center space-x-1 focus:outline-none text-gray-600 hover:text-indigo-600 transition duration-300">
+                        <span>Mon Compte</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <div class="grid grid-cols-2 gap-x-8">
-                            <div>
-                                <h5 class="text-xs text-gray-400 font-semibold uppercase mb-2">Selon vos envies</h5>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-family"></i><span>Famille</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-heart"></i><span>En couple</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-user-friends"></i><span>Entre amis</span></a>
-                            </div>
-                            <div>
-                                <h5 class="text-xs text-gray-400 font-semibold uppercase mb-2">Autour de...</h5>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-building"></i><span>Saint-Pierre</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-building"></i><span>Saint-Joseph</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-mountain"></i><span>Cilaos</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-leaf"></i><span>Le Tampon</span></a>
-                            </div>
-                        </div>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Se connecter</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">S'inscrire</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Mes réservations</a>
                     </div>
                 </div>
-                <!-- Loisirs Dropdown -->
-                <div class="dropdown relative group">
-                    <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
-                        Loisirs <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                         <div class="grid grid-cols-2 gap-x-8">
-                            <div>
-                                <h5 class="text-xs text-gray-400 font-semibold uppercase mb-2">Type d'activités</h5>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-hiking"></i><span>Randonnées</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-water"></i><span>Plages & Lagons</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-ship"></i><span>Activités nautiques</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-landmark"></i><span>Culture & Patrimoine</span></a>
-                            </div>
-                            <div>
-                                <h5 class="text-xs text-gray-400 font-semibold uppercase mb-2">Trouver l'inspiration</h5>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-lightbulb"></i><span>Idées de sorties</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-star"></i><span>Expériences uniques</span></a>
-                                <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-compass"></i><span>Moteur d'inspiration</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Séjours Dropdown -->
-                <div class="dropdown relative group">
-                    <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
-                        Séjours <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-plane"></i><span>Nos offres de séjours</span></a>
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-bed"></i><span>Hébergements</span></a>
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-utensils"></i><span>Restaurants</span></a>
-                    </div>
-                </div>
-                <!-- Agenda Dropdown -->
-                <div class="dropdown relative group">
-                    <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
-                        Agenda <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-calendar-alt"></i><span>Événements à venir</span></a>
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-calendar-check"></i><span>Fêtes traditionnelles</span></a>
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-calendar-day"></i><span>Manifestations sportives</span></a>
-                    </div>
-                </div>
-                <!-- Pratique Dropdown -->
-                <div class="dropdown relative group">
-                    <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
-                        Pratique <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-info-circle"></i><span>Informations utiles</span></a>
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-road"></i><span>Se déplacer</span></a>
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-shopping-bag"></i><span>Bons plans & Shopping</span></a>
-                    </div>
-                </div>
-                <!-- Inspiration Dropdown -->
-                <div class="dropdown relative group">
-                    <button class="text-gray-700 hover:text-blue-600 focus:outline-none flex items-center">
-                        Inspiration <i class="fas fa-chevron-down ml-2 text-xs transition-transform duration-300 group-hover:rotate-180"></i>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-book"></i><span>Blog & Récits de voyage</span></a>
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-camera"></i><span>Galerie photos</span></a>
-                        <a href="#" class="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-md"><i class="fas fa-video"></i><span>Vidéos</span></a>
-                    </div>
+                <div class="relative">
+                    <a href="#" class="text-gray-600 hover:text-indigo-600 transition duration-300">
+                        <i class="fas fa-heart text-2xl"></i>
+                    </a>
+                    <span id="favorites-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
                 </div>
             </div>
-            <!-- Icônes pour les grands écrans -->
-            <div class="hidden lg:flex items-center space-x-4">
-                <a href="#" class="text-gray-700 hover:text-blue-600"><i class="fas fa-search"></i></a>
-                <a href="#" id="open-map-modal" class="text-gray-700 hover:text-blue-600"><i class="fas fa-map-marker-alt"></i></a>
-                <!-- Bouton de notification -->
-                <a href="#" id="open-notifications-modal" class="text-gray-700 hover:text-blue-600 relative">
-                    <i class="fas fa-bell"></i>
-                    <span id="notifications-count-badge" class="notifications-count">1</span>
-                </a>
-                <a href="#" id="open-favorites-modal" class="text-gray-700 hover:text-blue-600 relative">
-                    <i class="fas fa-heart"></i>
-                    <span id="favorites-count-badge" class="favorites-count">0</span>
-                </a>
-            </div>
-            <!-- Bouton de menu mobile -->
-            <div class="lg:hidden">
-                <button id="mobile-menu-toggle" class="text-gray-700 focus:outline-none">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-button" class="md:hidden text-gray-600 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
         </nav>
-        <!-- Menu mobile (caché par défaut) -->
-        <div id="mobile-menu" class="bg-white lg:hidden px-6 py-4 shadow-md">
-            <nav class="flex flex-col space-y-4">
-                <a href="#" class="text-gray-700 hover:text-blue-600">Destinations</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Loisirs</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Séjours</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Agenda</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Pratique</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Inspiration</a>
-                <div class="flex items-center justify-between mt-4 border-t pt-4">
-                    <a href="#" class="text-gray-700 hover:text-blue-600"><i class="fas fa-search mr-2"></i>Recherche</a>
-                    <a href="#" id="open-map-modal-mobile" class="text-gray-700 hover:text-blue-600"><i class="fas fa-map-marker-alt mr-2"></i>Carte</a>
-                    <a href="#" id="open-notifications-modal-mobile" class="text-gray-700 hover:text-blue-600 relative">
-                        <i class="fas fa-bell mr-2"></i>Notifications
-                        <span id="notifications-count-badge-mobile" class="notifications-count">1</span>
-                    </a>
-                    <a href="#" id="open-favorites-modal-mobile" class="text-gray-700 hover:text-blue-600 relative">
-                        <i class="fas fa-heart mr-2"></i>Favoris
-                        <span id="favorites-count-badge-mobile" class="favorites-count">0</span>
-                    </a>
-                </div>
-            </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-4 pt-2 pb-4 space-y-2 bg-white shadow-sm">
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Accueil</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Destinations</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Activités</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Contact</a>
+            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">Mon Compte</a>
+            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-lg">
+                <i class="fas fa-heart mr-2"></i> Favoris
+                <span id="mobile-favorites-badge" class="ml-auto bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">0</span>
+            </a>
         </div>
     </header>
 
+    <!-- Hero Section -->
+    <div class="hero-bg bg-indigo-600 text-white py-20 md:py-32" style="background-image: url('https://www.sudreuniontourisme.fr/fileadmin/_processed_/4/d/csm_69085603_2548238691903982_8109312154474758144_o_e32230a1c1.jpg');">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight tracking-wide mb-4">Voyageuse et Voyageur du sud</h1>
+            <p class="text-lg md:text-xl font-medium mb-8">Votre aventure inoubliable commence ici.</p>
+            <a href="#destinations" class="bg-white text-indigo-600 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-200 transition duration-300 transform hover:scale-105">Découvrez nos offres</a>
+        </div>
+    </div>
+
     <!-- Main Content -->
-    <main>
-        <!-- Hero Section avec Carrousel -->
-        <section class="hero-carousel-container">
-            <div class="hero-title-overlay">
-                <div class="container mx-auto px-6 text-center text-white">
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Fabuleux Voyages dans le Sud de la Réunion</h1>
+    <main id="destinations" class="container mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold text-center mb-10">Nos fabuleux voyages</h2>
+
+        <!-- Cards Container -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <!-- Card 1: Les plus belles plages du sud -->
+            <div data-id="card-1" class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-transform duration-300 transform hover:scale-105">
+                <div class="relative overflow-hidden w-full h-48">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7wFLgdEzCadrOeNoIdoPsT9dgYpMAIUeEyA&s" alt="Plage de sable fin au sud de la Réunion" class="w-full h-full object-cover">
+                    <button class="like-button absolute top-4 right-4 text-2xl bg-white bg-opacity-70 p-2 rounded-full shadow-md z-10 focus:outline-none">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Les plus belles plages du sud</h3>
+                        <p class="text-gray-600 text-sm mb-4">Détendez-vous sur les lagons turquoise ou surfez sur les vagues de l'océan Indien.</p>
+                    </div>
+                    <a href="#" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full text-center hover:bg-indigo-700 transition duration-300">Découvrir</a>
                 </div>
             </div>
-            <!-- Images du carrousel -->
-            <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/fortevelave/foret_tevelave.jpg" onerror="this.onerror=null;this.src='https://placehold.co/1920x600/CCCCCC/FFFFFF?text=Image+1';" class="hero-carousel-image active" alt="Forêt de Tévelave">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7wFLgdEzCadrOeNoIdoPsT9dgYpMAIUeEyA&s" onerror="this.onerror=null;this.src='https://placehold.co/1920x600/CCCCCC/FFFFFF?text=Image+2';" class="hero-carousel-image" alt="Paysage du Sud de la Réunion">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSc8Tvm8tjH5Q3dkIxwIF6fwSrhtWTo-CyWw&s" onerror="this.onerror=null;this.src='https://placehold.co/1920x600/CCCCCC/FFFFFF?text=Image+3';" class="hero-carousel-image" alt="Cascade de la Réunion">
-        </section>
 
-        <!-- Introduction Section -->
-        <section class="py-16 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-col lg:flex-row items-center">
-                    <div class="lg:w-1/2 lg:pr-12">
-                        <p class="text-gray-600 text-lg leading-relaxed">
-                            Du volcan à l'océan, le Sud Sauvage de La Réunion vous invite à l'aventure. Partez pour un Fabuleux Voyage au cœur d'une nature exubérante et préservée. Rencontrez les habitants d'une région où l'hospitalité et la convivialité sont reines. Avec sa richesse culturelle unique, ses paysages à couper le souffle et ses activités de pleine nature, le Sud de La Réunion est une invitation permanente à l'émerveillement.
-                        </p>
+            <!-- Card 2: Tous en forêt! -->
+            <div data-id="card-2" class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-transform duration-300 transform hover:scale-105">
+                <div class="relative overflow-hidden w-full h-48">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/fortevelave/foret_tevelave.jpg" alt="Randonnée en forêt tropicale à La Réunion" class="w-full h-full object-cover">
+                    <button class="like-button absolute top-4 right-4 text-2xl bg-white bg-opacity-70 p-2 rounded-full shadow-md z-10 focus:outline-none">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Tous en forêt!</h3>
+                        <p class="text-gray-600 text-sm mb-4">Partez à l'aventure au cœur d'une végétation luxuriante et de sentiers spectaculaires.</p>
                     </div>
-                    <div class="lg:w-1/2 mt-8 lg:mt-0 flex items-center justify-center">
-                        <img src="https://www.sudreuniontourisme.fr/typo3conf/ext/theme_sud/Resources/Public/images/img11.png" onerror="this.onerror=null;this.src='https://placehold.co/400x300/CCCCCC/FFFFFF?text=Image';" alt="Fabuleux Voyages - Destination Sud Réunion" class="w-full h-auto max-w-md rounded-lg shadow-lg">
-                    </div>
+                    <a href="#" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full text-center hover:bg-indigo-700 transition duration-300">Découvrir</a>
                 </div>
             </div>
-        </section>
-        
-        <!-- Filterable Cards Section -->
-        <section class="py-16">
-            <div class="container mx-auto px-6">
-                <!-- Filters -->
-                <div class="mb-12 flex flex-wrap justify-center gap-4">
-                    <select id="filter-location" class="bg-white border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="all">Toute destination</option>
-                        <option value="volcan">Volcan</option>
-                        <option value="lagon">Lagon</option>
-                        <option value="foret">Forêt</option>
-                    </select>
-                    <select id="filter-season" class="bg-white border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="all">Toute saison</option>
-                        <option value="ete">Été Austral</option>
-                        <option value="hiver">Hiver Austral</option>
-                    </select>
-                    <select id="filter-type" class="bg-white border border-gray-300 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="all">Toute préférence</option>
-                        <option value="rando">Randonnée</option>
-                        <option value="culture">Culture</option>
-                        <option value="gastronomie">Gastronomie</option>
-                        <option value="sport">Sport & Nature</option>
-                        <option value="plage">Plage</option>
-                    </select>
-                </div>
 
-                <!-- Cards Grid -->
-                <div id="cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Card 1 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="volcan" data-season="ete" data-type="rando" data-id="card-1" data-title="Aventure au Piton de la Fournaise">
-                        <div class="card-like-button">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1596225791352-3a2d_5954ceb6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Piton+de+la+Fournaise';" alt="Piton de la Fournaise" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-800">Aventure au Piton de la Fournaise</h3>
-                            <p class="text-gray-600">Une randonnée inoubliable sur l'un des volcans les plus actifs au monde.</p>
+            <!-- Card 3: Les plus belles visites du sud -->
+            <div data-id="card-3" class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-transform duration-300 transform hover:scale-105">
+                <div class="relative overflow-hidden w-full h-48">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/0/e/csm_69157167_2551519911575860_2558748086809657344_o_72b0f66b03.jpg" alt="Un groupe en train de faire de la randonnée" class="w-full h-full object-cover">
+                    <button class="like-button absolute top-4 right-4 text-2xl bg-white bg-opacity-70 p-2 rounded-full shadow-md z-10 focus:outline-none">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Les plus belles visites du sud</h3>
+                        <p class="text-gray-600 text-sm mb-4">Des points de vue époustouflants aux sites naturels incontournables.</p>
+                    </div>
+                    <a href="#" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full text-center hover:bg-indigo-700 transition duration-300">Découvrir</a>
+                </div>
+            </div>
+            
+            <!-- Card 4: Féstivité du Sud -->
+            <div data-id="card-4" class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transition-transform duration-300 transform hover:scale-105">
+                <div class="relative overflow-hidden w-full h-48">
+                    <img src="https://storage.googleapis.com/utrailbucket/2024/10/Capture-decran-2024-10-30-a-13.28.18.jpg" alt="Célébrations et festivités locales" class="w-full h-full object-cover">
+                    <button class="like-button absolute top-4 right-4 text-2xl bg-white bg-opacity-70 p-2 rounded-full shadow-md z-10 focus:outline-none">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Féstivité du Sud</h3>
+                        <p class="text-gray-600 text-sm mb-4">Plongez au cœur des traditions et des célébrations du sud de l'île.</p>
+                    </div>
+                    <a href="#" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full text-center hover:bg-indigo-700 transition duration-300">Découvrir</a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section des avis -->
+        <section class="mt-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Avis des Voyageurs</h2>
+            <div class="scroll-container no-scrollbar">
+                <!-- Avis 1 -->
+                <div class="scroll-item px-2 md:px-4">
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <p class="text-gray-600 italic mb-4">"Incroyable expérience ! Le site m'a aidé à trouver des activités uniques que je n'aurais jamais découvertes par moi-même."</p>
+                        <div class="flex justify-center items-center">
+                            <img src="https://via.placeholder.co/48x48/d1d5db/4b5563?text=A1" alt="Avis 1" class="rounded-full mr-3">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Marie L.</h4>
+                                <div class="text-yellow-400 text-sm">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!-- Card 2 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="lagon" data-season="ete" data-type="sport" data-id="card-2" data-title="Détente et Kayak au lagon de St-Pierre">
-                        <div class="card-like-button">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <img src="https://images.unsplash.com/photo-1600558133149-59b32757a221?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Lagon+de+Saint-Pierre';" alt="Lagon de Saint-Pierre" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-800">Détente et Kayak au lagon de St-Pierre</h3>
-                            <p class="text-gray-600">Profitez des eaux turquoise et des activités nautiques pour toute la famille.</p>
-                        </div>
-                    </div>
-                    <!-- Card 3 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="foret" data-season="hiver" data-type="rando" data-id="card-3" data-title="Balade en Forêt de l'Étang Salé">
-                        <div class="card-like-button">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <img src="https://guide-reunion.fr/fileadmin/_processed_/5/8/csm_foret-etang-sale-parcours-sante-07_cafdd0dc48.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Forêt+de+l\'Étang+Salé';" alt="Forêt de l'Étang Salé" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-800">Balade en Forêt de l'Étang Salé</h3>
-                            <p class="text-gray-600">Un parcours de santé unique sous les filaos, entre plage de sable noir et océan.</p>
+                </div>
+                <!-- Avis 2 -->
+                <div class="scroll-item px-2 md:px-4">
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <p class="text-gray-600 italic mb-4">"Grâce à 'Voyageuse et Voyageur du Sud', notre voyage a été parfaitement planifié. Je le recommande à tous les amoureux de la Réunion."</p>
+                        <div class="flex justify-center items-center">
+                            <img src="https://via.placeholder.co/48x48/d1d5db/4b5563?text=A2" alt="Avis 2" class="rounded-full mr-3">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Paul B.</h4>
+                                <div class="text-yellow-400 text-sm">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!-- Card 4 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="lagon" data-season="hiver" data-type="gastronomie" data-id="card-4" data-title="Saveurs créoles au marché de St-Pierre">
-                        <div class="card-like-button">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/ac/27/74/marche-forain.jpg?w=1200&h=-1&s=1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Marché+de+Saint-Pierre';" alt="Marché de Saint-Pierre" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-800">Saveurs créoles au marché de St-Pierre</h3>
-                            <p class="text-gray-600">Un voyage culinaire à travers les étals colorés et parfumés du front de mer.</p>
-                        </div>
-                    </div>
-                    <!-- Card 5 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="foret" data-season="ete" data-type="rando" data-id="card-5" data-title="Vue panoramique depuis la Fenêtre des Makes">
-                        <div class="card-like-button">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/fenetremakes/fenetremakesreunion.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Fenêtre+des+Makes';" alt="Fenêtre des Makes" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-800">Vue panoramique depuis la Fenêtre des Makes</h3>
-                            <p class="text-gray-600">Admirez l'un des plus beaux panoramas sur le cirque de Cilaos.</p>
-                        </div>
-                    </div>
-                    <!-- Card 6 -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="volcan" data-season="hiver" data-type="culture" data-id="card-6" data-title="Les Festivités du Sud">
-                        <div class="card-like-button">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="slider-container">
-                            <img src="https://la1ere.franceinfo.fr/image/xLE7O7snQqxH7-mUAk23_fsm5Dc/0x31:660x371/800x450/outremer/2019/10/03/5d963ea45c6cc_ail_3-906594.jpg" class="slider-image active" alt="Festivité 1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Festivit\u00E9+1';">
-                            <img src="https://www.francebleu.fr/pikapi/images/cf22de72-aa04-4542-b703-cc853b6636d1/1200x680?webp=false" class="slider-image" alt="Festivité 2" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Festivit\u00E9+2';">
-                            <img src="https://www.widermag.com/media/blog/2022/Mars%202022/LOGO%2030%20ANS%20GRAND%20RAID%20REUNION.png" class="slider-image" alt="Festivité 3" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Festivit\u00E9+3';">
-                            <button class="slider-button slider-button-prev"><i class="fas fa-chevron-left"></i></button>
-                            <button class="slider-button slider-button-next"><i class="fas fa-chevron-right"></i></button>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-800">Les Festivités du Sud</h3>
-                            <p class="text-gray-600">Participez aux événements culturels et sportifs qui animent le Sud Sauvage toute l'année.</p>
-                        </div>
-                    </div>
-                     <!-- Card 7 - Plages -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="lagon" data-season="ete" data-type="plage" data-id="card-7" data-title="Les plus belles plages du Sud">
-                        <div class="card-like-button">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="slider-container">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7wFLgdEzCadrOeNoIdoPsT9dgYpMAIUeEyA&s" class="slider-image active" alt="Plage 1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Plage+de+l\'\u00C9tang+Sal\u00E9';">
-                            <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/grandeanse/grandeanse.jpg" class="slider-image" alt="Plage 2" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Plage+de+Grande+Anse';">
-                            <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/2/f/csm_plage_etangsale2_09b4d981fb.jpg" class="slider-image" alt="Plage 3" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Plage+de+l\'\u00C9tang+Sal\u00E9';">
-                            <button class="slider-button slider-button-prev"><i class="fas fa-chevron-left"></i></button>
-                            <button class="slider-button slider-button-next"><i class="fas fa-chevron-right"></i></button>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-800">Les plus belles plages du Sud</h3>
-                            <p class="text-gray-600">Sable fin, cocotiers et baignade sécurisée. Le lagon du Sud n'attend que vous !</p>
-                        </div>
-                    </div>
-                    <!-- Card 8 - Forêt -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="foret" data-season="hiver" data-type="rando" data-id="card-8" data-title="Tous en forêt !">
-                        <div class="card-like-button">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="slider-container">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2uY-dN7KKhLAXWZQ4rbEmzRcPRMuCZcmrsQ&s" class="slider-image active" alt="Forêt 1" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=For\u00EAt+de+B\u00E9bour';">
-                            <img src="https://guide-reunion.fr/fileadmin/_processed_/5/8/csm_foret-etang-sale-parcours-sante-07_cafdd0dc48.jpg" class="slider-image" alt="Forêt 2" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=For\u00EAt+de+l\'\u00C9tang+Sal\u00E9';">
-                            <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/7/4/csm_sentiertevelave_67ce75c721.jpg" class="slider-image" alt="Forêt 3" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Sentier+de+T\u00E9velave';">
-                            <button class="slider-button slider-button-prev"><i class="fas fa-chevron-left"></i></button>
-                            <button class="slider-button slider-button-next"><i class="fas fa-chevron-right"></i></button>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-800">Tous en forêt !</h3>
-                            <p class="text-gray-600">L'occasion de découvrir la faune et la flore endémique au cœur de la nature.</p>
-                        </div>
-                    </div>
-                    <!-- Card 9 - Visites -->
-                    <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover transition-all duration-300 relative" data-location="all" data-season="all" data-type="culture" data-id="card-9" data-title="Les plus belles visites du Sud !">
-                        <div class="card-like-button">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Tresors_du_sud/fenetremakes/fenetremakesreunion.jpg" onerror="this.onerror=null;this.src='https://placehold.co/400x224/CCCCCC/FFFFFF?text=Piton+de+la+Fournaise';" alt="Piton de la Fournaise" class="w-full h-56 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2 text-gray-800">Les plus belles visites du Sud !</h3>
-                            <p class="text-gray-600">Le Volcan, les marchés, les jardins créoles : un concentré de ce qu'il faut voir.</p>
+                </div>
+                <!-- Avis 3 -->
+                <div class="scroll-item px-2 md:px-4">
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <p class="text-gray-600 italic mb-4">"Facile à utiliser et plein de bonnes idées. J'ai adoré les sections sur les balades en forêt et les bonnes tables. Un vrai trésor !"</p>
+                        <div class="flex justify-center items-center">
+                            <img src="https://via.placeholder.co/48x48/d1d5db/4b5563?text=A3" alt="Avis 3" class="rounded-full mr-3">
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Sophie D.</h4>
+                                <div class="text-yellow-400 text-sm">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Video Section -->
-        <section class="bg-white py-16">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl font-bold mb-8 text-gray-800">Le Sud de la Réunion en Images</h2>
-                <div class="aspect-w-16 aspect-h-9 max-w-4xl mx-auto">
-                    <video class="rounded-lg shadow-xl w-full h-full" controls autoplay muted loop>
-                        <source src="https://github.com/KaporalClems/Borne_Digital_DSR/raw/ffa0481009299371067a0697f453f66158a2c2f4/Destination%20Sud%20R%C3%A9union_HD.mp4" type="video/mp4">
-                        Votre navigateur ne supporte pas la lecture de la vidéo.
-                    </video>
-                </div>
-                <div class="mt-12">
-                    <a href="#" id="open-subscribe-modal" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition duration-300 text-lg">
-                        Voir nos offres de séjours
-                    </a>
-                </div>
-            </div>
-        </section>
+        <!-- Section Ma communauté, Mon parcours de voyage & Les rubriques -->
+        <section class="mt-12">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Ma communauté</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Mon parcours de voyage -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Mon parcours de voyage</h3>
+                        <a href="#" class="text-indigo-600 text-sm font-semibold">Voir tout</a>
+                    </div>
+                    <!-- Liste des groupes cliquables -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                        <a href="#" class="flex flex-col items-center p-2 rounded-xl transition-colors duration-200 hover:bg-gray-100">
+                            <i class="fas fa-hiking text-3xl text-gray-500 mb-2"></i>
+                            <span class="text-sm text-center">Explorateur.trice</span>
+                        </a>
+                        <a href="#" class="flex flex-col items-center p-2 rounded-xl transition-colors duration-200 hover:bg-gray-100">
+                            <i class="fas fa-umbrella-beach text-3xl text-gray-500 mb-2"></i>
+                            <span class="text-sm text-center">Vacancier.ère</span>
+                        </a>
+                        <a href="#" class="flex flex-col items-center p-2 rounded-xl transition-colors duration-200 hover:bg-gray-100">
+                            <i class="fas fa-camera-retro text-3xl text-gray-500 mb-2"></i>
+                            <span class="text-sm text-center">Passionné.e</span>
+                        </a>
+                        <a href="#" class="flex flex-col items-center p-2 rounded-xl transition-colors duration-200 hover:bg-gray-100">
+                            <i class="fas fa-users text-3xl text-gray-500 mb-2"></i>
+                            <span class="text-sm text-center">Groupes</span>
+                        </a>
+                        <a href="#" class="flex flex-col items-center p-2 rounded-xl transition-colors duration-200 hover:bg-gray-100">
+                            <i class="fas fa-map-marked-alt text-3xl text-gray-500 mb-2"></i>
+                            <span class="text-sm text-center">Excursionniste</span>
+                        </a>
+                    </div>
+                    <!-- Progression -->
+                    <h3 class="font-semibold text-gray-800 mb-2">Exploration</h3>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-indigo-600 h-3 rounded-full" style="width: 50%;"></div>
+                    </div>
+                    <p class="text-right text-sm text-gray-600 mt-2">50%</p>
 
-        <!-- Testimonials Section -->
-        <section class="py-16 bg-blue-100">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl font-bold mb-12 text-blue-800">Ce que disent nos voyageurs</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Testimonial 1 -->
-                    <div class="bg-white p-8 rounded-lg shadow-lg">
-                        <i class="fas fa-quote-left text-blue-400 text-4xl mb-4"></i>
-                        <p class="text-gray-700 italic mb-4">"Un voyage incroyable ! J'ai été émerveillé par la diversité des paysages, du volcan à la plage. L'accueil des locaux a rendu l'expérience encore plus spéciale."</p>
-                        <div class="font-semibold text-gray-800">- Marc L.</div>
-                        <div class="text-yellow-400 mt-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <!-- Testimonial 2 -->
-                    <div class="bg-white p-8 rounded-lg shadow-lg">
-                        <i class="fas fa-quote-left text-blue-400 text-4xl mb-4"></i>
-                        <p class="text-gray-700 italic mb-4">"Une destination parfaite pour la randonnée et la découverte. Chaque jour était une nouvelle aventure. Je recommande vivement !"</p>
-                        <div class="font-semibold text-gray-800">- Sophie D.</div>
-                        <div class="text-yellow-400 mt-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                    <!-- Testimonial 3 -->
-                    <div class="bg-white p-8 rounded-lg shadow-lg">
-                        <i class="fas fa-quote-left text-blue-400 text-4xl mb-4"></i>
-                        <p class="text-gray-700 italic mb-4">"Le Sud de l'île est tout simplement magique. Nous avons adoré la tranquillité des lagons et la richesse de la culture locale. Un séjour inoubliable."</p>
-                        <div class="font-semibold text-gray-800">- Jean-Luc et Cécile</div>
-                        <div class="text-yellow-400 mt-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
+                    <!-- Section pour le nouveau carnet -->
+                    <div class="mt-6 border-t pt-6 border-gray-200">
+                        <h3 class="text-xl font-bold mb-4">Mes carnets de voyages</h3>
+                        <!-- Nouvelle carte pour le carnet de séminaire -->
+                        <div data-id="card-5" class="bg-white rounded-xl shadow-lg overflow-hidden flex-grow flex flex-col transition-transform duration-300 transform hover:scale-105">
+                            <div class="relative overflow-hidden w-full h-48">
+                                <img src="https://www.smile-evenements.fr/seminaires-et-conventions/wp-content/uploads/sites/2/2020/03/seminaire-rentree-entreprise-table-groupe-1024x610.jpg" alt="Séminaire d'entreprise" class="w-full h-full object-cover">
+                                <button class="like-button absolute top-4 right-4 text-2xl bg-white bg-opacity-70 p-2 rounded-full shadow-md z-10 focus:outline-none">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                            <div class="p-6 flex-grow flex flex-col justify-between">
+                                <div>
+                                    <h3 class="text-xl font-bold mb-2">Mon Carnet de voyage Collections seminaire</h3>
+                                    <p class="text-gray-600 text-sm mb-4">Un espace pour revivre vos voyages d'affaires et séminaires.</p>
+                                </div>
+                                <a href="#" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-full text-center hover:bg-indigo-700 transition duration-300">Découvrir</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white">
-        <div class="container mx-auto px-6 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-                <div>
-                    <h4 class="font-semibold mb-4">Nous contacter</h4>
-                    <ul>
-                        <li class="mb-2"><a href="#" class="hover:text-blue-400"><i class="fas fa-phone mr-2"></i>+262 262 35 34 33</a></li>
-                        <li class="mb-2"><a href="#" id="open-map-modal" class="hover:text-blue-400"><i class="fas fa-map-marker-alt mr-2"></i>Carte interactive</a></li>
-                        <li class="mb-2"><a href="#" class="hover:text-blue-400"><i class="fas fa-book mr-2"></i>Documentation</a></li>
+                <!-- Les rubriques -->
+                <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-xl font-bold">Les rubriques</h3>
+                        <a href="#" class="text-indigo-600 text-sm font-semibold">Voir tout</a>
+                    </div>
+                    <ul class="space-y-4 text-gray-700 flex-grow">
+                        <li class="flex items-start">
+                            <i class="fas fa-images text-indigo-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold">Reportages</h4>
+                                <p class="text-sm text-gray-600">Découvrez nos plus belles histoires en images.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-utensils text-indigo-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold">Bonnes tables</h4>
+                                <p class="text-sm text-gray-600">Nos meilleures adresses pour savourer le Sud.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-shoe-prints text-indigo-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold">Balades</h4>
+                                <p class="text-sm text-gray-600">Tous les sentiers pour explorer la région.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bed text-indigo-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold">Hébergements</h4>
+                                <p class="text-sm text-gray-600">Des lieux où se reposer, pour tous les goûts.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-biking text-indigo-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold">Activités</h4>
+                                <p class="text-sm text-gray-600">Les meilleures activités de plein air.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-calendar-alt text-indigo-600 mt-1 mr-4"></i>
+                            <div>
+                                <h4 class="font-semibold">Événements</h4>
+                                <p class="text-sm text-gray-600">Festivals, concerts et événements à ne pas manquer.</p>
+                            </div>
+                        </li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Newsletter</h4>
-                    <p class="mb-4">Recevez nos suggestions de séjours, visites et sorties.</p>
-                    <a href="#" id="open-subscribe-modal" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300">Je m'abonne</a>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Suivez-nous</h4>
-                    <div class="flex justify-center md:justify-start space-x-4">
-                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-youtube"></i></a>
-                        <a href="#" class="text-2xl hover:text-blue-400"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                </div>
             </div>
-            <div class="mt-12 border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center text-center">
-                <p class="text-sm">&copy; 2025 Destination Sud Réunion. Tous droits réservés.</p>
-                <div class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="text-sm hover:text-blue-400">Plan du site</a>
-                    <a href="#" class="text-sm hover:text-blue-400">Mentions légales</a>
-                </div>
-            </div>
+        </section>
+
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white py-8">
+        <div class="container mx-auto px-4 text-center text-gray-600 text-sm">
+            © 2025 Destination Sud Réunion. Tous droits réservés.
         </div>
     </footer>
 
-    <!-- Modals -->
-    <!-- Interactive Map Modal -->
-    <div id="map-modal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" id="close-map-modal">&times;</span>
-            <h2 class="text-2xl font-bold mb-4">Carte Interactive</h2>
-            <div style="height: 60vh;">
-                <iframe src="https://umap.openstreetmap.fr/fr/map/saint-pierre_1057466#15/-21.3382/55.4591" style="border:none; width:100%; height:100%;" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- Newsletter Subscription Modal -->
-    <div id="subscribe-modal" class="modal">
-        <div class="modal-content text-center">
-            <span class="modal-close" id="close-subscribe-modal">&times;</span>
-            <h2 class="text-2xl font-bold mb-4">Inscription à la Newsletter</h2>
-            <p class="text-gray-700 mb-4">Inscrivez-vous pour recevoir les dernières actualités et offres !</p>
-            <form class="flex flex-col items-center">
-                <input type="email" placeholder="Votre adresse email" class="w-full max-w-sm px-4 py-2 border rounded-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-8 rounded-full hover:bg-blue-700 transition duration-300">S'abonner</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Notifications Modal (Nouveau) -->
-    <div id="notifications-modal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" id="close-notifications-modal">&times;</span>
-            <h2 class="text-2xl font-bold mb-4">Nouveautés</h2>
-            <p class="text-gray-600 mb-4">Voici les dernières actualités et offres de séjours qui pourraient vous intéresser :</p>
-            <ul class="list-disc pl-5 space-y-2 text-gray-800">
-                <li><span class="font-semibold text-blue-600">Nouveau :</span> Découvrez notre séjour "Aventure Volcanique" pour l'hiver austral !</li>
-                <li><span class="font-semibold text-blue-600">Offre spéciale :</span> 15% de réduction sur les randonnées guidées jusqu'à la fin du mois.</li>
-                <li><span class="font-semibold text-blue-600">Article de blog :</span> "5 raisons de visiter le cirque de Cilaos en famille".</li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Favorites Modal (Nouveau) -->
-    <div id="favorites-modal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" id="close-favorites-modal">&times;</span>
-            <h2 class="text-2xl font-bold mb-4">Mon Itinéraire</h2>
-            <p class="text-gray-600 mb-4">Voici la liste des activités que vous avez sélectionnées. Un séjour sur mesure pour vous !</p>
-            <ul id="favorites-list" class="list-disc pl-5 space-y-2 text-gray-800">
-                <!-- Les activités aimées seront insérées ici par le script -->
-            </ul>
-        </div>
-    </div>
-
-    <!-- Script pour le menu mobile -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
-
-            mobileMenuToggle.addEventListener('click', () => {
-                mobileMenu.classList.toggle('active');
-            });
-        });
-    </script>
-    
-    <!-- Script pour le filtrage des cartes -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const locationFilter = document.getElementById('filter-location');
-            const seasonFilter = document.getElementById('filter-season');
-            const typeFilter = document.getElementById('filter-type');
-            const cardsContainer = document.getElementById('cards-container');
-            const cards = cardsContainer.children;
-
-            function filterCards() {
-                const locationValue = locationFilter.value;
-                const seasonValue = seasonFilter.value;
-                const typeValue = typeFilter.value;
-
-                for (let card of cards) {
-                    const cardLocation = card.dataset.location;
-                    const cardSeason = card.dataset.season;
-                    const cardType = card.dataset.type;
-
-                    const locationMatch = locationValue === 'all' || cardLocation === locationValue;
-                    const seasonMatch = seasonValue === 'all' || cardSeason === seasonValue;
-                    const typeMatch = typeValue === 'all' || cardType === typeValue;
-
-                    if (locationMatch && seasonMatch && typeMatch) {
-                        card.style.display = 'block';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                }
-            }
-
-            locationFilter.addEventListener('change', filterCards);
-            seasonFilter.addEventListener('change', filterCards);
-            typeFilter.addEventListener('change', filterCards);
-        });
-    </script>
-
-    <!-- Script pour les diaporamas des cartes -->
-    <script>
-        document.querySelectorAll('.slider-container').forEach(container => {
-            const images = container.querySelectorAll('.slider-image');
-            const prevButton = container.querySelector('.slider-button-prev');
-            const nextButton = container.querySelector('.slider-button-next');
-            let currentImageIndex = 0;
-            let slideInterval;
-
-            function showImage(index) {
-                images.forEach((img, i) => {
-                    img.classList.remove('active');
-                    if (i === index) {
-                        img.classList.add('active');
-                    }
-                });
-            }
-
-            function startSlide() {
-                slideInterval = setInterval(() => {
-                    currentImageIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
-                    showImage(currentImageIndex);
-                }, 3000); // Change l'image toutes les 3 secondes
-            }
-
-            function stopSlide() {
-                clearInterval(slideInterval);
-            }
-
-            // Navigation manuelle
-            prevButton.addEventListener('click', () => {
-                stopSlide();
-                currentImageIndex = (currentImageIndex > 0) ? currentImageIndex - 1 : images.length - 1;
-                showImage(currentImageIndex);
-                startSlide();
-            });
-
-            nextButton.addEventListener('click', () => {
-                stopSlide();
-                currentImageIndex = (currentImageIndex < images.length - 1) ? currentImageIndex + 1 : 0;
-                showImage(currentImageIndex);
-                startSlide();
-            });
-
-            // Pause/reprise au survol de la souris
-            container.addEventListener('mouseenter', stopSlide);
-            container.addEventListener('mouseleave', startSlide);
-
-            // Démarre le diaporama au chargement
-            showImage(currentImageIndex);
-            startSlide();
-        });
-    </script>
-    
-    <!-- Script pour le carrousel principal du "Hero" -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const heroImages = document.querySelectorAll('.hero-carousel-image');
-            let heroImageIndex = 0;
-
-            function showNextHeroImage() {
-                heroImages[heroImageIndex].classList.remove('active');
-                heroImageIndex = (heroImageIndex + 1) % heroImages.length;
-                heroImages[heroImageIndex].classList.add('active');
-            }
-
-            // Démarrer le défilement automatique
-            setInterval(showNextHeroImage, 5000); // Changement toutes les 5 secondes
-        });
-    </script>
-
-    <!-- Script pour les modales -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const mapModal = document.getElementById('map-modal');
-            const subscribeModal = document.getElementById('subscribe-modal');
-            const favoritesModal = document.getElementById('favorites-modal');
-            const notificationsModal = document.getElementById('notifications-modal');
+            const favoritesBadge = document.getElementById('favorites-badge');
+            const mobileFavoritesBadge = document.getElementById('mobile-favorites-badge');
+            const likeButtons = document.querySelectorAll('.like-button');
             
-            const openMapButtons = document.querySelectorAll('#open-map-modal, #open-map-modal-mobile');
-            const closeMapButton = document.getElementById('close-map-modal');
-
-            const openSubscribeButtons = document.querySelectorAll('#open-subscribe-modal, #open-footer-subscribe-modal');
-            const closeSubscribeButton = document.getElementById('close-subscribe-modal');
-
-            const openFavoritesButton = document.getElementById('open-favorites-modal');
-            const openFavoritesButtonMobile = document.getElementById('open-favorites-modal-mobile');
-            const closeFavoritesButton = document.getElementById('close-favorites-modal');
-
-            const openNotificationsButton = document.getElementById('open-notifications-modal');
-            const openNotificationsButtonMobile = document.getElementById('open-notifications-modal-mobile');
-            const closeNotificationsButton = document.getElementById('close-notifications-modal');
-
-            // Fonction générique pour ouvrir une modale
-            function openModal(modal) {
-                modal.style.display = 'flex';
-            }
-
-            // Fonction générique pour fermer une modale
-            function closeModal(modal) {
-                modal.style.display = 'none';
-            }
-
-            openMapButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    openModal(mapModal);
-                });
-            });
-
-            closeMapButton.addEventListener('click', () => {
-                closeModal(mapModal);
-            });
-
-            openSubscribeButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    openModal(subscribeModal);
-                });
-            });
-
-            closeSubscribeButton.addEventListener('click', () => {
-                closeModal(subscribeModal);
-            });
-            
-            openFavoritesButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                updateFavoritesList();
-                openModal(favoritesModal);
-            });
-            
-            openFavoritesButtonMobile.addEventListener('click', (event) => {
-                event.preventDefault();
-                updateFavoritesList();
-                closeModal(mobileMenu);
-                openModal(favoritesModal);
-            });
-
-            closeFavoritesButton.addEventListener('click', () => {
-                closeModal(favoritesModal);
-            });
-
-            openNotificationsButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                // Simuler la réinitialisation du compteur de notifications
-                const badge = document.getElementById('notifications-count-badge');
-                if (badge) {
-                    badge.style.display = 'none';
-                    badge.textContent = '0';
-                }
-                openModal(notificationsModal);
-            });
-            
-            openNotificationsButtonMobile.addEventListener('click', (event) => {
-                event.preventDefault();
-                const badge = document.getElementById('notifications-count-badge-mobile');
-                if (badge) {
-                    badge.style.display = 'none';
-                    badge.textContent = '0';
-                }
-                closeModal(mobileMenu);
-                openModal(notificationsModal);
-            });
-
-            closeNotificationsButton.addEventListener('click', () => {
-                closeModal(notificationsModal);
-            });
-
-            window.addEventListener('click', (event) => {
-                if (event.target === mapModal) {
-                    closeModal(mapModal);
-                }
-                if (event.target === subscribeModal) {
-                    closeModal(subscribeModal);
-                }
-                if (event.target === favoritesModal) {
-                    closeModal(favoritesModal);
-                }
-                if (event.target === notificationsModal) {
-                    closeModal(notificationsModal);
-                }
-            });
-        });
-    </script>
-    
-    <!-- Script pour les favoris et la gestion de l'itinéraire -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const likeButtons = document.querySelectorAll('.card-like-button');
-            const favoritesCountBadge = document.getElementById('favorites-count-badge');
-            const favoritesCountBadgeMobile = document.getElementById('favorites-count-badge-mobile');
-            const favoritesList = document.getElementById('favorites-list');
-
-            // Récupère les favoris du stockage local
+            // Récupère les cartes "likées" depuis le stockage local
             let likedCards = JSON.parse(localStorage.getItem('likedCards')) || [];
 
-            // Fonction pour mettre à jour le badge de favoris
+            // Gère l'affichage du menu mobile
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Met à jour les compteurs de favoris
             function updateFavoritesCount() {
                 const count = likedCards.length;
-                if (favoritesCountBadge) {
-                    favoritesCountBadge.textContent = count;
-                    favoritesCountBadge.style.display = count > 0 ? 'inline-block' : 'none';
-                }
-                if (favoritesCountBadgeMobile) {
-                    favoritesCountBadgeMobile.textContent = count;
-                    favoritesCountBadgeMobile.style.display = count > 0 ? 'inline-block' : 'none';
-                }
-            }
-
-            // Fonction pour mettre à jour la liste dans la modale
-            function updateFavoritesList() {
-                favoritesList.innerHTML = '';
-                if (likedCards.length === 0) {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = 'Vous n\'avez pas encore sélectionné d\'activités.';
-                    favoritesList.appendChild(listItem);
-                } else {
-                    likedCards.forEach(cardId => {
-                        const cardElement = document.querySelector(`[data-id="${cardId}"]`);
-                        if (cardElement) {
-                            const title = cardElement.dataset.title;
-                            const listItem = document.createElement('li');
-                            listItem.textContent = title;
-                            favoritesList.appendChild(listItem);
-                        }
-                    });
-                }
+                favoritesBadge.textContent = count;
+                mobileFavoritesBadge.textContent = count;
+                favoritesBadge.classList.toggle('hidden', count === 0);
+                mobileFavoritesBadge.classList.toggle('hidden', count === 0);
             }
 
             // Initialise l'état des coeurs et du badge
