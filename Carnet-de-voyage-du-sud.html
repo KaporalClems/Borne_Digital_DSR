@@ -25,9 +25,36 @@
         <p class="max-w-2xl text-lg text-gray-600 mb-8 animate-fade-in-up delay-200">
             Découvrez, créez et partagez vos aventures dans le Sud. Une webapp simple, sans pub et sans collecte de données.
         </p>
+
+        <!-- Compte à rebours de 30 jours pour le lancement -->
+        <div id="countdown-timer" class="flex justify-center items-center gap-4 text-center mb-12">
+            <div class="bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-md w-24">
+                <span id="days" class="block text-4xl font-bold text-orange-600">00</span>
+                <span class="block text-sm text-gray-600">Jours</span>
+            </div>
+            <div class="bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-md w-24">
+                <span id="hours" class="block text-4xl font-bold text-orange-600">00</span>
+                <span class="block text-sm text-gray-600">Heures</span>
+            </div>
+            <div class="bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-md w-24">
+                <span id="minutes" class="block text-4xl font-bold text-orange-600">00</span>
+                <span class="block text-sm text-gray-600">Minutes</span>
+            </div>
+            <div class="bg-white/50 backdrop-blur-sm rounded-lg p-4 shadow-md w-24">
+                <span id="seconds" class="block text-4xl font-bold text-orange-600">00</span>
+                <span class="block text-sm text-gray-600">Secondes</span>
+            </div>
+        </div>
+        
         <a href="https://carnet-de-voyage-du-sud.web.app/" class="bg-orange-500 hover:bg-orange-600 transition-all text-white font-semibold rounded-2xl px-8 py-4 text-lg shadow-lg hover:shadow-xl transform hover:scale-105">
             Je m’inscris gratuitement
         </a>
+        
+        <!-- Message de construction -->
+        <div class="mt-4 text-sm text-gray-500">
+            Ce site est en cours de construction, veuillez nous excuser pour la gêne occasionnée.
+        </div>
+
         <div class="relative mt-12 w-full max-w-4xl">
             <img
                 src="https://github.com/KaporalClems/Borne_Digital_DSR/raw/main/iphone%20apps%20carnet%20de%20voyage.png"
@@ -114,5 +141,45 @@
     <footer class="py-10 text-center text-gray-500 text-sm">
         © 2025 Carnet de Voyage du Sud. Tous droits réservés.
     </footer>
+
+    <script>
+        const daysEl = document.getElementById("days");
+        const hoursEl = document.getElementById("hours");
+        const minutesEl = document.getElementById("minutes");
+        const secondsEl = document.getElementById("seconds");
+
+        // Définir la date de lancement à 30 jours à partir d'aujourd'hui
+        // La date est le 15 octobre 2025 à 04h07
+        const launchDate = new Date("2025-10-15T04:07:00").getTime();
+
+        const updateCountdown = () => {
+            const now = new Date().getTime();
+            const timeLeft = launchDate - now;
+
+            // Calculer les jours, heures, minutes et secondes restants
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Mettre à jour l'affichage HTML
+            if (timeLeft >= 0) {
+                daysEl.innerText = String(days).padStart(2, '0');
+                hoursEl.innerText = String(hours).padStart(2, '0');
+                minutesEl.innerText = String(minutes).padStart(2, '0');
+                secondsEl.innerText = String(seconds).padStart(2, '0');
+            } else {
+                // Le compte à rebours est terminé
+                document.getElementById("countdown-timer").innerHTML = `<span class="text-2xl text-green-600 font-bold">Le lancement est en cours !</span>`;
+            }
+        };
+
+        // Mettre à jour le compte à rebours toutes les secondes
+        setInterval(updateCountdown, 1000);
+
+        // Appeler la fonction une fois au chargement pour éviter le délai d'une seconde initial
+        updateCountdown();
+    </script>
+
 </body>
 </html>
