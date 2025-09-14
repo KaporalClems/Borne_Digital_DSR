@@ -13,6 +13,33 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes fadeInMoveUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInMoveUp 1s ease-out forwards;
+        }
+        .delay-200 {
+            animation-delay: 0.2s;
+        }
     </style>
 </head>
 <body class="min-h-screen bg-[#FDFBF9] text-gray-900">
@@ -58,7 +85,7 @@
         <img
             src="https://github.com/KaporalClems/Borne_Digital_DSR/raw/main/iphone%20apps%20carnet%20de%20voyage.png"
             alt="Aperçu de l'application mobile"
-            class="mt-12 w-full max-w-2xl"
+            class="mt-12 w-full max-w-2xl animate-float"
         />
     </section>
 
@@ -136,8 +163,19 @@
     </section>
 
     <!-- Pied de page -->
-    <footer class="py-10 text-center text-gray-500 text-sm">
-        © 2025 Carnet de Voyage du Sud. Tous droits réservés.
+    <footer class="py-10 px-6 text-sm flex flex-col md:flex-row justify-between items-center text-gray-500">
+        <!-- Logo de gauche -->
+        <a href="https://srias.re" target="_blank" rel="noopener noreferrer" class="mb-4 md:mb-0">
+            <img src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" alt="Logo de l'Office de Tourisme du Sud de la Réunion" class="h-16 w-auto" />
+        </a>
+        <!-- Texte du pied de page -->
+        <div class="text-center md:text-left">
+            © 2025 Carnet de Voyage du Sud. Tous droits réservés.
+        </div>
+        <!-- Logo de droite -->
+        <a href="https://www.sudreuniontourisme.fr" target="_blank" rel="noopener noreferrer" class="mt-4 md:mt-0">
+            <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" alt="Logo de l'Office de Tourisme du Sud de la Réunion" class="h-16 w-auto" />
+        </a>
     </footer>
 
     <script>
