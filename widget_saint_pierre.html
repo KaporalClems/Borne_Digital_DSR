@@ -37,10 +37,39 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: transform 0.2s, box-shadow 0.2s;
+            position: relative; /* Nécessaire pour positionner l'image en arrière-plan */
+            overflow: hidden; /* Cache les débordements de l'image */
         }
         .card-bg:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Assure que l'image couvre toute la carte sans déformation */
+            opacity: 0.4; /* Opacité de l'image pour que le texte reste lisible */
+            z-index: 0; /* Place l'image en arrière-plan */
+            transition: opacity 0.2s;
+        }
+
+        .card-bg:hover .card-image {
+            opacity: 0.6; /* Augmente légèrement l'opacité au survol */
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1; /* Assure que le texte et l'icône sont au-dessus de l'image */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
         }
     </style>
 </head>
@@ -69,31 +98,22 @@
                 C’est la "Capitale" du Sud ! Elle présente une large façade maritime accueillant un tourisme balnéaire et festif. En effet, c’est la seule ville de La Réunion possédant une plage et un lagon. Le front de mer et le quartier central sont très animés : restaurants, casino, et boites de nuit s'y côtoient. Saint-Pierre est un carrefour de cultures. L’influence de la Compagnie des Indes, puis de l’épopée sucrière sont manifestes dans l'architecture des vieux quartiers et des édifices religieuses.
             </p>
 
-            <!-- Boutons d'action (Replacés ici, après la description) -->
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
-                <!-- Bouton "En savoir plus" (Rouge) qui ouvre la modale d'info -->
-                <button onclick="toggleInfoModal(true)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-200 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50">
+            <!-- Boutons d'action (Replacés ici, après la description) --><div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
+                <!-- Bouton "En savoir plus" (Rouge) qui ouvre la modale d'info --><button onclick="toggleInfoModal(true)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-200 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50">
                     En savoir plus
                 </button>
-                <!-- Bouton "Réserver" (vert) qui ouvre la modale QR code -->
-                <button onclick="toggleReservationModal(true)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-200 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50">
+                <!-- Bouton "Réserver" (vert) qui ouvre la modale QR code --><button onclick="toggleReservationModal(true)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-200 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50">
                     Réserver
                 </button>
             </div>
         </div>
         
-        <!-- Colonne de droite: Widget Météo et Grille de Widgets/Catégories (lg:w-2/3) -->
-        <div class="lg:w-2/3 flex flex-col space-y-6 p-4 sm:p-0">
+        <!-- Colonne de droite: Widget Météo et Grille de Widgets/Catégories (lg:w-2/3) --><div class="lg:w-2/3 flex flex-col space-y-6 p-4 sm:p-0">
 
-            <!-- ************************************ -->
-            <!-- WIDGET MÉTÉO (Placé au-dessus des boutons apps) -->
-            <!-- ************************************ -->
-            <div class="relative w-[290px] h-[318px] max-w-full mx-auto">
-                <!-- Couche transparente qui intercepte les clics pour désactiver les liens dans l'iframe -->
-                <div class="absolute inset-0 z-10 cursor-default"></div>
+            <!-- ************************************ --><!-- WIDGET MÉTÉO (Placé au-dessus des boutons apps) --><!-- ************************************ --><div class="relative w-[290px] h-[318px] max-w-full mx-auto">
+                <!-- Couche transparente qui intercepte les clics pour désactiver les liens dans l'iframe --><div class="absolute inset-0 z-10 cursor-default"></div>
 
-                <!-- Iframe du Widget Météo -->
-                <iframe src="https://api.wo-cloud.com/content/widget/?geoObjectKey=9921676&language=fr&region=FR&timeFormat=HH:mm&windUnit=kmh&systemOfMeasurement=metric&temperatureUnit=celsius" 
+                <!-- Iframe du Widget Météo --><iframe src="https://api.wo-cloud.com/content/widget/?geoObjectKey=9921676&language=fr&region=FR&timeFormat=HH:mm&windUnit=kmh&systemOfMeasurement=metric&temperatureUnit=celsius" 
                     name="CW2" 
                     scrolling="no" 
                     width="290" 
@@ -103,12 +123,9 @@
                     class="w-full h-full"
                 ></iframe>
             </div>
-            <!-- ************************************ -->
-
-            <!-- Grille de Widgets/Catégories -->
-            <div id="activities-grid" class="w-full grid grid-cols-2 md:grid-cols-3 gap-6">
-                <!-- Fonction pour générer l'icône SVG Lucide --><script>
-                    function lucideIcon(name, size = 24) {
+            <!-- ************************************ --><!-- Grille de Widgets/Catégories --><div id="activities-grid" class="w-full grid grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Fonction pour générer l'icône SVG Lucide (sera moins utilisée maintenant) --><script>
+                    function lucideIcon(name, size = 24, color = "currentColor") {
                         const icons = {
                             Hotel: '<path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2zM12 12V6M8 6h8"/>',
                             Utensils: '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 21v-4M15 15l4 4 2-2-4-4M15 17l2 2m-2-2l2 2"/>',
@@ -117,51 +134,61 @@
                             Gem: '<path d="M6.22 10.43 12 2l5.78 8.43-3.6 3.6 3.6 3.6L12 22l-5.78-4.37 3.6-3.6-3.6-3.6z"/>',
                             Calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y1="10"/>'
                         };
-                        return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-red-400 mb-3">${icons[name]}</svg>`;
+                        return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 mb-2"></svg>`;
                     }
                 </script>
                 
-                <!-- Cartes de Catégories (Apps) --><div id="hebergements" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
-                    <script>document.getElementById('hebergements').innerHTML = lucideIcon('Hotel') + 'Hébergements';</script>
-                    <span class="text-lg font-semibold mt-auto">Hébergements</span>
+                <!-- Cartes de Catégories avec images --><div class="card-bg rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02] aspect-square text-center">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Informations/sudreunion_reservationhebergement.jpg" alt="Hébergements" class="card-image">
+                    <div class="card-content">
+                        <span class="text-lg font-bold uppercase text-white">Hébergements</span>
+                    </div>
                 </div>
 
-                <div id="restauration" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
-                    <script>document.getElementById('restauration').innerHTML = lucideIcon('Utensils') + 'Restauration';</script>
-                    <span class="text-lg font-semibold mt-auto">Restauration</span>
+                <div class="card-bg rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02] aspect-square text-center">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/5/8/csm_restaurants_b7fece0ad8.jpg" alt="Restauration" class="card-image">
+                    <div class="card-content">
+                        <span class="text-lg font-bold uppercase text-white">Restauration</span>
+                    </div>
                 </div>
 
-                <div id="activite" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
-                    <script>document.getElementById('activite').innerHTML = lucideIcon('Compass') + 'Activité';</script>
-                    <span class="text-lg font-semibold mt-auto">Activité</span>
+                <div class="card-bg rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02] aspect-square text-center">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/Informations/sudreunion_reservationactivite.jpg" alt="Activité" class="card-image">
+                    <div class="card-content">
+                        <span class="text-lg font-bold uppercase text-white">Activité</span>
+                    </div>
                 </div>
 
-                <div id="contact" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
-                    <script>document.getElementById('contact').innerHTML = lucideIcon('Mail') + 'Contact';</script>
-                    <span class="text-lg font-semibold mt-auto">Contact</span>
+                <div class="card-bg rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02] aspect-square text-center">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo-w.png" alt="Contact" class="card-image">
+                    <div class="card-content">
+                        <span class="text-lg font-bold uppercase text-white">Contact</span>
+                    </div>
                 </div>
 
-                <div id="tresors" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
-                    <script>document.getElementById('tresors').innerHTML = lucideIcon('Gem') + 'Trésors de Saint Pierre';</script>
-                    <span class="text-lg font-semibold mt-auto">Trésors de Saint Pierre</span>
+                <div class="card-bg rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02] aspect-square text-center">
+                    <img src="https://www.sudreuniontourisme.fr/typo3conf/ext/theme_sud/Resources/Public/images/img11.png" alt="Trésors de Saint Pierre" class="card-image">
+                    <div class="card-content">
+                        <span class="text-lg font-bold uppercase text-white">Trésors de Saint Pierre</span>
+                    </div>
                 </div>
                 
-                <!-- Ajout d'une sixième carte pour compléter la grille 3x2 --><div id="evenements" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
-                    <script>document.getElementById('evenements').innerHTML = lucideIcon('Calendar') + 'Événements';</script>
-                    <span class="text-lg font-semibold mt-auto">Événements</span>
+                <div class="card-bg rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02] aspect-square text-center">
+                    <img src="https://www.sudreuniontourisme.fr/fileadmin/_processed_/f/3/csm_sudreunion_sortir_dc398a2993.jpg" alt="Événements" class="card-image">
+                    <div class="card-content">
+                        <span class="text-lg font-bold uppercase text-white">Événements</span>
+                    </div>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Modale "Réserver" (QR Code) - Géré par toggleReservationModal(true) -->
-    <div id="reservationModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 hidden flex items-center justify-center p-4" onclick="toggleReservationModal(false)">
+    <!-- Modale "Réserver" (QR Code) - Géré par toggleReservationModal(true) --><div id="reservationModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 hidden flex items-center justify-center p-4" onclick="toggleReservationModal(false)">
         <div class="card-bg p-8 rounded-2xl w-full max-w-sm shadow-2xl flex flex-col items-center" onclick="event.stopPropagation()">
             <h3 class="text-2xl font-bold mb-4 text-green-400">Réserver en ligne</h3>
             <p class="text-gray-200 leading-relaxed mb-4 text-center">Scannez le code QR pour accéder à la plateforme de réservation.</p>
-            <!-- Canvas pour le QR Code -->
-            <canvas id="qrcodeCanvas" class="bg-white p-2 rounded-lg mb-6 shadow-xl"></canvas>
+            <!-- Canvas pour le QR Code --><canvas id="qrcodeCanvas" class="bg-white p-2 rounded-lg mb-6 shadow-xl"></canvas>
             
             <button onclick="toggleReservationModal(false)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl transition duration-200">
                 Fermer
@@ -169,11 +196,9 @@
         </div>
     </div>
 
-    <!-- Modale "En savoir plus" (Info) - Géré par toggleInfoModal(true) -->
-    <div id="infoModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 hidden flex items-center justify-center p-4" onclick="toggleInfoModal(false)">
+    <!-- Modale "En savoir plus" (Info) - Géré par toggleInfoModal(true) --><div id="infoModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 hidden flex items-center justify-center p-4" onclick="toggleInfoModal(false)">
         <div class="card-bg p-8 rounded-2xl w-full max-w-lg shadow-2xl" onclick="event.stopPropagation()">
-            <!-- Image ajoutée ici -->
-            <img 
+            <!-- Image ajoutée ici --><img 
                 src="https://www.sudreuniontourisme.fr/typo3conf/ext/theme_sud/Resources/Public/images/maps-office/st-pierre.png" 
                 alt="Carte de Saint-Pierre" 
                 class="w-full h-auto rounded-lg mb-6 shadow-md"
@@ -243,24 +268,23 @@
             }
         }
         
-        // Petite fonction de débogage pour les cartes cliquables
-        document.querySelectorAll('.card-bg').forEach(card => {
-            // Empêche de déclencher le message de simulation sur le clic de la modale elle-même
-            if (card.id !== 'contact' && card.id !== 'reservationModal') {
-                card.addEventListener('click', () => {
-                    // Utilisation d'une modale simple à la place de alert()
-                    const message = `Action simulée pour la catégorie: ${card.querySelector('span').textContent.trim()}`;
-                    const customAlert = document.createElement('div');
-                    customAlert.className = 'fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black bg-opacity-70';
-                    customAlert.innerHTML = `
-                        <div class="bg-gray-800 p-6 rounded-xl max-w-sm shadow-xl border border-red-500">
-                            <p class="text-white mb-4">${message}</p>
-                            <button onclick="this.parentNode.parentNode.remove()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg float-right">OK</button>
-                        </div>
-                    `;
-                    document.body.appendChild(customAlert);
-                });
-            }
+        // Gestion des clics pour les cartes d'activités
+        document.querySelectorAll('#activities-grid > div').forEach(card => {
+            card.addEventListener('click', () => {
+                const titleElement = card.querySelector('span');
+                const title = titleElement ? titleElement.textContent.trim() : 'Catégorie inconnue';
+                
+                const message = `Action simulée pour la catégorie: ${title}`;
+                const customAlert = document.createElement('div');
+                customAlert.className = 'fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black bg-opacity-70';
+                customAlert.innerHTML = `
+                    <div class="bg-gray-800 p-6 rounded-xl max-w-sm shadow-xl border border-red-500">
+                        <p class="text-white mb-4">${message}</p>
+                        <button onclick="this.parentNode.parentNode.remove()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg float-right">OK</button>
+                    </div>
+                `;
+                document.body.appendChild(customAlert);
+            });
         });
 
     </script>
