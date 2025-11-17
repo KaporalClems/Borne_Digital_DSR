@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Saint-Pierre</title>
+    <!-- Chargement de Tailwind CSS pour un style rapide et moderne --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chargement de la librairie QRCode.js pour générer le code QR --><script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <!-- Configuration des polices --><style>
+        /* Importation de Permanent Marker (pour le titre) et Inter (pour le reste) */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Permanent+Marker&display=swap');
+        
+        /* Styles pour le centrage horizontal et vertical */
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Le corps est transparent, comme demandé pour un widget sans fond */
+            background-color: transparent !important;
+            /* AJOUTÉ pour centrer le contenu verticalement et horizontalement */
+            height: 100vh;
+            display: flex;
+            align-items: center; /* Centrage vertical */
+            justify-content: center; /* Centrage horizontal */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Classe spécifique pour appliquer la police script au titre */
+        .title-script-font {
+            font-family: 'Permanent Marker', cursive;
+            /* Ajout d'une ombre pour un meilleur effet visuel, comme dans l'image */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Style pour les cartes (widgets) - fond sombre et semi-transparent */
+        .card-bg {
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card-bg:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <!-- Conteneur principal du Widget (centré) --><div id="saint-pierre-widget" class="flex flex-col lg:flex-row items-start justify-center text-white space-y-8 lg:space-y-0 lg:space-x-12 w-full max-w-7xl mx-auto">
+        
+        <!-- Colonne de gauche: Titre, Description et Boutons d'action --><div class="lg:w-1/3 flex flex-col space-y-6 p-4 sm:p-0">
+            
+            <!-- Logo de Saint-Pierre --><img 
+                src="https://www.saintpierre.re/sites/default/files/logo-saint-pierre.png" 
+                alt="Logo de la ville de Saint-Pierre, La Réunion" 
+                class="w-24 h-auto mb-4"
+                onerror="this.style.display='none'; this.after(document.createTextNode('Logo (Image non disponible)'))"
+            />
+            
+            <!-- Titre Principal avec la nouvelle police script --><h1 class="text-5xl md:text-6xl font-extrabold leading-tight tracking-tighter title-script-font">
+                Saint-Pierre
+            </h1>
+
+            <!-- Sous-titre --><h2 class="text-xl md:text-2xl font-medium text-red-400">
+                Point d’intérêt Balnéaire et festive
+            </h2>
+
+            <!-- Description Courte --><p class="text-gray-300 text-base leading-relaxed">
+                C’est la "Capitale" du Sud ! Elle présente une large façade maritime accueillant un tourisme balnéaire et festif. En effet, c’est la seule ville de La Réunion possédant une plage et un lagon. Le front de mer et le quartier central sont très animés : restaurants, casino, et boites de nuit s'y côtoient. Saint-Pierre est un carrefour de cultures. L’influence de la Compagnie des Indes, puis de l’épopée sucrière sont manifestes dans l'architecture des vieux quartiers et des édifices religieuses.
+            </p>
+
+            <!-- Boutons d'action (Replacés ici, après la description) -->
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 pt-4">
+                <!-- Bouton "En savoir plus" (Rouge) qui ouvre la modale d'info -->
+                <button onclick="toggleInfoModal(true)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-200 focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50">
+                    En savoir plus
+                </button>
+                <!-- Bouton "Réserver" (vert) qui ouvre la modale QR code -->
+                <button onclick="toggleReservationModal(true)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-200 focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50">
+                    Réserver
+                </button>
+            </div>
+        </div>
+        
+        <!-- Colonne de droite: Widget Météo et Grille de Widgets/Catégories (lg:w-2/3) -->
+        <div class="lg:w-2/3 flex flex-col space-y-6 p-4 sm:p-0">
+
+            <!-- ************************************ -->
+            <!-- WIDGET MÉTÉO (Placé au-dessus des boutons apps) -->
+            <!-- ************************************ -->
+            <div class="relative w-[290px] h-[318px] max-w-full mx-auto">
+                <!-- Couche transparente qui intercepte les clics pour désactiver les liens dans l'iframe -->
+                <div class="absolute inset-0 z-10 cursor-default"></div>
+
+                <!-- Iframe du Widget Météo -->
+                <iframe src="https://api.wo-cloud.com/content/widget/?geoObjectKey=9921676&language=fr&region=FR&timeFormat=HH:mm&windUnit=kmh&systemOfMeasurement=metric&temperatureUnit=celsius" 
+                    name="CW2" 
+                    scrolling="no" 
+                    width="290" 
+                    height="318" 
+                    frameborder="0" 
+                    style="border: 1px solid #10658E; border-radius: 8px;"
+                    class="w-full h-full"
+                ></iframe>
+            </div>
+            <!-- ************************************ -->
+
+            <!-- Grille de Widgets/Catégories -->
+            <div id="activities-grid" class="w-full grid grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Fonction pour générer l'icône SVG Lucide --><script>
+                    function lucideIcon(name, size = 24) {
+                        const icons = {
+                            Hotel: '<path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2zM12 12V6M8 6h8"/>',
+                            Utensils: '<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 21v-4M15 15l4 4 2-2-4-4M15 17l2 2m-2-2l2 2"/>',
+                            Compass: '<path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2zm0 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/><path d="m15 9-6 6"/><path d="M12 2v2M20 12h-2M12 20v-2M4 12h2"/>',
+                            Mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+                            Gem: '<path d="M6.22 10.43 12 2l5.78 8.43-3.6 3.6 3.6 3.6L12 22l-5.78-4.37 3.6-3.6-3.6-3.6z"/>',
+                            Calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y1="10"/>'
+                        };
+                        return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-red-400 mb-3">${icons[name]}</svg>`;
+                    }
+                </script>
+                
+                <!-- Cartes de Catégories (Apps) --><div id="hebergements" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
+                    <script>document.getElementById('hebergements').innerHTML = lucideIcon('Hotel') + 'Hébergements';</script>
+                    <span class="text-lg font-semibold mt-auto">Hébergements</span>
+                </div>
+
+                <div id="restauration" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
+                    <script>document.getElementById('restauration').innerHTML = lucideIcon('Utensils') + 'Restauration';</script>
+                    <span class="text-lg font-semibold mt-auto">Restauration</span>
+                </div>
+
+                <div id="activite" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
+                    <script>document.getElementById('activite').innerHTML = lucideIcon('Compass') + 'Activité';</script>
+                    <span class="text-lg font-semibold mt-auto">Activité</span>
+                </div>
+
+                <div id="contact" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
+                    <script>document.getElementById('contact').innerHTML = lucideIcon('Mail') + 'Contact';</script>
+                    <span class="text-lg font-semibold mt-auto">Contact</span>
+                </div>
+
+                <div id="tresors" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
+                    <script>document.getElementById('tresors').innerHTML = lucideIcon('Gem') + 'Trésors de Saint Pierre';</script>
+                    <span class="text-lg font-semibold mt-auto">Trésors de Saint Pierre</span>
+                </div>
+                
+                <!-- Ajout d'une sixième carte pour compléter la grille 3x2 --><div id="evenements" class="card-bg p-4 flex flex-col items-start rounded-xl cursor-pointer hover:border-red-500 transform hover:scale-[1.02]">
+                    <script>document.getElementById('evenements').innerHTML = lucideIcon('Calendar') + 'Événements';</script>
+                    <span class="text-lg font-semibold mt-auto">Événements</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modale "Réserver" (QR Code) - Géré par toggleReservationModal(true) -->
+    <div id="reservationModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 hidden flex items-center justify-center p-4" onclick="toggleReservationModal(false)">
+        <div class="card-bg p-8 rounded-2xl w-full max-w-sm shadow-2xl flex flex-col items-center" onclick="event.stopPropagation()">
+            <h3 class="text-2xl font-bold mb-4 text-green-400">Réserver en ligne</h3>
+            <p class="text-gray-200 leading-relaxed mb-4 text-center">Scannez le code QR pour accéder à la plateforme de réservation.</p>
+            <!-- Canvas pour le QR Code -->
+            <canvas id="qrcodeCanvas" class="bg-white p-2 rounded-lg mb-6 shadow-xl"></canvas>
+            
+            <button onclick="toggleReservationModal(false)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-xl transition duration-200">
+                Fermer
+            </button>
+        </div>
+    </div>
+
+    <!-- Modale "En savoir plus" (Info) - Géré par toggleInfoModal(true) -->
+    <div id="infoModal" class="fixed inset-0 z-50 bg-black bg-opacity-80 hidden flex items-center justify-center p-4" onclick="toggleInfoModal(false)">
+        <div class="card-bg p-8 rounded-2xl w-full max-w-lg shadow-2xl" onclick="event.stopPropagation()">
+            <!-- Image ajoutée ici -->
+            <img 
+                src="https://www.sudreuniontourisme.fr/typo3conf/ext/theme_sud/Resources/Public/images/maps-office/st-pierre.png" 
+                alt="Carte de Saint-Pierre" 
+                class="w-full h-auto rounded-lg mb-6 shadow-md"
+                onerror="this.style.display='none'; this.after(document.createTextNode('Carte de Saint-Pierre (Image non disponible)'))"
+            />
+            
+            <h3 class="text-2xl font-bold mb-4 text-red-400">Patrimoine et Balades à Saint-Pierre</h3>
+            <p class="text-gray-200 leading-relaxed mb-6">
+                La ville est propice aux balades. Au hasard de la promenade, le long des rues commerçantes aux boutiques typiques, vous découvrez une architecture influencée par la Compagnie des Indes, puis par l’épopée sucrière. Pour ne rien rater de ce riche patrimoine, le service culturel de la ville organise toute l'année des visites accompagnées de guides conférenciers. Contactez-nous pour en savoir plus !
+            </p>
+            <button onclick="toggleInfoModal(false)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl transition duration-200">
+                Fermer
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // URL pour le QR Code de réservation
+        const RESERVATION_URL = 'https://www.sudreuniontourisme.fr/reserver.html';
+        
+        // Nouvelle fonction pour gérer l'ouverture et la fermeture de la modale de réservation
+        function toggleReservationModal(show) {
+            const modal = document.getElementById('reservationModal');
+            if (show) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                // Générer le QR code uniquement à l'ouverture
+                generateQRCode();
+            } else {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Fonction pour générer le QR Code
+        function generateQRCode() {
+            const canvas = document.getElementById('qrcodeCanvas');
+            // S'assurer que la librairie QRCode est chargée
+            if (typeof QRCode !== 'undefined' && canvas) {
+                // S'assurer que le canvas est vide avant de générer (éviter la superposition)
+                const context = canvas.getContext('2d');
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Génération du QR Code
+                QRCode.toCanvas(canvas, RESERVATION_URL, {
+                    errorCorrectionLevel: 'H',
+                    width: 200,
+                    margin: 2
+                }, function (error) {
+                    if (error) console.error(error);
+                });
+            } else if (canvas) {
+                console.error("La librairie QRCode n'a pas pu être chargée.");
+                canvas.parentNode.innerHTML = `<p class="text-red-500 text-center">Erreur: Le générateur de QR code n'a pas pu être chargé.</p>`;
+            }
+        }
+        
+        // ANCIENNE fonction pour la modale d'information
+        function toggleInfoModal(show) {
+            const modal = document.getElementById('infoModal');
+            if (show) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Petite fonction de débogage pour les cartes cliquables
+        document.querySelectorAll('.card-bg').forEach(card => {
+            // Empêche de déclencher le message de simulation sur le clic de la modale elle-même
+            if (card.id !== 'contact' && card.id !== 'reservationModal') {
+                card.addEventListener('click', () => {
+                    // Utilisation d'une modale simple à la place de alert()
+                    const message = `Action simulée pour la catégorie: ${card.querySelector('span').textContent.trim()}`;
+                    const customAlert = document.createElement('div');
+                    customAlert.className = 'fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black bg-opacity-70';
+                    customAlert.innerHTML = `
+                        <div class="bg-gray-800 p-6 rounded-xl max-w-sm shadow-xl border border-red-500">
+                            <p class="text-white mb-4">${message}</p>
+                            <button onclick="this.parentNode.parentNode.remove()" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg float-right">OK</button>
+                        </div>
+                    `;
+                    document.body.appendChild(customAlert);
+                });
+            }
+        });
+
+    </script>
+
+</body>
+</html>
