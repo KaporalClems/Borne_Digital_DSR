@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Destination Sud Réunion</title>
+    <!-- Chargement de Tailwind CSS via CDN --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chargement du SDK Supabase (NOUVEAU) --><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Configuration des polices (Inter pour le corps, Pacifico pour le titre) --><style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        
+        /* Image de la carte comme arrière-plan général de la page */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc; /* Fallback si l'image ne charge pas */
+            background-image: url('https://www.sudreuniontourisme.fr/fileadmin/_processed_/c/f/csm_bg-map_f5992c736e.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* L'image reste fixe lors du défilement */
+        }
+        
+        /* Style pour le titre de la partie gauche */
+        .title-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+        
+        /* Assure que l'image de fond couvre bien la zone */
+        .bg-cover-center {
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-gray-800">
+
+    <!-- Conteneur principal divisé en deux (gauche: carrousel, droite: formulaire) -->
+    <div class="flex w-full max-w-6xl bg-white rounded-lg shadow-2xl overflow-hidden min-h-[600px] md:min-h-[700px]">
+
+        <!-- Partie Gauche: Carrousel (maintenu) et Texte --><div 
+            class="hidden md:flex flex-col items-center justify-center w-1/2 p-8 text-white relative overflow-hidden"
+        >
+            
+            <!-- Conteneur d'images de Carrousel (MAINTENANT DYNAMIQUE) -->
+            <div 
+                id="carousel-container" 
+                class="absolute inset-0 bg-cover-center" 
+                style="
+                    background-image: url('https://www.sudreuniontourisme.fr/fileadmin/_processed_/9/9/csm_BrasEtangs-VueGdBenare-1_cbb4280c3f.jpg'); 
+                    opacity: 1; 
+                    /* Transition pour l'effet de fondu */
+                    transition: opacity 0.5s ease-in-out;
+                "
+            ></div>
+
+            <!-- Overlay pour assombrir l'image et améliorer la lisibilité du texte --><div class="absolute inset-0 bg-black opacity-40"></div>
+            
+            <div class="relative z-10 text-center">
+                <!-- Logo Destination Sud Réunion --><img 
+                    src="https://srias.re/wp-content/uploads/2020/12/Destination-Sud-Reunion-png-1-min.png" 
+                    alt="Logo Destination Sud Réunion" 
+                    class="w-auto max-h-24 mx-auto mb-4 object-contain"
+                    onerror="this.onerror=null; this.src='https://placehold.co/300x80/0d9488/ffffff?text=LOGO+SRIAS'; this.classList.remove('max-h-24'); this.classList.add('max-h-20');"
+                >
+                <!-- TITRE AVEC POLICE PACIFICO --><h2 class="title-pacifico text-4xl font-semibold mb-4 text-shadow-lg" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    Destination Sud Réunion
+                </h2>
+                <p class="text-lg leading-relaxed text-shadow-md" style="text-shadow: 1px 1px 3px rgba(0,0,0,0.4);">
+                    Découvrez la beauté et la richesse culturelle du Sud de la Réunion.
+                    <br>Votre portail vers des aventures inoubliables.
+                </p>
+            </div>
+        </div>
+
+        <!-- Partie Droite: Formulaire de Connexion --><div class="w-full md:w-1/2 p-8 sm:p-10 flex flex-col justify-between relative">
+            <div>
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-4xl font-extrabold text-[#007bff]">Bienvenue</h2>
+                    <!-- Icône d'avion --><svg class="w-10 h-10 text-[#007bff]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                </div>
+                
+                <p class="text-lg text-gray-600 mb-8">Connexion par Email</p>
+
+                <form id="login-form" class="space-y-6">
+                    <!-- Champ Identifiant Email --><div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Identifiant Email</label>
+                        <div class="relative">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                required 
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-[#007bff] focus:border-[#007bff] transition duration-150 ease-in-out"
+                                placeholder="votre.email@exemple.fr"
+                                aria-label="Identifiant Email"
+                            >
+                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                <!-- Icône d'email --><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 4v4a2 2 0 002 2h14a2 2 0 002-2v-4"></path></svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Champ Mot de passe --><div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mot de passe</label>
+                        <div class="relative">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                required 
+                                class="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-[#007bff] focus:border-[#007bff] transition duration-150 ease-in-out"
+                                placeholder="••••••••"
+                                aria-label="Mot de passe"
+                            >
+                            <!-- Icône de Cadenas (À gauche) -->
+                            <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                            </span>
+                            <!-- Bouton pour afficher/masquer le mot de passe (À droite) -->
+                            <button 
+                                type="button" 
+                                id="toggle-password-visibility" 
+                                aria-label="Afficher/Masquer le mot de passe"
+                                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1 rounded-full transition duration-150"
+                            >
+                                <!-- Icône d'œil ouvert (par défaut) / sera remplacée par JS si besoin -->
+                                <svg id="eye-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Lien Mot de passe oublié --><div class="text-right">
+                        <a href="#" class="text-sm font-medium text-gray-500 hover:text-[#007bff]">Mot de passe oublié ?</a>
+                    </div>
+
+                    <!-- Bouton de Connexion --><div>
+                        <button 
+                            type="submit" 
+                            id="login-button"
+                            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-lg font-semibold text-white bg-[#007bff] hover:bg-[#006acd] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#007bff] transition duration-200 ease-in-out transform hover:scale-[1.01] active:scale-[0.99]"
+                            aria-label="Se connecter"
+                        >
+                            <span id="login-text">CONNEXION</span>
+                            <div id="loading-spinner" class="hidden spinner" role="status">
+                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- SECTION : Logo et Texte Offices de Tourisme du Sud de la Réunion --><div class="mt-8 mb-4 flex items-center justify-center space-x-2">
+                <img 
+                    src="https://www.sudreuniontourisme.fr/fileadmin/user_upload/Sud/logo.png" 
+                    alt="Logo Offices de Tourisme du Sud de la Réunion" 
+                    class="h-10 w-auto object-contain"
+                >
+                <!-- Conteneur Flex Colonne pour empiler le texte --><div class="flex flex-col items-start">
+                    <p class="text-sm font-semibold text-gray-600 uppercase leading-none">
+                        OFFICES DE TOURISME
+                    </p>
+                    <p class="text-xs font-medium text-gray-500 uppercase leading-none mt-0.5">
+                        DU SUD DE LA RÉUNION
+                    </p>
+                </div>
+            </div>
+
+            <!-- Section des icônes de lieux célèbres en bas (décoratif) --><div class="flex justify-between items-end h-24 relative overflow-hidden">
+                <svg class="absolute bottom-0 left-0 w-full h-auto text-[#007bff] opacity-50" viewBox="0 0 1000 100" preserveAspectRatio="none">
+                    <path fill="currentColor" d="M0,100 L0,50 C100,50 150,0 250,0 C350,0 400,50 500,50 C600,50 650,0 750,0 C850,0 900,50 1000,50 L1000,100 L0,100 Z"></path>
+                    <path fill="currentColor" opacity="0.7" d="M0,100 L0,70 C100,70 150,20 250,20 C350,20 400,70 500,70 C600,70 650,20 750,20 C850,20 900,70 1000,70 L1000,100 L0,100 Z"></path>
+                </svg>
+                <div class="relative w-full h-full">
+                    <svg class="absolute bottom-0 left-0 w-full h-full text-[#007bff] opacity-70" viewBox="0 0 1000 150" preserveAspectRatio="xMidYMax meet">
+                        <!-- Tour Eiffel --><path fill="currentColor" d="M700 150 L700 80 L705 80 L705 75 L710 75 L710 70 L715 70 L715 65 L720 65 L720 60 L725 60 L725 55 L730 55 L730 50 L735 50 L735 45 L740 45 L740 40 L745 40 L745 35 L750 35 L750 30 L755 30 L755 25 L760 25 L760 20 L765 20 L765 15 L770 15 L770 10 L775 10 L775 5 L780 5 L780 0 L785 0 L785 5 L790 5 L790 10 L795 10 L795 15 L800 15 L800 20 L805 20 L805 25 L810 25 L810 30 L815 30 L815 35 L820 35 L820 40 L825 40 L825 45 L830 45 L830 50 L835 50 L835 55 L840 55 L840 60 L845 60 L845 65 L850 65 L850 70 L855 70 L855 75 L860 75 L860 80 L865 80 L865 150 Z"/>
+                        <!-- Taj Mahal (simplifié) --><path fill="currentColor" d="M150 150 L150 100 A20 20 0 0 1 170 80 L180 80 L180 100 A20 20 0 0 1 200 120 L200 150 Z M175 80 L175 60 A10 10 0 0 1 185 50 A10 10 0 0 1 195 60 L195 80 Z"/>
+                        <!-- Colisée (simplifié) --><path fill="currentColor" d="M400 150 L400 100 A20 20 0 0 1 420 80 L440 80 A20 20 0 0 1 460 100 L460 150 Z M410 80 L410 60 A10 10 0 0 1 420 50 A10 10 0 0 1 430 60 L430 80 Z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Bloc Mentions Légales et Copyright (MAINTENANT DYNAMIQUE) -->
+            <div class="text-center mt-2 mb-2">
+                <a href="#" class="js-legal-link text-xs text-gray-400 hover:text-[#007bff] font-medium block pb-1.5 border-b-2 border-gray-300 mx-auto w-40">
+                    Mentions Légales
+                </a>
+                <!-- L'année sera insérée par JavaScript -->
+                <p id="copyright-year" class="text-xs text-gray-400 mt-2.5">© Destination Sud Réunion. Tous droits réservés.</p>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Modal pour les Mentions Légales (caché par défaut) -->
+    <div id="legal-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-50 transition-opacity duration-300 opacity-0" aria-modal="true" role="dialog">
+        <!-- Contenu de la modale -->
+        <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col transform transition-transform duration-300 scale-95">
+            <!-- En-tête de la modale -->
+            <div class="p-5 border-b flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-800">Mentions Légales</h3>
+                <button id="close-modal" class="text-gray-400 hover:text-gray-600 focus:outline-none p-1 rounded-full hover:bg-gray-100 transition">
+                    <!-- Icône de fermeture (X) -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <!-- Corps de la modale (Contenu défilable) -->
+            <div class="p-5 overflow-y-auto flex-grow text-sm text-gray-600 space-y-4">
+                <h4 class="font-semibold text-lg text-[#007bff]">1. Identification de l'Éditeur</h4>
+                <p>
+                    <strong>Nom de l'entité :</strong> Destination Sud Réunion<br>
+                    <strong>Adresse :</strong> [À compléter par l'adresse complète]<br>
+                    <strong>Téléphone :</strong> [À compléter par le numéro de téléphone]<br>
+                    <strong>Email :</strong> [À compléter par l'adresse email de contact]<br>
+                    <strong>Forme juridique :</strong> [À compléter par la forme juridique]<br>
+                    <strong>Numéro SIRET :</strong> [À compléter par le numéro SIRET]
+                </p>
+
+                <h4 class="font-semibold text-lg text-[#007bff]">2. Directeur de la publication</h4>
+                <p>
+                    [Nom et prénom du Directeur de la publication]
+                </p>
+
+                <h4 class="font-semibold text-lg text-[#007bff]">3. Hébergement</h4>
+                <p>
+                    <strong>Hébergeur :</strong> [À compléter par le nom de l'hébergeur]<br>
+                    <strong>Adresse :</strong> [À compléter par l'adresse de l'hébergeur]<br>
+                    <strong>Téléphone :</strong> [À compléter par le téléphone de l'hébergeur]
+                </p>
+
+                <h4 class="font-semibold text-lg text-[#007bff]">4. Propriété Intellectuelle</h4>
+                <p>
+                    L'ensemble de ce site relève de la législation française et internationale sur le droit d'auteur et la propriété intellectuelle. Tous les droits de reproduction sont réservés, y compris pour les documents téléchargeables et les représentations iconographiques et photographiques. La reproduction de tout ou partie de ce site sur un support électronique quel qu'il soit est formellement interdite sauf autorisation expresse du directeur de la publication.
+                </p>
+
+                <h4 class="font-semibold text-lg text-[#007bff]">5. Données Personnelles</h4>
+                <p>
+                    Conformément à la loi Informatique et Libertés du 6 janvier 1978, vous disposez d'un droit d'accès, de rectification et d'opposition aux données personnelles vous concernant. Ce droit peut être exercé par courrier électronique à l'adresse [Email de contact].
+                </p>
+                <!-- NOTE: Ces mentions sont des placeholders et doivent être remplacées par des informations légales réelles et complètes. -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        // --- Configuration Supabase (NOUVELLE) ---
+        const SUPABASE_URL = 'https://miukmvnjkunwadroesft.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1pdWttdm5qa3Vud2Fkcm9lc2Z0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NzgyNDEsImV4cCI6MjA3ODU1NDI0MX0.uOJo3bGphRN2_75-46xc9vMSQst_io7ufVPU2dCfQBs';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Note: TABLE_NAME n'est pas utilisé pour l'authentification.
+
+        // --- Fonctions de gestion de l'état de chargement (NOUVEAU) ---
+        const loginButton = document.getElementById('login-button');
+        const loginText = document.getElementById('login-text');
+        const loadingSpinner = document.getElementById('loading-spinner');
+
+        function setButtonLoading(isLoading) {
+            loginButton.disabled = isLoading;
+            if (isLoading) {
+                loginText.textContent = 'CONNEXION EN COURS...';
+                loadingSpinner.classList.remove('hidden');
+                loginButton.classList.add('flex-row', 'items-center', 'justify-center');
+            } else {
+                loginText.textContent = 'CONNEXION';
+                loadingSpinner.classList.add('hidden');
+                loginButton.classList.remove('flex-row', 'items-center', 'justify-center');
+            }
+        }
+
+        // --- LOGIQUE DU CARROUSEL D'IMAGES (EXISTANTE) ---
+        const carouselImages = [
+            'https://www.sudreuniontourisme.fr/fileadmin/_processed_/9/9/csm_BrasEtangs-VueGdBenare-1_cbb4280c3f.jpg',
+            'https://www.sudreuniontourisme.fr/fileadmin/_processed_/c/c/csm_randonnee_redim_4ffbef2eae.jpg',
+            'https://www.sudreuniontourisme.fr/fileadmin/_processed_/d/0/csm_redim_volcan_2015_FRT-Gaby_Barathieu_8_fev_2019_1bf394bc18.jpg'
+        ];
+        let currentImageIndex = 0;
+        let carouselContainer;
+        const fadeDuration = 500; 
+
+        function updateCarouselImage() {
+            if (!carouselContainer || carouselImages.length === 0) return;
+
+            carouselContainer.style.opacity = 0;
+
+            setTimeout(() => {
+                currentImageIndex = (currentImageIndex + 1) % carouselImages.length;
+                carouselContainer.style.backgroundImage = `url('${carouselImages[currentImageIndex]}')`;
+                carouselContainer.style.opacity = 1;
+            }, fadeDuration); 
+        }
+
+        // Fonction pour afficher les messages de statut (succès/erreur)
+        function displayStatusMessage(message, isError = false) {
+            const existingMessage = document.querySelector('.status-message');
+            if (existingMessage) {
+                existingMessage.remove();
+            }
+
+            const statusMessage = document.createElement('p');
+            statusMessage.textContent = message;
+            statusMessage.className = `status-message mt-4 text-center text-sm font-medium ${isError ? 'text-red-600' : 'text-green-600'}`;
+            
+            document.getElementById('login-form').after(statusMessage);
+
+            if (!isError) {
+                // Supprimer le message de succès après 5 secondes
+                setTimeout(() => {
+                    statusMessage.remove();
+                }, 5000);
+            }
+        }
+
+
+        // --- Logique du Formulaire de Connexion (MISE À JOUR) ---
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault(); 
+            
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+
+            // Validation minimale
+            if (!email || !password) {
+                displayStatusMessage("Veuillez saisir votre email et votre mot de passe.", true);
+                return;
+            }
+
+            setButtonLoading(true);
+
+            try {
+                // Appel à l'authentification Supabase
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password,
+                });
+
+                if (error) {
+                    console.error("Erreur de connexion Supabase:", error);
+                    // Afficher un message d'erreur plus général pour des raisons de sécurité
+                    displayStatusMessage("Erreur de connexion : Identifiant ou mot de passe incorrect.", true);
+                    return;
+                }
+
+                if (data.user) {
+                    console.log(`Connexion réussie pour l'utilisateur: ${data.user.email}`);
+                    displayStatusMessage(`Connexion réussie ! Redirection vers votre espace...`);
+                    
+                    // --- PLACEHOLDER DE REDIRECTION (À PERSONNALISER) ---
+                    // Dans un environnement réel, vous redirigeriez l'utilisateur ici.
+                    // window.location.href = '/dashboard.html';
+                    // ---------------------------------------------------
+                }
+
+            } catch (e) {
+                console.error("Erreur inattendue lors de la tentative de connexion:", e);
+                displayStatusMessage("Une erreur inattendue est survenue. Veuillez réessayer.", true);
+            } finally {
+                setButtonLoading(false);
+            }
+        });
+
+        // --- Logique de la Modale Mentions Légales (EXISTANTE) ---
+        const legalLink = document.querySelector('.js-legal-link');
+        const modal = document.getElementById('legal-modal');
+        const closeModalButton = document.getElementById('close-modal');
+        const modalContent = modal.querySelector('div.bg-white'); 
+
+        function showModal() {
+            modal.style.display = 'flex';
+            void modal.offsetWidth; 
+            modal.classList.remove('opacity-0');
+            modal.classList.add('opacity-100');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }
+
+        function hideModal() {
+            modal.classList.remove('opacity-100');
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300); 
+        }
+
+        legalLink.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            showModal();
+        });
+
+        closeModalButton.addEventListener('click', hideModal);
+
+        modal.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                hideModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.style.display === 'flex') {
+                hideModal();
+            }
+        });
+        
+        // --- Logique d'Actualisation du Copyright (EXISTANTE) ---
+        const copyrightElement = document.getElementById('copyright-year');
+        
+        if (copyrightElement) {
+            const currentYear = new Date().getFullYear();
+            let currentText = copyrightElement.textContent;
+            copyrightElement.textContent = currentText.replace('©', `© ${currentYear}`);
+        }
+
+        // --- Logique d'Affichage/Masquage du Mot de Passe (EXISTANTE) ---
+        const passwordInput = document.getElementById('password');
+        const toggleButton = document.getElementById('toggle-password-visibility');
+        const eyeIcon = document.getElementById('eye-icon');
+
+        // SVG pour l'œil masqué (barré)
+        const eyeClosedSVG = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7 1.274-4.057 5.064-7 9.542-7a10.05 10.05 0 011.825.125m-1.825 11.55a3 3 0 100-6 3 3 0 000 6z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.042 1.077l.006.002.001.002-.001-.004a.975.975 0 00-.006-.002m-1.034 19.838c.005.002.01.003.016.003.006 0 .011-.001.016-.003.005-.002.009-.004.013-.007.004-.003.007-.005.009-.008.002-.003.003-.005.003-.008.001-.004.001-.007 0-.01-.001-.003-.002-.006-.004-.009-.002-.003-.005-.005-.008-.007-.003-.002-.006-.004-.009-.005-.003-.001-.006-.002-.009-.002a.975.975 0 00-.006.002.975.975 0 00-.006-.002c-.003 0-.006.001-.009.002-.003.001-.006.003-.009.005-.003.002-.006.004-.008.007-.002.003-.004.005-.004.009-.001.003-.001.006 0 .01.001.003.002.006.004.009.002.003.005.005.008.007.003.002.006.004.009.005.003.001.006.002.009.002"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 12l2 2m0 0l2-2m-2 2L10 12"></path></svg>`;
+
+        // SVG pour l'œil ouvert (visible)
+        const eyeOpenSVG = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>`;
+
+
+        toggleButton.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            if (type === 'text') {
+                eyeIcon.innerHTML = eyeClosedSVG;
+                toggleButton.setAttribute('aria-label', 'Masquer le mot de passe');
+            } else {
+                eyeIcon.innerHTML = eyeOpenSVG;
+                toggleButton.setAttribute('aria-label', 'Afficher le mot de passe');
+            }
+        });
+
+        // Exécution de la logique après le chargement du DOM
+        window.onload = function() {
+            // Initialisation du carrousel
+            carouselContainer = document.getElementById('carousel-container');
+            if (carouselContainer) {
+                 // Démarrer la rotation toutes les 5 secondes (5000ms)
+                setInterval(updateCarouselImage, 5000); 
+            }
+            // Vérifier si l'utilisateur est déjà connecté au chargement de la page
+            supabaseClient.auth.getSession().then(({ data: { session } }) => {
+                if (session) {
+                    console.log("Utilisateur déjà connecté:", session.user.email);
+                    // Optionnel : rediriger l'utilisateur s'il a déjà une session valide
+                    // window.location.href = '/dashboard.html';
+                }
+            });
+        };
+
+    </script>
+
+</body>
+</html>
